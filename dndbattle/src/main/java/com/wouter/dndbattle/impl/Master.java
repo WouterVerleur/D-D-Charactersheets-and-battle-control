@@ -86,8 +86,13 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     }
 
     @Override
-    public Settings getSettings() throws RemoteException {
-        return SETTINGS;
+    public int getProperty(String key, int defaultValue) throws RemoteException {
+        return SETTINGS.getProperty(key, defaultValue);
+    }
+
+    @Override
+    public void setProperty(String key, int value) throws RemoteException {
+        SETTINGS.setProperty(key, value);
     }
 
     public void nextTurn() {

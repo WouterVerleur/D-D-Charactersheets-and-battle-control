@@ -17,8 +17,13 @@
 package com.wouter.dndbattle.view.character;
 
 import java.awt.Component;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
-
+import com.wouter.dndbattle.objects.ICharacterClass;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.view.character.abiliyAndSkill.AbilityAndSkillPanel;
@@ -26,12 +31,16 @@ import com.wouter.dndbattle.view.character.extendedCharacter.ExtendedCharacterPa
 import com.wouter.dndbattle.view.character.spells.SpellOverviewPanel;
 import com.wouter.dndbattle.view.character.weapon.WeaponsPanel;
 import com.wouter.dndbattle.view.master.MasterCharactersPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Wouter
  */
 public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePanel {
+
+    private static final Logger log = LoggerFactory.getLogger(CharacterPanel.class);
 
     private final AbstractCharacter character;
     private final MasterCharactersPanel presetPanel;
@@ -53,14 +62,14 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         update();
     }
 
-    public int getCurrentTab(){
+    public int getCurrentTab() {
         return tpCharacterPages.getSelectedIndex();
     }
-    
-    public void setCurrentTab(int currentTab){
+
+    public void setCurrentTab(int currentTab) {
         tpCharacterPages.setSelectedIndex(currentTab);
     }
-    
+
     @Override
     public void update() {
         for (Component component : tpCharacterPages.getComponents()) {
@@ -92,6 +101,11 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         lName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lName.setText(character.getName());
+        lName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lNameMouseClicked(evt);
+            }
+        });
 
         tpCharacterPages.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         tpCharacterPages.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -113,6 +127,26 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
                 .addComponent(tpCharacterPages, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lNameMouseClicked
+        if (Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            String searchQuery;
+            if (character instanceof AbstractExtendedCharacter) {
+                List<ICharacterClass> classes = ((AbstractExtendedCharacter) character).getCharacterClasses();
+                if (classes == null || classes.isEmpty()) {
+                    return;
+                }
+                searchQuery = classes.get(0).getName();
+            } else {
+                searchQuery = character.getName();
+            }
+            try {
+                Desktop.getDesktop().browse(new URI("https://roll20.net/compendium/dnd5e/searchbook/?terms=" + searchQuery.replace(" ", "%20")));
+            } catch (IOException | URISyntaxException e) {
+                log.error("Error while opening search in browser", e);
+            }
+        }
+    }//GEN-LAST:event_lNameMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lName;

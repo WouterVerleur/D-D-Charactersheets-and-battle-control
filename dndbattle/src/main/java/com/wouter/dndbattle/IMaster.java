@@ -8,8 +8,6 @@ package com.wouter.dndbattle;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import com.wouter.dndbattle.utils.Settings;
-
 /**
  *
  * @author Wouter
@@ -22,5 +20,8 @@ public interface IMaster extends Remote {
 
     public void disconnect(ISlave slave) throws RemoteException;
 
-    public Settings getSettings() throws RemoteException;
+    public int getProperty(String key, int defaultValue) throws RemoteException;
+
+    public void setProperty(String key, int value) throws RemoteException;
+
 }

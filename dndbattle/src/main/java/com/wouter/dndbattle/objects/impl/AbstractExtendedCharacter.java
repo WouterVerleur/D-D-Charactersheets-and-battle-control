@@ -22,7 +22,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wouter.dndbattle.objects.ICharacterClass;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
-import com.wouter.dndbattle.objects.IFeature;
 
 /**
  *
@@ -32,7 +31,6 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
 
     private static final String EMPTY_FORMAT = "Empty %s";
 
-    private List<IFeature> additionalFeatures = new ArrayList<>();
     private int age;
     private String aliesAndOrganizations;
     private String alignment;
@@ -43,7 +41,7 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     private String equipment;
     private int experiencePoints;
     private String eyes;
-    private List<IFeature> featuresAndTraits = new ArrayList<>();
+    private String featuresAndTraits;
     private String flaws;
     private String hair;
     private String height;
@@ -183,11 +181,11 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     }
 
     @Override
-    public List<IFeature> getFeaturesAndTraits() {
+    public String getFeaturesAndTraits() {
         return featuresAndTraits;
     }
 
-    public void setFeaturesAndTraits(List<IFeature> featuresAndTraits) {
+    public void setFeaturesAndTraits(String featuresAndTraits) {
         this.featuresAndTraits = featuresAndTraits;
     }
 
@@ -261,15 +259,6 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
 
     public void setAliesAndOrganizations(String aliesAndOrganizations) {
         this.aliesAndOrganizations = aliesAndOrganizations;
-    }
-
-    @Override
-    public List<IFeature> getAdditionalFeatures() {
-        return additionalFeatures;
-    }
-
-    public void setAdditionalFeatures(List<IFeature> additionalFeatures) {
-        this.additionalFeatures = additionalFeatures;
     }
 
     @Override

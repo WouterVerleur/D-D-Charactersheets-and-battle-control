@@ -9,15 +9,14 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +45,9 @@ public class Characters {
         if (getCharacterFile(character).exists()) {
             return false;
         }
-        CLASS_CHARACTER_MAP.get(character.getClass()).add(character);
+        final List<ICharacter> characters = CLASS_CHARACTER_MAP.get(character.getClass());
+        characters.add(character);
+        Collections.sort(characters);
         storeCharacter(character, false);
         return true;
     }
@@ -78,9 +79,10 @@ public class Characters {
                 }
             } catch (CharacterReadException | IllegalArgumentException e) {
                 log.error("Error while reading character from file [{}]", file, e);
-                if (JOptionPane.showConfirmDialog(null, "The character " + GlobalUtils.getFileNameWithoutExtention(file) + " resulted in an error.\nIs it op to delete this character?", "Character Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) {
-                    file.delete();
-                }
+                /*
+                 * if (JOptionPane.showConfirmDialog(null, "The character " + GlobalUtils.getFileNameWithoutExtention(file) + " resulted in an error.\nIs it op to delete this character?", "Character
+                 * Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) { file.delete(); }
+                 */
             }
         }
         Collections.sort(returnList);

@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import com.wouter.dndbattle.IMaster;
+import com.wouter.dndbattle.IMasterConnectionInfo;
 import com.wouter.dndbattle.ISlave;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.utils.Settings;
@@ -23,22 +24,55 @@ import org.slf4j.LoggerFactory;
 public class Slave extends AbstractRemoteConnector implements ISlave {
 
     private static final Logger log = LoggerFactory.getLogger(Slave.class);
+
+    private static final Settings SETTINGS = Settings.getInstance();
+
     private final SlaveFrame frame;
-    private boolean shutdownRecieved = false;
     private final IMaster master;
+
+    private boolean shutdownRecieved = false;
+    private IMasterConnectionInfo connectionInfo;
 
     public Slave(IMaster master, SlaveFrame frame) {
         this.master = master;
         this.frame = frame;
     }
 
-    public Settings getSettings() {
-        try {
-            return master.getSettings();
-        } catch (RemoteException e) {
-            log.error("Error while retrieving settings", e);
+    /**
+     * @return the connectionInfo
+     */
+    public IMasterConnectionInfo getConnectionInfo() {
+        return connectionInfo;
+    }
+
+    /**
+     * @param connectionInfo the connectionInfo to set
+     */
+    public void setConnectionInfo(IMasterConnectionInfo connectionInfo) {
+        this.connectionInfo = connectionInfo;
+    }
+
+    public int getProperty(String key, int defaultValue) {
+        if (connectionInfo != null && connectionInfo.isLocalhost()) {
+            try {
+                return master.getProperty(key, defaultValue);
+            } catch (RemoteException e) {
+                log.error("Error while retrieving settings", e);
+            }
         }
-        return Settings.getInstance();
+        return SETTINGS.getProperty(key, defaultValue);
+    }
+
+    public void setProperty(String key, int value) {
+        if (connectionInfo != null && connectionInfo.isLocalhost()) {
+            try {
+                master.setProperty(key, value);
+                return;
+            } catch (RemoteException e) {
+                log.error("Error while retrieving settings", e);
+            }
+        }
+        SETTINGS.setProperty(key, value);
     }
 
     @Override

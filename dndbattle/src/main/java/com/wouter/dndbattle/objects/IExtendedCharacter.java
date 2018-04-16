@@ -73,7 +73,7 @@ public interface IExtendedCharacter extends ICharacter {
 
     String getEquipment();
 
-    List<IFeature> getFeaturesAndTraits();
+    String getFeaturesAndTraits();
 
     int getAge();
 
@@ -90,8 +90,6 @@ public interface IExtendedCharacter extends ICharacter {
     String getBackstory();
 
     String getAliesAndOrganizations();
-
-    List<IFeature> getAdditionalFeatures();
 
     String getTreasure();
 }

@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.view.master;
 
+import static com.wouter.dndbattle.utils.FileWriterThread.DEFAULT_TIMEOUT;
+import static com.wouter.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
 import static com.wouter.dndbattle.utils.Settings.INPUT_FILESELECTION;
 import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
 import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
@@ -35,11 +37,9 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.wouter.dndbattle.utils.FileManager;
-import static com.wouter.dndbattle.utils.FileWriterThread.DEFAULT_TIMEOUT;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static com.wouter.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
 
 /**
  *
@@ -75,6 +75,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         bgRollForDeath = new javax.swing.ButtonGroup();
         lMasterTitle = new javax.swing.JLabel();
@@ -86,8 +87,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         lLookAndFeel = new javax.swing.JLabel();
         cbLookAndFeel = new javax.swing.JComboBox();
         lRollForDeath = new javax.swing.JLabel();
-        rbAutomaticDeath = new javax.swing.JRadioButton();
         rbRollForDeath = new javax.swing.JRadioButton();
+        rbAutomaticDeath = new javax.swing.JRadioButton();
         lPresetFolder = new javax.swing.JLabel();
         tfPresetFolder = new javax.swing.JTextField();
         bPresetFolder = new javax.swing.JButton();
@@ -95,7 +96,16 @@ public class SettingsPanel extends javax.swing.JPanel {
         lSaveTimeout = new javax.swing.JLabel();
         sSaveTimeout = new javax.swing.JSpinner();
 
+        setLayout(new java.awt.GridBagLayout());
+
         lMasterTitle.setText("Master frame title");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 2, 2);
+        add(lMasterTitle, gridBagConstraints);
 
         tfMasterTitle.setText(SETTINGS.getProperty(MASTER_TITLE, "Master")
         );
@@ -104,8 +114,24 @@ public class SettingsPanel extends javax.swing.JPanel {
                 tfMasterTitleActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 3, 2, 5);
+        add(tfMasterTitle, gridBagConstraints);
 
         lSlaveTitle.setText("Slave frame title");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 2, 2);
+        add(lSlaveTitle, gridBagConstraints);
 
         tfSlaveTitle.setText(SETTINGS.getProperty(SLAVE_TITLE, "Slave")
         );
@@ -114,6 +140,15 @@ public class SettingsPanel extends javax.swing.JPanel {
                 tfSlaveTitleActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
+        add(tfSlaveTitle, gridBagConstraints);
 
         bSaveSettings.setText("Save");
         bSaveSettings.addActionListener(new java.awt.event.ActionListener() {
@@ -121,10 +156,35 @@ public class SettingsPanel extends javax.swing.JPanel {
                 bSaveSettingsActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
+        add(bSaveSettings, gridBagConstraints);
 
         lIp.setText(String.format(IP_FORMAT, ipaddress));
+        lIp.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 5, 5);
+        add(lIp, gridBagConstraints);
 
         lLookAndFeel.setText("Look and feel");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 2, 2);
+        add(lLookAndFeel, gridBagConstraints);
 
         cbLookAndFeel.setModel(getLookAndFeelModel());
         cbLookAndFeel.setSelectedItem(SETTINGS.getProperty(LOOKANDFEEL, "Nimbus")
@@ -134,18 +194,24 @@ public class SettingsPanel extends javax.swing.JPanel {
                 cbLookAndFeelItemStateChanged(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
+        add(cbLookAndFeel, gridBagConstraints);
 
         lRollForDeath.setText("Death roll style");
-
-        bgRollForDeath.add(rbAutomaticDeath);
-        rbAutomaticDeath.setSelected(!SETTINGS.getProperty(ROLLFORDEATH, true)
-        );
-        rbAutomaticDeath.setText("Automatic death");
-        rbAutomaticDeath.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbAutomaticDeathActionPerformed(evt);
-            }
-        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 2, 2);
+        add(lRollForDeath, gridBagConstraints);
 
         bgRollForDeath.add(rbRollForDeath);
         rbRollForDeath.setSelected(SETTINGS.getProperty(ROLLFORDEATH, true)
@@ -156,10 +222,52 @@ public class SettingsPanel extends javax.swing.JPanel {
                 rbRollForDeathActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 2);
+        add(rbRollForDeath, gridBagConstraints);
+
+        bgRollForDeath.add(rbAutomaticDeath);
+        rbAutomaticDeath.setSelected(!SETTINGS.getProperty(ROLLFORDEATH, true)
+        );
+        rbAutomaticDeath.setText("Automatic death");
+        rbAutomaticDeath.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbAutomaticDeathActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 2);
+        add(rbAutomaticDeath, gridBagConstraints);
 
         lPresetFolder.setText("Folder for presets");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 2, 2);
+        add(lPresetFolder, gridBagConstraints);
 
         tfPresetFolder.setText(FileManager.getPresetFolder().getPath());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 2);
+        add(tfPresetFolder, gridBagConstraints);
 
         bPresetFolder.setText("Browse");
         bPresetFolder.addActionListener(new java.awt.event.ActionListener() {
@@ -167,6 +275,13 @@ public class SettingsPanel extends javax.swing.JPanel {
                 bPresetFolderActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
+        add(bPresetFolder, gridBagConstraints);
 
         bReset.setText("Reset");
         bReset.addActionListener(new java.awt.event.ActionListener() {
@@ -174,101 +289,39 @@ public class SettingsPanel extends javax.swing.JPanel {
                 bResetActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 2, 2);
+        add(bReset, gridBagConstraints);
 
         lSaveTimeout.setText("Save timeout (sec)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 5, 2, 2);
+        add(lSaveTimeout, gridBagConstraints);
 
-        sSaveTimeout.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        sSaveTimeout.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
         sSaveTimeout.setValue(SETTINGS.getProperty(FILE_WRITER_SAVE_TIMEOUT, DEFAULT_TIMEOUT));
         sSaveTimeout.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sSaveTimeoutStateChanged(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lIp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(lPresetFolder, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                            .addComponent(lRollForDeath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfPresetFolder)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bPresetFolder))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(lSlaveTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(lLookAndFeel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(lMasterTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(rbRollForDeath)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rbAutomaticDeath)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(cbLookAndFeel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(tfSlaveTitle)
-                                            .addComponent(tfMasterTitle))))
-                                .addGap(4, 4, 4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lSaveTimeout)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sSaveTimeout)))
-                        .addGap(6, 6, 6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(bReset)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bSaveSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lMasterTitle)
-                    .addComponent(tfMasterTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lSlaveTitle)
-                    .addComponent(tfSlaveTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lLookAndFeel)
-                    .addComponent(cbLookAndFeel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lRollForDeath)
-                    .addComponent(rbAutomaticDeath)
-                    .addComponent(rbRollForDeath))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lPresetFolder)
-                    .addComponent(tfPresetFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bPresetFolder))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lSaveTimeout)
-                    .addComponent(sSaveTimeout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bSaveSettings)
-                    .addComponent(bReset))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lIp)
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
+        add(sSaveTimeout, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfSlaveTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSlaveTitleActionPerformed

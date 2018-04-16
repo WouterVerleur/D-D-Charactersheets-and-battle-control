@@ -157,15 +157,24 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public int getSkillModifier(SkillType skillType) {
-        return abilities.get(skillType.getAbilityType()).getModifier() + skills.get(skillType).getProficiency().getMultiplier() * getProficiencyScore();
+        return abilities.get(skillType.getAbilityType()).getModifier() + getSkillProficiency(skillType).getMultiplier() * getProficiencyScore();
     }
 
     public Proficiency getSkillProficiency(SkillType skillType) {
-        return skills.get(skillType).getProficiency();
+        try {
+            return skills.get(skillType).getProficiency();
+        } catch (NullPointerException e) {
+            return Proficiency.NONE;
+        }
     }
 
     public void setSkillProficiency(SkillType skillType, Proficiency proficiency) {
-        ((Skill) skills.get(skillType)).setProficiency(proficiency);
+        Skill skill = (Skill) skills.get(skillType);
+        if (skill == null) {
+            skill = new Skill(skillType);
+            skills.put(skillType, skill);
+        }
+        skill.setProficiency(proficiency);
     }
 
     public Map<SkillType, ISkill> getSkills() {

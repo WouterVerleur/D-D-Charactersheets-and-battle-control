@@ -20,7 +20,6 @@ import com.wouter.dndbattle.IMasterConnectionInfo;
 import com.wouter.dndbattle.ISlave;
 import com.wouter.dndbattle.impl.Slave;
 import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,29 +31,22 @@ public class SlaveFrame extends javax.swing.JFrame {
 
     private static final Logger log = LoggerFactory.getLogger(SlaveFrame.class);
 
-    private Settings settings = Settings.getInstance();
-    private IMasterConnectionInfo connectionInfo;
-
     private final Slave slave;
 
     public SlaveFrame(IMaster master) {
         this.slave = new Slave(master, this);
         initComponents();
-        int x = settings.getProperty(SLAVE_LOCATION_X, 0);
-        int y = settings.getProperty(SLAVE_LOCATION_Y, 0);
+        int x = slave.getProperty(SLAVE_LOCATION_X, 0);
+        int y = slave.getProperty(SLAVE_LOCATION_Y, 0);
         setLocation(x, y);
-        int width = settings.getProperty(SLAVE_SIZE_WIDTH, getPreferredSize().width);
-        int height = settings.getProperty(SLAVE_SIZE_HEIGHT, getPreferredSize().width);
+        int width = slave.getProperty(SLAVE_SIZE_WIDTH, getPreferredSize().width);
+        int height = slave.getProperty(SLAVE_SIZE_HEIGHT, getPreferredSize().width);
         setSize(width, height);
-        setExtendedState(settings.getProperty(SLAVE_SIZE_STATE, 0));
+        setExtendedState(slave.getProperty(SLAVE_SIZE_STATE, 0));
     }
 
     public void setConnectionInfo(IMasterConnectionInfo connectionInfo) {
-        this.connectionInfo = connectionInfo;
-        if (connectionInfo.isLocalhost()) {
-            log.debug("Getting settings from master");
-            settings = slave.getSettings();
-        }
+        slave.setConnectionInfo(connectionInfo);
         setTitle(connectionInfo.getSlaveName());
     }
 
@@ -101,18 +93,18 @@ public class SlaveFrame extends javax.swing.JFrame {
 
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
         if (getExtendedState() == NORMAL) {
-            settings.setProperty(SLAVE_LOCATION_X, getLocation().x);
-            settings.setProperty(SLAVE_LOCATION_Y, getLocation().y);
+            slave.setProperty(SLAVE_LOCATION_X, getLocation().x);
+            slave.setProperty(SLAVE_LOCATION_Y, getLocation().y);
         }
     }//GEN-LAST:event_formComponentMoved
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         if (getExtendedState() == NORMAL) {
-            settings.setProperty(SLAVE_SIZE_WIDTH, getWidth());
-            settings.setProperty(SLAVE_SIZE_HEIGHT, getHeight());
+            slave.setProperty(SLAVE_SIZE_WIDTH, getWidth());
+            slave.setProperty(SLAVE_SIZE_HEIGHT, getHeight());
         }
         if (getExtendedState() != ICONIFIED) {
-            settings.setProperty(SLAVE_SIZE_STATE, getExtendedState());
+            slave.setProperty(SLAVE_SIZE_STATE, getExtendedState());
         }
     }//GEN-LAST:event_formComponentResized
 

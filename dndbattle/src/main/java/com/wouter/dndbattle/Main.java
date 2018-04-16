@@ -75,7 +75,7 @@ public class Main {
         try {
             connectSlave(host, port);
         } catch (RemoteException | NotBoundException e) {
-            System.out.println("Master doesn't seem present [" + e + "] creating now.");
+            log.debug("Master doesn't seem present [" + e + "] creating now.");
             createMaster(port);
         }
     }
@@ -91,7 +91,7 @@ public class Main {
                 masterFrame.setVisible(true);
             });
         } catch (RemoteException | AlreadyBoundException ex) {
-            System.out.println("Master can't be started [" + ex + "]");
+            log.error("Master can't be started [" + ex + "]");
             JOptionPane.showMessageDialog(null, "Unable to start.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }

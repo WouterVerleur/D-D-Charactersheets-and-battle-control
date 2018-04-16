@@ -41,6 +41,9 @@
           <Connection code="character.getName()" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lNameMouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JTabbedPane" name="tpCharacterPages">
       <Properties>

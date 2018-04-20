@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.weapon;
+package com.wouter.dndbattle.view.master.character.weapon;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -24,18 +24,19 @@ import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.Weapon;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.character.CharacterPanel;
-import com.wouter.dndbattle.view.character.IUpdateablePanel;
+import com.wouter.dndbattle.utils.WeaponTablePanel;
+import com.wouter.dndbattle.view.master.character.CharacterPanel;
+import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
 import java.util.List;
 
 /**
  *
  * @author Wouter
  */
-public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel {
+public class WeaponsPanel extends WeaponTablePanel implements IUpdateablePanel {
 
-    private static final String DAMAGE_FORMAT_SHORT = "%s %s";
-    private static final String DAMAGE_FORMAT = "%d%s %s %s";
+    public static final String DAMAGE_FORMAT_SHORT = "%s %s";
+    public static final String DAMAGE_FORMAT = "%d%s %s %s";
 
     private final AbstractCharacter character;
     private final CharacterPanel characterPanel;
@@ -176,48 +177,8 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
         DefaultTableModel model = (DefaultTableModel) tWeapons.getModel();
         model.setRowCount(0);
         character.getWeapons().forEach((weapon) -> {
-            model.addRow(getWeaponRow(weapon));
+            model.addRow(getWeaponRow(character, weapon));
         });
-    }
-
-    private String[] getWeaponRow(IWeapon weapon) {
-        return new String[]{
-            weapon.getName(),
-            getModifierString(weapon, true),
-            getWeaponDamage(weapon, getModifierString(weapon, false)),
-            weapon.getNotes()
-        };
-    }
-
-    private String getModifierString(IWeapon weapon, boolean addProficiency) {
-        int modifier = character.getAbilityModifier(AbilityType.STR);
-        if (weapon.isFinesse() && character.getAbilityModifier(AbilityType.DEX) > modifier) {
-            modifier = character.getAbilityModifier(AbilityType.DEX);
-        }
-
-        if (addProficiency) {
-            String attackOverride = weapon.getAttackOverride();
-            if (attackOverride != null && !attackOverride.isEmpty()) {
-                return attackOverride;
-            }
-            modifier += (character.getProficiencyScore() * weapon.getProficiency().getMultiplier());
-        } else {
-            String damageOverride = weapon.getDamageOverride();
-            if (damageOverride != null && !damageOverride.isEmpty()) {
-                return damageOverride;
-            }
-            if (modifier == 0) {
-                return "";
-            }
-        }
-        return GlobalUtils.modifierToString(modifier);
-    }
-
-    private String getWeaponDamage(IWeapon weapon, String modifierString) {
-        if (weapon.getAttackDice() == Dice.NONE) {
-            return String.format(DAMAGE_FORMAT_SHORT, modifierString, weapon.getDamageType());
-        }
-        return String.format(DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString, weapon.getDamageType());
     }
 
     private Weapon getSelectedWeapon() {

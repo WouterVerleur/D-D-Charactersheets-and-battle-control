@@ -48,4 +48,12 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
     boolean isTransformed();
 
     int getTotalDamageRecieved();
+    
+    boolean ownedbyPlayer(String playerName);
+
+    ICombatant getTransformation();
+    
+    boolean rollingForDeath();
+
+    boolean isFriendly();
 }

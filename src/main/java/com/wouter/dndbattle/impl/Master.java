@@ -20,7 +20,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import com.wouter.dndbattle.IMaster;
-import com.wouter.dndbattle.IMasterConnectionInfo;
 import com.wouter.dndbattle.ISlave;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Combatant;
@@ -62,22 +61,22 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     }
 
     @Override
-    public IMasterConnectionInfo connect(ISlave slave) throws RemoteException {
-        return connect(slave, SLAVE_TITLE);
+    public void connect(ISlave slave) throws RemoteException {
+        connect(slave, "");
     }
 
     @Override
-    public IMasterConnectionInfo connect(ISlave slave, String name) throws RemoteException {
+    public void connect(ISlave slave, String playerName) throws RemoteException {
         slaves.add(slave);
-        slave.refreshView(combatants, activeIndex);
         boolean localhost = false;
         try {
             localhost = RemoteServer.getClientHost().equalsIgnoreCase(InetAddress.getLocalHost().getHostAddress());
         } catch (ServerNotActiveException | UnknownHostException e) {
             log.error("Error while determining if connection if from localhost", e);
         }
-        log.debug("Recieved new slave connection from [{}] for witch localhost was [{}]", name, localhost);
-        return new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost);
+        log.debug("Recieved new slave connection from [{}] for witch localhost was [{}]", playerName, localhost);
+        slave.setConnectionInfo(new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName));
+        slave.refreshView(combatants, activeIndex);
     }
 
     @Override
@@ -111,7 +110,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
                 combatants.remove(next);
                 continue;
             }
-            if (next.getHealth() == 0 && !SETTINGS.getProperty(ROLLFORDEATH, true)) {
+            if (next.rollingForDeath() && !SETTINGS.getProperty(ROLLFORDEATH, true)) {
                 log.debug("Adding deathroll to [{}]", next);
                 JOptionPane.showMessageDialog(frame, "An automatic deathroll was added to " + next, "Automatic deathroll.", JOptionPane.INFORMATION_MESSAGE);
                 ((Combatant) next).addDeathRoll();

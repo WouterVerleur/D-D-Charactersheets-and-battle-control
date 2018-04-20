@@ -23,3 +23,5 @@ hs_err_pid*
 
 dndbattle/nbactions.xml
 dndbattle/target/
+/target/
+nbactions.xml

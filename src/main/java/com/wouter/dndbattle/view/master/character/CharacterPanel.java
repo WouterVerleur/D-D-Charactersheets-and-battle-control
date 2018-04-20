@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character;
+package com.wouter.dndbattle.view.master.character;
 
 import java.awt.Component;
 import java.awt.Desktop;
@@ -26,10 +26,10 @@ import java.util.List;
 import com.wouter.dndbattle.objects.ICharacterClass;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
-import com.wouter.dndbattle.view.character.abiliyAndSkill.AbilityAndSkillPanel;
-import com.wouter.dndbattle.view.character.extendedCharacter.ExtendedCharacterPanel;
-import com.wouter.dndbattle.view.character.spells.SpellOverviewPanel;
-import com.wouter.dndbattle.view.character.weapon.WeaponsPanel;
+import com.wouter.dndbattle.view.master.character.abiliyAndSkill.AbilityAndSkillPanel;
+import com.wouter.dndbattle.view.master.character.extendedCharacter.ExtendedCharacterPanel;
+import com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel;
+import com.wouter.dndbattle.view.master.character.weapon.WeaponsPanel;
 import com.wouter.dndbattle.view.master.MasterCharactersPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

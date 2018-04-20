@@ -65,4 +65,16 @@ public class GlobalUtils {
     public static Color getTransparentColor() {
         return new Color(0, 0, 0, 0);
     }
+
+    public static Color getErrorBackground() {
+        return Color.RED;
+    }
+
+    public static Color getDownBackground() {
+        return Color.GRAY;
+    }
+
+    public static Color getDeadBackground() {
+        return Color.DARK_GRAY;
+    }
 }

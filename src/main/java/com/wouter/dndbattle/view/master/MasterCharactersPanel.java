@@ -16,7 +16,7 @@ import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.character.CharacterPanel;
+import com.wouter.dndbattle.view.master.character.CharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

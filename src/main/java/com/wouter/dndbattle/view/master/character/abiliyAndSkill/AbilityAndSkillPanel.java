@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.abiliyAndSkill;
+package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 
 import java.awt.Component;
 
@@ -26,8 +26,8 @@ import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.character.CharacterPanel;
-import com.wouter.dndbattle.view.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.master.character.CharacterPanel;
+import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
 import static java.awt.event.ItemEvent.SELECTED;
 
 /**

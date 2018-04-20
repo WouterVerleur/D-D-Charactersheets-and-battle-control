@@ -22,8 +22,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.wouter.dndbattle.utils.Settings;
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_NAME;
 import com.wouter.dndbattle.view.master.MasterFrame;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
+import static javax.swing.JOptionPane.CANCEL_OPTION;
+import static javax.swing.JOptionPane.NO_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +39,10 @@ import org.slf4j.LoggerFactory;
 public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
+
     private static final Settings SETTINGS = Settings.getInstance();
+
+    private static final String LOCALHOST = "localhost";
 
     public static void main(String[] args) {
 
@@ -42,7 +50,6 @@ public class Main {
             Settings.setAlpha(true);
         }
 
-        //<editor-fold defaultstate="collapsed" desc=" Setting the look and feel ">
         String lookAndFeel = SETTINGS.getProperty(LOOKANDFEEL, "Nimbus");
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -56,27 +63,62 @@ public class Main {
         }
         UIDefaults defaults = UIManager.getLookAndFeelDefaults();
         defaults.put("nimbusOrange", Color.GREEN);
-        //</editor-fold>
 
-        int port = SETTINGS.getProperty("connection.port", 12345);
+        start(false);
+    }
+
+    private static void start(boolean requestPort) throws HeadlessException {
         String host;
-        if (Settings.isAlpha()) {
-            host = "localhost";
+        int port = 0;
+        if (requestPort) {
+            while (port == 0) {
+                String portInput = JOptionPane.showInputDialog(null, "What port?", SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST));
+                if (portInput == null) {
+                    log.debug("User cancelled");
+                    System.exit(0);
+                }
+                log.debug("User input on port request: [{}]", portInput);
+                try {
+                    port = Integer.parseInt(portInput);
+                } catch (NumberFormatException e) {
+                    log.error("Error while parsing userinput [{}] as a number.", portInput, e);
+                }
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Warning!\nThis is a development build.\nIt may not be compatible with future releases.", "Warning", JOptionPane.WARNING_MESSAGE);
-            host = JOptionPane.showInputDialog(null, "What host?", "localhost");
+            port = SETTINGS.getProperty("connection.port", 12345);
+        }
+        if (Settings.isAlpha()) {
+            host = SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST);
+        } else {
+            host = JOptionPane.showInputDialog(null, "What host?", SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST));
             if (host == null) {
                 log.debug("User cancelled");
                 System.exit(0);
             }
+            SETTINGS.setProperty(CONNECTION_HOST, host);
             log.debug("User input on host request: [{}]", host);
         }
-
         try {
             connectSlave(host, port);
         } catch (RemoteException | NotBoundException e) {
             log.debug("Master doesn't seem present [" + e + "] creating now.");
-            createMaster(port);
+            boolean createMaster = host.equalsIgnoreCase(LOCALHOST);
+            if (!createMaster) {
+                switch (JOptionPane.showConfirmDialog(null, "No connection could be made to host " + host + ".\nWould you like to create a master on this machine?", "No connection", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
+                    case YES_OPTION:
+                        createMaster = true;
+                        break;
+                    case CANCEL_OPTION:
+                        start(true);
+                        break;
+                    case NO_OPTION:
+                        System.exit(1);
+                        break;
+                }
+            }
+            if (createMaster) {
+                createMaster(port);
+            }
         }
     }
 
@@ -102,17 +144,23 @@ public class Main {
         registry = LocateRegistry.getRegistry(host, port);
         IMaster master = (IMaster) registry.lookup("dnd");
         final SlaveFrame slaveFrame = new SlaveFrame(master);
-        IMasterConnectionInfo connectionInfo = master.connect((ISlave) UnicastRemoteObject.exportObject(slaveFrame.getSlave(), 0));
-        slaveFrame.setConnectionInfo(connectionInfo);
+        IMasterConnectionInfo connectionInfo;
+        ISlave remoteSlave = (ISlave) UnicastRemoteObject.exportObject(slaveFrame.getSlave(), 0);
+        if (host.equalsIgnoreCase("localhost")) {
+            master.connect(remoteSlave);
+        } else {
+            String playerName = JOptionPane.showInputDialog(slaveFrame, "What is your name?", SETTINGS.getProperty(CONNECTION_NAME));
+            if (playerName != null && !playerName.isEmpty()) {
+                SETTINGS.setProperty(CONNECTION_NAME, playerName);
+            }
+            master.connect(remoteSlave, playerName);
+        }
         java.awt.EventQueue.invokeLater(() -> {
             slaveFrame.setVisible(true);
         });
     }
 
     public Main() {
-    }
-
-    public void start(String host) {
     }
 
 }

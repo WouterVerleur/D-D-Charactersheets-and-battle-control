@@ -24,17 +24,26 @@ import com.wouter.dndbattle.IMasterConnectionInfo;
  */
 public class MasterConnectionInfo implements IMasterConnectionInfo {
 
-    private final String slaveName;
+    private final String slaveTitle;
     private final boolean localhost;
+    private final String playerName;
 
-    public MasterConnectionInfo(String slaveName, boolean localhost) {
-        this.slaveName = slaveName;
+    /**
+     * Default construcotr for MasterConnectionInfo.
+     *
+     * @param slaveTitle The title the slave should have.
+     * @param localhost True if the connection is to the same computer
+     * @param playerName The name of the player.
+     */
+    public MasterConnectionInfo(String slaveTitle, boolean localhost, String playerName) {
+        this.slaveTitle = slaveTitle;
         this.localhost = localhost;
+        this.playerName = playerName;
     }
 
     @Override
-    public String getSlaveName() {
-        return slaveName;
+    public String getSlaveTitle() {
+        return slaveTitle;
     }
 
     @Override
@@ -42,4 +51,17 @@ public class MasterConnectionInfo implements IMasterConnectionInfo {
         return localhost;
     }
 
+    /**
+     * @return the playerName that can be used to determine if a character is
+     * played by the current user.
+     */
+    @Override
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    @Override
+    public String toString() {
+        return slaveTitle + '(' + localhost + ')' + playerName;
+    }
 }

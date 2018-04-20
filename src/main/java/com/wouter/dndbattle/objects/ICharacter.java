@@ -32,6 +32,8 @@ import com.wouter.dndbattle.objects.enums.SkillType;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public interface ICharacter extends Comparable<ICharacter>, Serializable {
 
+    int getAbilityScore(AbilityType abilityType);
+
     int getAbilityModifier(AbilityType abilityType);
 
     IArmor getArmor();
@@ -64,6 +66,7 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
 
     boolean isShieldWearer();
 
+    @JsonIgnore
     boolean rollForDeath();
 
     @JsonIgnore
@@ -80,4 +83,7 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
     ChallengeRating getChallengeRating();
 
     boolean isFriendly();
+
+    @JsonIgnore
+    String getArmorClassString();
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.abiliyAndSkill;
+package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 
 import com.wouter.dndbattle.objects.IArmor;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
@@ -100,7 +100,7 @@ public class ArmorFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
         getContentPane().add(cbType, gridBagConstraints);
 
-        sRating.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        sRating.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         sRating.setValue(armor.getBaseArmorRating());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -123,7 +123,7 @@ public class ArmorFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 3, 2, 5);
         getContentPane().add(tfName, gridBagConstraints);
 
-        lExtraArmor.setText("Extra armor");
+        lExtraArmor.setText("Extra armor from features and traits");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;

@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.abiliyAndSkill;
+package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import static com.wouter.dndbattle.objects.enums.Dice.D20;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.view.character.IUpdateablePanel;
-import com.wouter.dndbattle.view.character.abiliyAndSkill.DicePopup;
+import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.master.character.abiliyAndSkill.DicePopup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

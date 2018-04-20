@@ -68,6 +68,10 @@ public enum SkillType {
         return abilityType;
     }
 
+    public String getCasedName() {
+        return casedName;
+    }
+    
     @JsonValue
     public String toValue() {
         return name();

@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.extendedCharacter;
+package com.wouter.dndbattle.view.master.character.extendedCharacter;
 
 import javax.swing.JOptionPane;
 
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.objects.impl.CharacterClass;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.view.character.CharacterPanel;
-import com.wouter.dndbattle.view.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.master.character.CharacterPanel;
+import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -316,7 +316,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(lExperiencePoints, gridBagConstraints);
 
-        sExperiencePoints.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100)));
+        sExperiencePoints.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 100));
         sExperiencePoints.setValue(character.getExperiencePoints());
         sExperiencePoints.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -342,7 +342,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(lSpeed, gridBagConstraints);
 
-        sSpeed.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(30), Integer.valueOf(0), null, Integer.valueOf(5)));
+        sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 0, null, 5));
         sSpeed.setValue(character.getSpeed());
         sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -377,7 +377,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(lAge, gridBagConstraints);
 
-        sAge.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        sAge.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         sAge.setValue(character.getAge());
         sAge.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -856,7 +856,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         add(sepFeatures, gridBagConstraints);
 
         lFeatures.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lFeatures.setText("Features & traits");
+        lFeatures.setText("Features & Traits");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;

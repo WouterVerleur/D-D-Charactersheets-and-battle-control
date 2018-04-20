@@ -833,7 +833,7 @@
     <Component class="javax.swing.JLabel" name="lFeatures">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Features &amp; traits"/>
+        <Property name="text" type="java.lang.String" value="Features &amp; Traits"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

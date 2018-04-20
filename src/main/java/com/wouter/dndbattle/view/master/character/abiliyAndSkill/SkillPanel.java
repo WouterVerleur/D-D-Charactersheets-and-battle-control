@@ -14,34 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.abiliyAndSkill;
+package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 
-import java.awt.event.ItemEvent;
-
-import javax.swing.DefaultComboBoxModel;
-
-import com.wouter.dndbattle.objects.enums.AbilityType;
 import static com.wouter.dndbattle.objects.enums.Dice.D20;
+import com.wouter.dndbattle.objects.enums.SkillType;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.character.IUpdateablePanel;
-import com.wouter.dndbattle.view.character.abiliyAndSkill.DicePopup;
+import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.master.character.abiliyAndSkill.DicePopup;
+import java.awt.event.ItemEvent;
 
 /**
  *
  * @author Wouter
  */
-public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
+public class SkillPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
+    private final SkillType skillType;
+    private final AbstractCharacter character;
     private final AbilityAndSkillPanel abilityAndSkillPanel;
 
-    private final AbilityType abilityType;
-    private final AbstractCharacter character;
-
-    public SavingThrowPanel(AbstractCharacter character, AbilityType abilityType, AbilityAndSkillPanel abilityAndSkillPanel) {
+    public SkillPanel(AbstractCharacter character, SkillType skillType, AbilityAndSkillPanel abilityAndSkillPanel) {
         this.character = character;
-        this.abilityType = abilityType;
+        this.skillType = skillType;
         this.abilityAndSkillPanel = abilityAndSkillPanel;
         initComponents();
         updateLabel();
@@ -53,7 +49,7 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
     }
 
     private void updateLabel() {
-        lModifier.setText(GlobalUtils.modifierToString(character.getSavingThrowModifier(abilityType)));
+        lModifier.setText(GlobalUtils.modifierToString(character.getSkillModifier(skillType)));
     }
 
     /**
@@ -68,7 +64,7 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
         lModifier = new javax.swing.JLabel();
         cbProficiency = new com.wouter.dndbattle.view.comboboxes.ProficiencyComboBox();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), abilityType.getFullName(), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), skillType.toString(), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
         lModifier.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lModifier.setText("0");
@@ -78,7 +74,7 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
             }
         });
 
-        cbProficiency.setSelectedItem(character.getSavingThrowProficiency(abilityType));
+        cbProficiency.setSelectedItem(character.getSkillProficiency(skillType));
         cbProficiency.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbProficiencyItemStateChanged(evt);
@@ -92,7 +88,8 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(cbProficiency, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,14 +101,14 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
 
     private void cbProficiencyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbProficiencyItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
-            character.setSavingThrowProficiency(abilityType, cbProficiency.getSelectedItem());
+            character.setSkillProficiency(skillType, cbProficiency.getSelectedItem());
             Characters.updateCharacter(character);
             abilityAndSkillPanel.updatePanels();
         }
     }//GEN-LAST:event_cbProficiencyItemStateChanged
 
     private void lModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lModifierMouseClicked
-        DicePopup dicePopup = new DicePopup(character.getSavingThrowModifier(abilityType), D20, abilityType.getFullName());
+        DicePopup dicePopup = new DicePopup(character.getSkillModifier(skillType), D20, skillType.toString());
         dicePopup.setLocationRelativeTo(lModifier);
         dicePopup.setVisible(true);
     }//GEN-LAST:event_lModifierMouseClicked

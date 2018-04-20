@@ -61,7 +61,7 @@ public class AddCombatantFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Health");
 
-        jLabel5.setText("Initiative (r + dex)");
+        jLabel5.setText("Initiative (r + init)");
 
         cbHealth.setText("Health is not full");
         cbHealth.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +118,7 @@ public class AddCombatantFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                        .addComponent(bAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bAddMore))
                     .addComponent(tfInitiative)

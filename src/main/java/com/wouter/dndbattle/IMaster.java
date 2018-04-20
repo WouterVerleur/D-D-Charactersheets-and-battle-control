@@ -14,9 +14,9 @@ import java.rmi.RemoteException;
  */
 public interface IMaster extends Remote {
 
-    public IMasterConnectionInfo connect(ISlave slave) throws RemoteException;
+    public void connect(ISlave slave) throws RemoteException;
 
-    public IMasterConnectionInfo connect(ISlave slave, String name) throws RemoteException;
+    public void connect(ISlave slave, String name) throws RemoteException;
 
     public void disconnect(ISlave slave) throws RemoteException;
 

@@ -48,7 +48,11 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     /**
      * @param connectionInfo the connectionInfo to set
      */
+    @Override
     public void setConnectionInfo(IMasterConnectionInfo connectionInfo) {
+        if (frame != null){
+            frame.setTitle(connectionInfo.getSlaveTitle());
+        }
         this.connectionInfo = connectionInfo;
     }
 
@@ -87,12 +91,12 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     }
 
     @Override
-    public void refreshView(final List<ICombatant> combatants, int activeIndex) throws RemoteException {
+    public void refreshView(final List<ICombatant> combatants, int activeIndex) {
         frame.showCombatants(combatants, activeIndex);
     }
 
     @Override
-    public void shutdown() throws RemoteException {
+    public void shutdown() {
         shutdownRecieved = true;
         System.exit(0);
     }

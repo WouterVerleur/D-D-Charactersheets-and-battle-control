@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.character.spells;
+package com.wouter.dndbattle.view.master.character.spells;
 
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
@@ -23,7 +23,7 @@ import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
 import static com.wouter.dndbattle.utils.Settings.SPELLS_GRID_COLUMNS;
-import com.wouter.dndbattle.view.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 

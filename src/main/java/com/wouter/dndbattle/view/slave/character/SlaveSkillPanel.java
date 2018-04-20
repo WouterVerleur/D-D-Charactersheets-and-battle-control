@@ -14,19 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle;
+package com.wouter.dndbattle.view.slave.character;
 
-import java.io.Serializable;
+import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.enums.SkillType;
+import com.wouter.dndbattle.utils.GlobalUtils;
 
 /**
  *
  * @author wverl
  */
-public interface IMasterConnectionInfo extends Serializable {
+public class SlaveSkillPanel extends AbstractSlaveAbilityPanel {
 
-    String getSlaveTitle();
+    public SlaveSkillPanel(ICharacter character, SkillType skillType) {
+        super(skillType.getCasedName(), GlobalUtils.modifierToString(character.getSkillModifier(skillType)));
+    }
 
-    boolean isLocalhost();
-    
-    String getPlayerName();
 }

@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Settings extends Properties {
 
+    public static final String CONNECTION_HOST="network.connect.host";
+    public static final String CONNECTION_NAME="network.connect.name";
     public static final String LOOKANDFEEL = "gui.lookandfeel";
     public static final String INPUT_FILESELECTION = "gui.input.fileselection";
     public static final String MASTER_LOCATION_X = "gui.master.location.x";

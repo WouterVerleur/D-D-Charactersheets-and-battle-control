@@ -18,6 +18,8 @@ package com.wouter.dndbattle.objects.impl;
 
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.objects.IExtendedCharacter;
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +46,7 @@ public class Combatant implements ICombatant {
     private int lifeRolls = 0;
     private int healthBuff = 0;
     private int initiative;
+    private Boolean rollForDeath;
     private int totalDamageRecieved = 0;
 
     public Combatant(ICharacter character, String name, int initiative) {
@@ -58,6 +61,11 @@ public class Combatant implements ICombatant {
         this.initiative = initiative;
     }
 
+    private Combatant(ICharacter character, String name, int initiative, Boolean rollForDeath) {
+        this(character, name, initiative, character.getMaxHealth());
+        this.rollForDeath = rollForDeath;
+    }
+
     @Override
     public ICharacter getCharacter() {
         if (isTransformed()) {
@@ -67,7 +75,15 @@ public class Combatant implements ICombatant {
     }
 
     @Override
+    public boolean isFriendly() {
+        return character.isFriendly();
+    }
+    
+    @Override
     public int getHealth() {
+        if (isTransformed()){
+            return transformation.getHealth();
+        }
         return health;
     }
 
@@ -134,7 +150,11 @@ public class Combatant implements ICombatant {
 
     @Override
     public int compareTo(ICombatant t) {
-        return t.getInitiative() - initiative;
+        int returnValue = t.getInitiative() - initiative;
+        if (returnValue == 0) {
+            returnValue = t.getCharacter().getAbilityModifier(DEX) - character.getAbilityModifier(DEX);
+        }
+        return returnValue;
     }
 
     @Override
@@ -164,8 +184,10 @@ public class Combatant implements ICombatant {
     }
 
     public int giveDamage(int damage) {
+        log.debug("Damaging [{}] for [{}] points", character, damage);
         int damageReturn = damage;
         if (isTransformed()) {
+            log.debug("Damaging transformation for [{}] points", damage);
             int newDamage = transformation.giveDamage(damage);
             if (newDamage > 0 && (transformation.isDead() || transformation.getHealth() == 0)) {
                 transformation = null;
@@ -190,10 +212,15 @@ public class Combatant implements ICombatant {
                 health -= damageAfterBuff;
                 if (health < 0) {
                     damageReturn = Math.abs(health);
+                } else {
+                    damageReturn = 0;
                 }
                 if (health < 0 && health > (character.getMaxHealth() * -1)) {
                     // Ok, you were not killed right away...
                     health = 0;
+                }
+                if (health < 1 && !rollingForDeath()) {
+                    health = -1;
                 }
             }
             checkDead();
@@ -212,12 +239,21 @@ public class Combatant implements ICombatant {
         }
     }
 
+    @Override
+    public String getName() {
+        if (isTransformed()) {
+            return String.format(TRANSFORM_NAME_FORMAT, transformation.getName(), name);
+        }
+        return name;
+    }
+
     public void transform(ICharacter transform) {
         if (isTransformed()) {
             transformation.transform(transform);
         } else if (character.isCanTransform()) {
             log.debug("Transforming [{}] into [{}]", character.getName(), transform.getName());
-            transformation = new Combatant(transform, transform.getName(), initiative);
+            transformation = new Combatant(transform, transform.getName(), initiative, false);
+            return;
         }
         log.debug("Transformation of [{}] into [{}] failed", character.getName(), transform.getName());
     }
@@ -227,20 +263,32 @@ public class Combatant implements ICombatant {
         return character.isCanTransform() && transformation != null && !transformation.isDead();
     }
 
-    @Override
-    public String getName() {
-        if (isTransformed()) {
-            return String.format(TRANSFORM_NAME_FORMAT, transformation.getName(), name);
-        }
-        return name;
-    }
-
     public void leaveTransformation() {
         transformation = null;
     }
 
+    @Override
     public Combatant getTransformation() {
         return transformation;
+    }
+
+    @Override
+    public boolean rollingForDeath() {
+        if (health > 0 || isDead()) {
+            return false;
+        }
+        if (rollForDeath == null) {
+            rollForDeath = character.rollForDeath();
+        }
+        return rollForDeath;
+    }
+
+    @Override
+    public boolean ownedbyPlayer(String playerName) {
+        if (character instanceof IExtendedCharacter && playerName != null) {
+            return playerName.equalsIgnoreCase(((IExtendedCharacter) character).getPlayerName());
+        }
+        return false;
     }
 
     @Override

@@ -95,11 +95,12 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(abilityType).getModifier();
     }
 
+    @Override
     public int getAbilityScore(AbilityType abilityType) {
         return abilities.get(abilityType).getScore();
     }
 
-    @JsonIgnore
+    @Override
     public String getArmorClassString() {
         StringBuilder builder = new StringBuilder();
         int armorClass = getArmorClass();

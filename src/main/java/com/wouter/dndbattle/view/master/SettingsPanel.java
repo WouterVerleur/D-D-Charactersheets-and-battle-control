@@ -28,7 +28,12 @@ import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.logging.Level;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -36,6 +41,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import com.wouter.dndbattle.Main;
 import com.wouter.dndbattle.utils.FileManager;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
@@ -51,21 +57,40 @@ public class SettingsPanel extends javax.swing.JPanel {
 
     private static final Settings SETTINGS = Settings.getInstance();
 
-    private static final String IP_FORMAT = "Your IP is: %s";
-    private final String ipaddress;
+    private static final String IP_FORMAT = "Your connection is on port %d and your IP is: %s";
+    private static final String IPS_FORMAT = "Your connection is on port %d and your IP's are: %s";
+    private final String ipaddressText;
 
     /**
      * Creates new form SettingsPanel
      */
     public SettingsPanel() {
-        String ipaddr;
+        List<String> adresses = new ArrayList<>();
+        Enumeration<NetworkInterface> networkInterfaces;
+        String ipAddr;
         try {
-            ipaddr = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            log.error("Unable to determine IP", e);
-            ipaddr = "unknown";
+            networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> netAdresses = networkInterface.getInetAddresses();
+                while (netAdresses.hasMoreElements()) {
+                    InetAddress address = netAdresses.nextElement();
+                    if (address.isLinkLocalAddress() || address.isLoopbackAddress() || address.isMulticastAddress()) {
+                        continue;
+                    }
+                    adresses.add(address.getHostAddress());
+                }
+            }
+            ipAddr = String.join(", ", adresses);
+        } catch (SocketException ex) {
+            java.util.logging.Logger.getLogger(SettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+            ipAddr = "Unknown";
         }
-        this.ipaddress = ipaddr;
+        if (adresses.size() > 1) {
+            this.ipaddressText = String.format(IPS_FORMAT, Main.getPort(), ipAddr);
+        } else {
+            this.ipaddressText = String.format(IP_FORMAT, Main.getPort(), ipAddr);
+        }
         initComponents();
     }
 
@@ -164,7 +189,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 2, 5);
         add(bSaveSettings, gridBagConstraints);
 
-        lIp.setText(String.format(IP_FORMAT, ipaddress));
+        lIp.setText(ipaddressText);
         lIp.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;

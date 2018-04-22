@@ -86,7 +86,7 @@
     <Component class="javax.swing.JLabel" name="lIp">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="String.format(IP_FORMAT, ipaddress)" type="code"/>
+          <Connection code="ipaddressText" type="code"/>
         </Property>
         <Property name="verticalAlignment" type="int" value="1"/>
       </Properties>

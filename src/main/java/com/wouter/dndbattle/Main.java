@@ -5,6 +5,13 @@
  */
 package com.wouter.dndbattle;
 
+import static javax.swing.JOptionPane.CANCEL_OPTION;
+import static javax.swing.JOptionPane.NO_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
+
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_NAME;
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_PORT;
 import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
 
 import java.awt.Color;
@@ -22,13 +29,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.wouter.dndbattle.utils.Settings;
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_NAME;
 import com.wouter.dndbattle.view.master.MasterFrame;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
-import static javax.swing.JOptionPane.CANCEL_OPTION;
-import static javax.swing.JOptionPane.NO_OPTION;
-import static javax.swing.JOptionPane.YES_OPTION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +45,9 @@ public class Main {
     private static final Settings SETTINGS = Settings.getInstance();
 
     private static final String LOCALHOST = "localhost";
+    private static final int DEFAULT_PORT = 12345;
+
+    private static int port = DEFAULT_PORT;
 
     public static void main(String[] args) {
 
@@ -69,10 +74,10 @@ public class Main {
 
     private static void start(boolean requestPort) throws HeadlessException {
         String host;
-        int port = 0;
         if (requestPort) {
+            port = 0;
             while (port == 0) {
-                String portInput = JOptionPane.showInputDialog(null, "What port?", SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST));
+                String portInput = JOptionPane.showInputDialog(null, "What port?", SETTINGS.getProperty(CONNECTION_PORT, DEFAULT_PORT));
                 if (portInput == null) {
                     log.debug("User cancelled");
                     System.exit(0);
@@ -85,7 +90,7 @@ public class Main {
                 }
             }
         } else {
-            port = SETTINGS.getProperty("connection.port", 12345);
+            port = SETTINGS.getProperty("connection.port", DEFAULT_PORT);
         }
         if (Settings.isAlpha()) {
             host = SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST);
@@ -99,7 +104,7 @@ public class Main {
             log.debug("User input on host request: [{}]", host);
         }
         try {
-            connectSlave(host, port);
+            connectSlave(host);
         } catch (RemoteException | NotBoundException e) {
             log.debug("Master doesn't seem present [" + e + "] creating now.");
             boolean createMaster = host.equalsIgnoreCase(LOCALHOST);
@@ -117,12 +122,16 @@ public class Main {
                 }
             }
             if (createMaster) {
-                createMaster(port);
+                createMaster();
             }
         }
     }
 
-    private static void createMaster(int port) throws HeadlessException {
+    public static int getPort() {
+        return port;
+    }
+
+    private static void createMaster() throws HeadlessException {
         Registry registry;
         try {
             registry = LocateRegistry.createRegistry(port);
@@ -139,16 +148,13 @@ public class Main {
         }
     }
 
-    private static void connectSlave(String host, int port) throws RemoteException, NotBoundException {
+    private static void connectSlave(String host) throws RemoteException, NotBoundException {
         Registry registry;
         registry = LocateRegistry.getRegistry(host, port);
         IMaster master = (IMaster) registry.lookup("dnd");
         final SlaveFrame slaveFrame = new SlaveFrame(master);
-        IMasterConnectionInfo connectionInfo;
         ISlave remoteSlave = (ISlave) UnicastRemoteObject.exportObject(slaveFrame.getSlave(), 0);
         if (host.equalsIgnoreCase("localhost")) {
-            master.connect(remoteSlave);
-        } else {
             String playerName = JOptionPane.showInputDialog(slaveFrame, "What is your name?", SETTINGS.getProperty(CONNECTION_NAME));
             if (playerName != null && !playerName.isEmpty()) {
                 SETTINGS.setProperty(CONNECTION_NAME, playerName);

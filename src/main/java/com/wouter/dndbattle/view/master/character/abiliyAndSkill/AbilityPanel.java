@@ -20,8 +20,8 @@ import com.wouter.dndbattle.objects.enums.AbilityType;
 import static com.wouter.dndbattle.objects.enums.Dice.D20;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
-import com.wouter.dndbattle.view.master.character.abiliyAndSkill.DicePopup;
+import com.wouter.dndbattle.view.IUpdateablePanel;
+import com.wouter.dndbattle.view.DicePopup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

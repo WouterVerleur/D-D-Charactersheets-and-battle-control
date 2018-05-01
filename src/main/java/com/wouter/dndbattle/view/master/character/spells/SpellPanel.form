@@ -48,7 +48,7 @@
     <Component class="javax.swing.JTextField" name="tfName">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="GlobalUtils.getTransparentColor()" type="code"/>
+          <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -84,6 +84,9 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="taDescription">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>
+            </Property>
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
@@ -111,7 +114,7 @@
         <Component class="javax.swing.JTextField" name="tfCastingTime">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="GlobalUtils.getTransparentColor()" type="code"/>
+              <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -135,7 +138,7 @@
         <Component class="javax.swing.JTextField" name="tfRange">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="GlobalUtils.getTransparentColor()" type="code"/>
+              <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -159,7 +162,7 @@
         <Component class="javax.swing.JTextField" name="tfComponents">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="GlobalUtils.getTransparentColor()" type="code"/>
+              <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -183,7 +186,7 @@
         <Component class="javax.swing.JTextField" name="tfDuration">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="GlobalUtils.getTransparentColor()" type="code"/>
+              <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Wouter
+ * Copyright (C) 2018 wverl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character;
+package com.wouter.dndbattle.core;
+
+import java.io.Serializable;
 
 /**
  *
- * @author Wouter
+ * @author wverl
  */
-public interface IUpdateablePanel {
+public interface IMasterConnectionInfo extends Serializable {
 
-    public void update();
+    String getSlaveTitle();
+
+    boolean isLocalhost();
+    
+    String getPlayerName();
 }

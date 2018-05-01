@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.impl;
+package com.wouter.dndbattle.core.impl;
 
 import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
@@ -19,8 +19,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.IMaster;
-import com.wouter.dndbattle.ISlave;
+import com.wouter.dndbattle.core.IMaster;
+import com.wouter.dndbattle.core.ISlave;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Combatant;
 import com.wouter.dndbattle.utils.Settings;

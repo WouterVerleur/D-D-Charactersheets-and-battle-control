@@ -9,7 +9,7 @@ import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.impl.Master;
+import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Combatant;
@@ -41,9 +41,9 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         this.character = getCombatantCharacter(combatant);
         initComponents();
         if (combatant.isDead()) {
-            setBackground(GlobalUtils.getDeadBackground());
+            setBackground(GlobalUtils.getBackgroundDead());
         } else if (combatant.getHealth() == 0) {
-            setBackground(GlobalUtils.getDownBackground());
+            setBackground(GlobalUtils.getBackgroundDown());
         }
     }
 

@@ -19,7 +19,7 @@ package com.wouter.dndbattle.view.master;
 import java.util.Iterator;
 import java.util.List;
 
-import com.wouter.dndbattle.impl.Master;
+import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Combatant;

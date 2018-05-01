@@ -19,9 +19,10 @@ package com.wouter.dndbattle.objects.impl;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
 
 /**
  *
@@ -48,6 +49,7 @@ public class Combatant implements ICombatant {
     private int initiative;
     private Boolean rollForDeath;
     private int totalDamageRecieved = 0;
+    private boolean friendly;
 
     public Combatant(ICharacter character, String name, int initiative) {
         this(character, name, initiative, character.getMaxHealth());
@@ -59,6 +61,7 @@ public class Combatant implements ICombatant {
         this.health = health;
         this.dead = false;
         this.initiative = initiative;
+        friendly = character.isFriendly();
     }
 
     private Combatant(ICharacter character, String name, int initiative, Boolean rollForDeath) {
@@ -76,12 +79,16 @@ public class Combatant implements ICombatant {
 
     @Override
     public boolean isFriendly() {
-        return character.isFriendly();
+        return friendly;
     }
-    
+
+    public void setFriendly(Boolean friendly) {
+        this.friendly = friendly;
+    }
+
     @Override
     public int getHealth() {
-        if (isTransformed()){
+        if (isTransformed()) {
             return transformation.getHealth();
         }
         return health;
@@ -198,7 +205,6 @@ public class Combatant implements ICombatant {
                 // Stop kicking the dead body.
                 return damage;
             }
-            totalDamageRecieved += damage;
             if (health == 0 && damage < character.getMaxHealth()) {
                 deathRolls += 1;
             } else {
@@ -208,6 +214,7 @@ public class Combatant implements ICombatant {
                     return 0;
                 }
                 int damageAfterBuff = damage - healthBuff;
+                totalDamageRecieved += damageAfterBuff;
                 healthBuff = 0;
                 health -= damageAfterBuff;
                 if (health < 0) {

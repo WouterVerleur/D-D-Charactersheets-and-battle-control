@@ -25,6 +25,7 @@ import com.wouter.dndbattle.objects.ICharacter;
 public class Beast extends AbstractCharacter {
 
     private static final String STRING_FORMAT = "%s (CR: %s)";
+    private boolean friendly = false;
 
     @Override
     public int compareTo(ICharacter other) {
@@ -36,7 +37,7 @@ public class Beast extends AbstractCharacter {
         }
         return super.compareTo(other);
     }
-
+    
     @Override
     public String toString() {
         return String.format(STRING_FORMAT, getName(), getChallengeRating());

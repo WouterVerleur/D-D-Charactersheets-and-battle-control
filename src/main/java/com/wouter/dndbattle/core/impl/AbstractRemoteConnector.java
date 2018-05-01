@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.impl;
+package com.wouter.dndbattle.core.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

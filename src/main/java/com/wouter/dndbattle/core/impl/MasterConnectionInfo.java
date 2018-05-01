@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.impl;
+package com.wouter.dndbattle.core.impl;
 
-import com.wouter.dndbattle.IMasterConnectionInfo;
+import com.wouter.dndbattle.core.IMasterConnectionInfo;
 
 /**
  *

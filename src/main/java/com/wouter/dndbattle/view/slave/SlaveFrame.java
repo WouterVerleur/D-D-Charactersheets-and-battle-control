@@ -15,15 +15,18 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import com.wouter.dndbattle.IMaster;
-import com.wouter.dndbattle.IMasterConnectionInfo;
-import com.wouter.dndbattle.ISlave;
-import com.wouter.dndbattle.impl.Slave;
+import com.wouter.dndbattle.core.IMaster;
+import com.wouter.dndbattle.core.IMasterConnectionInfo;
+import com.wouter.dndbattle.core.ISlave;
+import com.wouter.dndbattle.core.impl.Slave;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.view.slave.character.SlaveCharacterPanel;
+
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -27,12 +27,12 @@ public class SlaveSubPanel extends javax.swing.JPanel {
             pbHealth.setVisible(combatant.isFriendly());
             pbHealthBuff.setVisible(combatant.isFriendly());
             if (combatant.isDead()) {
-                setBackground(GlobalUtils.getDeadBackground());
+                setBackground(GlobalUtils.getBackgroundDead());
             } else if (combatant.getHealth() == 0) {
-                setBackground(GlobalUtils.getDownBackground());
+                setBackground(GlobalUtils.getBackgroundDown());
             }
         } else {
-            setBackground(GlobalUtils.getErrorBackground());
+            setBackground(GlobalUtils.getBackgroundError());
         }
     }
 

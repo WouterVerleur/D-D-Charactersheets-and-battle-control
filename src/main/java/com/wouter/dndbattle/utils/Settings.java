@@ -23,6 +23,7 @@ public class Settings extends Properties {
     public static final String CONNECTION_HOST = "network.connect.host";
     public static final String CONNECTION_NAME = "network.connect.name";
     public static final String CONNECTION_PORT = "network.connect.port";
+    public static final String FILE_WRITER_SAVE_TIMEOUT = "storage.presets.timeout";
     public static final String LOOKANDFEEL = "gui.lookandfeel";
     public static final String INPUT_FILESELECTION = "gui.input.fileselection";
     public static final String MASTER_LOCATION_X = "gui.master.location.x";
@@ -31,15 +32,15 @@ public class Settings extends Properties {
     public static final String MASTER_SIZE_STATE = "gui.master.size.state";
     public static final String MASTER_SIZE_WIDTH = "gui.master.size.width";
     public static final String MASTER_TITLE = "gui.master.title";
+    public static final String PRESETFOLDER = "storage.presets.home";
+    public static final String ROLLFORDEATH = "gameplay.rollfordeath";
     public static final String SLAVE_LOCATION_X = "gui.slave.location.x";
     public static final String SLAVE_LOCATION_Y = "gui.slave.location.y";
     public static final String SLAVE_SIZE_HEIGHT = "gui.slave.size.height";
     public static final String SLAVE_SIZE_STATE = "gui.slave.size.state";
     public static final String SLAVE_SIZE_WIDTH = "gui.slave.size.width";
+    public static final String SLAVE_SPELLS_SEPERATOR = "gui.slave.spells.seperator";
     public static final String SLAVE_TITLE = "gui.slave.title";
-    public static final String ROLLFORDEATH = "gameplay.rollfordeath";
-    public static final String PRESETFOLDER = "storage.presets.home";
-    public static final String FILE_WRITER_SAVE_TIMEOUT = "storage.presets.timeout";
     public static final String SPELLS_GRID_COLUMNS = "gui.spells.gid.columns";
 
     private static boolean alpha = false;

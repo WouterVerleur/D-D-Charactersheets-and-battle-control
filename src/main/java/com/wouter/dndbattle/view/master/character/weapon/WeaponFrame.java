@@ -16,6 +16,11 @@
  */
 package com.wouter.dndbattle.view.master.character.weapon;
 
+import java.awt.event.ItemEvent;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SpinnerNumberModel;
+
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.enums.Proficiency;
@@ -23,9 +28,6 @@ import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.Weapon;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import java.awt.event.ItemEvent;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -118,6 +120,7 @@ public class WeaponFrame extends javax.swing.JFrame {
             }
         });
 
+        cbReach.setSelected(weapon.isReach());
         cbReach.setText("Reach");
 
         bSave.setText("Save");
@@ -134,6 +137,7 @@ public class WeaponFrame extends javax.swing.JFrame {
             }
         });
 
+        cbRanged.setSelected(weapon.isRanged());
         cbRanged.setText("Ranged");
         cbRanged.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,13 +195,13 @@ public class WeaponFrame extends javax.swing.JFrame {
                             .addComponent(cbProficiency, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tfName)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(sAmountOfAttackDice, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(sAmountOfAttackDice, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbAttackDice, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lDamageModifier)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tfDamageType, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                                .addComponent(tfDamageType, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                             .addComponent(tfNotes)
                             .addComponent(tfAttackOverride)
                             .addGroup(layout.createSequentialGroup()

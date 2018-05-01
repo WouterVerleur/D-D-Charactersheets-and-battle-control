@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.impl;
+package com.wouter.dndbattle.core.impl;
 
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.wouter.dndbattle.IMaster;
-import com.wouter.dndbattle.IMasterConnectionInfo;
-import com.wouter.dndbattle.ISlave;
+import com.wouter.dndbattle.core.IMaster;
+import com.wouter.dndbattle.core.IMasterConnectionInfo;
+import com.wouter.dndbattle.core.ISlave;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
@@ -50,7 +50,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
      */
     @Override
     public void setConnectionInfo(IMasterConnectionInfo connectionInfo) {
-        if (frame != null){
+        if (frame != null) {
             frame.setTitle(connectionInfo.getSlaveTitle());
         }
         this.connectionInfo = connectionInfo;
@@ -92,6 +92,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
 
     @Override
     public void refreshView(final List<ICombatant> combatants, int activeIndex) {
+        log.debug("Recieving [{}] combatants and active index [{}]", combatants.size(), activeIndex);
         frame.showCombatants(combatants, activeIndex);
     }
 

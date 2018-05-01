@@ -5,13 +5,6 @@
  */
 package com.wouter.dndbattle.view.master;
 
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
-import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
-
 import java.awt.Component;
 import java.util.Iterator;
 import java.util.List;
@@ -19,8 +12,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.wouter.dndbattle.IMaster;
-import com.wouter.dndbattle.impl.Master;
+import com.wouter.dndbattle.core.IMaster;
+import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Beast;
 import com.wouter.dndbattle.objects.impl.Combatant;
@@ -30,6 +23,13 @@ import com.wouter.dndbattle.objects.impl.Player;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
+import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
+import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
 
 /**
  *
@@ -48,12 +48,8 @@ public class MasterFrame extends javax.swing.JFrame {
     public MasterFrame() {
         master = new Master(this);
         initComponents();
-        int x = SETTINGS.getProperty(MASTER_LOCATION_X, 0);
-        int y = SETTINGS.getProperty(MASTER_LOCATION_Y, 0);
-        setLocation(x, y);
-        int width = SETTINGS.getProperty(MASTER_SIZE_WIDTH, getPreferredSize().width);
-        int height = SETTINGS.getProperty(MASTER_SIZE_HEIGHT, getPreferredSize().height);
-        setSize(width, height);
+        setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, 0), SETTINGS.getProperty(MASTER_LOCATION_Y, 0));
+        setSize(SETTINGS.getProperty(MASTER_SIZE_WIDTH, getPreferredSize().width), SETTINGS.getProperty(MASTER_SIZE_HEIGHT, getPreferredSize().height));
         setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
     }
 

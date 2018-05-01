@@ -18,15 +18,13 @@ package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 
 import java.awt.event.ItemEvent;
 
-import javax.swing.DefaultComboBoxModel;
-
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import static com.wouter.dndbattle.objects.enums.Dice.D20;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
-import com.wouter.dndbattle.view.master.character.abiliyAndSkill.DicePopup;
+import com.wouter.dndbattle.view.IUpdateablePanel;
+import com.wouter.dndbattle.view.DicePopup;
 
 /**
  *

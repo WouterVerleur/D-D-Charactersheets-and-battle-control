@@ -23,7 +23,7 @@ import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
 import static com.wouter.dndbattle.utils.Settings.SPELLS_GRID_COLUMNS;
-import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.IUpdateablePanel;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 

@@ -21,8 +21,8 @@ import com.wouter.dndbattle.objects.enums.SkillType;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
-import com.wouter.dndbattle.view.master.character.abiliyAndSkill.DicePopup;
+import com.wouter.dndbattle.view.IUpdateablePanel;
+import com.wouter.dndbattle.view.DicePopup;
 import java.awt.event.ItemEvent;
 
 /**

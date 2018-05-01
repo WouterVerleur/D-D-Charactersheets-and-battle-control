@@ -24,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="bCancel" min="-2" max="-2" attributes="0"/>
@@ -40,18 +40,18 @@
                           <Component id="lDamage" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
                           <Component id="lAttackOverrade" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="cbProficiency" max="32767" attributes="0"/>
                           <Component id="tfName" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="sAmountOfAttackDice" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="sAmountOfAttackDice" pref="51" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="cbAttackDice" min="-2" pref="70" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="lDamageModifier" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="tfDamageType" pref="112" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="tfDamageType" pref="122" max="32767" attributes="0"/>
                           </Group>
                           <Component id="tfNotes" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAttackOverride" alignment="0" max="32767" attributes="0"/>
@@ -80,7 +80,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -232,6 +232,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbReach">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="weapon.isReach()" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Reach"/>
       </Properties>
     </Component>
@@ -253,6 +256,9 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbRanged">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="weapon.isRanged()" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ranged"/>
       </Properties>
       <Events>

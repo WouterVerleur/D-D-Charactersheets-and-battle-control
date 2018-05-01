@@ -16,9 +16,10 @@
  */
 package com.wouter.dndbattle.view.master.character.spells;
 
+import java.awt.event.ItemEvent;
+
 import com.wouter.dndbattle.objects.impl.Spell;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import java.awt.event.ItemEvent;
 
 /**
  *
@@ -66,7 +67,7 @@ public class SpellPanel extends javax.swing.JPanel {
         tfComponents = new javax.swing.JTextField();
         tfDuration = new javax.swing.JTextField();
 
-        tfName.setBackground(GlobalUtils.getTransparentColor());
+        tfName.setBackground(GlobalUtils.getBackgroundTransparent());
         tfName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfName.setText(spell.getName());
         tfName.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -84,6 +85,7 @@ public class SpellPanel extends javax.swing.JPanel {
             }
         });
 
+        taDescription.setBackground(GlobalUtils.getBackgroundTransparent());
         taDescription.setColumns(20);
         taDescription.setLineWrap(true);
         taDescription.setRows(5);
@@ -101,7 +103,7 @@ public class SpellPanel extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
-        tfCastingTime.setBackground(GlobalUtils.getTransparentColor());
+        tfCastingTime.setBackground(GlobalUtils.getBackgroundTransparent());
         tfCastingTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfCastingTime.setText(spell.getCastingTime());
         tfCastingTime.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Casting Time", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -113,7 +115,7 @@ public class SpellPanel extends javax.swing.JPanel {
         });
         jPanel1.add(tfCastingTime);
 
-        tfRange.setBackground(GlobalUtils.getTransparentColor());
+        tfRange.setBackground(GlobalUtils.getBackgroundTransparent());
         tfRange.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfRange.setText(spell.getRange());
         tfRange.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Range", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -125,7 +127,7 @@ public class SpellPanel extends javax.swing.JPanel {
         });
         jPanel1.add(tfRange);
 
-        tfComponents.setBackground(GlobalUtils.getTransparentColor());
+        tfComponents.setBackground(GlobalUtils.getBackgroundTransparent());
         tfComponents.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfComponents.setText(spell.getComponents());
         tfComponents.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Components", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -137,7 +139,7 @@ public class SpellPanel extends javax.swing.JPanel {
         });
         jPanel1.add(tfComponents);
 
-        tfDuration.setBackground(GlobalUtils.getTransparentColor());
+        tfDuration.setBackground(GlobalUtils.getBackgroundTransparent());
         tfDuration.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfDuration.setText(spell.getDuration());
         tfDuration.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Duration", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));

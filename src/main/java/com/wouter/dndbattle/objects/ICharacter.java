@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
+import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.SkillType;
 
 /**
@@ -70,9 +71,7 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
     boolean rollForDeath();
 
     @JsonIgnore
-    default int getProficiencyScore() {
-        return 2;
-    }
+    int getProficiencyScore();
 
     boolean isCanTransform();
 
@@ -86,4 +85,12 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
 
     @JsonIgnore
     String getArmorClassString();
+
+    @JsonIgnore
+    Proficiency getSavingThrowProficiency(AbilityType abilityType);
+
+    @JsonIgnore
+    Proficiency getSkillProficiency(SkillType skillType);
+
+    String getNotes();
 }

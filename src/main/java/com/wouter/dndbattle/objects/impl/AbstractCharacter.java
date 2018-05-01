@@ -49,6 +49,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private int conditionalArmorBonus = 0;
     private boolean friendly;
     private String name;
+    private String notes;
     private int speed;
     private List<ISpell> spells = new ArrayList<>();
     private boolean shieldWearer;
@@ -137,9 +138,9 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public int getSavingThrowModifier(AbilityType abilityType) {
         return abilities.get(abilityType).getModifier() + savingThrows.get(abilityType).getProficiency().getMultiplier() * getProficiencyScore();
-
     }
 
+    @Override
     public Proficiency getSavingThrowProficiency(AbilityType abilityType) {
         return savingThrows.get(abilityType).getProficiency();
     }
@@ -161,6 +162,7 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(skillType.getAbilityType()).getModifier() + getSkillProficiency(skillType).getMultiplier() * getProficiencyScore();
     }
 
+    @Override
     public Proficiency getSkillProficiency(SkillType skillType) {
         try {
             return skills.get(skillType).getProficiency();
@@ -381,5 +383,22 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public String getDescription() {
         return getName();
+    }
+
+    @Override
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public int getProficiencyScore() {
+        if (hasChallengeRating()) {
+            return getChallengeRating().getProficiencyScore();
+        }
+        return 2;
     }
 }

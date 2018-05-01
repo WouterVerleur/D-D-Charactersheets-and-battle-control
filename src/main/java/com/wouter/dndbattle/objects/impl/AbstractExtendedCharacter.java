@@ -279,6 +279,9 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     @JsonIgnore
     @Override
     public int getProficiencyScore() {
+        if (getCharacterClasses().isEmpty()) {
+            return super.getProficiencyScore();
+        }
         return (getTotalLevel() - 1) / 4 + 2;
     }
 

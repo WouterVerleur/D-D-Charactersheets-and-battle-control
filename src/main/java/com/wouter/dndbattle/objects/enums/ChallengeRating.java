@@ -22,39 +22,41 @@ package com.wouter.dndbattle.objects.enums;
  */
 public enum ChallengeRating {
 
-    ZERO("0"),
-    ONE_EIGHT("\u215B"),
-    ONE_FORTH("\u00BC"),
-    HALF("\u00BD"),
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8"),
-    NINE("9"),
-    TEN("10"),
-    ELEVEN("11"),
-    TWELVE("12"),
-    THIRTEEN("13"),
-    FOURTEEN("14"),
-    FIVETEEN("15"),
-    SIXTEEN("16"),
-    ZEVENTEEN("17"),
-    NINETEEN("19"),
-    TWENTY("20"),
-    TWENRYONE("21"),
-    TWENTYTWO("22"),
-    TWENTYTHREE("23"),
-    TWENTYFOUR("24"),
-    THIRTY("30");
+    ZERO("0", 2),
+    ONE_EIGHT("\u215B", 2),
+    ONE_FORTH("\u00BC", 2),
+    HALF("\u00BD", 2),
+    ONE("1", 2),
+    TWO("2", 2),
+    THREE("3", 2),
+    FOUR("4", 2),
+    FIVE("5", 3),
+    SIX("6", 3),
+    SEVEN("7", 3),
+    EIGHT("8", 3),
+    NINE("9", 4),
+    TEN("10", 4),
+    ELEVEN("11", 4),
+    TWELVE("12", 4),
+    THIRTEEN("13", 5),
+    FOURTEEN("14", 5),
+    FIVETEEN("15", 5),
+    SIXTEEN("16", 5),
+    ZEVENTEEN("17", 6),
+    NINETEEN("19", 6),
+    TWENTY("20", 6),
+    TWENRYONE("21", 7),
+    TWENTYTWO("22", 7),
+    TWENTYTHREE("23", 7),
+    TWENTYFOUR("24", 7),
+    THIRTY("30", 8);
 
     private final String displayName;
+    private final int proficiencyScore;
 
-    private ChallengeRating(final String displayName) {
+    private ChallengeRating(final String displayName, final int proficiencyScore) {
         this.displayName = displayName;
+        this.proficiencyScore = proficiencyScore;
     }
 
     public String getDisplayName() {
@@ -64,5 +66,9 @@ public enum ChallengeRating {
     @Override
     public String toString() {
         return displayName;
+    }
+
+    public int getProficiencyScore() {
+        return proficiencyScore;
     }
 }

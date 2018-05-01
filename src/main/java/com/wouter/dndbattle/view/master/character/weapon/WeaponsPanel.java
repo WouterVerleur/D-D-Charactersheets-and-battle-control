@@ -19,21 +19,18 @@ package com.wouter.dndbattle.view.master.character.weapon;
 import javax.swing.table.DefaultTableModel;
 
 import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.Weapon;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.WeaponTablePanel;
 import com.wouter.dndbattle.view.master.character.CharacterPanel;
-import com.wouter.dndbattle.view.master.character.IUpdateablePanel;
+import com.wouter.dndbattle.view.IUpdateablePanel;
 import java.util.List;
 
 /**
  *
  * @author Wouter
  */
-public class WeaponsPanel extends WeaponTablePanel implements IUpdateablePanel {
+public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
     public static final String DAMAGE_FORMAT_SHORT = "%s %s";
     public static final String DAMAGE_FORMAT = "%d%s %s %s";
@@ -177,7 +174,7 @@ public class WeaponsPanel extends WeaponTablePanel implements IUpdateablePanel {
         DefaultTableModel model = (DefaultTableModel) tWeapons.getModel();
         model.setRowCount(0);
         character.getWeapons().forEach((weapon) -> {
-            model.addRow(getWeaponRow(character, weapon));
+            model.addRow(GlobalUtils.getWeaponRow(character, weapon));
         });
     }
 

@@ -6,10 +6,24 @@
 package com.wouter.dndbattle.utils;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
+import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.ICharacterClass;
+import com.wouter.dndbattle.objects.IWeapon;
+import com.wouter.dndbattle.objects.enums.AbilityType;
+import com.wouter.dndbattle.objects.enums.Dice;
+import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.view.master.character.weapon.WeaponsPanel.DAMAGE_FORMAT;
+import static com.wouter.dndbattle.view.master.character.weapon.WeaponsPanel.DAMAGE_FORMAT_SHORT;
 
 /**
  *
@@ -19,6 +33,11 @@ public class GlobalUtils {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalUtils.class);
 
+    /*
+     ************************************
+     * File Functions
+     ************************************
+     */
     public static String getFileExtension(File file) {
         return getFileExtension(file.getName());
     }
@@ -58,23 +77,112 @@ public class GlobalUtils {
         }
     }
 
+    /*
+     ************************************
+     * Character Functions
+     ************************************
+     */
     public static String modifierToString(int modifier) {
         return modifier > 0 ? "+" + modifier : Integer.toString(modifier);
     }
 
-    public static Color getTransparentColor() {
+    public static String[] getWeaponRow(ICharacter character, IWeapon weapon) {
+        return new String[]{
+            weapon.getName(),
+            getModifierString(character, weapon, true),
+            getWeaponDamage(weapon, getModifierString(character, weapon, false)),
+            weapon.getNotes()
+        };
+    }
+
+    private static String getModifierString(ICharacter character, IWeapon weapon, boolean addProficiency) {
+        int modifier;
+        if (weapon.isRanged()) {
+            if (weapon.isFinesse()) {
+                modifier = character.getAbilityModifier(AbilityType.DEX);
+            } else {
+                modifier = character.getAbilityModifier(AbilityType.STR);
+            }
+        } else {
+            modifier = character.getAbilityModifier(AbilityType.STR);
+            if (weapon.isFinesse() && character.getAbilityModifier(AbilityType.DEX) > modifier) {
+                modifier = character.getAbilityModifier(AbilityType.DEX);
+            }
+        }
+
+        if (addProficiency) {
+            String attackOverride = weapon.getAttackOverride();
+            if (attackOverride != null && !attackOverride.isEmpty()) {
+                return attackOverride;
+            }
+            modifier += (character.getProficiencyScore() * weapon.getProficiency().getMultiplier());
+        } else {
+            String damageOverride = weapon.getDamageOverride();
+            if (damageOverride != null && !damageOverride.isEmpty()) {
+                return damageOverride;
+            }
+            if (modifier == 0) {
+                return "";
+            }
+        }
+        return modifierToString(modifier);
+    }
+
+    private static String getWeaponDamage(IWeapon weapon, String modifierString) {
+        if (weapon.getAttackDice() == Dice.NONE) {
+            return String.format(DAMAGE_FORMAT_SHORT, modifierString.trim(), weapon.getDamageType()).trim();
+        }
+        return String.format(DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType()).trim();
+    }
+
+    /*
+     ************************************
+     * Browser Functions
+     ************************************
+     */
+    public static void browseCharacter(ICharacter character) {
+        String searchQuery = null;
+        if (character instanceof AbstractExtendedCharacter) {
+            List<ICharacterClass> classes = ((AbstractExtendedCharacter) character).getCharacterClasses();
+            if (classes != null && !classes.isEmpty()) {
+                searchQuery = classes.get(0).getName();
+            }
+        }
+        if (searchQuery == null || searchQuery.isEmpty()) {
+            searchQuery = character.getName();
+        }
+        browseSearch(searchQuery);
+    }
+
+    public static void browseSearch(String searchQuery) {
+        if (Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://roll20.net/compendium/dnd5e/searchbook/?terms=" + searchQuery.replace(" ", "%20")));
+            } catch (IOException | URISyntaxException e) {
+                log.error("Error while opening search in browser", e);
+            }
+        }
+    }
+
+    /*
+     ************************************
+     * Background Functions
+     ************************************
+     */
+    public static Color getBackgroundTransparent() {
         return new Color(0, 0, 0, 0);
     }
 
-    public static Color getErrorBackground() {
+    public static Color getBackgroundError() {
         return Color.RED;
     }
 
-    public static Color getDownBackground() {
+    public static Color getBackgroundDown() {
         return Color.GRAY;
     }
 
-    public static Color getDeadBackground() {
+    public static Color getBackgroundDead() {
         return Color.DARK_GRAY;
     }
+
 }

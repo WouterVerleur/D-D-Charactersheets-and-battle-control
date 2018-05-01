@@ -13,6 +13,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.filechooser.FileFilter;
@@ -57,7 +58,7 @@ public class AudioPlayer extends Thread {
         try {
             auline = (SourceDataLine) AudioSystem.getLine(info);
             auline.open(format);
-        } catch (Exception e) {
+        } catch (LineUnavailableException e) {
             log.error("Error opening audio from file [{}]", soundFile, e);
             return;
         }

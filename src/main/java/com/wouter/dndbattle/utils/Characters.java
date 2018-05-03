@@ -140,7 +140,14 @@ public class Characters {
     }
 
     private static File getCharacterFile(ICharacter character) {
-        String name = character.getName().replaceAll("[^a-zA-Z0-9]+", "_") + '.' + character.getClass().getSimpleName();
+        String name = character.getName().replaceAll("[^a-zA-Z0-9]+", "_");
+        if (name.endsWith("_")) {
+            name = name.substring(0, name.length() - 1);
+        }
+        if (name.startsWith("_")) {
+            name = name.substring(1);
+        }
+        name = name + '.' + character.getClass().getSimpleName();
         return new File(PRESET_FOLDER, name);
     }
 

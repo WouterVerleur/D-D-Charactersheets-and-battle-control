@@ -31,7 +31,6 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -538,7 +537,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.75;
         gridBagConstraints.weighty = 1.0;
         add(spCharacterFields, gridBagConstraints);
 
@@ -581,6 +580,8 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 100;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
         add(spFeatures, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents

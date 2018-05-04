@@ -92,7 +92,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.wouter.dndbattle.Main</mainClass>
+                            <mainClass>com.wouter.dndbattle.core.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -108,7 +108,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.wouter.dndbattle.Main</mainClass>
+                            <mainClass>com.wouter.dndbattle.core.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

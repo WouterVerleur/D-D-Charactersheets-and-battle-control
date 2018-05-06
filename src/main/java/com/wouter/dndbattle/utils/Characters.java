@@ -28,6 +28,8 @@ public class Characters {
 
     private static final Logger log = LoggerFactory.getLogger(Characters.class);
 
+    private static final String SPECIAL_CHARACTER_REPLACEMENT = "_";
+    private static final String SPECIAL_CHARACTER_REGEX = "[^a-zA-Z0-9]+";
     private static final File PRESET_FOLDER = FileManager.getPresetFolder();
     private static final Map<File, CharacterFileWriterThread> WRITER_THREAD_MAP = new HashMap<>();
     private static final Map<Class<? extends ICharacter>, List<ICharacter>> CLASS_CHARACTER_MAP = new HashMap<>();
@@ -140,15 +142,15 @@ public class Characters {
     }
 
     private static File getCharacterFile(ICharacter character) {
-        String name = character.getName().replaceAll("[^a-zA-Z0-9]+", "_");
-        if (name.endsWith("_")) {
-            name = name.substring(0, name.length() - 1);
-        }
-        if (name.startsWith("_")) {
+        String name = character.getName().replaceAll(SPECIAL_CHARACTER_REGEX, SPECIAL_CHARACTER_REPLACEMENT);
+        if (name.startsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
             name = name.substring(1);
         }
-        name = name + '.' + character.getClass().getSimpleName();
-        return new File(PRESET_FOLDER, name);
+        if (name.endsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
+            name = name.substring(0, name.length() - 1);
+        }
+        final String filename = name + '.' + character.getClass().getSimpleName();
+        return new File(PRESET_FOLDER, filename);
     }
 
     public static class CharacterReadException extends Exception {

@@ -16,13 +16,15 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
+import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
 
 /**
  *
@@ -34,7 +36,8 @@ public class Combatant implements ICombatant {
 
     private static final String TRANSFORM_NAME_FORMAT = "%s (%s)";
     private static final String HEALTH_FORMAT = "%d (%d%%)";
-    private static final String HEALTH_ZERO = "0 (0%)";
+    private static final String HEALTH_ZERO_WITH_LIFE = "0 (Rolls Life: %d/3 Death: %d/3)";
+    private static final String HEALTH_ZERO = "0 (Deathrolls: %d/3)";
     private static final String DEAD = "Dead";
 
     private final String name;
@@ -150,7 +153,10 @@ public class Combatant implements ICombatant {
             return DEAD;
         }
         if (health == 0) {
-            return HEALTH_ZERO;
+            if (Settings.getInstance().getProperty(ROLLFORDEATH, false)) {
+                return String.format(HEALTH_ZERO_WITH_LIFE, getLifeRolls(), getDeathRolls());
+            }
+            return String.format(HEALTH_ZERO, getDeathRolls());
         }
         return String.format(HEALTH_FORMAT, health, (health * 100) / character.getMaxHealth());
     }

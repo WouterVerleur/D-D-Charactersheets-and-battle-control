@@ -169,9 +169,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="bDeathRoll">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="String.format(DEATH_ROLL,combatant.getDeathRolls())" type="code"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Add death roll"/>
         <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="SETTINGS.getProperty(ROLLFORDEATH, true)" type="code"/>
         </Property>
@@ -182,9 +180,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="bLifeRoll">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="String.format(LIFE_ROLL,combatant.getLifeRolls())" type="code"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="Add life roll"/>
         <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="SETTINGS.getProperty(ROLLFORDEATH, true)" type="code"/>
         </Property>

@@ -80,8 +80,8 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         lHitDice = new javax.swing.JLabel();
         pTransform = new javax.swing.JPanel();
         lTransformation = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        spNotes = new javax.swing.JScrollPane();
+        taNotes = new javax.swing.JTextArea();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -100,7 +100,6 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 75;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         add(spAbility, gridBagConstraints);
@@ -120,7 +119,6 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 125;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         add(spSavingThrow, gridBagConstraints);
@@ -140,7 +138,6 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 125;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         add(spSkill, gridBagConstraints);
@@ -155,7 +152,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pHealth.setLayout(pHealthLayout);
         pHealthLayout.setHorizontalGroup(
             pHealthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lHealth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lHealth, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pHealthLayout.setVerticalGroup(
             pHealthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +178,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pPassiveWisdom.setLayout(pPassiveWisdomLayout);
         pPassiveWisdomLayout.setHorizontalGroup(
             pPassiveWisdomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lPassiveWisdomModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addComponent(lPassiveWisdomModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pPassiveWisdomLayout.setVerticalGroup(
             pPassiveWisdomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +203,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pInitiative.setLayout(pInitiativeLayout);
         pInitiativeLayout.setHorizontalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pInitiativeLayout.setVerticalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,7 +227,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pProficiency.setLayout(pProficiencyLayout);
         pProficiencyLayout.setHorizontalGroup(
             pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lProficiency, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lProficiency, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pProficiencyLayout.setVerticalGroup(
             pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +251,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pArmorClass.setLayout(pArmorClassLayout);
         pArmorClassLayout.setHorizontalGroup(
             pArmorClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lArmorClass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lArmorClass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pArmorClassLayout.setVerticalGroup(
             pArmorClassLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +277,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pHitDice.setLayout(pHitDiceLayout);
         pHitDiceLayout.setHorizontalGroup(
             pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lHitDice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lHitDice, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pHitDiceLayout.setVerticalGroup(
             pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +301,7 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         pTransform.setLayout(pTransformLayout);
         pTransformLayout.setHorizontalGroup(
             pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lTransformation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lTransformation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
         pTransformLayout.setVerticalGroup(
             pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,24 +316,25 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(pTransform, gridBagConstraints);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setText(character.getNotes());
-        jTextArea1.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(jTextArea1);
+        taNotes.setEditable(false);
+        taNotes.setColumns(20);
+        taNotes.setLineWrap(true);
+        taNotes.setText(character.getNotes());
+        taNotes.setWrapStyleWord(true);
+        spNotes.setViewportView(taNotes);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 50;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        add(jScrollPane1, gridBagConstraints);
+        add(spNotes, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lArmorClass;
     private javax.swing.JLabel lHealth;
     private javax.swing.JLabel lHitDice;
@@ -355,8 +353,10 @@ public class SlaveAbilityAndSkillPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pSkill;
     private javax.swing.JPanel pTransform;
     private javax.swing.JScrollPane spAbility;
+    private javax.swing.JScrollPane spNotes;
     private javax.swing.JScrollPane spSavingThrow;
     private javax.swing.JScrollPane spSkill;
+    private javax.swing.JTextArea taNotes;
     // End of variables declaration//GEN-END:variables
 
 }

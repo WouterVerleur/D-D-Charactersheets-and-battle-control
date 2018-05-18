@@ -96,12 +96,13 @@ public class GlobalUtils {
     }
 
     private static String getModifierString(ICharacter character, IWeapon weapon, boolean addProficiency) {
+
         int modifier;
         if (weapon.isRanged()) {
-            if (weapon.isFinesse()) {
-                modifier = character.getAbilityModifier(AbilityType.DEX);
-            } else {
+            if (weapon.isThrown()) {
                 modifier = character.getAbilityModifier(AbilityType.STR);
+            } else {
+                modifier = character.getAbilityModifier(AbilityType.DEX);
             }
         } else {
             modifier = character.getAbilityModifier(AbilityType.STR);

@@ -60,6 +60,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
     public void removeClass(CharacterClass characterClass) {
         character.removeCharacterClass(characterClass);
         saveCharacter();
+        refreshClasses();
     }
 
     private void refreshClasses() {

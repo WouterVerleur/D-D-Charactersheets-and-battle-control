@@ -22,14 +22,14 @@ import com.wouter.dndbattle.objects.ICharacter;
  *
  * @author wverl
  */
-public class Beast extends AbstractCharacter {
+public class Elemental extends AbstractCharacter {
 
     private static final String STRING_FORMAT = "%s (CR: %s)";
     private final boolean friendly = false;
 
     @Override
     public int compareTo(ICharacter other) {
-        if (other instanceof Beast) {
+        if (other instanceof Elemental) {
             int crCompare = getChallengeRating().compareTo(other.getChallengeRating());
             if (crCompare != 0) {
                 return crCompare;

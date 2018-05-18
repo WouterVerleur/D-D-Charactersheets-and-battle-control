@@ -17,6 +17,7 @@ import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Beast;
 import com.wouter.dndbattle.objects.impl.Combatant;
+import com.wouter.dndbattle.objects.impl.Elemental;
 import com.wouter.dndbattle.objects.impl.Enemy;
 import com.wouter.dndbattle.objects.impl.Npc;
 import com.wouter.dndbattle.objects.impl.Player;
@@ -78,7 +79,7 @@ public class MasterFrame extends javax.swing.JFrame {
         spDice = new javax.swing.JScrollPane();
         dicePanel = new com.wouter.dndbattle.view.master.DicePanel();
         spSettings = new javax.swing.JScrollPane();
-        pSettings = new com.wouter.dndbattle.view.master.SettingsPanel();
+        settingsPanel = new com.wouter.dndbattle.view.master.SettingsPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(SETTINGS.getProperty(MASTER_TITLE, "Master").toString());
@@ -167,6 +168,7 @@ public class MasterFrame extends javax.swing.JFrame {
         tpCharacters.addTab("NPC", new com.wouter.dndbattle.view.master.MasterCharactersPanel(Npc.class));
         tpCharacters.addTab("Enemy", new com.wouter.dndbattle.view.master.MasterCharactersPanel(Enemy.class));
         tpCharacters.addTab("Beast", new com.wouter.dndbattle.view.master.MasterCharactersPanel(Beast.class));
+        tpCharacters.addTab("Elemental", new com.wouter.dndbattle.view.master.MasterCharactersPanel(Elemental.class));
 
         tpBase.addTab("Characters", tpCharacters);
         tpBase.addTab("Audio", pAudio);
@@ -175,7 +177,7 @@ public class MasterFrame extends javax.swing.JFrame {
 
         tpBase.addTab("Dice", spDice);
 
-        spSettings.setViewportView(pSettings);
+        spSettings.setViewportView(settingsPanel);
 
         tpBase.addTab("Settings", spSettings);
 
@@ -193,12 +195,6 @@ public class MasterFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bAddCombatantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddCombatantActionPerformed
-        CombatantSelectionFrame frame = new CombatantSelectionFrame(master);
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
-    }//GEN-LAST:event_bAddCombatantActionPerformed
-
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
         if (getExtendedState() == NORMAL) {
             SETTINGS.setProperty(MASTER_LOCATION_X, getLocation().x);
@@ -215,43 +211,6 @@ public class MasterFrame extends javax.swing.JFrame {
             SETTINGS.setProperty(MASTER_SIZE_STATE, getExtendedState());
         }
     }//GEN-LAST:event_formComponentResized
-
-    private void bNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNextActionPerformed
-        master.nextTurn();
-    }//GEN-LAST:event_bNextActionPerformed
-
-    private void bNewBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewBattleActionPerformed
-        switch (JOptionPane.showConfirmDialog(this,
-                "Do you want to carry over the currect combatants with all settings and reroll for initiative?\n"
-                + "If you don't want to start a new battle please select cancel.", "Please confirm.", JOptionPane.YES_NO_CANCEL_OPTION)) {
-            case JOptionPane.YES_OPTION:
-                List<ICombatant> combatants = master.getCombatants();
-                for (Iterator<ICombatant> iterator = combatants.iterator(); iterator.hasNext();) {
-                    ICombatant combatant = iterator.next();
-                    if (combatant.isDead()) {
-                        iterator.remove();
-                        continue;
-                    }
-                    int initiative = Integer.MIN_VALUE;
-                    while (initiative == Integer.MIN_VALUE) {
-                        try {
-                            String input = JOptionPane.showInputDialog(this, "Please enter new initiative for " + combatant, "New initiative", JOptionPane.QUESTION_MESSAGE);
-                            initiative = Integer.parseInt(input);
-                            ((Combatant) combatant).setInitiative(initiative);
-                        } catch (NumberFormatException e) {
-                            log.error("User input could not be parsed", e);
-                        }
-                    }
-                }
-                master.setCombatants(combatants);
-                break;
-            case JOptionPane.NO_OPTION:
-                master.startNewBattle();
-                break;
-            default:
-                break;
-        }
-    }//GEN-LAST:event_bNewBattleActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         master.shutdown();
@@ -289,6 +248,49 @@ public class MasterFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tpCharactersStateChanged
 
+    private void bNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNextActionPerformed
+        master.nextTurn();
+    }//GEN-LAST:event_bNextActionPerformed
+
+    private void bAddCombatantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddCombatantActionPerformed
+        CombatantSelectionFrame frame = new CombatantSelectionFrame(master);
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+    }//GEN-LAST:event_bAddCombatantActionPerformed
+
+    private void bNewBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewBattleActionPerformed
+        switch (JOptionPane.showConfirmDialog(this,
+                "Do you want to carry over the currect combatants with all settings and reroll for initiative?\n"
+                + "If you don't want to start a new battle please select cancel.", "Please confirm.", JOptionPane.YES_NO_CANCEL_OPTION)) {
+            case JOptionPane.YES_OPTION:
+                List<ICombatant> combatants = master.getCombatants();
+                for (Iterator<ICombatant> iterator = combatants.iterator(); iterator.hasNext();) {
+                    ICombatant combatant = iterator.next();
+                    if (combatant.isDead()) {
+                        iterator.remove();
+                        continue;
+                    }
+                    int initiative = Integer.MIN_VALUE;
+                    while (initiative == Integer.MIN_VALUE) {
+                        try {
+                            String input = JOptionPane.showInputDialog(this, "Please enter new initiative for " + combatant, "New initiative", JOptionPane.QUESTION_MESSAGE);
+                            initiative = Integer.parseInt(input);
+                            ((Combatant) combatant).setInitiative(initiative);
+                        } catch (NumberFormatException e) {
+                            log.error("User input could not be parsed", e);
+                        }
+                    }
+                }
+                master.setCombatants(combatants);
+                break;
+            case JOptionPane.NO_OPTION:
+                master.startNewBattle();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_bNewBattleActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddCombatant;
     private javax.swing.JButton bNewBattle;
@@ -297,7 +299,7 @@ public class MasterFrame extends javax.swing.JFrame {
     private com.wouter.dndbattle.view.master.AudioPanel pAudio;
     private javax.swing.JPanel pCombatants;
     private javax.swing.JPanel pMain;
-    private com.wouter.dndbattle.view.master.SettingsPanel pSettings;
+    private com.wouter.dndbattle.view.master.SettingsPanel settingsPanel;
     private javax.swing.JScrollPane spCombatants;
     private javax.swing.JScrollPane spDice;
     private javax.swing.JScrollPane spSettings;

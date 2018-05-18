@@ -16,15 +16,17 @@
  */
 package com.wouter.dndbattle.view.master.character.weapon;
 
+import java.util.List;
+
 import javax.swing.table.DefaultTableModel;
 
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.Weapon;
+import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.master.character.CharacterPanel;
 import com.wouter.dndbattle.view.IUpdateablePanel;
-import java.util.List;
+import com.wouter.dndbattle.view.master.character.CharacterPanel;
 
 /**
  *
@@ -160,6 +162,8 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
         if (weapon != null) {
             character.removeWeapon(weapon);
         }
+        Characters.updateCharacter(character);
+        updateTable();
     }//GEN-LAST:event_bDeleteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

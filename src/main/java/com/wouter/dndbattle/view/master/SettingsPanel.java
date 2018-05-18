@@ -57,7 +57,13 @@ public class SettingsPanel extends javax.swing.JPanel {
      * Creates new form SettingsPanel
      */
     public SettingsPanel() {
-        this.ipaddressText = String.format(IP_FORMAT, Main.getPort(), Main.getIp());
+        String ipText;
+        try {
+            ipText = String.format(IP_FORMAT, Main.getPort(), Main.getIp());
+        } catch (java.lang.NoClassDefFoundError e) {
+            ipText = "Unable to determine IP and port";
+        }
+        ipaddressText = ipText;
         initComponents();
     }
 

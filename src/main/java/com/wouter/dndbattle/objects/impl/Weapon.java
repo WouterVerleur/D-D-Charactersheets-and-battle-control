@@ -16,9 +16,9 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.Dice;
@@ -41,6 +41,7 @@ public class Weapon implements IWeapon {
     private Proficiency proficiency = Proficiency.NONE;
     private int range;
     private boolean ranged;
+    private boolean thrown;
     private boolean reach;
     private boolean light;
     private String attackOverride;
@@ -126,7 +127,7 @@ public class Weapon implements IWeapon {
         }
         if (ranged) {
             checkBuilder(builder);
-            builder.append("Ranged (").append(range).append('/').append(maxRange).append(')');
+            builder.append(thrown ? "Thrown (" : "Ranged (").append(range).append('/').append(maxRange).append(')');
         }
         if (proficiency.isProficient()) {
             checkBuilder(builder);
@@ -139,18 +140,18 @@ public class Weapon implements IWeapon {
         return builder.toString();
     }
 
+    private void checkBuilder(StringBuilder builder) {
+        if (builder.length() > 0) {
+            builder.append(", ");
+        }
+    }
+
     public String getActualNotes() {
         return actualNotes;
     }
 
     public void setActualNotes(String actualNotes) {
         this.actualNotes = actualNotes;
-    }
-
-    private void checkBuilder(StringBuilder builder) {
-        if (builder.length() > 0) {
-            builder.append(", ");
-        }
     }
 
     @Override
@@ -205,6 +206,15 @@ public class Weapon implements IWeapon {
 
     public void setLight(boolean light) {
         this.light = light;
+    }
+
+    @Override
+    public boolean isThrown() {
+        return thrown;
+    }
+
+    public void setThrown(boolean thrown) {
+        this.thrown = thrown;
     }
 
     @Override

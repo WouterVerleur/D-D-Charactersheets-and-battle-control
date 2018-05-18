@@ -41,19 +41,21 @@ public interface IWeapon extends Comparable<IWeapon>, Serializable {
 
     boolean isRanged();
 
+    boolean isThrown();
+
     int getRange();
 
     int getMaxRange();
 
     boolean isReach();
-    
+
     boolean isLight();
 
     String getNotes();
 
     Proficiency getProficiency();
-    
+
     String getAttackOverride();
-    
+
     String getDamageOverride();
 }

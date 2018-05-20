@@ -35,6 +35,7 @@ public class Weapon implements IWeapon {
     private Dice attackDice;
     private String damageType;
     private boolean finesse;
+    private boolean magicallyImbued;
     private int maxRange;
     private String name;
     private String actualNotes;
@@ -90,6 +91,15 @@ public class Weapon implements IWeapon {
 
     public void setDamageType(String damageType) {
         this.damageType = damageType;
+    }
+
+    @Override
+    public boolean isMagicallyImbued() {
+        return magicallyImbued;
+    }
+
+    public void setMagicallyImbued(boolean magicallyImbued) {
+        this.magicallyImbued = magicallyImbued;
     }
 
     @Override

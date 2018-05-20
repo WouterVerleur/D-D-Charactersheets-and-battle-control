@@ -6,7 +6,6 @@
 package com.wouter.dndbattle.view.master;
 
 import java.awt.event.ItemEvent;
-import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -14,10 +13,6 @@ import javax.swing.JFrame;
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.Beast;
-import com.wouter.dndbattle.objects.impl.Enemy;
-import com.wouter.dndbattle.objects.impl.Npc;
-import com.wouter.dndbattle.objects.impl.Player;
 import com.wouter.dndbattle.utils.Characters;
 
 /**
@@ -135,7 +130,7 @@ public class CombatantSelectionFrame extends JFrame {
     }//GEN-LAST:event_bNextActionPerformed
 
     private void cbClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbClassItemStateChanged
-        if (evt.getStateChange()==ItemEvent.SELECTED){
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
             listCharacters.setListData(Characters.getCharacters(cbClass.getSelectedItem()).toArray());
         }
     }//GEN-LAST:event_cbClassItemStateChanged

@@ -16,13 +16,13 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
-import com.wouter.dndbattle.objects.IExtendedCharacter;
+import com.wouter.dndbattle.objects.ICharacter;
 
 /**
  *
  * @author wverl
  */
-public class Enemy extends AbstractExtendedCharacter implements IExtendedCharacter {
+public class Enemy extends AbstractCharacter implements ICharacter {
 
     @Override
     public boolean isFriendly() {

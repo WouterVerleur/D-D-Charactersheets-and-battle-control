@@ -22,9 +22,6 @@ import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.wouter.dndbattle.view.master.character.weapon.WeaponsPanel.DAMAGE_FORMAT;
-import static com.wouter.dndbattle.view.master.character.weapon.WeaponsPanel.DAMAGE_FORMAT_SHORT;
-
 /**
  *
  * @author Wouter
@@ -33,11 +30,13 @@ public class GlobalUtils {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalUtils.class);
 
+    public static final String DAMAGE_FORMAT_SHORT = "%s %s";
+    public static final String DAMAGE_FORMAT = "%d%s %s %s";
     /*
      ************************************
-     * File Functions
-     ************************************
+     * File Functions ***********************************
      */
+
     public static String getFileExtension(File file) {
         return getFileExtension(file.getName());
     }
@@ -79,8 +78,7 @@ public class GlobalUtils {
 
     /*
      ************************************
-     * Character Functions
-     ************************************
+     * Character Functions ***********************************
      */
     public static String modifierToString(int modifier) {
         return modifier > 0 ? "+" + modifier : Integer.toString(modifier);
@@ -90,41 +88,51 @@ public class GlobalUtils {
         return new String[]{
             weapon.getName(),
             getModifierString(character, weapon, true),
-            getWeaponDamage(weapon, getModifierString(character, weapon, false)),
+            getWeaponDamage(weapon, getModifierString(character, weapon, false)).replaceAll("\\s(\\s)+", " "),
             weapon.getNotes()
         };
     }
 
-    private static String getModifierString(ICharacter character, IWeapon weapon, boolean addProficiency) {
+    public static String getAttackModifier(ICharacter character, IWeapon weapon) {
+        return getModifierString(character, weapon, true);
+    }
 
-        int modifier;
-        if (weapon.isRanged()) {
-            if (weapon.isThrown()) {
-                modifier = character.getAbilityModifier(AbilityType.STR);
-            } else {
-                modifier = character.getAbilityModifier(AbilityType.DEX);
-            }
-        } else {
-            modifier = character.getAbilityModifier(AbilityType.STR);
-            if (weapon.isFinesse() && character.getAbilityModifier(AbilityType.DEX) > modifier) {
-                modifier = character.getAbilityModifier(AbilityType.DEX);
-            }
+    public static String getDamageModifier(ICharacter character, IWeapon weapon) {
+        return getModifierString(character, weapon, false);
+    }
+
+    private static String getModifierString(ICharacter character, IWeapon weapon, boolean addProficiency) {
+        int modifier = character.getAbilityModifier(AbilityType.STR);
+        int dex = character.getAbilityModifier(AbilityType.DEX);
+
+        // First handle overrides
+        String override = addProficiency ? weapon.getAttackOverride() : weapon.getDamageOverride();
+        if (override != null && !override.isEmpty()) {
+            log.debug("Returning the override [{}]", override);
+            return override;
         }
 
+        // Then handle magic weapons
+        if (weapon.isMagicallyImbued()) {
+            AbilityType spellAbility = character.getSpellCastingAbility();
+            modifier = character.getProficiencyScore();
+            if (spellAbility != null) {
+                modifier += character.getAbilityModifier(spellAbility);
+            }
+            log.debug("Magic weapons with modifier [{}]", modifier);
+            return modifierToString(modifier);
+        }
+
+        if (weapon.isRanged() && !weapon.isThrown()) {
+            modifier = dex;
+        } else if (weapon.isFinesse() && dex > modifier) {
+            modifier = dex;
+        }
         if (addProficiency) {
-            String attackOverride = weapon.getAttackOverride();
-            if (attackOverride != null && !attackOverride.isEmpty()) {
-                return attackOverride;
-            }
             modifier += (character.getProficiencyScore() * weapon.getProficiency().getMultiplier());
-        } else {
-            String damageOverride = weapon.getDamageOverride();
-            if (damageOverride != null && !damageOverride.isEmpty()) {
-                return damageOverride;
-            }
-            if (modifier == 0) {
-                return "";
-            }
+        }
+        if (modifier == 0) {
+            return "";
         }
         return modifierToString(modifier);
     }
@@ -138,8 +146,7 @@ public class GlobalUtils {
 
     /*
      ************************************
-     * Browser Functions
-     ************************************
+     * Browser Functions ***********************************
      */
     public static void browseCharacter(ICharacter character) {
         String searchQuery = null;
@@ -167,8 +174,7 @@ public class GlobalUtils {
 
     /*
      ************************************
-     * Background Functions
-     ************************************
+     * Background Functions ***********************************
      */
     public static Color getBackgroundTransparent() {
         return new Color(0, 0, 0, 0);

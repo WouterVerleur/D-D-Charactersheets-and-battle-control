@@ -16,14 +16,17 @@
  */
 package com.wouter.dndbattle.view.comboboxes;
 
+import java.awt.Component;
+
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
+
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.Beast;
+import com.wouter.dndbattle.objects.impl.Elemental;
 import com.wouter.dndbattle.objects.impl.Enemy;
 import com.wouter.dndbattle.objects.impl.Npc;
 import com.wouter.dndbattle.objects.impl.Player;
-import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
 
 /**
  *
@@ -31,7 +34,7 @@ import javax.swing.JList;
  */
 public class ClassComboBox extends CustomComboBox<Class<? extends ICharacter>> {
 
-    private static final Class<? extends ICharacter>[] CLASSES = new Class[]{Beast.class, Enemy.class, Npc.class, Player.class};
+    private static final Class<? extends ICharacter>[] CLASSES = new Class[]{Player.class, Npc.class, Enemy.class, Beast.class, Elemental.class};
     private static final ClassCellRenderer RENDERER = new ClassCellRenderer();
 
     public ClassComboBox() {

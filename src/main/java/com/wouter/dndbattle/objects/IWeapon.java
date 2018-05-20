@@ -39,6 +39,8 @@ public interface IWeapon extends Comparable<IWeapon>, Serializable {
 
     String getDamageType();
 
+    boolean isMagicallyImbued();
+
     boolean isRanged();
 
     boolean isThrown();

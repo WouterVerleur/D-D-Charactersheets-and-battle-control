@@ -26,7 +26,6 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
 
     private static final Logger log = LoggerFactory.getLogger(MasterCombatantPanel.class);
 
-    private static final String DAMAGE_RECIEVED_FORMAT = "Total damage recieved: %d";
     private static final Settings SETTINGS = Settings.getInstance();
 
     private final Combatant combatant;
@@ -134,7 +133,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
             }
         });
 
-        lTotalDamageRecieved.setText(String.format(DAMAGE_RECIEVED_FORMAT,combatant.getTotalDamageRecieved()));
+        lTotalDamageRecieved.setText(combatant.getTotalDamageString());
 
         bTransform.setText("Transform");
         bTransform.setEnabled(checkCanTransform(combatant));

@@ -40,6 +40,9 @@ public class Combatant implements ICombatant {
     private static final String HEALTH_ZERO = "0 (Deathrolls: %d/3)";
     private static final String DEAD = "Dead";
 
+    private static final String DAMAGE_RECIEVED_FORMAT = "Total damage recieved: %d.";
+    private static final String DAMAGE_RECIEVED_FORMAT_AND_DOWNED = "Total damage recieved: %d. Times downed: %d.";
+
     private final String name;
 
     private final ICharacter character;
@@ -49,6 +52,7 @@ public class Combatant implements ICombatant {
     private int deathRolls = 0;
     private int lifeRolls = 0;
     private int healthBuff = 0;
+    private int timesDowned = 0;
     private int initiative;
     private Boolean rollForDeath;
     private int totalDamageRecieved = 0;
@@ -78,6 +82,13 @@ public class Combatant implements ICombatant {
             transformation.getCharacter();
         }
         return character;
+    }
+
+    public String getTotalDamageString() {
+        if (timesDowned > 0) {
+            return String.format(DAMAGE_RECIEVED_FORMAT_AND_DOWNED, totalDamageRecieved, timesDowned);
+        }
+        return String.format(DAMAGE_RECIEVED_FORMAT, totalDamageRecieved);
     }
 
     @Override
@@ -234,6 +245,8 @@ public class Combatant implements ICombatant {
                 }
                 if (health < 1 && !rollingForDeath()) {
                     health = -1;
+                } else if (health == 0) {
+                    timesDowned++;
                 }
             }
             checkDead();

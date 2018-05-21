@@ -1,0 +1,74 @@
+
+<!--
+Copyright (C) 2018 Wouter
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+This template is used to create character export in PDF format.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>#{CharacterName}</title>
+        <style type="text/css">
+            h1 {
+                text-align:center;
+                border-bottom:1px solid black;
+            }
+            .right {
+                float: right;
+            }
+            .left {
+                float: left;
+            }
+            tr.input td {
+                background: rgb(221,228,255);
+            }
+            table {
+                border-spacing: 5px 0px;
+            }
+            table * {
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>#{Name}</h1>
+        <table class="right">
+            <tr class="input">
+                <td>#{ClassLevel}</td>
+                <td>#{Background}</td>
+                <td>#{PlayerName}</td>
+            </tr>
+            <tr>
+                <td>Class &amp; Level</td>
+                <td>Background</td>
+                <td>Player Name</td>
+            </tr>
+            <tr class="input">
+                <td>#{Race}</td>
+                <td>#{Alignment}</td>
+                <td>#{ExperiencePoints}</td>
+            </tr>
+            <tr>
+                <td>Race</td>
+                <td>Alignment</td>
+                <td>Experience points</td>
+            </tr>
+        </table>
+        <div class="left">
+            a+s
+        </div>
+    </body>
+</html>

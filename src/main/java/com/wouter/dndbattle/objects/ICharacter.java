@@ -45,6 +45,8 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
 
     String getName();
 
+    String getSaveFileName();
+
     String getDescription();
 
     int getInitiative();

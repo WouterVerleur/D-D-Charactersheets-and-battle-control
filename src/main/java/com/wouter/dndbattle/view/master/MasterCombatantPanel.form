@@ -203,7 +203,7 @@
     <Component class="javax.swing.JLabel" name="lTotalDamageRecieved">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="String.format(DAMAGE_RECIEVED_FORMAT,combatant.getTotalDamageRecieved())" type="code"/>
+          <Connection code="combatant.getTotalDamageString()" type="code"/>
         </Property>
       </Properties>
     </Component>

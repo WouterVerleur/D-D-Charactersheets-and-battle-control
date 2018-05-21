@@ -37,6 +37,7 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     private String backstory;
     private String bonds;
     private String background;
+    private Object character;
     private List<ICharacterClass> characterClasses = new ArrayList<>();
     private String equipment;
     private int experiencePoints;

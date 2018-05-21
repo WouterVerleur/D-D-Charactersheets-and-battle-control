@@ -45,6 +45,9 @@ import com.wouter.dndbattle.objects.enums.SkillType;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class AbstractCharacter implements ICharacter {
 
+    private static final String SPECIAL_CHARACTER_REPLACEMENT = "_";
+    private static final String SPECIAL_CHARACTER_REGEX = "[^a-zA-Z0-9]+";
+
     private IArmor armor;
     private int conditionalArmorBonus = 0;
     private boolean friendly;
@@ -125,6 +128,23 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public void setConditionalArmorBonus(int conditionalArmorBonus) {
         this.conditionalArmorBonus = conditionalArmorBonus;
+    }
+
+    /**
+     * Funtion to return a name based string that is save for usage in filenames.
+     *
+     * @return a filename save representation of the name of this character.
+     */
+    @Override
+    public String getSaveFileName() {
+        String fileName = getName().replaceAll(SPECIAL_CHARACTER_REGEX, SPECIAL_CHARACTER_REPLACEMENT);
+        if (fileName.startsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
+            fileName = fileName.substring(1);
+        }
+        if (fileName.endsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
+            fileName = fileName.substring(0, fileName.length() - 1);
+        }
+        return fileName;
     }
 
     public boolean hasChallengeRating() {
@@ -259,6 +279,10 @@ public abstract class AbstractCharacter implements ICharacter {
     public void addSpell(ISpell spell) {
         spells.add(spell);
         sortSpells();
+    }
+
+    public void removeSpell(Spell spell) {
+        spells.remove(spell);
     }
 
     public void sortSpells() {

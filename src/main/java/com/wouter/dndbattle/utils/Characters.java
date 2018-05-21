@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
@@ -28,8 +31,6 @@ public class Characters {
 
     private static final Logger log = LoggerFactory.getLogger(Characters.class);
 
-    private static final String SPECIAL_CHARACTER_REPLACEMENT = "_";
-    private static final String SPECIAL_CHARACTER_REGEX = "[^a-zA-Z0-9]+";
     private static final File PRESET_FOLDER = FileManager.getPresetFolder();
     private static final Map<File, CharacterFileWriterThread> WRITER_THREAD_MAP = new HashMap<>();
     private static final Map<Class<? extends ICharacter>, List<ICharacter>> CLASS_CHARACTER_MAP = new HashMap<>();
@@ -81,10 +82,6 @@ public class Characters {
                 }
             } catch (CharacterReadException | IllegalArgumentException e) {
                 log.error("Error while reading character from file [{}]", file, e);
-                /*
-                 * if (JOptionPane.showConfirmDialog(null, "The character " + GlobalUtils.getFileNameWithoutExtention(file) + " resulted in an error.\nIs it op to delete this character?", "Character
-                 * Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) == JOptionPane.YES_OPTION) { file.delete(); }
-                 */
             }
         }
         Collections.sort(returnList);
@@ -113,6 +110,22 @@ public class Characters {
                 return mapper.readValue(file, AbstractCharacter.class);
             } catch (IOException e) {
                 log.error("Exception while reading character from file [{}]", file, e);
+                String charname = file.getName();
+                charname = charname.substring(0, charname.indexOf('.')).replace('_', ' ');
+                switch (JOptionPane.showConfirmDialog(null,
+                        "The character " + charname + " seems to be incompatible with the current version of the software.\n"
+                        + "The character can be converted to the current version, but some information may be lost in the process.\n"
+                        + "Would you like to continue?", "Error reading character", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
+                    case JOptionPane.YES_OPTION:
+                        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+                        try {
+                            AbstractCharacter character = mapper.readValue(file, AbstractCharacter.class);
+                            storeCharacter(character, true);
+                        } catch (IOException e2) {
+                            log.error("Error while converting the character from file [{}]", file, e2);
+                        }
+                        break;
+                }
                 throw new CharacterReadException("Error while character presets from file " + file.getAbsolutePath(), e);
             }
         }
@@ -142,15 +155,9 @@ public class Characters {
     }
 
     private static File getCharacterFile(ICharacter character) {
-        String name = character.getName().replaceAll(SPECIAL_CHARACTER_REGEX, SPECIAL_CHARACTER_REPLACEMENT);
-        if (name.startsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
-            name = name.substring(1);
-        }
-        if (name.endsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
-            name = name.substring(0, name.length() - 1);
-        }
-        final String filename = name + '.' + character.getClass().getSimpleName();
+        final String filename = character.getSaveFileName() + '.' + character.getClass().getSimpleName();
         return new File(PRESET_FOLDER, filename);
+
     }
 
     public static class CharacterReadException extends Exception {

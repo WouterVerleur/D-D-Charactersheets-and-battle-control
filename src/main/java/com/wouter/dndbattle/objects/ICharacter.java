@@ -45,6 +45,7 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
 
     String getName();
 
+    @JsonIgnore
     String getSaveFileName();
 
     String getDescription();

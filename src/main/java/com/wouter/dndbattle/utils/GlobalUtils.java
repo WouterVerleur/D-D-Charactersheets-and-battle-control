@@ -216,7 +216,7 @@ public class GlobalUtils {
         // Then handle magic weapons
         if (weapon.isMagicallyImbued()) {
             AbilityType spellAbility = character.getSpellCastingAbility();
-            modifier = character.getProficiencyScore();
+            modifier = addProficiency ? character.getProficiencyScore() : 0;
             if (spellAbility != null) {
                 modifier += character.getAbilityModifier(spellAbility);
             }

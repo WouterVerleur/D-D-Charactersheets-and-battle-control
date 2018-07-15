@@ -12,6 +12,9 @@ import static com.wouter.dndbattle.utils.Settings.SLAVE_SIZE_STATE;
 import static com.wouter.dndbattle.utils.Settings.SLAVE_SIZE_WIDTH;
 
 import java.awt.Component;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,13 +44,27 @@ public class SlaveFrame extends javax.swing.JFrame {
     public SlaveFrame(IMaster master) {
         this.slave = new Slave(master, this);
         initComponents();
-        int x = slave.getProperty(SLAVE_LOCATION_X, 0);
-        int y = slave.getProperty(SLAVE_LOCATION_Y, 0);
-        setLocation(x, y);
+        setLocation(slave.getProperty(SLAVE_LOCATION_X, Integer.MIN_VALUE), slave.getProperty(SLAVE_LOCATION_Y, Integer.MIN_VALUE));
         int width = slave.getProperty(SLAVE_SIZE_WIDTH, getPreferredSize().width);
         int height = slave.getProperty(SLAVE_SIZE_HEIGHT, getPreferredSize().width);
         setSize(width, height);
         setExtendedState(slave.getProperty(SLAVE_SIZE_STATE, 0));
+        Rectangle screenBounds = getScreenBounds();
+        final Rectangle bounds = this.getBounds();
+        if (!screenBounds.contains(bounds)) {
+            log.debug("Frame brounds [{}] are not within screen bounds [{}]", bounds, screenBounds);
+            setLocationRelativeTo(null);
+        }
+    }
+
+    private Rectangle getScreenBounds() {
+        Rectangle bounds = new Rectangle(0, 0, 0, 0);
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice lstGDs[] = ge.getScreenDevices();
+        for (GraphicsDevice gd : lstGDs) {
+            bounds.add(gd.getDefaultConfiguration().getBounds());
+        }
+        return bounds;
     }
 
     public ISlave getSlave() {

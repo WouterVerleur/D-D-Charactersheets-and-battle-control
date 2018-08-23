@@ -152,7 +152,7 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tpCharactersStateChanged"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="tpCharacters.addTab(&quot;Player&quot;, new com.wouter.dndbattle.view.master.MasterCharactersPanel(Player.class));&#xa;tpCharacters.addTab(&quot;NPC&quot;, new com.wouter.dndbattle.view.master.MasterCharactersPanel(Npc.class));&#xa;tpCharacters.addTab(&quot;Enemy&quot;, new com.wouter.dndbattle.view.master.MasterCharactersPanel(Enemy.class));&#xa;tpCharacters.addTab(&quot;Beast&quot;, new com.wouter.dndbattle.view.master.MasterCharactersPanel(Beast.class));&#xa;tpCharacters.addTab(&quot;Elemental&quot;, new com.wouter.dndbattle.view.master.MasterCharactersPanel(Elemental.class));"/>
+            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="addTabsToTpCharacter();"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">

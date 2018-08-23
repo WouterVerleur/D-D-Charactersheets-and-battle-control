@@ -5,9 +5,6 @@
  */
 package com.wouter.dndbattle.core.impl;
 
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
@@ -27,6 +24,9 @@ import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.master.MasterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
 
 /**
  *
@@ -74,7 +74,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         } catch (ServerNotActiveException | UnknownHostException e) {
             log.error("Error while determining if connection if from localhost", e);
         }
-        log.debug("Recieved new slave connection from [{}] for witch localhost was [{}]", playerName, localhost);
+        log.debug("Recieved new slave connection from [{}] for which localhost was [{}]", playerName, localhost);
         slave.setConnectionInfo(new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName));
         slave.refreshView(combatants, activeIndex);
     }

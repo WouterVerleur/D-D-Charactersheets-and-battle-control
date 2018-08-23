@@ -45,13 +45,13 @@ public class Characters {
     }
 
     public static boolean addCharacter(ICharacter character) {
-        if (getCharacterFile(character).exists()) {
+        if (!canCreateCharacter(character)) {
             return false;
         }
         final List<ICharacter> characters = CLASS_CHARACTER_MAP.get(character.getClass());
         characters.add(character);
         Collections.sort(characters);
-        storeCharacter(character, false);
+        storeCharacter(character, true);
         return true;
     }
 
@@ -95,9 +95,12 @@ public class Characters {
     }
 
     public static void remove(ICharacter preset) {
+        storeCharacter(preset, true);// to make sure any change does not undo this remove
         File file = getCharacterFile(preset);
         if (file.exists()) {
             file.delete();
+            getCharacters(preset.getClass()).remove(preset);
+            log.debug("Character [{}] has been deleted.", preset);
         }
     }
 
@@ -155,9 +158,14 @@ public class Characters {
     }
 
     private static File getCharacterFile(ICharacter character) {
+        log.debug("Returning file for character [{}]", character);
         final String filename = character.getSaveFileName() + '.' + character.getClass().getSimpleName();
         return new File(PRESET_FOLDER, filename);
 
+    }
+
+    public static boolean canCreateCharacter(ICharacter character) {
+        return !getCharacterFile(character).exists();
     }
 
     public static class CharacterReadException extends Exception {

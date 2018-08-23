@@ -68,6 +68,10 @@ public abstract class AbstractCharacter implements ICharacter {
     private AbilityType spellCastingAbility;
 
     public AbstractCharacter() {
+        createEmptySettings();
+    }
+
+    private void createEmptySettings() {
         for (AbilityType abilityType : AbilityType.values()) {
             abilities.put(abilityType, new Ability(abilityType));
             savingThrows.put(abilityType, new SavingThrow(abilityType));
@@ -75,6 +79,33 @@ public abstract class AbstractCharacter implements ICharacter {
         for (SkillType skillType : SkillType.values()) {
             skills.put(skillType, new Skill(skillType));
         }
+    }
+
+    public AbstractCharacter(ICharacter character) {
+
+        this.armor = character.getArmor();
+        this.conditionalArmorBonus = character.getConditionalArmorBonus();
+        this.friendly = character.isFriendly();
+        this.name = character.getName();
+        this.notes = character.getNotes();
+        this.speed = character.getSpeed();
+        this.spells = character.getSpells();
+        this.shieldWearer = character.isShieldWearer();
+        this.weapons = character.getWeapons();
+        if (character instanceof AbstractCharacter) {
+            final AbstractCharacter aCharacter = (AbstractCharacter) character;
+            this.abilities = aCharacter.getAbilities();
+            this.savingThrows = aCharacter.getSavingThrows();
+            this.skills = aCharacter.getSkills();
+        } else {
+            createEmptySettings();
+        }
+        this.maxHealth = character.getMaxHealth();
+        this.canTransform = character.isCanTransform();
+        this.transformType = character.getTransformType();
+        this.transformChallengeRating = character.getTransformChallengeRating();
+        this.challengeRating = character.getChallengeRating();
+        this.spellCastingAbility = character.getSpellCastingAbility();
     }
 
     @Override
@@ -131,7 +162,8 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in filenames.
+     * Funtion to return a name based string that is save for usage in
+     * filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -229,10 +261,11 @@ public abstract class AbstractCharacter implements ICharacter {
                 return armor.getBaseArmorRating() + dexMod;
             case MEDIUM:
                 return armor.getBaseArmorRating() + (dexMod > 2 ? 2 : dexMod);
+            case MAGICAL:
+                return armor.getBaseArmorRating() + dexMod + getAbilityModifier(spellCastingAbility);
             default:
                 return armor.getBaseArmorRating();
         }
-
     }
 
     @JsonIgnore

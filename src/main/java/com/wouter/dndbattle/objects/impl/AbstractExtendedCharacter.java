@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICharacterClass;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
 
@@ -37,7 +38,6 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     private String backstory;
     private String bonds;
     private String background;
-    private Object character;
     private List<ICharacterClass> characterClasses = new ArrayList<>();
     private String equipment;
     private int experiencePoints;
@@ -55,6 +55,39 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     private String skin;
     private String treasure;
     private String weight;
+
+    public AbstractExtendedCharacter() {
+    }
+
+    public AbstractExtendedCharacter(ICharacter character) {
+        super(character);
+        if (character instanceof AbstractExtendedCharacter) {
+            AbstractExtendedCharacter aeCharacter = (AbstractExtendedCharacter) character;
+            this.age = aeCharacter.age;
+            this.aliesAndOrganizations = aeCharacter.aliesAndOrganizations;
+            this.alignment = aeCharacter.alignment;
+            this.backstory = aeCharacter.backstory;
+            this.bonds = aeCharacter.bonds;
+            this.background = aeCharacter.background;
+            this.characterClasses = aeCharacter.characterClasses;
+            this.equipment = aeCharacter.equipment;
+            this.experiencePoints = aeCharacter.experiencePoints;
+            this.eyes = aeCharacter.eyes;
+            this.featuresAndTraits = aeCharacter.featuresAndTraits;
+            this.flaws = aeCharacter.flaws;
+            this.hair = aeCharacter.hair;
+            this.height = aeCharacter.height;
+            this.ideals = aeCharacter.ideals;
+            this.languages = aeCharacter.languages;
+            this.personalityTraits = aeCharacter.personalityTraits;
+            this.playerName = aeCharacter.playerName;
+            this.proficiencies = aeCharacter.proficiencies;
+            this.race = aeCharacter.race;
+            this.skin = aeCharacter.skin;
+            this.treasure = aeCharacter.treasure;
+            this.weight = aeCharacter.weight;
+        }
+    }
 
     @Override
     public List<ICharacterClass> getCharacterClasses() {

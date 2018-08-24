@@ -22,15 +22,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
 import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.character.Beast;
-import com.wouter.dndbattle.objects.impl.character.Celestial;
-import com.wouter.dndbattle.objects.impl.character.Construct;
-import com.wouter.dndbattle.objects.impl.character.Dragon;
-import com.wouter.dndbattle.objects.impl.character.Elemental;
-import com.wouter.dndbattle.objects.impl.character.Enemy;
-import com.wouter.dndbattle.objects.impl.character.Monstrosity;
-import com.wouter.dndbattle.objects.impl.character.Npc;
-import com.wouter.dndbattle.objects.impl.character.Player;
+import com.wouter.dndbattle.objects.impl.character.*;
 
 /**
  *
@@ -47,6 +39,7 @@ public class ClassComboBox extends CustomComboBox<Class<? extends ICharacter>> {
         Construct.class,
         Dragon.class,
         Elemental.class,
+        Giant.class,
         Monstrosity.class};
     private static final ClassCellRenderer RENDERER = new ClassCellRenderer();
 

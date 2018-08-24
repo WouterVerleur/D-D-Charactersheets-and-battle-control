@@ -48,7 +48,7 @@ public class Characters {
         if (!canCreateCharacter(character)) {
             return false;
         }
-        final List<ICharacter> characters = CLASS_CHARACTER_MAP.get(character.getClass());
+        final List<ICharacter> characters = getCharacters(character.getClass());
         characters.add(character);
         Collections.sort(characters);
         storeCharacter(character, true);

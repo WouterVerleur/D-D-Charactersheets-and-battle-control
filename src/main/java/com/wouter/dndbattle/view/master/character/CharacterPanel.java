@@ -27,6 +27,7 @@ import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.view.IUpdateablePanel;
+import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
 import com.wouter.dndbattle.view.master.MasterCharactersPanel;
 import com.wouter.dndbattle.view.master.character.abiliyAndSkill.AbilityAndSkillPanel;
 import com.wouter.dndbattle.view.master.character.extendedCharacter.ExtendedCharacterPanel;
@@ -161,8 +162,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(bRoll20, gridBagConstraints);
 
-        bChangeClass.setText("Export");
-        bChangeClass.setEnabled(false);
+        bChangeClass.setText("Change class");
         bChangeClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bChangeClassActionPerformed(evt);
@@ -204,7 +204,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
                 }
             }
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            log.error("Woops this went wrong", e);
+            log.error("Rename went wrong because we could not create a clone.", e);
         }
         presetPanel.updateList();
     }//GEN-LAST:event_bRenameActionPerformed
@@ -217,7 +217,22 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void bChangeClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeClassActionPerformed
-        JOptionPane.showMessageDialog(this, "We are sorry, but this function is currently unavailable.", "Sorry", JOptionPane.INFORMATION_MESSAGE);
+        ClassComboBox comboBox = new ClassComboBox();
+        comboBox.setSelectedItem(character.getClass());
+        JOptionPane.showMessageDialog(this, comboBox, "Please select the class", JOptionPane.QUESTION_MESSAGE);
+        Class<? extends ICharacter> selection = comboBox.getSelectedItem();
+        if (selection != null && selection != character.getClass()
+                && JOptionPane.showConfirmDialog(this, "Are you sure you wish to change " + character + " into a " + selection.getSimpleName() + ". Some information may be lost in the process.", "Please confirm change", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            try {
+                ICharacter newChar = selection.getDeclaredConstructor(ICharacter.class).newInstance(character);
+                if (Characters.addCharacter(newChar)) {
+                    Characters.remove(character);
+                }
+            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                log.error("Woops this went wrong", e);
+            }
+        }
+        presetPanel.updateList();
     }//GEN-LAST:event_bChangeClassActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -25,8 +25,6 @@ import com.wouter.dndbattle.objects.impl.AbstractCharacter;
  */
 public class Construct extends AbstractCharacter {
 
-    private static final String STRING_FORMAT = "%s (CR: %s)";
-
     public Construct() {
     }
 
@@ -34,19 +32,4 @@ public class Construct extends AbstractCharacter {
         super(character);
     }
 
-    @Override
-    public int compareTo(ICharacter other) {
-        if (other instanceof Construct) {
-            int crCompare = getChallengeRating().compareTo(other.getChallengeRating());
-            if (crCompare != 0) {
-                return crCompare;
-            }
-        }
-        return super.compareTo(other);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(STRING_FORMAT, getName(), getChallengeRating());
-    }
 }

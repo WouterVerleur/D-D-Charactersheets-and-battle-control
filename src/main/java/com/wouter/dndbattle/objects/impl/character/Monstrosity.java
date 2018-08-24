@@ -25,28 +25,10 @@ import com.wouter.dndbattle.objects.impl.AbstractCharacter;
  */
 public class Monstrosity extends AbstractCharacter {
 
-    private static final String STRING_FORMAT = "%s (CR: %s)";
-
     public Monstrosity() {
     }
 
     public Monstrosity(ICharacter character) {
         super(character);
-    }
-
-    @Override
-    public int compareTo(ICharacter other) {
-        if (other instanceof Monstrosity) {
-            int crCompare = getChallengeRating().compareTo(other.getChallengeRating());
-            if (crCompare != 0) {
-                return crCompare;
-            }
-        }
-        return super.compareTo(other);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(STRING_FORMAT, getName(), getChallengeRating());
     }
 }

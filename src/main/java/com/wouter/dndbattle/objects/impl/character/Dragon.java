@@ -25,28 +25,10 @@ import com.wouter.dndbattle.objects.impl.AbstractCharacter;
  */
 public class Dragon extends AbstractCharacter {
 
-    private static final String STRING_FORMAT = "%s (CR: %s)";
-
     public Dragon() {
     }
 
     public Dragon(ICharacter character) {
         super(character);
-    }
-
-    @Override
-    public int compareTo(ICharacter other) {
-        if (other instanceof Dragon) {
-            int crCompare = getChallengeRating().compareTo(other.getChallengeRating());
-            if (crCompare != 0) {
-                return crCompare;
-            }
-        }
-        return super.compareTo(other);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(STRING_FORMAT, getName(), getChallengeRating());
     }
 }

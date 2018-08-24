@@ -78,8 +78,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="bChangeClass">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Export"/>
-        <Property name="enabled" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Change class"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bChangeClassActionPerformed"/>

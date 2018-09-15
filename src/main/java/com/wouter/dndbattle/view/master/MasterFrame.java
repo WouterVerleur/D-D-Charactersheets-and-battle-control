@@ -52,6 +52,7 @@ public class MasterFrame extends javax.swing.JFrame {
     public MasterFrame() {
         master = new Master(this);
         initComponents();
+        spCombatants.getVerticalScrollBar().setUnitIncrement(20);
         setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, Integer.MIN_VALUE), SETTINGS.getProperty(MASTER_LOCATION_Y, Integer.MIN_VALUE));
         setSize(SETTINGS.getProperty(MASTER_SIZE_WIDTH, getPreferredSize().width), SETTINGS.getProperty(MASTER_SIZE_HEIGHT, getPreferredSize().height));
         setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
@@ -176,6 +177,8 @@ public class MasterFrame extends javax.swing.JFrame {
                 .addComponent(spCombatants, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
         );
 
+        spCombatants.getAccessibleContext().setAccessibleName("");
+
         tpMain.addTab("Battle", pMain);
 
         tpBase.addTab("Main", tpMain);
@@ -284,6 +287,7 @@ public class MasterFrame extends javax.swing.JFrame {
                     }
                 }
                 master.setCombatants(combatants);
+                master.updateAll();
                 break;
             case JOptionPane.NO_OPTION:
                 master.startNewBattle();

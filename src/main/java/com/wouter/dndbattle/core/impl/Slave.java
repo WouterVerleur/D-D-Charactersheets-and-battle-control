@@ -30,12 +30,21 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     private final SlaveFrame frame;
     private final IMaster master;
 
-    private boolean shutdownRecieved = false;
+    private final Thread shutdownHook;
+
     private IMasterConnectionInfo connectionInfo;
 
     public Slave(IMaster master, SlaveFrame frame) {
         this.master = master;
         this.frame = frame;
+
+        shutdownHook = new Thread() {
+            @Override
+            public void run() {
+                shutdownHook();
+            }
+        };
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
 
     /**
@@ -81,7 +90,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
 
     @Override
     protected void shutdownHook() {
-        if (!shutdownRecieved && master != null) {
+        if (master != null) {
             try {
                 master.disconnect(this);
             } catch (RemoteException e) {
@@ -98,7 +107,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
 
     @Override
     public void shutdown() {
-        shutdownRecieved = true;
+        Runtime.getRuntime().removeShutdownHook(shutdownHook);
         System.exit(0);
     }
 }

@@ -193,7 +193,7 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Leave transformation"/>
         <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="character.isCanTransform() &amp;&amp; combatant.isTransformed()" type="code"/>
+          <Connection code="combatant.isTransformed()" type="code"/>
         </Property>
       </Properties>
       <Events>

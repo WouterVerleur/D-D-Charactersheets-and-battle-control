@@ -13,6 +13,8 @@ import java.rmi.server.ServerNotActiveException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
@@ -42,6 +44,8 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     private final MasterFrame frame;
     private final List<ISlave> slaves = new ArrayList<>();
     private int activeIndex = 0;
+
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public Master(MasterFrame frame) {
         this.frame = frame;
@@ -142,13 +146,15 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     public void updateAll() {
         frame.refreshBattle(combatants, activeIndex);
-        for (ISlave slave : slaves) {
-            try {
-                slave.refreshView(combatants, activeIndex);
-            } catch (RemoteException e) {
-                System.out.println("Unable to refresh a slave " + e);
-            }
-        }
+        slaves.forEach((slave) -> {
+            executor.submit(() -> {
+                try {
+                    slave.refreshView(combatants, activeIndex);
+                } catch (RemoteException e) {
+                    log.error("Unable to refresh slave [{}]", slave, e);
+                }
+            });
+        });
     }
 
     @Override

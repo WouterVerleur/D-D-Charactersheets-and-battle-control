@@ -262,7 +262,7 @@ public abstract class AbstractCharacter implements ICharacter {
             case MEDIUM:
                 return armor.getBaseArmorRating() + (dexMod > 2 ? 2 : dexMod);
             case MAGICAL:
-                return armor.getBaseArmorRating() + dexMod + getAbilityModifier(spellCastingAbility);
+                return armor.getBaseArmorRating() + dexMod + ((spellCastingAbility == null) ? 0 : getAbilityModifier(spellCastingAbility));
             default:
                 return armor.getBaseArmorRating();
         }

@@ -17,6 +17,7 @@
 package com.wouter.dndbattle.objects.impl.character;
 
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 
 /**
@@ -35,9 +36,10 @@ public class Beast extends AbstractCharacter {
     }
 
     @Override
-    public int compareTo(ICharacter other) {
+    public int compareTo(ISaveableClass other) {
         if (other instanceof Beast) {
-            int crCompare = getChallengeRating().compareTo(other.getChallengeRating());
+            Beast beast = (Beast) other;
+            int crCompare = getChallengeRating().compareTo(beast.getChallengeRating());
             if (crCompare != 0) {
                 return crCompare;
             }

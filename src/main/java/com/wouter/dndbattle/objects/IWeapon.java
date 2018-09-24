@@ -16,8 +16,6 @@
  */
 package com.wouter.dndbattle.objects;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.enums.Proficiency;
@@ -27,7 +25,7 @@ import com.wouter.dndbattle.objects.enums.Proficiency;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface IWeapon extends Comparable<IWeapon>, Serializable {
+public interface IWeapon extends ISaveableClass {
 
     String getName();
 

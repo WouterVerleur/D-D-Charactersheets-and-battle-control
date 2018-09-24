@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.IAbility;
 import com.wouter.dndbattle.objects.IArmor;
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.ISavingThrow;
 import com.wouter.dndbattle.objects.ISkill;
 import com.wouter.dndbattle.objects.ISpell;
@@ -44,9 +45,6 @@ import com.wouter.dndbattle.objects.enums.SkillType;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class AbstractCharacter implements ICharacter {
-
-    private static final String SPECIAL_CHARACTER_REPLACEMENT = "_";
-    private static final String SPECIAL_CHARACTER_REGEX = "[^a-zA-Z0-9]+";
 
     private IArmor armor;
     private int conditionalArmorBonus = 0;
@@ -109,12 +107,16 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     @Override
-    public int compareTo(ICharacter other) {
-        int compare = name.compareToIgnoreCase(other.getName());
-        if (compare == 0) {
-            return getDescription().compareToIgnoreCase(other.getDescription());
+    public int compareTo(ISaveableClass other) {
+        if (other instanceof ICharacter) {
+            ICharacter character = (ICharacter) other;
+            int compare = name.compareToIgnoreCase(character.getName());
+            if (compare == 0) {
+                return getDescription().compareToIgnoreCase(character.getDescription());
+            }
+            return compare;
         }
-        return compare;
+        return ICharacter.super.compareTo(other);
     }
 
     public Map<AbilityType, IAbility> getAbilities() {

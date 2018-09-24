@@ -27,9 +27,9 @@ import org.joda.time.DateTime;
  *
  * @author wverl
  */
-public abstract class FileWriterThread extends Thread {
+public abstract class AbstractFileWriterThread extends Thread {
 
-    private static final Logger log = LoggerFactory.getLogger(FileWriterThread.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractFileWriterThread.class);
 
     private static final Settings SETTINGS = Settings.getInstance();
     private static boolean shutdown = false;
@@ -40,7 +40,7 @@ public abstract class FileWriterThread extends Thread {
     private final Thread shutdownHook;
     private DateTime saveTime;
 
-    public FileWriterThread(File file) {
+    public AbstractFileWriterThread(File file) {
         this.file = file;
         resetTimer();
 

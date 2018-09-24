@@ -31,7 +31,7 @@ import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.wouter.dndbattle.utils.FileWriterThread.DEFAULT_TIMEOUT;
+import static com.wouter.dndbattle.utils.AbstractFileWriterThread.DEFAULT_TIMEOUT;
 import static com.wouter.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
 import static com.wouter.dndbattle.utils.Settings.INPUT_FILESELECTION;
 import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;

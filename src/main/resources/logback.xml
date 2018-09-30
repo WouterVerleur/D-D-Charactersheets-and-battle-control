@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.wouter.dndbattle" level="DEBUG"/>
+    <!--<logger name="com.wouter.dndbattle" level="DEBUG"/>-->
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />

@@ -8,9 +8,9 @@ package com.wouter.dndbattle.core;
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import com.wouter.dndbattle.objects.ICombatant;
-import java.util.List;
 
 /**
  *
@@ -21,6 +21,10 @@ public interface ISlave extends Remote, Serializable {
     public void refreshView(List<ICombatant> combatants, int activeIndex) throws RemoteException;
 
     public void setConnectionInfo(IMasterConnectionInfo connectionInfo) throws RemoteException;
-    
+
     public void shutdown() throws RemoteException;
+
+    public String getIp() throws RemoteException;
+
+    public String getName() throws RemoteException;
 }

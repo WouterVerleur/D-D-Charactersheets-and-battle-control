@@ -28,23 +28,15 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     private static final Settings SETTINGS = Settings.getInstance();
 
     private final SlaveFrame frame;
-    private final IMaster master;
-
-    private final Thread shutdownHook;
+    private IMaster master;
 
     private IMasterConnectionInfo connectionInfo;
+    private final String ip;
 
-    public Slave(IMaster master, SlaveFrame frame) {
+    public Slave(IMaster master, SlaveFrame frame, String ip) {
         this.master = master;
         this.frame = frame;
-
-        shutdownHook = new Thread() {
-            @Override
-            public void run() {
-                shutdownHook();
-            }
-        };
-        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        this.ip = ip;
     }
 
     /**
@@ -107,7 +99,17 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
 
     @Override
     public void shutdown() {
-        Runtime.getRuntime().removeShutdownHook(shutdownHook);
+        master = null;
         System.exit(0);
+    }
+
+    @Override
+    public String getIp() {
+        return ip;
+    }
+
+    @Override
+    public String getName() {
+        return connectionInfo.getPlayerName();
     }
 }

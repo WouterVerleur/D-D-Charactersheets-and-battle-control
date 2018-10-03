@@ -5,10 +5,12 @@
  */
 package com.wouter.dndbattle.view.master;
 
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 import com.wouter.dndbattle.core.IMaster;
 import com.wouter.dndbattle.core.impl.Master;
@@ -88,19 +91,42 @@ public class MasterFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         tpBase = new javax.swing.JTabbedPane();
-        tpMain = new javax.swing.JTabbedPane();
+        pView = new javax.swing.JPanel();
+        tpBattle = new javax.swing.JTabbedPane();
         pMain = new javax.swing.JPanel();
-        bNewBattle = new javax.swing.JButton();
         bAddCombatant = new javax.swing.JButton();
+        bNext = new javax.swing.JButton();
+        bNewBattle = new javax.swing.JButton();
         spCombatants = new javax.swing.JScrollPane();
         pCombatants = new javax.swing.JPanel();
-        bNext = new javax.swing.JButton();
         tpCharacters = new javax.swing.JTabbedPane();
         pAudio = new com.wouter.dndbattle.view.master.AudioPanel();
         spDice = new javax.swing.JScrollPane();
         dicePanel = new com.wouter.dndbattle.view.master.DicePanel();
         spSettings = new javax.swing.JScrollPane();
         settingsPanel = new com.wouter.dndbattle.view.master.SettingsPanel();
+        pClients = new javax.swing.JPanel();
+        spClientsTable = new javax.swing.JScrollPane();
+        tClients = new javax.swing.JTable();
+        bKickClient = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mView = new javax.swing.JMenu();
+        miBattle = new javax.swing.JMenuItem();
+        miCharacters = new javax.swing.JMenuItem();
+        miDice = new javax.swing.JMenuItem();
+        miAudio = new javax.swing.JMenuItem();
+        miSettings = new javax.swing.JMenuItem();
+        sMenu1 = new javax.swing.JPopupMenu.Separator();
+        miClients = new javax.swing.JMenuItem();
+        sMenu2 = new javax.swing.JPopupMenu.Separator();
+        miShutdown = new javax.swing.JMenuItem();
+
+        tpBase.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tpBase.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tpBaseStateChanged(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(SETTINGS.getProperty(MASTER_TITLE, "Master").toString());
@@ -118,10 +144,19 @@ public class MasterFrame extends javax.swing.JFrame {
             }
         });
 
-        tpBase.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        tpBase.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                tpBaseStateChanged(evt);
+        pView.setLayout(new java.awt.CardLayout());
+
+        bAddCombatant.setText("Add combatant");
+        bAddCombatant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAddCombatantActionPerformed(evt);
+            }
+        });
+
+        bNext.setText("Next round");
+        bNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bNextActionPerformed(evt);
             }
         });
 
@@ -132,24 +167,10 @@ public class MasterFrame extends javax.swing.JFrame {
             }
         });
 
-        bAddCombatant.setText("Add combatant");
-        bAddCombatant.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAddCombatantActionPerformed(evt);
-            }
-        });
-
         spCombatants.setBorder(null);
 
         pCombatants.setLayout(new javax.swing.BoxLayout(pCombatants, javax.swing.BoxLayout.Y_AXIS));
         spCombatants.setViewportView(pCombatants);
-
-        bNext.setText("Next round");
-        bNext.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bNextActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pMainLayout = new javax.swing.GroupLayout(pMain);
         pMain.setLayout(pMainLayout);
@@ -159,7 +180,7 @@ public class MasterFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(bAddCombatant)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bNext, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                .addComponent(bNext, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bNewBattle)
                 .addContainerGap())
@@ -174,14 +195,14 @@ public class MasterFrame extends javax.swing.JFrame {
                     .addComponent(bAddCombatant)
                     .addComponent(bNext))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spCombatants, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
+                .addComponent(spCombatants, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
         );
 
         spCombatants.getAccessibleContext().setAccessibleName("");
 
-        tpMain.addTab("Battle", pMain);
+        tpBattle.addTab("Battle", pMain);
 
-        tpBase.addTab("Main", tpMain);
+        pView.add(tpBattle, "Battle");
 
         tpCharacters.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -191,26 +212,152 @@ public class MasterFrame extends javax.swing.JFrame {
 
         addTabsToTpCharacter();
 
-        tpBase.addTab("Characters", tpCharacters);
-        tpBase.addTab("Audio", pAudio);
+        pView.add(tpCharacters, "Characters");
+        pView.add(pAudio, "Audio");
 
         spDice.setViewportView(dicePanel);
 
-        tpBase.addTab("Dice", spDice);
+        pView.add(spDice, "Dice");
 
         spSettings.setViewportView(settingsPanel);
 
-        tpBase.addTab("Settings", spSettings);
+        pView.add(spSettings, "Settings");
+
+        tClients.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "IP", "Name"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tClients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tClients.getTableHeader().setReorderingAllowed(false);
+        spClientsTable.setViewportView(tClients);
+
+        bKickClient.setText("Kick");
+        bKickClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bKickClientActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pClientsLayout = new javax.swing.GroupLayout(pClients);
+        pClients.setLayout(pClientsLayout);
+        pClientsLayout.setHorizontalGroup(
+            pClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pClientsLayout.createSequentialGroup()
+                .addComponent(spClientsTable, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bKickClient)
+                .addContainerGap())
+        );
+        pClientsLayout.setVerticalGroup(
+            pClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(spClientsTable, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+            .addGroup(pClientsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bKickClient)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pView.add(pClients, "Clients");
+        pClients.getAccessibleContext().setAccessibleName("Clients");
+
+        mView.setText("View");
+
+        miBattle.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.ALT_MASK));
+        miBattle.setText("Battle");
+        miBattle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miBattleActionPerformed(evt);
+            }
+        });
+        mView.add(miBattle);
+
+        miCharacters.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
+        miCharacters.setText("Characters");
+        miCharacters.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miCharactersActionPerformed(evt);
+            }
+        });
+        mView.add(miCharacters);
+
+        miDice.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
+        miDice.setText("Dice");
+        miDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miDiceActionPerformed(evt);
+            }
+        });
+        mView.add(miDice);
+
+        miAudio.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        miAudio.setText("Audio");
+        miAudio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAudioActionPerformed(evt);
+            }
+        });
+        mView.add(miAudio);
+
+        miSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        miSettings.setText("Settings");
+        miSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSettingsActionPerformed(evt);
+            }
+        });
+        mView.add(miSettings);
+        mView.add(sMenu1);
+
+        miClients.setText("Clients");
+        miClients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miClientsActionPerformed(evt);
+            }
+        });
+        mView.add(miClients);
+        mView.add(sMenu2);
+
+        miShutdown.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        miShutdown.setText("Shutdown");
+        miShutdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miShutdownActionPerformed(evt);
+            }
+        });
+        mView.add(miShutdown);
+
+        jMenuBar1.add(mView);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpBase)
+            .addComponent(pView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpBase)
+            .addComponent(pView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -297,27 +444,109 @@ public class MasterFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bNewBattleActionPerformed
 
+    private void miDiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miDiceActionPerformed
+        changeView("Dice");
+    }//GEN-LAST:event_miDiceActionPerformed
+
+    private void miAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAudioActionPerformed
+        changeView("Audio");
+    }//GEN-LAST:event_miAudioActionPerformed
+
+    private void miSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSettingsActionPerformed
+        changeView("Settings");
+    }//GEN-LAST:event_miSettingsActionPerformed
+
+    private void miBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miBattleActionPerformed
+        changeView("Battle");
+    }//GEN-LAST:event_miBattleActionPerformed
+
+    private void miCharactersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCharactersActionPerformed
+        changeView("Characters");
+    }//GEN-LAST:event_miCharactersActionPerformed
+
+    private void miShutdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miShutdownActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_miShutdownActionPerformed
+
+    private void miClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miClientsActionPerformed
+        changeView("Clients");
+        refreshClientsTable();
+    }//GEN-LAST:event_miClientsActionPerformed
+
+    private void refreshClientsTable() {
+        DefaultTableModel model = (DefaultTableModel) tClients.getModel();
+        model.setRowCount(0);
+        master.getSlaves().forEach((client) -> {
+            String ip = null;
+            String name = null;
+            try {
+                ip = client.getIp();
+            } catch (RemoteException ex) {
+                log.error("Error retrieveing remote ip", ex);
+            }
+            try {
+                name = client.getName();
+            } catch (RemoteException ex) {
+                log.error("Error retrieveing remote name", ex);
+            }
+            model.addRow(new Object[]{ip, name});
+        });
+    }
+
+    private void bKickClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bKickClientActionPerformed
+        int selectedRow = tClients.getSelectedRow();
+        if (selectedRow >= 0) {
+            try {
+                master.kick(master.getSlaves().get(selectedRow));
+            } catch (RemoteException ex) {
+                log.error("Unable to kick remote connection.", ex);
+            }
+            refreshClientsTable();
+        }
+    }//GEN-LAST:event_bKickClientActionPerformed
+
+    private void changeView(String cardName) {
+        CardLayout layout = (CardLayout) (pView.getLayout());
+        layout.show(pView, cardName);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddCombatant;
+    private javax.swing.JButton bKickClient;
     private javax.swing.JButton bNewBattle;
     private javax.swing.JButton bNext;
     private com.wouter.dndbattle.view.master.DicePanel dicePanel;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu mView;
+    private javax.swing.JMenuItem miAudio;
+    private javax.swing.JMenuItem miBattle;
+    private javax.swing.JMenuItem miCharacters;
+    private javax.swing.JMenuItem miClients;
+    private javax.swing.JMenuItem miDice;
+    private javax.swing.JMenuItem miSettings;
+    private javax.swing.JMenuItem miShutdown;
     private com.wouter.dndbattle.view.master.AudioPanel pAudio;
+    private javax.swing.JPanel pClients;
     private javax.swing.JPanel pCombatants;
     private javax.swing.JPanel pMain;
+    private javax.swing.JPanel pView;
+    private javax.swing.JPopupMenu.Separator sMenu1;
+    private javax.swing.JPopupMenu.Separator sMenu2;
     private com.wouter.dndbattle.view.master.SettingsPanel settingsPanel;
+    private javax.swing.JScrollPane spClientsTable;
     private javax.swing.JScrollPane spCombatants;
     private javax.swing.JScrollPane spDice;
     private javax.swing.JScrollPane spSettings;
+    private javax.swing.JTable tClients;
     private javax.swing.JTabbedPane tpBase;
+    private javax.swing.JTabbedPane tpBattle;
     private javax.swing.JTabbedPane tpCharacters;
-    private javax.swing.JTabbedPane tpMain;
     // End of variables declaration//GEN-END:variables
 
     public void refreshBattle(final List<ICombatant> combatants, int activeIndex) {
         pCombatants.removeAll();
-        while (tpMain.getTabCount() > 1) {
-            tpMain.remove(1);
+        while (tpBattle.getTabCount() > 1) {
+            tpBattle.remove(1);
         }
         List<ICharacter> characters = new ArrayList<>();
         log.debug("Removed all from view to leave a total of [{}] components in the view", pCombatants.getComponents().length);
@@ -335,7 +564,7 @@ public class MasterFrame extends javax.swing.JFrame {
         ICharacter previousCharacter = null;
         for (ICharacter character : characters) {
             if (!character.equals(previousCharacter)) {
-                tpMain.add(new SlaveCharacterPanel(character));
+                tpBattle.add(new SlaveCharacterPanel(character));
                 previousCharacter = character;
             }
         }

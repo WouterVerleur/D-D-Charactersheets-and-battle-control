@@ -40,8 +40,8 @@ public class SlaveFrame extends javax.swing.JFrame {
 
     private final Slave slave;
 
-    public SlaveFrame(IMaster master) {
-        this.slave = new Slave(master, this);
+    public SlaveFrame(IMaster master, String ip) {
+        this.slave = new Slave(master, this, ip);
         initComponents();
         setLocation(slave.getProperty(SLAVE_LOCATION_X, Integer.MIN_VALUE), slave.getProperty(SLAVE_LOCATION_Y, Integer.MIN_VALUE));
         int width = slave.getProperty(SLAVE_SIZE_WIDTH, getPreferredSize().width);

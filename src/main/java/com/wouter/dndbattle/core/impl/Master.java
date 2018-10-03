@@ -98,6 +98,10 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         SETTINGS.setProperty(key, value);
     }
 
+    public List<ISlave> getSlaves() {
+        return slaves;
+    }
+
     public void nextTurn() {
         battleStarted = true;
         boolean keepSearching = true;
@@ -137,6 +141,11 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         System.exit(0);
     }
 
+    public void kick(ISlave slave) throws RemoteException {
+        slave.shutdown();
+        slaves.remove(slave);
+    }
+
     public void startNewBattle() {
         combatants = new ArrayList<>();
         activeIndex = 0;
@@ -159,13 +168,13 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     @Override
     protected void shutdownHook() {
-        for (ISlave slave : slaves) {
+        slaves.forEach((slave) -> {
             try {
                 slave.shutdown();
             } catch (RemoteException e) {
                 System.out.println("Unable to shutdown slave " + e);
             }
-        }
+        });
     }
 
     public List<ICombatant> getCombatants() {

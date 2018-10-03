@@ -16,8 +16,6 @@
  */
 package com.wouter.dndbattle.objects;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 
@@ -26,7 +24,7 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface ISpell extends Comparable<ISpell>, Serializable {
+public interface ISpell extends ISaveableClass {
 
     SpellLevel getLevel();
 

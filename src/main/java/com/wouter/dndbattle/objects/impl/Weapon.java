@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.enums.Proficiency;
@@ -246,14 +247,23 @@ public class Weapon implements IWeapon {
     }
 
     @Override
-    public int compareTo(IWeapon other) {
-        int returnValue = name.compareToIgnoreCase(other.getName());
-        if (returnValue == 0) {
-            returnValue = attackDice.compareTo(other.getAttackDice());
+    public int compareTo(ISaveableClass other) {
+        if (other instanceof IWeapon) {
+            IWeapon weapon = (IWeapon) other;
+            int returnValue = name.compareToIgnoreCase(weapon.getName());
+            if (returnValue == 0) {
+                returnValue = attackDice.compareTo(weapon.getAttackDice());
+            }
+            if (returnValue == 0) {
+                returnValue = amountOfAttackDice - weapon.getAmountOfAttackDice();
+            }
+            return returnValue;
         }
-        if (returnValue == 0) {
-            returnValue = amountOfAttackDice - other.getAmountOfAttackDice();
-        }
-        return returnValue;
+        return IWeapon.super.compareTo(other);
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

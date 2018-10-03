@@ -190,7 +190,7 @@ public class Main extends javax.swing.JFrame {
         Registry registry;
         registry = LocateRegistry.getRegistry(host, port);
         IMaster master = (IMaster) registry.lookup("dnd");
-        final SlaveFrame slaveFrame = new SlaveFrame(master);
+        final SlaveFrame slaveFrame = new SlaveFrame(master, ip);
         ISlave remoteSlave = (ISlave) UnicastRemoteObject.exportObject(slaveFrame.getSlave(), 0);
         String playerName = JOptionPane.showInputDialog(MAIN, "What is your name?", SETTINGS.getProperty(CONNECTION_NAME));
         if (playerName != null && !playerName.isEmpty()) {

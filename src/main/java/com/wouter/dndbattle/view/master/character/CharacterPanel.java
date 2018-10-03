@@ -199,8 +199,8 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
             ICharacter newChar = character.getClass().getDeclaredConstructor(ICharacter.class).newInstance(character);
             if (newChar instanceof AbstractCharacter) {
                 ((AbstractCharacter) newChar).setName(newName);
-                if (Characters.addCharacter(newChar)) {
-                    Characters.remove(character);
+                if (Characters.getInstance().addCharacter(newChar)) {
+                    Characters.getInstance().remove(character);
                 }
             }
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -212,7 +212,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
         if (JOptionPane.showConfirmDialog(this, "Are you sure you wish to remove " + character + "?\nThis cannot be undone!",
                 "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-            Characters.remove(character);
+            Characters.getInstance().remove(character);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
@@ -225,8 +225,8 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
                 && JOptionPane.showConfirmDialog(this, "Are you sure you wish to change " + character + " into a " + selection.getSimpleName() + ". Some information may be lost in the process.", "Please confirm change", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             try {
                 ICharacter newChar = selection.getDeclaredConstructor(ICharacter.class).newInstance(character);
-                if (Characters.addCharacter(newChar)) {
-                    Characters.remove(character);
+                if (Characters.getInstance().addCharacter(newChar)) {
+                    Characters.getInstance().remove(character);
                 }
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 log.error("Woops this went wrong", e);

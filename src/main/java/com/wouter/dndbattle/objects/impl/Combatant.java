@@ -16,15 +16,15 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
-
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 /**
  *
@@ -155,6 +155,13 @@ public class Combatant implements ICombatant {
         }
     }
 
+    public int getHealthPercent() {
+        if (character.getMaxHealth() > 0) {
+            return (health * 100) / character.getMaxHealth();
+        }
+        return 0;
+    }
+
     @Override
     public String getHealthString() {
         if (isTransformed()) {
@@ -169,7 +176,7 @@ public class Combatant implements ICombatant {
             }
             return String.format(HEALTH_ZERO, getDeathRolls());
         }
-        return String.format(HEALTH_FORMAT, health, (health * 100) / character.getMaxHealth());
+        return String.format(HEALTH_FORMAT, health, getHealthPercent());
     }
 
     @Override

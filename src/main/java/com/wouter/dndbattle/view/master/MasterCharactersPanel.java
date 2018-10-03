@@ -142,7 +142,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         try {
             AbstractCharacter newCharacter = characterClass.newInstance();
             newCharacter.setName(inputValue);
-            if (!Characters.addCharacter(newCharacter)) {
+            if (!Characters.getInstance().addCharacter(newCharacter)) {
                 JOptionPane.showMessageDialog(this, "Unable to create character with name " + inputValue + " because it already exists!", "Character exists.", JOptionPane.WARNING_MESSAGE);
             }
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -171,7 +171,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lCharactersValueChanged
 
     private List<ICharacter> getAllCharacters() {
-        return Characters.getCharacters(characterClass);
+        return Characters.getInstance().getCharacters(characterClass);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -16,7 +16,6 @@
  */
 package com.wouter.dndbattle.objects;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +30,7 @@ import com.wouter.dndbattle.objects.enums.SkillType;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface ICharacter extends Comparable<ICharacter>, Serializable {
+public interface ICharacter extends ISaveableClass {
 
     int getAbilityScore(AbilityType abilityType);
 
@@ -44,9 +43,6 @@ public interface ICharacter extends Comparable<ICharacter>, Serializable {
     int getConditionalArmorBonus();
 
     String getName();
-
-    @JsonIgnore
-    String getSaveFileName();
 
     String getDescription();
 

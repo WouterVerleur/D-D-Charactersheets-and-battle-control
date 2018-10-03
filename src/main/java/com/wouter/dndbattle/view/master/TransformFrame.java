@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Combatant;
 import com.wouter.dndbattle.utils.Characters;
 
@@ -41,7 +40,7 @@ public class TransformFrame extends javax.swing.JFrame {
         this.combatant = combatant;
         character = combatant.getCharacter();
         this.master = master;
-        List<ICharacter> characters = Characters.getCharacters(character.getTransformType());
+        List<ICharacter> characters = Characters.getInstance().getCharacters(character.getTransformType());
         for (Iterator<ICharacter> iterator = characters.iterator(); iterator.hasNext();) {
             if (checkChallengeRatingToHigh(iterator.next())) {
                 iterator.remove();

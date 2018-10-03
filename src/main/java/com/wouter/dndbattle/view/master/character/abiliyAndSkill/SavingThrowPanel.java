@@ -19,12 +19,13 @@ package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 import java.awt.event.ItemEvent;
 
 import com.wouter.dndbattle.objects.enums.AbilityType;
-import static com.wouter.dndbattle.objects.enums.Dice.D20;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.DicePopup;
+import com.wouter.dndbattle.view.IUpdateablePanel;
+
+import static com.wouter.dndbattle.objects.enums.Dice.D20;
 
 /**
  *
@@ -103,7 +104,7 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
     private void cbProficiencyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbProficiencyItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             character.setSavingThrowProficiency(abilityType, cbProficiency.getSelectedItem());
-            Characters.updateCharacter(character);
+            Characters.getInstance().updateCharacter(character);
             abilityAndSkillPanel.updatePanels();
         }
     }//GEN-LAST:event_cbProficiencyItemStateChanged

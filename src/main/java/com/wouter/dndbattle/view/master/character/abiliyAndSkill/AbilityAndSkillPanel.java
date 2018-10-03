@@ -418,14 +418,14 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
 
     private void sHealthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sHealthStateChanged
         character.setMaxHealth((int) sHealth.getValue());
-        Characters.updateCharacter(character);
+        Characters.getInstance().updateCharacter(character);
         updatePanels();
     }//GEN-LAST:event_sHealthStateChanged
 
     private void cbChallengeRatingItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbChallengeRatingItemStateChanged
         if (evt.getStateChange() == SELECTED) {
             character.setChallengeRating(cbChallengeRating.getSelectedItem());
-            Characters.updateCharacter(character);
+            Characters.getInstance().updateCharacter(character);
             updatePanels();
         }
     }//GEN-LAST:event_cbChallengeRatingItemStateChanged
@@ -435,20 +435,20 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         character.setCanTransform(canTransform);
         cbTransformChallengeRating.setEnabled(canTransform);
         cbTransformClass.setEnabled(canTransform);
-        Characters.updateCharacter(character);
+        Characters.getInstance().updateCharacter(character);
     }//GEN-LAST:event_cbCanTransformActionPerformed
 
     private void cbTransformClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransformClassItemStateChanged
         if (evt.getStateChange() == SELECTED) {
             character.setTransformType(cbTransformClass.getSelectedItem());
-            Characters.updateCharacter(character);
+            Characters.getInstance().updateCharacter(character);
         }
     }//GEN-LAST:event_cbTransformClassItemStateChanged
 
     private void cbTransformChallengeRatingItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTransformChallengeRatingItemStateChanged
         if (evt.getStateChange() == SELECTED) {
             character.setTransformChallengeRating(cbTransformChallengeRating.getSelectedItem());
-            Characters.updateCharacter(character);
+            Characters.getInstance().updateCharacter(character);
         }
     }//GEN-LAST:event_cbTransformChallengeRatingItemStateChanged
 
@@ -464,7 +464,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
 
     private void taNotesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taNotesKeyTyped
         character.setNotes(taNotes.getText());
-        Characters.updateCharacter(character);
+        Characters.getInstance().updateCharacter(character);
     }//GEN-LAST:event_taNotesKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

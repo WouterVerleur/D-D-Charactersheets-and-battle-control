@@ -19,6 +19,7 @@ package com.wouter.dndbattle.objects.impl;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 
@@ -120,21 +121,26 @@ public class Spell implements ISpell {
     }
 
     @Override
-    public int compareTo(ISpell other) {
-        int returnValue = level.compareTo(other.getLevel());
-        if (returnValue == 0) {
-            if (name == null || other.getName() == null) {
-                if (name == other.getName()) {
-                    returnValue = 0;
-                } else if (name == null) {
-                    returnValue = -1;
+    public int compareTo(ISaveableClass other) {
+        if (other instanceof ISpell) {
+            ISpell spell = (ISpell) other;
+            int returnValue = level.compareTo(spell.getLevel());
+            if (returnValue == 0) {
+                if (name == null || spell.getName() == null) {
+                    if (name == null) {
+                        returnValue = -1;
+                        if (spell.getName() == null) {
+                            returnValue = 0;
+                        }
+                    } else {
+                        returnValue = 1;
+                    }
                 } else {
-                    returnValue = 1;
+                    returnValue = name.compareToIgnoreCase(spell.getName());
                 }
-            } else {
-                returnValue = name.compareToIgnoreCase(other.getName());
             }
+            return returnValue;
         }
-        return returnValue;
+        return ISpell.super.compareTo(other);
     }
 }

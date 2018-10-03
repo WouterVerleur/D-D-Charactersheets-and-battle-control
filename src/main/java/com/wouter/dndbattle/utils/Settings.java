@@ -145,7 +145,7 @@ public class Settings extends Properties {
         }
     }
 
-    private static class SettingsFileWriterThread extends FileWriterThread {
+    private static class SettingsFileWriterThread extends AbstractFileWriterThread {
 
         public SettingsFileWriterThread() {
             super(PROPERTIES_FILE);

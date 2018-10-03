@@ -332,7 +332,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(lExperiencePoints, gridBagConstraints);
 
-        sExperiencePoints.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(100)));
+        sExperiencePoints.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 100));
         sExperiencePoints.setValue(character.getExperiencePoints());
         sExperiencePoints.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -358,7 +358,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(lSpeed, gridBagConstraints);
 
-        sSpeed.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(30), Integer.valueOf(0), null, Integer.valueOf(5)));
+        sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 0, null, 5));
         sSpeed.setValue(character.getSpeed());
         sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -393,7 +393,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(lAge, gridBagConstraints);
 
-        sAge.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(0), null, Integer.valueOf(1)));
+        sAge.setModel(new javax.swing.SpinnerNumberModel(1, 0, null, 1));
         sAge.setValue(character.getAge());
         sAge.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -884,8 +884,6 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         taFeatures.setRows(5);
         taFeatures.setText(character.getFeaturesAndTraits());
         taFeatures.setWrapStyleWord(true);
-        taFeatures.setMinimumSize(new java.awt.Dimension(100, 22));
-        taFeatures.setPreferredSize(new java.awt.Dimension(100, 94));
         taFeatures.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 taFeaturesFocusLost(evt);

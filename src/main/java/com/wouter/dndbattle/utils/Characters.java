@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Wouter
  */
-public class Characters extends ObjectStorer<ICharacter> {
+public class Characters extends AbstractObjectStorer<ICharacter> {
 
     private static final Logger log = LoggerFactory.getLogger(Characters.class);
 
@@ -27,6 +27,7 @@ public class Characters extends ObjectStorer<ICharacter> {
     private static final Characters INSTANCE = new Characters();
 
     private Characters() {
+        super("Characters");
     }
 
     public static Characters getInstance() {

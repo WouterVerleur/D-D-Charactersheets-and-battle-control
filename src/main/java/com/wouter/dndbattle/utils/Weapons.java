@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.wouter.dndbattle.objects.IWeapon;
+import com.wouter.dndbattle.objects.impl.Weapon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Wouter
  */
-public class Weapons extends ObjectStorer<IWeapon> {
+public class Weapons extends AbstractObjectStorer<IWeapon> {
 
     private static final Logger log = LoggerFactory.getLogger(Weapons.class);
 
@@ -26,29 +27,33 @@ public class Weapons extends ObjectStorer<IWeapon> {
     private List<IWeapon> weapons = null;
 
     private Weapons() {
+        super("Weapons");
     }
 
     public static Weapons getInstance() {
         return INSTANCE;
     }
 
-    public boolean addCharacter(IWeapon weapon) {
+    public boolean addWeapon(IWeapon weapon) {
         if (!canCreate(weapon)) {
             return false;
         }
-        weapons.add(weapon);
-        Collections.sort(weapons);
+        getWeapons().add(weapon);
+        Collections.sort(getWeapons());
         store(weapon, true);
         return true;
     }
 
-    public void updateCharacter(IWeapon weapon) {
+    public void updateWeapon(IWeapon weapon) {
         if (getFile(weapon).exists()) {
             store(weapon, false);
         }
     }
 
     public List<IWeapon> getWeapons() {
+        if (weapons == null) {
+            weapons = loadFromFiles(Weapon.class);
+        }
         return weapons;
     }
 

@@ -38,6 +38,7 @@ import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.SkillType;
+import com.wouter.dndbattle.utils.Spells;
 
 /**
  *
@@ -309,6 +310,24 @@ public abstract class AbstractCharacter implements ICharacter {
         if (spells != null) {
             this.spells = spells;
         }
+    }
+
+    public void setSpellNames(List<String> spellNames) {
+        Spells spellsStorer = Spells.getInstance();
+        for (String spellName : spellNames) {
+            ISpell spell = spellsStorer.getByString(spellName);
+            if (!spells.contains(spell)) {
+                spells.add(spell);
+            }
+        }
+    }
+
+    public List<String> getSpellNames() {
+        List<String> returnList = new ArrayList<>(spells.size());
+        spells.forEach((spell) -> {
+            returnList.add(spell.toString());
+        });
+        return returnList;
     }
 
     public void addSpell(ISpell spell) {

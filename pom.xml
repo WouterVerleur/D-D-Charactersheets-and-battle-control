@@ -12,7 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <dep.jackson.version>2.9.7</dep.jackson.version>
-        <dep.commons.version>1.3.2</dep.commons.version>
+        <dep.commons.version>2.6</dep.commons.version>
     </properties>
 
     <dependencies>

@@ -18,7 +18,9 @@ package com.wouter.dndbattle.objects;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.objects.enums.Proficiency;
+import com.wouter.dndbattle.objects.enums.WeaponRange;
+import com.wouter.dndbattle.objects.enums.WeaponType;
+import com.wouter.dndbattle.objects.enums.WeaponWeight;
 
 /**
  *
@@ -29,7 +31,7 @@ public interface IWeapon extends ISaveableClass {
 
     String getName();
 
-    boolean isFinesse();
+    WeaponType getType();
 
     Dice getAttackDice();
 
@@ -37,25 +39,25 @@ public interface IWeapon extends ISaveableClass {
 
     String getDamageType();
 
-    boolean isMagicallyImbued();
+    String getNotes();
 
-    boolean isRanged();
+    boolean isFinesse();
 
-    boolean isThrown();
+    boolean isLoading();
+
+    boolean isTwoHanded();
+
+    boolean isCanUseMagicStats();
+
+    WeaponRange getWeaponRange();
 
     int getRange();
 
     int getMaxRange();
 
-    boolean isReach();
+    WeaponWeight getWeight();
 
-    boolean isLight();
+    int getAttackModifier();
 
-    String getNotes();
-
-    Proficiency getProficiency();
-
-    String getAttackOverride();
-
-    String getDamageOverride();
+    int getDamageModifier();
 }

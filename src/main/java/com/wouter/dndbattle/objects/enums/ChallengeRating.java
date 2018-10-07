@@ -23,9 +23,9 @@ package com.wouter.dndbattle.objects.enums;
 public enum ChallengeRating {
 
     ZERO("0", 2),
-    ONE_EIGHT("\u215B", 2),
-    ONE_FORTH("\u00BC", 2),
-    HALF("\u00BD", 2),
+    ONE_EIGHT("⅛", 2),
+    ONE_FORTH("¼", 2),
+    HALF("½", 2),
     ONE("1", 2),
     TWO("2", 2),
     THREE("3", 2),

@@ -5,3 +5,5 @@ Any other computer in the network can than connect to the battle master to creat
 Thisway the DM has control over the battle and party members can view information like the order and the health of friendly characters.
 
 Development of this project is optimised for use with netbeans.
+
+[![Known Vulnerabilities](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=pom.xml)

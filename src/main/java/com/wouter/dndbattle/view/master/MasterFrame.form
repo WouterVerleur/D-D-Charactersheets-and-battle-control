@@ -157,7 +157,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="SETTINGS.getProperty(MASTER_TITLE, &quot;Master&quot;).toString()" type="code"/>
+      <Connection code="SETTINGS.getProperty(MASTER_TITLE, &quot;Master&quot;)" type="code"/>
     </Property>
   </Properties>
   <SyntheticProperties>

@@ -27,8 +27,10 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.wouter.dndbattle.objects.ISaveableClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +70,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
                     returnList.add(character);
                 }
             } catch (ObjectReadException | IllegalArgumentException e) {
-                log.error("Error while reading preset of class [{}[] from file [{}]", clazz, file, e);
+                log.error("Error while reading preset of class [{}] from file [{}]", clazz, file, e);
             }
         }
         Collections.sort(returnList);
@@ -100,12 +102,17 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
                         + "Would you like to continue?", "Error reading preset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                     case JOptionPane.YES_OPTION:
                         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+                        mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
                         try {
                             T object = mapper.readValue(file, clazz);
                             store(object, true);
+                            return object;
                         } catch (IOException e2) {
                             log.error("Error while converting the preset from file [{}]", file, e2);
                         }
+                        break;
+                    default:
+                        log.debug("User did not want to attempt a conversion of the file [{}]", file);
                         break;
                 }
                 throw new ObjectReadException("Error while reading preset from file " + file.getAbsolutePath(), e);

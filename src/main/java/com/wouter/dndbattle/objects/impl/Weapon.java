@@ -23,7 +23,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.objects.enums.Proficiency;
+import com.wouter.dndbattle.objects.enums.WeaponRange;
+import com.wouter.dndbattle.objects.enums.WeaponType;
+import com.wouter.dndbattle.objects.enums.WeaponWeight;
 
 /**
  *
@@ -32,39 +34,28 @@ import com.wouter.dndbattle.objects.enums.Proficiency;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Weapon implements IWeapon {
 
-    private int amountOfAttackDice;
+    private int amountOfAttackDice = 1;
     private Dice attackDice;
+    private int attackModifier;
+    private boolean canUseMagicStats;
+    private int damageModifier;
     private String damageType;
     private boolean finesse;
-    private boolean magicallyImbued;
+    private boolean loading;
+    private int range;
     private int maxRange;
     private String name;
     private String actualNotes;
-    private Proficiency proficiency = Proficiency.NONE;
-    private int range;
-    private boolean ranged;
-    private boolean thrown;
-    private boolean reach;
-    private boolean light;
-    private String attackOverride;
-    private String damageOverride;
+    private boolean twoHanded;
+    private WeaponType type;
+    private WeaponRange weaponRange = WeaponRange.MELEE;
+    private WeaponWeight weight = WeaponWeight.NORMAL;
 
-    @Override
-    public String getAttackOverride() {
-        return attackOverride;
+    public Weapon() {
     }
 
-    public void setAttackOverride(String attackOverride) {
-        this.attackOverride = attackOverride;
-    }
-
-    @Override
-    public String getDamageOverride() {
-        return damageOverride;
-    }
-
-    public void setDamageOverride(String damageOverride) {
-        this.damageOverride = damageOverride;
+    public Weapon(WeaponType type) {
+        this.type = type;
     }
 
     @Override
@@ -86,21 +77,30 @@ public class Weapon implements IWeapon {
     }
 
     @Override
+    public int getAttackModifier() {
+        return attackModifier;
+    }
+
+    public void setAttackModifier(int attackModifier) {
+        this.attackModifier = attackModifier;
+    }
+
+    @Override
+    public int getDamageModifier() {
+        return damageModifier;
+    }
+
+    public void setDamageModifier(int damageModifier) {
+        this.damageModifier = damageModifier;
+    }
+
+    @Override
     public String getDamageType() {
         return damageType;
     }
 
     public void setDamageType(String damageType) {
         this.damageType = damageType;
-    }
-
-    @Override
-    public boolean isMagicallyImbued() {
-        return magicallyImbued;
-    }
-
-    public void setMagicallyImbued(boolean magicallyImbued) {
-        this.magicallyImbued = magicallyImbued;
     }
 
     @Override
@@ -128,27 +128,88 @@ public class Weapon implements IWeapon {
         if (finesse) {
             builder.append("Finesse");
         }
-        if (light) {
+        if (loading) {
             checkBuilder(builder);
-            builder.append("Light");
+            builder.append("Loading");
         }
-        if (reach) {
+        if (twoHanded) {
             checkBuilder(builder);
-            builder.append("Reach");
+            builder.append("Two-handed");
         }
-        if (ranged) {
+        if (canUseMagicStats) {
             checkBuilder(builder);
-            builder.append(thrown ? "Thrown (" : "Ranged (").append(range).append('/').append(maxRange).append(')');
+            builder.append("Magical");
         }
-        if (proficiency.isProficient()) {
+        if (weight != WeaponWeight.NORMAL) {
             checkBuilder(builder);
-            builder.append("Proficient");
+            builder.append(weight);
+        }
+        switch (weaponRange) {
+            case REACH:
+                checkBuilder(builder);
+                builder.append("Reach");
+                break;
+            case THROWN:
+                checkBuilder(builder);
+                builder.append("Thrown (").append(range).append('/').append(maxRange).append(')');
+                break;
+            case RANGED:
+                checkBuilder(builder);
+                builder.append("Ranged (").append(range).append('/').append(maxRange).append(')');
+                break;
+            default:
+                break;
         }
         if (actualNotes != null && !actualNotes.isEmpty()) {
             checkBuilder(builder);
             builder.append(actualNotes);
         }
         return builder.toString();
+    }
+
+    @Override
+    public WeaponType getType() {
+        return type;
+    }
+
+    public void setType(WeaponType type) {
+        this.type = type;
+    }
+
+    @Override
+    public WeaponRange getWeaponRange() {
+        return weaponRange;
+    }
+
+    public void setWeaponRange(WeaponRange weaponRange) {
+        this.weaponRange = weaponRange;
+    }
+
+    @Override
+    public WeaponWeight getWeight() {
+        return weight;
+    }
+
+    public void setWeight(WeaponWeight weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public boolean isCanUseMagicStats() {
+        return canUseMagicStats;
+    }
+
+    public void setCanUseMagicStats(boolean canUseMagicStats) {
+        this.canUseMagicStats = canUseMagicStats;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return loading;
+    }
+
+    public void setLoading(boolean loading) {
+        this.loading = loading;
     }
 
     private void checkBuilder(StringBuilder builder) {
@@ -163,15 +224,6 @@ public class Weapon implements IWeapon {
 
     public void setActualNotes(String actualNotes) {
         this.actualNotes = actualNotes;
-    }
-
-    @Override
-    public Proficiency getProficiency() {
-        return proficiency;
-    }
-
-    public void setProficiency(Proficiency proficiency) {
-        this.proficiency = proficiency;
     }
 
     @Override
@@ -193,39 +245,12 @@ public class Weapon implements IWeapon {
     }
 
     @Override
-    public boolean isRanged() {
-        return ranged;
+    public boolean isTwoHanded() {
+        return twoHanded;
     }
 
-    public void setRanged(boolean ranged) {
-        this.ranged = ranged;
-    }
-
-    @Override
-    public boolean isReach() {
-        return reach;
-    }
-
-    public void setReach(boolean reach) {
-        this.reach = reach;
-    }
-
-    @Override
-    public boolean isLight() {
-        return light;
-    }
-
-    public void setLight(boolean light) {
-        this.light = light;
-    }
-
-    @Override
-    public boolean isThrown() {
-        return thrown;
-    }
-
-    public void setThrown(boolean thrown) {
-        this.thrown = thrown;
+    public void setTwoHanded(boolean twoHanded) {
+        this.twoHanded = twoHanded;
     }
 
     @Override
@@ -266,4 +291,5 @@ public class Weapon implements IWeapon {
     public String toString() {
         return getName();
     }
+
 }

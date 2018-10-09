@@ -17,7 +17,12 @@
 package com.wouter.dndbattle.view.master.spells;
 
 import java.awt.GridLayout;
+import java.util.Collections;
+import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.impl.Spell;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Spells;
@@ -31,7 +36,6 @@ import static com.wouter.dndbattle.utils.Settings.SPELLS_GRID_COLUMNS;
  */
 public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
-    public static final String ABILITY_FORMAT = "%d / %s";
     private static final int DEFAULT_COLUMNS = 4;
 
     private static final Settings SETTINGS = Settings.getInstance();
@@ -45,7 +49,9 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
     @Override
     public final void update() {
         pSpells.removeAll();
-        spells.getAll().stream().filter((spell) -> (spell instanceof Spell)).forEachOrdered((spell) -> {
+        final List<ISpell> allSpells = spells.getAll();
+        Collections.sort(allSpells, (ISpell spell_1, ISpell spell_2) -> spell_1.getName().compareToIgnoreCase(spell_2.getName()));
+        allSpells.forEach((spell) -> {
             pSpells.add(new SpellPanel((Spell) spell, this));
         });
     }
@@ -83,8 +89,9 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipadx = 200;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(6, 10, 11, 0);
         add(sSpellColumns, gridBagConstraints);
 
@@ -99,7 +106,7 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(6, 6, 11, 0);
         add(bNew, gridBagConstraints);
 
@@ -120,7 +127,9 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
     }// </editor-fold>//GEN-END:initComponents
 
     private void bNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewActionPerformed
-        spells.addSpell(new Spell());
+        final Spell spell = new Spell();
+        spell.setName(JOptionPane.showInputDialog(this, "Please enter a name for the new spell", "New spell", JOptionPane.QUESTION_MESSAGE));
+        spells.addSpell(spell);
         update();
     }//GEN-LAST:event_bNewActionPerformed
 
@@ -139,6 +148,7 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
 
     public void removeSpell(Spell spell) {
         spells.remove(spell);
+        update();
     }
 
     void saveSpell(Spell spell) {

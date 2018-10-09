@@ -16,12 +16,12 @@
  */
 package com.wouter.dndbattle.utils;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -78,11 +78,11 @@ public class GlobalUtilsTest {
         testValues.put(0, "0");
         testValues.put(2, "+2");
 
-        for (Map.Entry<Integer, String> entrySet : testValues.entrySet()) {
+        testValues.entrySet().forEach((entrySet) -> {
             int modifier = entrySet.getKey();
             String result = GlobalUtils.modifierToString(modifier);
             assertEquals("Get modifier string was not able to convert " + modifier + " to the correct string.", entrySet.getValue(), result);
-        }
+        });
 
     }
 

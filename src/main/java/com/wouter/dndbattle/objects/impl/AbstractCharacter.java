@@ -168,7 +168,8 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in filenames.
+     * Funtion to return a name based string that is save for usage in
+     * filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -303,6 +304,7 @@ public abstract class AbstractCharacter implements ICharacter {
         this.speed = speed;
     }
 
+    @JsonIgnore
     @Override
     public List<ISpell> getSpells() {
         return spells;
@@ -337,7 +339,7 @@ public abstract class AbstractCharacter implements ICharacter {
         sortSpells();
     }
 
-    public void removeSpell(Spell spell) {
+    public void removeSpell(ISpell spell) {
         spells.remove(spell);
     }
 

@@ -7,7 +7,6 @@ package com.wouter.dndbattle.utils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Spells extends AbstractObjectStorer<ISpell> {
         return INSTANCE;
     }
 
-    public Collection<ISpell> getAll() {
+    public List<ISpell> getAll() {
         List<ISpell> returnVal = new ArrayList(getSpells().values());
         Collections.sort(returnVal);
         return returnVal;
@@ -66,7 +65,7 @@ public class Spells extends AbstractObjectStorer<ISpell> {
         if (file.exists()) {
             file.delete();
             getSpells().remove(spell.toString());
-            log.debug("Character [{}] has been deleted.", spell);
+            log.debug("Spell [{}] has been deleted.", spell);
         }
     }
 

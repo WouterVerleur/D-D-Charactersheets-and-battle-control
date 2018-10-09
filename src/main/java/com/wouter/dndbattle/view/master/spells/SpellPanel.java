@@ -226,7 +226,7 @@ public class SpellPanel extends javax.swing.JPanel {
         add(bDelete, gridBagConstraints);
 
         lName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lName.setText(spell.getName());
+        lName.setText(getSpellName());
         lName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lName.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -248,7 +248,6 @@ public class SpellPanel extends javax.swing.JPanel {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             spell.setLevel(cbSpellLevel.getSelectedItem());
             overviewPanel.saveSpell(spell);
-            overviewPanel.update();
         }
     }//GEN-LAST:event_cbSpellLevelItemStateChanged
 
@@ -273,7 +272,13 @@ public class SpellPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tfDurationKeyReleased
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
-        overviewPanel.removeSpell(spell);
+        switch (JOptionPane.showConfirmDialog(this, "Are you sure you wish to delete the spell " + spell + "?\n\nThis cannot be undone!", "Please confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
+            case JOptionPane.YES_OPTION:
+                overviewPanel.removeSpell(spell);
+                break;
+            default:
+                break;
+        }
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void lNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lNameMouseClicked
@@ -297,10 +302,12 @@ public class SpellPanel extends javax.swing.JPanel {
 
     private void taNotesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taNotesKeyReleased
         spell.setNotes(taNotes.getText());
+        overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_taNotesKeyReleased
 
     private void taDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taDescriptionKeyReleased
         spell.setDescription(taDescription.getText());
+        overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_taDescriptionKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,4 +324,13 @@ public class SpellPanel extends javax.swing.JPanel {
     private javax.swing.JTextField tfDuration;
     private javax.swing.JTextField tfRange;
     // End of variables declaration//GEN-END:variables
+
+    private String getSpellName() {
+        String spellName = spell.getName();
+        if (spellName == null || spellName.isEmpty()) {
+            return EMPTY_SPELL_NAME;
+        }
+        return spellName;
+    }
+    private static final String EMPTY_SPELL_NAME = " ";
 }

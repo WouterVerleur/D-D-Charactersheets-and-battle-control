@@ -64,7 +64,7 @@ public class Weapons extends AbstractObjectStorer<IWeapon> {
         if (file.exists()) {
             file.delete();
             weapons.remove(weapon);
-            log.debug("Character [{}] has been deleted.", weapon);
+            log.debug("Weapon [{}] has been deleted.", weapon);
         }
     }
 }

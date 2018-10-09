@@ -30,8 +30,6 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Spell implements ISpell {
 
-    private static final String STRING_FORMAT = "%s (%s)";
-
     private String castingTime;
     private String components;
     private String description;
@@ -132,7 +130,7 @@ public class Spell implements ISpell {
 
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, name, level);
+        return getName();
     }
 
     @Override

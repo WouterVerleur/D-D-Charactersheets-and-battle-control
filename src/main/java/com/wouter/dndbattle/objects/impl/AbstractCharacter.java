@@ -16,6 +16,7 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,6 +39,9 @@ import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.SkillType;
+import com.wouter.dndbattle.objects.enums.WeaponType;
+import com.wouter.dndbattle.utils.Spells;
+import com.wouter.dndbattle.utils.Weapons;
 
 /**
  *
@@ -54,7 +58,6 @@ public abstract class AbstractCharacter implements ICharacter {
     private int speed;
     private List<ISpell> spells = new ArrayList<>();
     private boolean shieldWearer;
-    private List<IWeapon> weapons = new ArrayList<>();
     private Map<AbilityType, IAbility> abilities = new HashMap<>(AbilityType.values().length);
     private Map<AbilityType, ISavingThrow> savingThrows = new HashMap<>(AbilityType.values().length);
     private Map<SkillType, ISkill> skills = new HashMap<>(SkillType.values().length);
@@ -64,6 +67,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private ChallengeRating transformChallengeRating;
     private ChallengeRating challengeRating = ChallengeRating.ZERO;
     private AbilityType spellCastingAbility;
+    private WeaponProficiency weaponProficiency;
 
     public AbstractCharacter() {
         createEmptySettings();
@@ -77,6 +81,7 @@ public abstract class AbstractCharacter implements ICharacter {
         for (SkillType skillType : SkillType.values()) {
             skills.put(skillType, new Skill(skillType));
         }
+        weaponProficiency = new WeaponProficiency();
     }
 
     public AbstractCharacter(ICharacter character) {
@@ -89,7 +94,6 @@ public abstract class AbstractCharacter implements ICharacter {
         this.speed = character.getSpeed();
         this.spells = character.getSpells();
         this.shieldWearer = character.isShieldWearer();
-        this.weapons = character.getWeapons();
         if (character instanceof AbstractCharacter) {
             final AbstractCharacter aCharacter = (AbstractCharacter) character;
             this.abilities = aCharacter.getAbilities();
@@ -300,6 +304,7 @@ public abstract class AbstractCharacter implements ICharacter {
         this.speed = speed;
     }
 
+    @JsonIgnore
     @Override
     public List<ISpell> getSpells() {
         return spells;
@@ -311,12 +316,30 @@ public abstract class AbstractCharacter implements ICharacter {
         }
     }
 
+    public void setSpellNames(List<String> spellNames) {
+        Spells spellsStorer = Spells.getInstance();
+        for (String spellName : spellNames) {
+            ISpell spell = spellsStorer.getByString(spellName);
+            if (!spells.contains(spell) && spell != null) {
+                addSpell(spell);
+            }
+        }
+    }
+
+    public List<String> getSpellNames() {
+        List<String> returnList = new ArrayList<>(spells.size());
+        spells.forEach((spell) -> {
+            returnList.add(spell.toString());
+        });
+        return returnList;
+    }
+
     public void addSpell(ISpell spell) {
         spells.add(spell);
         sortSpells();
     }
 
-    public void removeSpell(Spell spell) {
+    public void removeSpell(ISpell spell) {
         spells.remove(spell);
     }
 
@@ -334,23 +357,8 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     @Override
-    public List<IWeapon> getWeapons() {
-        return weapons;
-    }
-
-    public void setWeapons(List<IWeapon> weapons) {
-        if (weapons != null) {
-            this.weapons = weapons;
-        }
-    }
-
-    public void addWeapon(IWeapon weapon) {
-        weapons.add(weapon);
-        Collections.sort(weapons);
-    }
-
-    public void removeWeapon(IWeapon weapon) {
-        weapons.remove(weapon);
+    public boolean isProficient(IWeapon weapon) {
+        return weaponProficiency.isProficient(weapon);
     }
 
     @Override
@@ -459,5 +467,78 @@ public abstract class AbstractCharacter implements ICharacter {
             return getChallengeRating().getProficiencyScore();
         }
         return 2;
+    }
+
+    public WeaponProficiency getWeaponProficiency() {
+        return weaponProficiency;
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+    public static class WeaponProficiency implements Serializable {
+
+        private boolean allWeapons = false;
+        private WeaponType type = null;
+        private List<IWeapon> weapons = new ArrayList<>();
+
+        public WeaponType getType() {
+            return type;
+        }
+
+        public void setType(WeaponType type) {
+            this.type = type;
+        }
+
+        @JsonIgnore
+        public List<IWeapon> getWeapons() {
+            return weapons;
+        }
+
+        public void setWeapons(List<IWeapon> weapons) {
+            this.weapons = weapons;
+        }
+
+        public void addWeapon(IWeapon weapon) {
+            weapons.add(weapon);
+        }
+
+        public void removeWeapon(IWeapon weapon) {
+            weapons.remove(weapon);
+        }
+
+        public List<String> getWeaponNames() {
+            List<String> names = new ArrayList<>();
+            for (IWeapon weapon : weapons) {
+                names.add(weapon.getName());
+            }
+            return names;
+        }
+
+        public void setWeaponNames(List<String> weaponNames) {
+            List<IWeapon> completeWeaponList = Weapons.getInstance().getWeapons();
+            for (IWeapon weapon : completeWeaponList) {
+                if (weaponNames.contains(weapon.getName())) {
+                    weapons.add(weapon);
+                }
+            }
+        }
+
+        public boolean isAllWeapons() {
+            return allWeapons;
+        }
+
+        public void setAllWeapons(boolean allWeapons) {
+            this.allWeapons = allWeapons;
+        }
+
+        public boolean isProficient(IWeapon weapon) {
+            if (allWeapons) {
+                return true;
+            }
+            if (type != null && weapon.getType() == type) {
+                return true;
+            }
+            return weapons.contains(weapon);
+        }
+
     }
 }

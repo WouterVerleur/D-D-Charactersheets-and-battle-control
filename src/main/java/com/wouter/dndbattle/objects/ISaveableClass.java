@@ -51,4 +51,8 @@ public interface ISaveableClass extends Serializable, Comparable<ISaveableClass>
     public default int compareTo(ISaveableClass other) {
         return toString().compareTo(other.toString());
     }
+
+    @Override
+    public String toString();
+
 }

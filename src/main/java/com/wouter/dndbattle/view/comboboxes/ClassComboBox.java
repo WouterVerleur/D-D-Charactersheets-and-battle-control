@@ -34,13 +34,20 @@ public class ClassComboBox extends CustomComboBox<Class<? extends ICharacter>> {
         Player.class,
         Npc.class,
         Enemy.class,
+        Aberration.class,
         Beast.class,
         Celestial.class,
         Construct.class,
         Dragon.class,
         Elemental.class,
+        Fey.class,
+        Fiend.class,
         Giant.class,
-        Monstrosity.class};
+        Monstrosity.class,
+        Ooze.class,
+        Plant.class,
+        Swarm.class,
+        Undead.class};
     private static final ClassCellRenderer RENDERER = new ClassCellRenderer();
 
     public ClassComboBox() {

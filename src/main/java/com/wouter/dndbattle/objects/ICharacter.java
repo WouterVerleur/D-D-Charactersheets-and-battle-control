@@ -62,7 +62,7 @@ public interface ICharacter extends ISaveableClass {
 
     public AbilityType getSpellCastingAbility();
 
-    List<IWeapon> getWeapons();
+    boolean isProficient(IWeapon weapon);
 
     boolean isShieldWearer();
 

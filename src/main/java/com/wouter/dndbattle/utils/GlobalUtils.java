@@ -34,6 +34,7 @@ import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.Dice;
+import com.wouter.dndbattle.objects.enums.WeaponRange;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +91,8 @@ public class GlobalUtils {
 
     public static String getFileNameWithoutExtention(String fileName) {
         try {
-            return fileName.substring(0, fileName.lastIndexOf('.'));
+            String name = getFileName(fileName);
+            return name.substring(0, name.lastIndexOf('.'));
         } catch (Exception e) {
             log.error("Error while getting filename without extention from [{}]", fileName, e);
             return fileName;
@@ -143,11 +145,6 @@ public class GlobalUtils {
             tempFile.delete();
         }
     }
-    private static final String TEMPLATE_REPLACEMENT_STRING = "#\\{\\w+\\}";
-
-    private static String replaceInTemplate(String template, String search, String replacement) {
-        return template.replace(search, replacement);
-    }
 
     public static void createPDF(File tempFile, File pdf) throws IOException, DocumentException {
         try (OutputStream os = new FileOutputStream(pdf)) {
@@ -167,6 +164,12 @@ public class GlobalUtils {
         }
     }
 
+    private static final String TEMPLATE_REPLACEMENT_STRING = "#\\{\\w+\\}";
+
+    private static String replaceInTemplate(String template, String search, String replacement) {
+        return template.replace(search, replacement);
+    }
+
     public static String getResourceFileAsString(String fileName) {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         InputStream is = classLoader.getResourceAsStream(fileName);
@@ -177,17 +180,18 @@ public class GlobalUtils {
         return null;
     }
     /*
-     ************************************
-     * Character Functions ***********************************
+     *
+     * Character Functions
      */
 
     public static String modifierToString(int modifier) {
         return modifier > 0 ? "+" + modifier : Integer.toString(modifier);
     }
 
-    public static String[] getWeaponRow(ICharacter character, IWeapon weapon) {
-        return new String[]{
+    public static Object[] getWeaponRow(ICharacter character, IWeapon weapon) {
+        return new Object[]{
             weapon.getName(),
+            character.isProficient(weapon),
             getModifierString(character, weapon, true),
             getWeaponDamage(weapon, getModifierString(character, weapon, false)).replaceAll("\\s(\\s)+", " "),
             weapon.getNotes()
@@ -203,45 +207,44 @@ public class GlobalUtils {
     }
 
     private static String getModifierString(ICharacter character, IWeapon weapon, boolean addProficiency) {
-        int modifier = character.getAbilityModifier(AbilityType.STR);
-        int dex = character.getAbilityModifier(AbilityType.DEX);
+        final int str = character.getAbilityModifier(AbilityType.STR);
+        final int dex = character.getAbilityModifier(AbilityType.DEX);
+        final int magic = character.getSpellCastingAbility() != null ? character.getAbilityModifier(character.getSpellCastingAbility()) : -100;
 
-        // First handle overrides
-        String override = addProficiency ? weapon.getAttackOverride() : weapon.getDamageOverride();
-        if (override != null && !override.isEmpty()) {
-            log.debug("Returning the override [{}]", override);
-            return override;
-        }
+        int modifier;
 
-        // Then handle magic weapons
-        if (weapon.isMagicallyImbued()) {
-            AbilityType spellAbility = character.getSpellCastingAbility();
-            modifier = addProficiency ? character.getProficiencyScore() : 0;
-            if (spellAbility != null) {
-                modifier += character.getAbilityModifier(spellAbility);
-            }
-            log.debug("Magic weapons with modifier [{}]", modifier);
-            return modifierToString(modifier);
-        }
-
-        if (weapon.isRanged() && !weapon.isThrown()) {
+        // First calculate the base
+        if (weapon.getWeaponRange() == WeaponRange.RANGED || (weapon.isFinesse() && dex > str)) {
             modifier = dex;
-        } else if (weapon.isFinesse() && dex > modifier) {
-            modifier = dex;
+        } else {
+            modifier = str;
         }
-        if (addProficiency) {
-            modifier += (character.getProficiencyScore() * weapon.getProficiency().getMultiplier());
+
+        // Check if we should use magic stats
+        if (weapon.isCanUseMagicStats() && magic > modifier) {
+            modifier = magic;
         }
+
+        // Add bonus
+        modifier += addProficiency ? weapon.getAttackModifier() : weapon.getDamageModifier();
+
+        // Add proficiency
+        if (addProficiency && character.isProficient(weapon)) {
+            modifier += character.getProficiencyScore();
+        }
+
         if (modifier == 0) {
             return "";
         }
         return modifierToString(modifier);
     }
 
-    private static String getWeaponDamage(IWeapon weapon, String modifierString) {
+    public static String getWeaponDamage(IWeapon weapon, String modifierString) {
         if (weapon.getAttackDice() == Dice.NONE) {
+            log.debug("Formatting [{}] with [{}], [{}]", DAMAGE_FORMAT_SHORT, modifierString.trim(), weapon.getDamageType());
             return String.format(DAMAGE_FORMAT_SHORT, modifierString.trim(), weapon.getDamageType()).trim();
         }
+        log.debug("Formatting [{}] with [{}], [{}], [{}], [{}]", DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType());
         return String.format(DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType()).trim();
     }
 

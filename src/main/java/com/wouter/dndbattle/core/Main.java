@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import static java.awt.Frame.NORMAL;
 
 import static javax.swing.JOptionPane.CANCEL_OPTION;
-import static javax.swing.JOptionPane.NO_OPTION;
 import static javax.swing.JOptionPane.YES_OPTION;
 
 import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
@@ -58,7 +57,7 @@ public class Main extends javax.swing.JFrame {
     private static final Settings SETTINGS = Settings.getInstance();
 
     private static final String LOCALHOST = "localhost";
-    private static final int DEFAULT_PORT = 12345;
+    private static final int DEFAULT_PORT = 4144; // d = 4, n = 14, dnd=4144
     private static final Main MAIN = new Main();
 
     private static int port = DEFAULT_PORT;
@@ -158,7 +157,7 @@ public class Main extends javax.swing.JFrame {
                     case CANCEL_OPTION:
                         start(true);
                         break;
-                    case NO_OPTION:
+                    default:
                         System.exit(1);
                         break;
                 }
@@ -174,6 +173,7 @@ public class Main extends javax.swing.JFrame {
         Registry registry;
         try {
             registry = LocateRegistry.createRegistry(port);
+            logToScreen("Loading characters, spells and weapons.");
             final MasterFrame masterFrame = new MasterFrame();
             IMaster stub = (IMaster) UnicastRemoteObject.exportObject(masterFrame.getMaster(), port);
             registry.bind("dnd", stub);

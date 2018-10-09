@@ -39,4 +39,7 @@ public interface ISpell extends ISaveableClass {
     String getRange();
 
     String getComponents();
+
+    String getNotes();
+
 }

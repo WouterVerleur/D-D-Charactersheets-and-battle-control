@@ -32,26 +32,14 @@ import org.slf4j.LoggerFactory;
  *
  * @author wverl
  */
-public class SpellPanel extends javax.swing.JPanel {
+class SpellPanel extends javax.swing.JPanel {
 
     private static final Logger log = LoggerFactory.getLogger(SpellPanel.class);
-
-    public static final int PREFERED_WIDTH;
-
-    static {
-        PREFERED_WIDTH = new SpellPanel().getPreferredSize().width;
-    }
 
     private final Spell spell;
     private final SpellsPanel overviewPanel;
 
-    private SpellPanel() {
-        spell = new Spell();
-        overviewPanel = null;
-        initComponents();
-    }
-
-    public SpellPanel(Spell spell, SpellsPanel overviewPanel) {
+    SpellPanel(Spell spell, SpellsPanel overviewPanel) {
         this.spell = spell;
         this.overviewPanel = overviewPanel;
         initComponents();
@@ -289,7 +277,7 @@ public class SpellPanel extends javax.swing.JPanel {
                 ISpell newSpell = spell.getClass().getDeclaredConstructor(ISpell.class).newInstance(spell);
                 if (newSpell instanceof Spell) {
                     ((Spell) newSpell).setName(newName);
-                    if (Spells.getInstance().addSpell(newSpell)) {
+                    if (Spells.getInstance().add(newSpell)) {
                         Spells.getInstance().remove(spell);
                     }
                 }

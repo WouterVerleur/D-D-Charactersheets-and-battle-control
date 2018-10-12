@@ -34,23 +34,26 @@ public class Weapons extends AbstractObjectStorer<IWeapon> {
         return INSTANCE;
     }
 
-    public boolean addWeapon(IWeapon weapon) {
+    @Override
+    public boolean add(IWeapon weapon) {
         if (!canCreate(weapon)) {
             return false;
         }
-        getWeapons().add(weapon);
-        Collections.sort(getWeapons());
+        getAll().add(weapon);
+        Collections.sort(getAll());
         store(weapon, true);
         return true;
     }
 
-    public void updateWeapon(IWeapon weapon) {
+    @Override
+    public void update(IWeapon weapon) {
         if (getFile(weapon).exists()) {
             store(weapon, false);
         }
     }
 
-    public List<IWeapon> getWeapons() {
+    @Override
+    public List<IWeapon> getAll() {
         if (weapons == null) {
             weapons = loadFromFiles(Weapon.class);
         }
@@ -63,7 +66,7 @@ public class Weapons extends AbstractObjectStorer<IWeapon> {
         File file = getFile(weapon);
         if (file.exists()) {
             file.delete();
-            weapons.remove(weapon);
+            getAll().remove(weapon);
             log.debug("Weapon [{}] has been deleted.", weapon);
         }
     }

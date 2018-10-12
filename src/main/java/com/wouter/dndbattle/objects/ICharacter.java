@@ -38,8 +38,6 @@ public interface ICharacter extends ISaveableClass {
 
     IArmor getArmor();
 
-    int getArmorClass();
-
     int getConditionalArmorBonus();
 
     String getName();

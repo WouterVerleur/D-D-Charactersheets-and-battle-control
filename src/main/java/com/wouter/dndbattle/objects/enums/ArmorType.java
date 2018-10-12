@@ -26,5 +26,6 @@ public enum ArmorType {
     MEDIUM,
     HEAVY,
     NATURAL,
+    UNARMORED,
     MAGICAL;
 }

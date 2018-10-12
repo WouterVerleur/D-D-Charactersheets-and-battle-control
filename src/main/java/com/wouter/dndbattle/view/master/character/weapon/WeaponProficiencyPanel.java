@@ -162,7 +162,7 @@ public class WeaponProficiencyPanel extends javax.swing.JPanel implements IUpdat
 
         pWeapons.setLayout(new java.awt.GridLayout(0, 3));
 
-        for (IWeapon weapon : Weapons.getInstance().getWeapons()){
+        for (IWeapon weapon : Weapons.getInstance().getAll()){
             pWeapons.add(new WeaponCheckBox(weapon));
         }
 
@@ -224,7 +224,7 @@ public class WeaponProficiencyPanel extends javax.swing.JPanel implements IUpdat
     }
 
     private void saveCharacter() {
-        Characters.getInstance().updateCharacter(character);
+        Characters.getInstance().update(character);
     }
 
     private class WeaponCheckBox extends JCheckBox {

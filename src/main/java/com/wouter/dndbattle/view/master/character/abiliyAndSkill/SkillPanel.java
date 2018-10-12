@@ -31,13 +31,13 @@ import static com.wouter.dndbattle.objects.enums.Dice.D20;
  *
  * @author Wouter
  */
-public class SkillPanel extends javax.swing.JPanel implements IUpdateablePanel {
+class SkillPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
     private final SkillType skillType;
     private final AbstractCharacter character;
     private final AbilityAndSkillPanel abilityAndSkillPanel;
 
-    public SkillPanel(AbstractCharacter character, SkillType skillType, AbilityAndSkillPanel abilityAndSkillPanel) {
+    SkillPanel(AbstractCharacter character, SkillType skillType, AbilityAndSkillPanel abilityAndSkillPanel) {
         this.character = character;
         this.skillType = skillType;
         this.abilityAndSkillPanel = abilityAndSkillPanel;
@@ -104,7 +104,7 @@ public class SkillPanel extends javax.swing.JPanel implements IUpdateablePanel {
     private void cbProficiencyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbProficiencyItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             character.setSkillProficiency(skillType, cbProficiency.getSelectedItem());
-            Characters.getInstance().updateCharacter(character);
+            Characters.getInstance().update(character);
             abilityAndSkillPanel.updatePanels();
         }
     }//GEN-LAST:event_cbProficiencyItemStateChanged

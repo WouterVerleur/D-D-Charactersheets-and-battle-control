@@ -16,9 +16,10 @@
  */
 package com.wouter.dndbattle.objects;
 
-import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ArmorType;
 
 /**
@@ -26,12 +27,16 @@ import com.wouter.dndbattle.objects.enums.ArmorType;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface IArmor extends Comparable<IArmor>, Serializable {
+public interface IArmor extends ISaveableClass {
 
     String getName();
 
     ArmorType getArmorType();
 
     int getBaseArmorRating();
+
+    List<AbilityType> getAdditionalAbilityTypes();
+
+    public int getArmorClass(ICharacter aThis);
 
 }

@@ -204,7 +204,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         try {
             AbstractCharacter newCharacter = characterClass.newInstance();
             newCharacter.setName(inputValue);
-            if (!Characters.getInstance().addCharacter(newCharacter)) {
+            if (!Characters.getInstance().add(newCharacter)) {
                 JOptionPane.showMessageDialog(this, "Unable to create character with name " + inputValue + " because it already exists!", "Character exists.", JOptionPane.WARNING_MESSAGE);
             }
         } catch (InstantiationException | IllegalAccessException ex) {

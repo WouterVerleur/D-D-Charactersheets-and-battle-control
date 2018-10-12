@@ -30,7 +30,7 @@ import static com.wouter.dndbattle.objects.enums.Dice.D20;
  *
  * @author Wouter
  */
-public class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel {
+class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
     private static final Logger log = LoggerFactory.getLogger(AbilityPanel.class);
 
@@ -38,7 +38,7 @@ public class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel
     private final AbstractCharacter character;
     private final AbilityAndSkillPanel abilityAndSkillPanel;
 
-    public AbilityPanel(AbstractCharacter character, AbilityType abilityType, AbilityAndSkillPanel abilityAndSkillPanel) {
+    AbilityPanel(AbstractCharacter character, AbilityType abilityType, AbilityAndSkillPanel abilityAndSkillPanel) {
         this.character = character;
         this.abilityType = abilityType;
         this.abilityAndSkillPanel = abilityAndSkillPanel;
@@ -107,7 +107,7 @@ public class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel
     private void sScoreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sScoreStateChanged
         character.setAbilityScore(abilityType, (int) sScore.getValue());
         abilityAndSkillPanel.updatePanels();
-        Characters.getInstance().updateCharacter(character);
+        Characters.getInstance().update(character);
     }//GEN-LAST:event_sScoreStateChanged
 
     private void lModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lModifierMouseClicked

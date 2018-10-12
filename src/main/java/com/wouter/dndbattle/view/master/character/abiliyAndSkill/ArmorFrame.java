@@ -208,7 +208,7 @@ public class ArmorFrame extends javax.swing.JFrame {
         }
         character.setConditionalArmorBonus((int) sExtraArmor.getValue());
         character.setUsingShield(cbShield.isSelected());
-        Characters.getInstance().updateCharacter(character);
+        Characters.getInstance().update(character);
         abilityAndSkillPanel.updatePanels();
         dispose();
     }//GEN-LAST:event_bSaveActionPerformed

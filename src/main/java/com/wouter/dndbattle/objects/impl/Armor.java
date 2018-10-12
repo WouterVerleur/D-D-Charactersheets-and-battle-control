@@ -16,8 +16,14 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.IArmor;
+import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.ISaveableClass;
+import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ArmorType;
 
 /**
@@ -30,6 +36,7 @@ public class Armor implements IArmor {
     private String name;
     private ArmorType armorType = ArmorType.LIGHT;
     private int baseArmorRating = 10;
+    private List<AbilityType> additionalAbilityTypes = new ArrayList<>();
 
     public Armor() {
     }
@@ -70,11 +77,61 @@ public class Armor implements IArmor {
     }
 
     @Override
-    public int compareTo(IArmor other) {
-        if (armorType.equals(other.getArmorType())) {
-            return baseArmorRating - other.getBaseArmorRating();
+    public List<AbilityType> getAdditionalAbilityTypes() {
+        return additionalAbilityTypes;
+    }
+
+    public void setAdditionalAbilityTypes(List<AbilityType> additionalAbilityTypes) {
+        this.additionalAbilityTypes = additionalAbilityTypes;
+    }
+
+    public void addAdditionalAbilityType(AbilityType abilityType) {
+        additionalAbilityTypes.add(abilityType);
+    }
+
+    public void removeAdditionalAbilityType(AbilityType abilityType) {
+        additionalAbilityTypes.remove(abilityType);
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int getArmorClass(ICharacter character) {
+        int dex = character.getAbilityModifier(AbilityType.DEX);
+        int ac = baseArmorRating;
+        switch (armorType) {
+            case LIGHT:
+            case UNARMORED:
+                ac += dex;
+                break;
+            case MEDIUM:
+                ac += (dex > 2 ? 2 : dex);
+                break;
+            default:
+                break;
         }
-        return armorType.compareTo(armorType);
+        for (AbilityType additionalAbilityType : additionalAbilityTypes) {
+            ac += character.getAbilityModifier(additionalAbilityType);
+        }
+        return ac;
+    }
+
+    @Override
+    public int compareTo(ISaveableClass other) {
+        if (other instanceof IArmor) {
+            IArmor armor = (IArmor) other;
+            if (armorType == armor.getArmorType()) {
+                if (baseArmorRating == armor.getBaseArmorRating()) {
+                    return name.compareToIgnoreCase(armor.getName());
+                }
+                return baseArmorRating - armor.getBaseArmorRating();
+            }
+            return armorType.compareTo(armor.getArmorType());
+        }
+        return IArmor.super.compareTo(other);
     }
 
 }

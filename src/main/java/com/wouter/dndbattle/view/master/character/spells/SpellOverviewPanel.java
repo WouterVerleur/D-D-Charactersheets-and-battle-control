@@ -189,7 +189,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
 
     public void saveCharacter() {
         character.sortSpells();
-        Characters.getInstance().updateCharacter(character);
+        Characters.getInstance().update(character);
     }
 
     private String getAbilityString() {

@@ -57,7 +57,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
     }
 
     public void saveCharacter() {
-        Characters.getInstance().updateCharacter(character);
+        Characters.getInstance().update(character);
     }
 
     @Override

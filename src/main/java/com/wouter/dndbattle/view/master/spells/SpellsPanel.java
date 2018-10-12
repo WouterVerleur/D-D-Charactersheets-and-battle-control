@@ -129,7 +129,7 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
     private void bNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewActionPerformed
         final Spell spell = new Spell();
         spell.setName(JOptionPane.showInputDialog(this, "Please enter a name for the new spell", "New spell", JOptionPane.QUESTION_MESSAGE));
-        spells.addSpell(spell);
+        spells.add(spell);
         update();
     }//GEN-LAST:event_bNewActionPerformed
 
@@ -152,6 +152,6 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
     }
 
     void saveSpell(Spell spell) {
-        spells.updateSpell(spell);
+        spells.update(spell);
     }
 }

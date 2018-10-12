@@ -6,12 +6,14 @@
 package com.wouter.dndbattle.utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +36,8 @@ public class Characters extends AbstractObjectStorer<ICharacter> {
         return INSTANCE;
     }
 
-    public boolean addCharacter(ICharacter character) {
+    @Override
+    public boolean add(ICharacter character) {
         if (!canCreate(character)) {
             return false;
         }
@@ -45,10 +48,20 @@ public class Characters extends AbstractObjectStorer<ICharacter> {
         return true;
     }
 
-    public void updateCharacter(ICharacter character) {
+    @Override
+    public void update(ICharacter character) {
         if (getFile(character).exists()) {
             store(character, false);
         }
+    }
+
+    @Override
+    public List<ICharacter> getAll() {
+        List<ICharacter> all = new ArrayList<>();
+        for (Class<? extends ICharacter> clazz : ClassComboBox.getAllClasses()) {
+            all.addAll(getCharacters(clazz));
+        }
+        return all;
     }
 
     public List<ICharacter> getCharacters(Class<? extends ICharacter> clazz) {

@@ -269,37 +269,37 @@ class SpellPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lNameMouseClicked
 
     private void taNotesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taNotesKeyReleased
-        spell.setNotes(taNotes.getText());
+        spell.setNotes(taNotes.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_taNotesKeyReleased
 
     private void tfCastingTimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCastingTimeFocusLost
-        spell.setCastingTime(tfCastingTime.getText());
+        spell.setCastingTime(tfCastingTime.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_tfCastingTimeFocusLost
 
     private void tfRangeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfRangeFocusLost
-        spell.setRange(tfRange.getText());
+        spell.setRange(tfRange.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_tfRangeFocusLost
 
     private void tfComponentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfComponentsFocusLost
-        spell.setComponents(tfComponents.getText());
+        spell.setComponents(tfComponents.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_tfComponentsFocusLost
 
     private void tfDurationFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfDurationFocusLost
-        spell.setDuration(tfDuration.getText());
+        spell.setDuration(tfDuration.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_tfDurationFocusLost
 
     private void spNotesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spNotesFocusLost
-        spell.setNotes(taNotes.getText());
+        spell.setNotes(taNotes.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_spNotesFocusLost
 
     private void taDescriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_taDescriptionFocusLost
-        spell.setDescription(taDescription.getText());
+        spell.setDescription(taDescription.getText().trim());
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_taDescriptionFocusLost
 

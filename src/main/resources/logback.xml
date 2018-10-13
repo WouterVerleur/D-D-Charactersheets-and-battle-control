@@ -7,10 +7,22 @@
         </encoder>
     </appender>
 
-    <!--<logger name="com.wouter.dndbattle" level="DEBUG"/>-->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>dnd-${byday}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <prudent>true</prudent>
+    </appender>
+
+    <logger name="com.wouter.dndbattle" level="DEBUG"/>
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 
 </configuration>

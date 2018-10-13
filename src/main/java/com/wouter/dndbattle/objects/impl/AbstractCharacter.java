@@ -40,6 +40,7 @@ import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.SkillType;
 import com.wouter.dndbattle.objects.enums.WeaponType;
+import com.wouter.dndbattle.utils.Armors;
 import com.wouter.dndbattle.utils.Spells;
 import com.wouter.dndbattle.utils.Weapons;
 
@@ -50,6 +51,7 @@ import com.wouter.dndbattle.utils.Weapons;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class AbstractCharacter implements ICharacter {
 
+    private int armorOverride = 0;
     private IArmor armor;
     private int conditionalArmorBonus = 0;
     private boolean friendly;
@@ -73,19 +75,7 @@ public abstract class AbstractCharacter implements ICharacter {
         createEmptySettings();
     }
 
-    private void createEmptySettings() {
-        for (AbilityType abilityType : AbilityType.values()) {
-            abilities.put(abilityType, new Ability(abilityType));
-            savingThrows.put(abilityType, new SavingThrow(abilityType));
-        }
-        for (SkillType skillType : SkillType.values()) {
-            skills.put(skillType, new Skill(skillType));
-        }
-        weaponProficiency = new WeaponProficiency();
-    }
-
     public AbstractCharacter(ICharacter character) {
-
         this.armor = character.getArmor();
         this.conditionalArmorBonus = character.getConditionalArmorBonus();
         this.friendly = character.isFriendly();
@@ -96,6 +86,7 @@ public abstract class AbstractCharacter implements ICharacter {
         this.shieldWearer = character.isShieldWearer();
         if (character instanceof AbstractCharacter) {
             final AbstractCharacter aCharacter = (AbstractCharacter) character;
+            this.armorOverride = aCharacter.getArmorOverride();
             this.abilities = aCharacter.getAbilities();
             this.savingThrows = aCharacter.getSavingThrows();
             this.skills = aCharacter.getSkills();
@@ -108,6 +99,23 @@ public abstract class AbstractCharacter implements ICharacter {
         this.transformChallengeRating = character.getTransformChallengeRating();
         this.challengeRating = character.getChallengeRating();
         this.spellCastingAbility = character.getSpellCastingAbility();
+    }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new AbstractCharacter(this) {
+        };
+    }
+
+    private void createEmptySettings() {
+        for (AbilityType abilityType : AbilityType.values()) {
+            abilities.put(abilityType, new Ability(abilityType));
+            savingThrows.put(abilityType, new SavingThrow(abilityType));
+        }
+        for (SkillType skillType : SkillType.values()) {
+            skills.put(skillType, new Skill(skillType));
+        }
+        weaponProficiency = new WeaponProficiency();
     }
 
     @Override
@@ -141,10 +149,26 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(abilityType).getScore();
     }
 
+    public int getArmorOverride() {
+        return armorOverride;
+    }
+
+    public void setArmorOverride(int armorOverride) {
+        this.armorOverride = armorOverride;
+    }
+
     @Override
     public String getArmorClassString() {
+        int armorClass;
+        if (armor == null) {
+            armorClass = 10 + getAbilityModifier(AbilityType.DEX);
+        } else {
+            armorClass = armor.getArmorClass(this);
+        }
+        if (armorOverride > armorClass) {
+            armorClass = armorOverride;
+        }
         StringBuilder builder = new StringBuilder();
-        int armorClass = getArmorClass();
         builder.append(armorClass);
         if (conditionalArmorBonus > 0) {
             builder.append('/').append(armorClass + conditionalArmorBonus);
@@ -168,18 +192,17 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in
-     * filenames.
+     * Funtion to return a name based string that is save for usage in filenames.
      *
      * @return a filename save representation of the name of this character.
      */
     @Override
     public String getSaveFileName() {
         String fileName = getName().replaceAll(SPECIAL_CHARACTER_REGEX, SPECIAL_CHARACTER_REPLACEMENT);
-        if (fileName.startsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
+        while (fileName.startsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
             fileName = fileName.substring(1);
         }
-        if (fileName.endsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
+        while (fileName.endsWith(SPECIAL_CHARACTER_REPLACEMENT)) {
             fileName = fileName.substring(0, fileName.length() - 1);
         }
         return fileName;
@@ -246,6 +269,18 @@ public abstract class AbstractCharacter implements ICharacter {
         this.skills = skills;
     }
 
+    public String getArmorName() {
+        if (armor == null) {
+            return "";
+        }
+        return armor.getName();
+    }
+
+    public void setArmorName(String armorName) {
+        armor = Armors.getInstance().getForString(armorName);
+    }
+
+    @JsonIgnore
     @Override
     public IArmor getArmor() {
         return armor;
@@ -253,25 +288,6 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public void setArmor(IArmor armor) {
         this.armor = armor;
-    }
-
-    @JsonIgnore
-    @Override
-    public int getArmorClass() {
-        int dexMod = getAbilityModifier(AbilityType.DEX);
-        if (armor == null) {
-            return 10 + dexMod;
-        }
-        switch (armor.getArmorType()) {
-            case LIGHT:
-                return armor.getBaseArmorRating() + dexMod;
-            case MEDIUM:
-                return armor.getBaseArmorRating() + (dexMod > 2 ? 2 : dexMod);
-            case MAGICAL:
-                return armor.getBaseArmorRating() + dexMod + ((spellCastingAbility == null) ? 0 : getAbilityModifier(spellCastingAbility));
-            default:
-                return armor.getBaseArmorRating();
-        }
     }
 
     @JsonIgnore
@@ -336,11 +352,16 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public void addSpell(ISpell spell) {
         spells.add(spell);
+        if (spell instanceof Spell) {
+            ((Spell) spell).addUser(this);
+        }
         sortSpells();
     }
 
     public void removeSpell(ISpell spell) {
-        spells.remove(spell);
+        if (spells.remove(spell) && spell instanceof Spell) {
+            ((Spell) spell).removeUser(this);
+        }
     }
 
     public void sortSpells() {
@@ -514,7 +535,7 @@ public abstract class AbstractCharacter implements ICharacter {
         }
 
         public void setWeaponNames(List<String> weaponNames) {
-            List<IWeapon> completeWeaponList = Weapons.getInstance().getWeapons();
+            List<IWeapon> completeWeaponList = Weapons.getInstance().getAll();
             for (IWeapon weapon : completeWeaponList) {
                 if (weaponNames.contains(weapon.getName())) {
                     weapons.add(weapon);

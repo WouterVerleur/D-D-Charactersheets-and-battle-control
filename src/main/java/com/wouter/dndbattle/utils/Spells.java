@@ -37,13 +37,15 @@ public class Spells extends AbstractObjectStorer<ISpell> {
         return INSTANCE;
     }
 
+    @Override
     public List<ISpell> getAll() {
         List<ISpell> returnVal = new ArrayList(getSpells().values());
         Collections.sort(returnVal);
         return returnVal;
     }
 
-    public boolean addSpell(ISpell spell) {
+    @Override
+    public boolean add(ISpell spell) {
         if (!canCreate(spell)) {
             return false;
         }
@@ -52,7 +54,8 @@ public class Spells extends AbstractObjectStorer<ISpell> {
         return true;
     }
 
-    public void updateSpell(ISpell spell) {
+    @Override
+    public void update(ISpell spell) {
         if (getFile(spell).exists()) {
             store(spell, false);
         }

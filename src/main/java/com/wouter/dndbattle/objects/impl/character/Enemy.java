@@ -33,6 +33,11 @@ public class Enemy extends AbstractCharacter implements ICharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Enemy(this);
+    }
+
+    @Override
     public boolean isFriendly() {
         return false;
     }

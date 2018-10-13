@@ -31,4 +31,9 @@ public class Celestial extends AbstractCharacter {
     public Celestial(ICharacter character) {
         super(character);
     }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new Celestial(this);
+    }
 }

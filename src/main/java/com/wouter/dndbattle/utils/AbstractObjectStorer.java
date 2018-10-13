@@ -52,7 +52,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         if (!PRESET_FOLDER.exists()) {
             PRESET_FOLDER.mkdir();
         } else if (!PRESET_FOLDER.isDirectory()) {
-            log.error("The preset folder [{}] exists but is not a file.", PRESET_FOLDER);
+            log.error("The preset folder [{}] exists but is not a directory.", PRESET_FOLDER);
             System.exit(1);
         }
     }
@@ -65,9 +65,9 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         for (File file : files) {
             try {
                 log.debug("Found preset file [{}]", file);
-                T character = getFromFile(file, clazz);
-                if (character != null) {
-                    returnList.add(character);
+                T preset = getFromFile(file, clazz);
+                if (preset != null) {
+                    returnList.add(preset);
                 }
             } catch (ObjectReadException | IllegalArgumentException e) {
                 log.error("Error while reading preset of class [{}] from file [{}]", clazz, file, e);
@@ -83,7 +83,28 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         });
     }
 
-    public abstract void remove(T object);
+    public abstract void remove(T preset);
+
+    public abstract boolean add(T preset);
+
+    public void updateAll(List<T> presets) {
+        for (T preset : presets) {
+            update(preset);
+        }
+    }
+
+    public abstract void update(T preset);
+
+    public abstract List<T> getAll();
+
+    public T getForString(String name) {
+        for (T item : getAll()) {
+            if (item.toString().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
 
     protected T getFromFile(File file, Class<? extends T> clazz) throws ObjectReadException {
         if (file.length() == 0) {
@@ -98,7 +119,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
                 presetName = presetName.substring(0, presetName.indexOf('.')).replace('_', ' ');
                 switch (JOptionPane.showConfirmDialog(null,
                         "The preset " + presetName + " seems to be incompatible with the current version of the software.\n"
-                        + "The preset can be converted to the current version, but some information may be lost in the process.\n"
+                        + "The preset can probably be converted to the current version, but some information may be lost in the process.\n"
                         + "Would you like to continue?", "Error reading preset", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                     case JOptionPane.YES_OPTION:
                         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -136,8 +157,6 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
                 if (writerThread.getState() == Thread.State.TERMINATED) {
                     WRITER_THREAD_MAP.remove(file);
                     store(object, storeRightNow);
-                } else {
-                    writerThread.start();
                 }
             }
         }
@@ -147,6 +166,15 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         return !getFile(object).exists();
     }
 
+    protected File getFile(ISaveableClass object) {
+        log.debug("Returning file for preset [{}]", object);
+        final String filename = object.getSaveFileName() + '.' + object.getClass().getSimpleName();
+        return new File(PRESET_FOLDER, filename);
+    }
+
+    /*
+     * Internal Classes
+     */
     public static class ObjectReadException extends Exception {
 
         public ObjectReadException(String message) {
@@ -176,13 +204,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         }
     }
 
-    protected File getFile(ISaveableClass object) {
-        log.debug("Returning file for preset [{}]", object);
-        final String filename = object.getSaveFileName() + '.' + object.getClass().getSimpleName();
-        return new File(PRESET_FOLDER, filename);
-    }
-
-    private class FileWriterThread<T extends ISaveableClass> extends AbstractFileWriterThread {
+    private static class FileWriterThread<T extends ISaveableClass> extends AbstractFileWriterThread {
 
         private T object;
         private final Object syncObject = new Object();

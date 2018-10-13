@@ -31,4 +31,9 @@ public class Giant extends AbstractCharacter {
     public Giant(ICharacter character) {
         super(character);
     }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new Giant(this);
+    }
 }

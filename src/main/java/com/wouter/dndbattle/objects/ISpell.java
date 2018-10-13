@@ -24,7 +24,7 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface ISpell extends ISaveableClass {
+public interface ISpell extends ISaveableClass, Cloneable {
 
     SpellLevel getLevel();
 

@@ -42,7 +42,7 @@ public class Settings extends Properties {
     public static final String SLAVE_SIZE_WIDTH = "gui.slave.size.width";
     public static final String SLAVE_SPELLS_SEPERATOR = "gui.slave.spells.seperator";
     public static final String SLAVE_TITLE = "gui.slave.title";
-    public static final String SPELLS_GRID_COLUMNS = "gui.spells.gid.columns";
+    public static final String SPELLS_GRID_COLUMNS = "gui.spells.grid.columns";
 
     private static boolean alpha = false;
 

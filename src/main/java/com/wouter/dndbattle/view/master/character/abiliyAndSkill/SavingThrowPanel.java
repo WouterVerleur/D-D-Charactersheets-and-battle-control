@@ -31,14 +31,14 @@ import static com.wouter.dndbattle.objects.enums.Dice.D20;
  *
  * @author Wouter
  */
-public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
+class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
     private final AbilityAndSkillPanel abilityAndSkillPanel;
 
     private final AbilityType abilityType;
     private final AbstractCharacter character;
 
-    public SavingThrowPanel(AbstractCharacter character, AbilityType abilityType, AbilityAndSkillPanel abilityAndSkillPanel) {
+    SavingThrowPanel(AbstractCharacter character, AbilityType abilityType, AbilityAndSkillPanel abilityAndSkillPanel) {
         this.character = character;
         this.abilityType = abilityType;
         this.abilityAndSkillPanel = abilityAndSkillPanel;
@@ -104,7 +104,7 @@ public class SavingThrowPanel extends javax.swing.JPanel implements IUpdateableP
     private void cbProficiencyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbProficiencyItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             character.setSavingThrowProficiency(abilityType, cbProficiency.getSelectedItem());
-            Characters.getInstance().updateCharacter(character);
+            Characters.getInstance().update(character);
             abilityAndSkillPanel.updatePanels();
         }
     }//GEN-LAST:event_cbProficiencyItemStateChanged

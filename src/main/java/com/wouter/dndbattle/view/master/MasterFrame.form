@@ -65,11 +65,19 @@
             <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="addItemsToMCharacters();"/>
           </AuxValues>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
+        <Menu class="javax.swing.JMenu" name="mAttributes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Attributes"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="miArmors">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Armors"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miArmorsActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miSpells">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Spells"/>
@@ -126,7 +134,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miSettingsActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="sMenu1">
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="sView1">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miClients">
               <Properties>
@@ -136,7 +144,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miClientsActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="sMenu2">
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="sView2">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miShutdown">
               <Properties>
@@ -420,14 +428,21 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.wouter.dndbattle.view.master.spells.SpellsPanel" name="spellsPanel1">
+        <Component class="com.wouter.dndbattle.view.master.armor.ArmorsPanel" name="armorsPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="Armors"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="com.wouter.dndbattle.view.master.spells.SpellsPanel" name="spellsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Spells"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="com.wouter.dndbattle.view.master.weapons.WeaponsPanel" name="weaponsPanel1">
+        <Component class="com.wouter.dndbattle.view.master.weapons.WeaponsPanel" name="weaponsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Weapons"/>

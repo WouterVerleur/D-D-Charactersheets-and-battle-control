@@ -316,7 +316,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
     private void fillTables() {
         DefaultTableModel weaponModel = (DefaultTableModel) tWeapons.getModel();
-        Weapons.getInstance().getWeapons().forEach((weapon) -> {
+        Weapons.getInstance().getAll().forEach((weapon) -> {
             weaponModel.addRow(GlobalUtils.getWeaponRow(character, weapon));
         });
         List<ISpell> spells = character.getSpells();

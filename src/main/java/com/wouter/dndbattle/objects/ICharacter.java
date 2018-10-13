@@ -30,15 +30,13 @@ import com.wouter.dndbattle.objects.enums.SkillType;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface ICharacter extends ISaveableClass {
+public interface ICharacter extends ISaveableClass, Cloneable {
 
     int getAbilityScore(AbilityType abilityType);
 
     int getAbilityModifier(AbilityType abilityType);
 
     IArmor getArmor();
-
-    int getArmorClass();
 
     int getConditionalArmorBonus();
 

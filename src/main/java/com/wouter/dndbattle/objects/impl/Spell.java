@@ -16,9 +16,13 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
@@ -38,6 +42,7 @@ public class Spell implements ISpell {
     private String name;
     private String notes;
     private String range;
+    private List<ICharacter> users = new ArrayList<>();
 
     public Spell() {
     }
@@ -52,6 +57,11 @@ public class Spell implements ISpell {
         this.name = spell.getName();
         this.notes = spell.getNotes();
         this.range = spell.getRange();
+    }
+
+    @Override
+    public Spell clone() {
+        return new Spell(this);
     }
 
     @Override
@@ -173,4 +183,18 @@ public class Spell implements ISpell {
         }
         return ISpell.super.compareTo(other);
     }
+
+    public void addUser(ICharacter user) {
+        users.add(user);
+    }
+
+    public void removeUser(ICharacter user) {
+        users.remove(user);
+    }
+
+    @JsonIgnore
+    public List<ICharacter> getUsers() {
+        return users;
+    }
+
 }

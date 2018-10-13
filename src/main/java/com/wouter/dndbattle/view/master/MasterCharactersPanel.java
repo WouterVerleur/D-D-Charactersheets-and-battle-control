@@ -78,6 +78,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         bPrevious = new javax.swing.JButton();
         lName = new javax.swing.JLabel();
         bNext = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -100,9 +101,8 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         spCharacters.setBorder(null);
         spCharacters.setOpaque(false);
 
-        lCharacters.setBackground(GlobalUtils.getBackgroundTransparent());
+        lCharacters.setBackground(new java.awt.Color(255, 255, 255));
         lCharacters.setModel(listModel);
-        lCharacters.setOpaque(false);
         lCharacters.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lCharactersValueChanged(evt);
@@ -190,6 +190,15 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(bNext, gridBagConstraints);
+
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.X_AXIS));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewActionPerformed
@@ -204,7 +213,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         try {
             AbstractCharacter newCharacter = characterClass.newInstance();
             newCharacter.setName(inputValue);
-            if (!Characters.getInstance().addCharacter(newCharacter)) {
+            if (!Characters.getInstance().add(newCharacter)) {
                 JOptionPane.showMessageDialog(this, "Unable to create character with name " + inputValue + " because it already exists!", "Character exists.", JOptionPane.WARNING_MESSAGE);
             }
         } catch (InstantiationException | IllegalAccessException ex) {
@@ -254,6 +263,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
     private javax.swing.JButton bNew;
     private javax.swing.JButton bNext;
     private javax.swing.JButton bPrevious;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JList lCharacters;
     private javax.swing.JLabel lName;
     private javax.swing.JPanel pCharacters;

@@ -31,4 +31,9 @@ public class Monstrosity extends AbstractCharacter {
     public Monstrosity(ICharacter character) {
         super(character);
     }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new Monstrosity(this);
+    }
 }

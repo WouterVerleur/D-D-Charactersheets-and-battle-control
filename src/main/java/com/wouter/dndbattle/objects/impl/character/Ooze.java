@@ -34,6 +34,11 @@ public class Ooze extends AbstractCharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Ooze(this);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof Ooze) {
             Ooze beast = (Ooze) other;

@@ -84,6 +84,11 @@ class SpellPanel extends javax.swing.JPanel {
         add(cbSpellLevel, gridBagConstraints);
 
         spNotes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Notes", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+        spNotes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                spNotesFocusLost(evt);
+            }
+        });
 
         taNotes.setBackground(GlobalUtils.getBackgroundTransparent());
         taNotes.setColumns(20);
@@ -119,9 +124,9 @@ class SpellPanel extends javax.swing.JPanel {
         taDescription.setWrapStyleWord(true);
         taDescription.setCaretPosition(0);
         taDescription.setOpaque(false);
-        taDescription.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                taDescriptionKeyReleased(evt);
+        taDescription.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                taDescriptionFocusLost(evt);
             }
         });
         spDescription.setViewportView(taDescription);
@@ -145,9 +150,9 @@ class SpellPanel extends javax.swing.JPanel {
         tfCastingTime.setText(spell.getCastingTime());
         tfCastingTime.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Casting Time", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         tfCastingTime.setOpaque(false);
-        tfCastingTime.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfCastingTimeKeyReleased(evt);
+        tfCastingTime.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfCastingTimeFocusLost(evt);
             }
         });
         psmallFields.add(tfCastingTime);
@@ -157,9 +162,9 @@ class SpellPanel extends javax.swing.JPanel {
         tfRange.setText(spell.getRange());
         tfRange.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Range", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         tfRange.setOpaque(false);
-        tfRange.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfRangeKeyReleased(evt);
+        tfRange.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfRangeFocusLost(evt);
             }
         });
         psmallFields.add(tfRange);
@@ -169,9 +174,9 @@ class SpellPanel extends javax.swing.JPanel {
         tfComponents.setText(spell.getComponents());
         tfComponents.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Components", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         tfComponents.setOpaque(false);
-        tfComponents.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfComponentsKeyReleased(evt);
+        tfComponents.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfComponentsFocusLost(evt);
             }
         });
         psmallFields.add(tfComponents);
@@ -181,9 +186,9 @@ class SpellPanel extends javax.swing.JPanel {
         tfDuration.setText(spell.getDuration());
         tfDuration.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Duration", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         tfDuration.setOpaque(false);
-        tfDuration.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tfDurationKeyReleased(evt);
+        tfDuration.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfDurationFocusLost(evt);
             }
         });
         psmallFields.add(tfDuration);
@@ -237,26 +242,6 @@ class SpellPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbSpellLevelItemStateChanged
 
-    private void tfCastingTimeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfCastingTimeKeyReleased
-        spell.setCastingTime(tfCastingTime.getText());
-        overviewPanel.saveSpell(spell);
-    }//GEN-LAST:event_tfCastingTimeKeyReleased
-
-    private void tfRangeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfRangeKeyReleased
-        spell.setRange(tfRange.getText());
-        overviewPanel.saveSpell(spell);
-    }//GEN-LAST:event_tfRangeKeyReleased
-
-    private void tfComponentsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfComponentsKeyReleased
-        spell.setComponents(tfComponents.getText());
-        overviewPanel.saveSpell(spell);
-    }//GEN-LAST:event_tfComponentsKeyReleased
-
-    private void tfDurationKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDurationKeyReleased
-        spell.setDuration(tfDuration.getText());
-        overviewPanel.saveSpell(spell);
-    }//GEN-LAST:event_tfDurationKeyReleased
-
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
         switch (JOptionPane.showConfirmDialog(this, "Are you sure you wish to delete the spell " + spell + "?\n\nThis cannot be undone!", "Please confirm", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
             case JOptionPane.YES_OPTION:
@@ -288,10 +273,35 @@ class SpellPanel extends javax.swing.JPanel {
         overviewPanel.saveSpell(spell);
     }//GEN-LAST:event_taNotesKeyReleased
 
-    private void taDescriptionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_taDescriptionKeyReleased
+    private void tfCastingTimeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCastingTimeFocusLost
+        spell.setCastingTime(tfCastingTime.getText());
+        overviewPanel.saveSpell(spell);
+    }//GEN-LAST:event_tfCastingTimeFocusLost
+
+    private void tfRangeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfRangeFocusLost
+        spell.setRange(tfRange.getText());
+        overviewPanel.saveSpell(spell);
+    }//GEN-LAST:event_tfRangeFocusLost
+
+    private void tfComponentsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfComponentsFocusLost
+        spell.setComponents(tfComponents.getText());
+        overviewPanel.saveSpell(spell);
+    }//GEN-LAST:event_tfComponentsFocusLost
+
+    private void tfDurationFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfDurationFocusLost
+        spell.setDuration(tfDuration.getText());
+        overviewPanel.saveSpell(spell);
+    }//GEN-LAST:event_tfDurationFocusLost
+
+    private void spNotesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_spNotesFocusLost
+        spell.setNotes(taNotes.getText());
+        overviewPanel.saveSpell(spell);
+    }//GEN-LAST:event_spNotesFocusLost
+
+    private void taDescriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_taDescriptionFocusLost
         spell.setDescription(taDescription.getText());
         overviewPanel.saveSpell(spell);
-    }//GEN-LAST:event_taDescriptionKeyReleased
+    }//GEN-LAST:event_taDescriptionFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bDelete;

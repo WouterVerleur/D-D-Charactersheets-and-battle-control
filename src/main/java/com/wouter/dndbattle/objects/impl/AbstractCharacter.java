@@ -51,6 +51,7 @@ import com.wouter.dndbattle.utils.Weapons;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public abstract class AbstractCharacter implements ICharacter {
 
+    private int armorOverride = 0;
     private IArmor armor;
     private int conditionalArmorBonus = 0;
     private boolean friendly;
@@ -74,19 +75,7 @@ public abstract class AbstractCharacter implements ICharacter {
         createEmptySettings();
     }
 
-    private void createEmptySettings() {
-        for (AbilityType abilityType : AbilityType.values()) {
-            abilities.put(abilityType, new Ability(abilityType));
-            savingThrows.put(abilityType, new SavingThrow(abilityType));
-        }
-        for (SkillType skillType : SkillType.values()) {
-            skills.put(skillType, new Skill(skillType));
-        }
-        weaponProficiency = new WeaponProficiency();
-    }
-
     public AbstractCharacter(ICharacter character) {
-
         this.armor = character.getArmor();
         this.conditionalArmorBonus = character.getConditionalArmorBonus();
         this.friendly = character.isFriendly();
@@ -97,6 +86,7 @@ public abstract class AbstractCharacter implements ICharacter {
         this.shieldWearer = character.isShieldWearer();
         if (character instanceof AbstractCharacter) {
             final AbstractCharacter aCharacter = (AbstractCharacter) character;
+            this.armorOverride = aCharacter.getArmorOverride();
             this.abilities = aCharacter.getAbilities();
             this.savingThrows = aCharacter.getSavingThrows();
             this.skills = aCharacter.getSkills();
@@ -109,6 +99,23 @@ public abstract class AbstractCharacter implements ICharacter {
         this.transformChallengeRating = character.getTransformChallengeRating();
         this.challengeRating = character.getChallengeRating();
         this.spellCastingAbility = character.getSpellCastingAbility();
+    }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new AbstractCharacter(this) {
+        };
+    }
+
+    private void createEmptySettings() {
+        for (AbilityType abilityType : AbilityType.values()) {
+            abilities.put(abilityType, new Ability(abilityType));
+            savingThrows.put(abilityType, new SavingThrow(abilityType));
+        }
+        for (SkillType skillType : SkillType.values()) {
+            skills.put(skillType, new Skill(skillType));
+        }
+        weaponProficiency = new WeaponProficiency();
     }
 
     @Override
@@ -142,13 +149,26 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(abilityType).getScore();
     }
 
+    public int getArmorOverride() {
+        return armorOverride;
+    }
+
+    public void setArmorOverride(int armorOverride) {
+        this.armorOverride = armorOverride;
+    }
+
     @Override
     public String getArmorClassString() {
+        int armorClass;
         if (armor == null) {
-            return Integer.toString(10 + getAbilityModifier(AbilityType.DEX));
+            armorClass = 10 + getAbilityModifier(AbilityType.DEX);
+        } else {
+            armorClass = armor.getArmorClass(this);
+        }
+        if (armorOverride > armorClass) {
+            armorClass = armorOverride;
         }
         StringBuilder builder = new StringBuilder();
-        int armorClass = armor.getArmorClass(this);
         builder.append(armorClass);
         if (conditionalArmorBonus > 0) {
             builder.append('/').append(armorClass + conditionalArmorBonus);
@@ -172,8 +192,7 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in
-     * filenames.
+     * Funtion to return a name based string that is save for usage in filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -251,6 +270,9 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     public String getArmorName() {
+        if (armor == null) {
+            return "";
+        }
         return armor.getName();
     }
 
@@ -330,11 +352,16 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public void addSpell(ISpell spell) {
         spells.add(spell);
+        if (spell instanceof Spell) {
+            ((Spell) spell).addUser(this);
+        }
         sortSpells();
     }
 
     public void removeSpell(ISpell spell) {
-        spells.remove(spell);
+        if (spells.remove(spell) && spell instanceof Spell) {
+            ((Spell) spell).removeUser(this);
+        }
     }
 
     public void sortSpells() {

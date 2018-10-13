@@ -31,4 +31,9 @@ public class Dragon extends AbstractCharacter {
     public Dragon(ICharacter character) {
         super(character);
     }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new Dragon(this);
+    }
 }

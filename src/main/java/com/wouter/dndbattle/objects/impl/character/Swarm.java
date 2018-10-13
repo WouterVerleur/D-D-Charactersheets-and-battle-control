@@ -36,6 +36,11 @@ public class Swarm extends AbstractCharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Swarm(this);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof Swarm) {
             Swarm beast = (Swarm) other;

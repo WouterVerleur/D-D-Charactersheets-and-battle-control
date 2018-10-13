@@ -83,11 +83,17 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         });
     }
 
-    public abstract void remove(T object);
+    public abstract void remove(T preset);
 
-    public abstract boolean add(T object);
+    public abstract boolean add(T preset);
 
-    public abstract void update(T object);
+    public void updateAll(List<T> presets) {
+        for (T preset : presets) {
+            update(preset);
+        }
+    }
+
+    public abstract void update(T preset);
 
     public abstract List<T> getAll();
 
@@ -167,7 +173,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
     }
 
     /*
-    Internal Classes
+     * Internal Classes
      */
     public static class ObjectReadException extends Exception {
 

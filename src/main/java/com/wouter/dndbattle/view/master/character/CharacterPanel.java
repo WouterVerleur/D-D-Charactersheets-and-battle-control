@@ -193,16 +193,12 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
 
     private void bRenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRenameActionPerformed
         String newName = JOptionPane.showInputDialog(this, "Please enter the new name", "Rename", JOptionPane.QUESTION_MESSAGE);
-        try {
-            ICharacter newChar = character.getClass().getDeclaredConstructor(ICharacter.class).newInstance(character);
-            if (newChar instanceof AbstractCharacter) {
-                ((AbstractCharacter) newChar).setName(newName);
-                if (Characters.getInstance().add(newChar)) {
-                    Characters.getInstance().remove(character);
-                }
+        ICharacter newChar = character.clone();
+        if (newChar instanceof AbstractCharacter) {
+            ((AbstractCharacter) newChar).setName(newName);
+            if (Characters.getInstance().add(newChar)) {
+                Characters.getInstance().remove(character);
             }
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            log.error("Rename went wrong because we could not create a clone.", e);
         }
         presetPanel.updateList();
     }//GEN-LAST:event_bRenameActionPerformed

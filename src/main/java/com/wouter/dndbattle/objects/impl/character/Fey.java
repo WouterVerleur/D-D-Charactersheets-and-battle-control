@@ -34,6 +34,11 @@ public class Fey extends AbstractCharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Fey(this);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof Fey) {
             Fey beast = (Fey) other;

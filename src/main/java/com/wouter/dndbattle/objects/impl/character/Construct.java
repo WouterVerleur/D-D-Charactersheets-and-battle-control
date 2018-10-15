@@ -32,4 +32,9 @@ public class Construct extends AbstractCharacter {
         super(character);
     }
 
+    @Override
+    public AbstractCharacter clone() {
+        return new Construct(this);
+    }
+
 }

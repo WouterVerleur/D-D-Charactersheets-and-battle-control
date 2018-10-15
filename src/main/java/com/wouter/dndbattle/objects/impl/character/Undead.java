@@ -34,6 +34,11 @@ public class Undead extends AbstractCharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Undead(this);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof Undead) {
             Undead beast = (Undead) other;

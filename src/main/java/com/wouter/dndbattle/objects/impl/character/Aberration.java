@@ -34,6 +34,11 @@ public class Aberration extends AbstractCharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Aberration(this);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof Aberration) {
             Aberration beast = (Aberration) other;

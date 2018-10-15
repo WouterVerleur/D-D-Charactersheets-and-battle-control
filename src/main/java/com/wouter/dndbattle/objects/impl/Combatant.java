@@ -16,15 +16,15 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 /**
  *

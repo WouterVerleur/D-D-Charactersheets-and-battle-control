@@ -45,22 +45,21 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractObjectStorer.class);
 
-    private final File PRESET_FOLDER;
+    private final Map<File, FileWriterThread<T>> writerThreadMap = new HashMap<>();
+    private final File presetFolder;
 
     protected AbstractObjectStorer(String subPath) {
-        PRESET_FOLDER = new File(FileManager.getPresetFolder(), subPath);
-        if (!PRESET_FOLDER.exists()) {
-            PRESET_FOLDER.mkdir();
-        } else if (!PRESET_FOLDER.isDirectory()) {
-            log.error("The preset folder [{}] exists but is not a directory.", PRESET_FOLDER);
+        presetFolder = new File(FileManager.getPresetFolder(), subPath);
+        if (!presetFolder.exists()) {
+            presetFolder.mkdir();
+        } else if (!presetFolder.isDirectory()) {
+            log.error("The preset folder [{}] exists but is not a directory.", presetFolder);
             System.exit(1);
         }
     }
 
-    private final Map<File, FileWriterThread<T>> WRITER_THREAD_MAP = new HashMap<>();
-
     protected List<T> loadFromFiles(Class<? extends T> clazz) {
-        File[] files = PRESET_FOLDER.listFiles(new ClassFileFilter(clazz));
+        File[] files = presetFolder.listFiles(new ClassFileFilter(clazz));
         List<T> returnList = new ArrayList<>();
         for (File file : files) {
             try {
@@ -83,11 +82,17 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
         });
     }
 
-    public abstract void remove(T object);
+    public abstract void remove(T preset);
 
-    public abstract boolean add(T object);
+    public abstract boolean add(T preset);
 
-    public abstract void update(T object);
+    public void updateAll(List<T> presets) {
+        for (T preset : presets) {
+            update(preset);
+        }
+    }
+
+    public abstract void update(T preset);
 
     public abstract List<T> getAll();
 
@@ -137,21 +142,21 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
 
     protected void store(T object, boolean storeRightNow) {
         File file = getFile(object);
-        FileWriterThread writerThread = WRITER_THREAD_MAP.get(file);
+        FileWriterThread writerThread = writerThreadMap.get(file);
         if (writerThread == null) {
             writerThread = new FileWriterThread(file, object);
             if (storeRightNow) {
                 writerThread.saveToFile();
             } else {
+                writerThreadMap.put(file, writerThread);
                 writerThread.start();
             }
-            WRITER_THREAD_MAP.put(file, writerThread);
         } else {
-            if (writerThread.changeObject(object)) {
-                if (writerThread.getState() == Thread.State.TERMINATED) {
-                    WRITER_THREAD_MAP.remove(file);
-                    store(object, storeRightNow);
-                }
+            if (writerThread.changeObject(object) || writerThread.getState() == Thread.State.TERMINATED) {
+                writerThreadMap.remove(file);
+                store(object, storeRightNow);
+            } else if (storeRightNow) {
+                writerThread.saveToFile();
             }
         }
     }
@@ -163,11 +168,11 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
     protected File getFile(ISaveableClass object) {
         log.debug("Returning file for preset [{}]", object);
         final String filename = object.getSaveFileName() + '.' + object.getClass().getSimpleName();
-        return new File(PRESET_FOLDER, filename);
+        return new File(presetFolder, filename);
     }
 
     /*
-    Internal Classes
+     * Internal Classes
      */
     public static class ObjectReadException extends Exception {
 

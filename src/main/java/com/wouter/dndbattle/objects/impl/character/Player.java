@@ -17,6 +17,7 @@
 package com.wouter.dndbattle.objects.impl.character;
 
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 
 /**
@@ -30,6 +31,11 @@ public class Player extends AbstractExtendedCharacter {
 
     public Player(ICharacter character) {
         super(character);
+    }
+
+    @Override
+    public AbstractCharacter clone() {
+        return new Player(this);
     }
 
     @Override

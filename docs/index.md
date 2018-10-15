@@ -7,6 +7,8 @@ Requires Java.
 ## Current features
 * D&D style character sheets
   * With automatic calculations
+* Database like storage
+  * Weapons, spells & armor are stored in a shared pool
 * Battle assistant
   * Tells you the amount of health everybody has
 * Network connection
@@ -20,8 +22,6 @@ Requires Java.
 
 ## Planned features
 * Exporting to a PDF
-* Database like storage
-  * Storing weapons, spells & armor in a shared pool
 * Other options for information lookup
 
 ## All versions:

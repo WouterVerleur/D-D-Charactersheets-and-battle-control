@@ -34,6 +34,11 @@ public class Plant extends AbstractCharacter {
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new Plant(this);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof Plant) {
             Plant beast = (Plant) other;

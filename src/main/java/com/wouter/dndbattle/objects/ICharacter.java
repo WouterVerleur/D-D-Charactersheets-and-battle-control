@@ -31,7 +31,7 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface ICharacter extends ISaveableClass {
+public interface ICharacter extends ISaveableClass, Cloneable {
 
     int getAbilityScore(AbilityType abilityType);
 

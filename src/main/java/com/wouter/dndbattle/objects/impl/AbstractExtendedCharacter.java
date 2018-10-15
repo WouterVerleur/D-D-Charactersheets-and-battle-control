@@ -90,6 +90,12 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     }
 
     @Override
+    public AbstractCharacter clone() {
+        return new AbstractExtendedCharacter(this) {
+        };
+    }
+
+    @Override
     public List<ICharacterClass> getCharacterClasses() {
         return characterClasses;
     }

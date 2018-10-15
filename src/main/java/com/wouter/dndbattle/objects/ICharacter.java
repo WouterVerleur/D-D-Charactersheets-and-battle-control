@@ -24,6 +24,7 @@ import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.SkillType;
+import com.wouter.dndbattle.objects.enums.SpellLevel;
 
 /**
  *
@@ -58,7 +59,10 @@ public interface ICharacter extends ISaveableClass {
 
     List<ISpell> getSpells();
 
-    public AbilityType getSpellCastingAbility();
+    AbilityType getSpellCastingAbility();
+
+    @JsonIgnore
+    int getSpellSlots(SpellLevel spellLevel);
 
     boolean isProficient(IWeapon weapon);
 

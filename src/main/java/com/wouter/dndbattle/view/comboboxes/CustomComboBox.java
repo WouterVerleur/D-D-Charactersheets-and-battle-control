@@ -23,15 +23,15 @@ import javax.swing.JComboBox;
  * @author wverl
  * @param <T> type of the combobox
  */
-public class CustomComboBox<T> extends JComboBox<T>{
+public class CustomComboBox<T> extends JComboBox<T> {
 
     public CustomComboBox(T[] elements) {
         super(elements);
     }
-    
+
     @Override
     public T getSelectedItem() {
         return (T) super.getSelectedItem(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

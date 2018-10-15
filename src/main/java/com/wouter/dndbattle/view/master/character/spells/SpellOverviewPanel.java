@@ -105,6 +105,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
         lSpellAttackBonus = new javax.swing.JLabel();
         spSpells = new javax.swing.JScrollPane();
         pSpells = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -162,12 +163,21 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipady = 100;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         add(spSpells, gridBagConstraints);
+
+        jScrollPane1.setBorder(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(jScrollPane1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbSpellModifierItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSpellModifierItemStateChanged
@@ -180,6 +190,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.wouter.dndbattle.view.comboboxes.AbilityTypeComboBox cbSpellModifier;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lSpellAttackBonus;
     private javax.swing.JLabel lSpellSaveDC;
     private javax.swing.JLabel lSpellcastingAbility;

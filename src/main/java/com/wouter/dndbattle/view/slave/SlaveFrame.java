@@ -18,7 +18,6 @@ import com.wouter.dndbattle.core.IMaster;
 import com.wouter.dndbattle.core.IMasterConnectionInfo;
 import com.wouter.dndbattle.core.ISlave;
 import com.wouter.dndbattle.core.impl.Slave;
-import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
@@ -176,8 +175,7 @@ public class SlaveFrame extends javax.swing.JFrame {
     }
 
     private void createCharacterPanel(ICombatant combatant) {
-        ICharacter character = combatant.getCharacter();
-        final SlaveCharacterPanel panel = new SlaveCharacterPanel(character);
+        final SlaveCharacterPanel panel = new SlaveCharacterPanel(combatant);
         tpSelection.add(panel);
         if (combatant.isTransformed()) {
             createCharacterPanel(combatant.getTransformation());

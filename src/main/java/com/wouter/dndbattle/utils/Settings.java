@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Settings extends Properties {
 
+    public static final String CHARACTER_SPELLS_COLUMNS = "gui.character.spells.columns";
     public static final String CONNECTION_HOST = "network.connect.host";
     public static final String CONNECTION_NAME = "network.connect.name";
     public static final String CONNECTION_PORT = "network.connect.port";

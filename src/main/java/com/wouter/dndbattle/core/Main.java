@@ -147,6 +147,7 @@ public class Main extends javax.swing.JFrame {
         try {
             connectSlave(host);
         } catch (RemoteException | NotBoundException e) {
+            logToScreen("Unable to connect to master on host " + host);
             log.debug("Master doesn't seem present [" + e + "] creating now.");
             boolean createMaster = host.equalsIgnoreCase(LOCALHOST);
             if (!createMaster) {
@@ -169,12 +170,13 @@ public class Main extends javax.swing.JFrame {
     }
 
     private static void createMaster() throws HeadlessException {
-        logToScreen(String.format("Attempting to create a master on port %d", port));
+        logToScreen("Creating master.");
         Registry registry;
         try {
             registry = LocateRegistry.createRegistry(port);
-            logToScreen("Loading characters, spells and weapons.");
+            logToScreen("Loading characters, weapons, spells and armor.");
             final MasterFrame masterFrame = new MasterFrame();
+            logToScreen(String.format("Attempting to create a master on port %d", port));
             IMaster stub = (IMaster) UnicastRemoteObject.exportObject(masterFrame.getMaster(), port);
             registry.bind("dnd", stub);
             startFrame(masterFrame);

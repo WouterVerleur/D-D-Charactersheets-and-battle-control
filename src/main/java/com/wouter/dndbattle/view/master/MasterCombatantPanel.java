@@ -5,11 +5,14 @@
  */
 package com.wouter.dndbattle.view.master;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.impl.Combatant;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
@@ -27,6 +30,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     private static final Logger log = LoggerFactory.getLogger(MasterCombatantPanel.class);
 
     private static final Settings SETTINGS = Settings.getInstance();
+    private static final String SPELL_SLOT_BUTTON_FORMAT = "Level %s (%d/%d used)";
 
     private final Combatant combatant;
     private final ICharacter character;
@@ -72,6 +76,8 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         bLeaveTransformation = new javax.swing.JButton();
         lTotalDamageRecieved = new javax.swing.JLabel();
         bTransform = new javax.swing.JButton();
+        bPolyMorph = new javax.swing.JButton();
+        pUseSpellSlots = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(""), javax.swing.BorderFactory.createEtchedBorder()));
 
@@ -145,6 +151,17 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
             }
         });
 
+        bPolyMorph.setText("Polymorph");
+        bPolyMorph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPolyMorphActionPerformed(evt);
+            }
+        });
+
+        pUseSpellSlots.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Use spell slot", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        pUseSpellSlots.setLayout(new javax.swing.BoxLayout(pUseSpellSlots, javax.swing.BoxLayout.X_AXIS));
+        createUseSpellSlotButtons();
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,6 +169,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pUseSpellSlots, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -169,8 +187,11 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lTotalDamageRecieved, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bTransform, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bTransform, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bPolyMorph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bLeaveTransformation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(bTempHitpoints, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -199,7 +220,10 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                     .addComponent(bDeathRoll)
                     .addComponent(bLeaveTransformation)
                     .addComponent(bLifeRoll)
-                    .addComponent(bTransform))
+                    .addComponent(bTransform)
+                    .addComponent(bPolyMorph))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pUseSpellSlots, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -238,11 +262,18 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
 
     private void bTransformActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTransformActionPerformed
         if (checkCanTransform(combatant)) {
-            TransformFrame transformFrame = new TransformFrame(combatant, master);
-            transformFrame.setLocationRelativeTo(this);
-            transformFrame.setVisible(true);
+            showFrame(new TransformFrame(combatant, master));
         }
     }//GEN-LAST:event_bTransformActionPerformed
+
+    private void bPolyMorphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPolyMorphActionPerformed
+        showFrame(new CombatantSelectionFrame(master, combatant));
+    }//GEN-LAST:event_bPolyMorphActionPerformed
+
+    private void showFrame(JFrame frame) {
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+    }
 
     private int requestNumber(String description) {
         int value = 0;
@@ -264,6 +295,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     private javax.swing.JButton bHealth;
     private javax.swing.JButton bLeaveTransformation;
     private javax.swing.JButton bLifeRoll;
+    private javax.swing.JButton bPolyMorph;
     private javax.swing.JButton bTempHitpoints;
     private javax.swing.JButton bTransform;
     private javax.swing.JProgressBar jProgressBar1;
@@ -271,6 +303,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lDescription;
     private javax.swing.JLabel lName;
     private javax.swing.JLabel lTotalDamageRecieved;
+    private javax.swing.JPanel pUseSpellSlots;
     // End of variables declaration//GEN-END:variables
 
     private boolean checkCanTransform(Combatant combatant) {
@@ -278,5 +311,40 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
             return checkCanTransform(combatant.getTransformation());
         }
         return combatant.getCharacter().isCanTransform();
+    }
+
+    private void createUseSpellSlotButtons() {
+        int totalSpellSlots = 0;
+        int totalUsedSpellSlots = 0;
+        for (SpellLevel level : SpellLevel.values()) {
+            if (level != SpellLevel.CANTRIP && level != SpellLevel.FEATURE) {
+                final int spellSlots = combatant.getCharacter().getSpellSlots(level);
+                final int usedSpellSlots = combatant.getUsedSpellSlots(level);
+
+                totalSpellSlots += spellSlots;
+                totalUsedSpellSlots += usedSpellSlots;
+
+                if (spellSlots > 0) {
+                    JButton button = new JButton(String.format(SPELL_SLOT_BUTTON_FORMAT, level.toString(), usedSpellSlots, spellSlots));
+                    button.addActionListener((evt) -> {
+                        combatant.useSpellSlot(level);
+                        master.updateAll();
+                    });
+                    button.setEnabled(usedSpellSlots < spellSlots);
+                    pUseSpellSlots.add(button);
+                }
+            }
+        }
+        if (totalSpellSlots > 0) {
+            JButton reset = new JButton("Reset");
+            reset.addActionListener((evt) -> {
+                combatant.resetSpellSlots();
+                master.updateAll();
+            });
+            reset.setEnabled(totalUsedSpellSlots > 0);
+            pUseSpellSlots.add(reset);
+        } else {
+            pUseSpellSlots.setVisible(false);
+        }
     }
 }

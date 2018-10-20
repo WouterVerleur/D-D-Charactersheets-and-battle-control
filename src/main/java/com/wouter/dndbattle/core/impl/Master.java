@@ -45,7 +45,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     private final List<ISlave> slaves = new ArrayList<>();
     private int activeIndex = 0;
 
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public Master(MasterFrame frame) {
         this.frame = frame;
@@ -73,12 +73,16 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     public void connect(ISlave slave, String playerName) throws RemoteException {
         slaves.add(slave);
         boolean localhost = false;
+        String clientHost = null;
+        String localhostAddress = null;
         try {
-            localhost = RemoteServer.getClientHost().equalsIgnoreCase(InetAddress.getLocalHost().getHostAddress());
+            clientHost = RemoteServer.getClientHost();
+            localhostAddress = InetAddress.getLocalHost().getHostAddress();
+            localhost = clientHost.equalsIgnoreCase(localhostAddress);
         } catch (ServerNotActiveException | UnknownHostException e) {
             log.error("Error while determining if connection if from localhost", e);
         }
-        log.debug("Recieved new slave connection from [{}] for which localhost was [{}]", playerName, localhost);
+        log.debug("Recieved new slave connection from [{}] for which localhost was [{}] fors remote host [{}] and localhost [{}]", playerName, localhost, clientHost, localhostAddress);
         slave.setConnectionInfo(new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName));
         slave.refreshView(combatants, activeIndex);
     }
@@ -141,8 +145,12 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         System.exit(0);
     }
 
-    public void kick(ISlave slave) throws RemoteException {
-        slave.shutdown();
+    public void kick(ISlave slave) {
+        try {
+            slave.shutdown();
+        } catch (RemoteException ex) {
+            log.error("Attempt to kick [{}] resulted in an error.", slave, ex);
+        }
         slaves.remove(slave);
     }
 

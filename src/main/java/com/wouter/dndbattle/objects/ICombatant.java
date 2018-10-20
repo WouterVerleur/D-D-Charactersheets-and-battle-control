@@ -19,6 +19,7 @@ package com.wouter.dndbattle.objects;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.wouter.dndbattle.objects.enums.SpellLevel;
 
 /**
  *
@@ -47,13 +48,15 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
 
     boolean isTransformed();
 
+    ICombatant getTransformation();
+
     int getTotalDamageRecieved();
 
     boolean ownedbyPlayer(String playerName);
 
-    ICombatant getTransformation();
-
     boolean rollingForDeath();
 
     boolean isFriendly();
+
+    int getUsedSpellSlots(SpellLevel level);
 }

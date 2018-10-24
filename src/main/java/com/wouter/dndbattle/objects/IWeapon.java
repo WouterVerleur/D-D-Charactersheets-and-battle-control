@@ -60,4 +60,6 @@ public interface IWeapon extends ISaveableClass {
     int getAttackModifier();
 
     int getDamageModifier();
+
+    boolean isProficient();
 }

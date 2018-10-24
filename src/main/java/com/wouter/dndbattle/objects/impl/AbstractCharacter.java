@@ -39,6 +39,7 @@ import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.SkillType;
+import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.enums.WeaponType;
 import com.wouter.dndbattle.utils.Armors;
 import com.wouter.dndbattle.utils.Spells;
@@ -69,7 +70,9 @@ public abstract class AbstractCharacter implements ICharacter {
     private ChallengeRating transformChallengeRating;
     private ChallengeRating challengeRating = ChallengeRating.ZERO;
     private AbilityType spellCastingAbility;
+    private Map<SpellLevel, Integer> spellSlots = new HashMap<>(SpellLevel.values().length);
     private WeaponProficiency weaponProficiency;
+    private List<IWeapon> privateWeapons = new ArrayList<>();
 
     public AbstractCharacter() {
         createEmptySettings();
@@ -90,6 +93,7 @@ public abstract class AbstractCharacter implements ICharacter {
             this.abilities = aCharacter.getAbilities();
             this.savingThrows = aCharacter.getSavingThrows();
             this.skills = aCharacter.getSkills();
+            this.spellSlots = aCharacter.getSpellSlots();
         } else {
             createEmptySettings();
         }
@@ -114,6 +118,9 @@ public abstract class AbstractCharacter implements ICharacter {
         }
         for (SkillType skillType : SkillType.values()) {
             skills.put(skillType, new Skill(skillType));
+        }
+        for (SpellLevel spellLevel : SpellLevel.values()) {
+            spellSlots.put(spellLevel, 0);
         }
         weaponProficiency = new WeaponProficiency();
     }
@@ -192,7 +199,8 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in filenames.
+     * Funtion to return a name based string that is save for usage in
+     * filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -378,8 +386,43 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     @Override
+    public int getSpellSlotsByLevel(SpellLevel level) {
+        return spellSlots.get(level);
+    }
+
+    public void setSpellSlotsByLevel(SpellLevel level, int slots) {
+        spellSlots.put(level, slots);
+    }
+
+    public Map<SpellLevel, Integer> getSpellSlots() {
+        return spellSlots;
+    }
+
+    public void setSpellSlots(Map<SpellLevel, Integer> spellSlots) {
+        this.spellSlots = spellSlots;
+    }
+
+    @Override
     public boolean isProficient(IWeapon weapon) {
         return weaponProficiency.isProficient(weapon);
+    }
+
+    public void setPrivateWeapons(List<IWeapon> privateWeapons) {
+        this.privateWeapons = privateWeapons;
+    }
+
+    @Override
+    public List<IWeapon> getPrivateWeapons() {
+        return privateWeapons;
+    }
+
+    public void addPrivateWeapon(IWeapon weapon) {
+        privateWeapons.add(weapon);
+        Collections.sort(privateWeapons);
+    }
+
+    public void removePrivateWeapon(IWeapon weapon) {
+        privateWeapons.remove(weapon);
     }
 
     @Override
@@ -552,6 +595,9 @@ public abstract class AbstractCharacter implements ICharacter {
         }
 
         public boolean isProficient(IWeapon weapon) {
+            if (weapon.getType() == WeaponType.PERSONAL) {
+                return weapon.isProficient();
+            }
             if (allWeapons) {
                 return true;
             }

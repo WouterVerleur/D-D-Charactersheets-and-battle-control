@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Settings extends Properties {
 
+    public static final String CHARACTER_SPELLS_COLUMNS = "gui.character.spells.columns";
     public static final String CONNECTION_HOST = "network.connect.host";
     public static final String CONNECTION_NAME = "network.connect.name";
     public static final String CONNECTION_PORT = "network.connect.port";
@@ -155,7 +156,7 @@ public class Settings extends Properties {
         public void saveToFile() {
             try {
                 log.debug("Saving properties to file [{}]", PROPERTIES_FILE);
-                getInstance().store(new FileOutputStream(PROPERTIES_FILE), null);
+                getInstance().store(new FileOutputStream(PROPERTIES_FILE), "Properties for D&D charactersheets & Battle Control");
             } catch (IOException e) {
                 log.error("Exception while saving properties to file [{}]", PROPERTIES_FILE, e);
             }

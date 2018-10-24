@@ -19,6 +19,7 @@ import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 import com.wouter.dndbattle.core.IMaster;
@@ -47,8 +48,13 @@ public class MasterFrame extends javax.swing.JFrame {
 
     private static final Logger log = LoggerFactory.getLogger(MasterFrame.class);
     private static final Settings SETTINGS = Settings.getInstance();
+    private static final int DEFAULT_REFRESH_TIME = 1000;
 
     private final Master master;
+
+    private final Timer refreshTimer = new Timer(DEFAULT_REFRESH_TIME, (ActionEvent e) -> {
+        refreshClientsTable();
+    });
 
     /**
      * Creates new form MasterFrame
@@ -109,6 +115,7 @@ public class MasterFrame extends javax.swing.JFrame {
         spClientsTable = new javax.swing.JScrollPane();
         tClients = new javax.swing.JTable();
         bKickClient = new javax.swing.JButton();
+        tbRefresh = new javax.swing.JToggleButton();
         armorsPanel = new com.wouter.dndbattle.view.master.armor.ArmorsPanel();
         spellsPanel = new com.wouter.dndbattle.view.master.spells.SpellsPanel();
         weaponsPanel = new com.wouter.dndbattle.view.master.weapons.WeaponsPanel();
@@ -226,14 +233,14 @@ public class MasterFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IP", "Name"
+                "IP", "Name", "Ping"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -255,14 +262,24 @@ public class MasterFrame extends javax.swing.JFrame {
             }
         });
 
+        tbRefresh.setSelected(refreshTimer.isRunning());
+        tbRefresh.setText("Refresh");
+        tbRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pClientsLayout = new javax.swing.GroupLayout(pClients);
         pClients.setLayout(pClientsLayout);
         pClientsLayout.setHorizontalGroup(
             pClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pClientsLayout.createSequentialGroup()
-                .addComponent(spClientsTable, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+                .addComponent(spClientsTable, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bKickClient)
+                .addGroup(pClientsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tbRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bKickClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pClientsLayout.setVerticalGroup(
@@ -271,6 +288,8 @@ public class MasterFrame extends javax.swing.JFrame {
             .addGroup(pClientsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(bKickClient)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbRefresh)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -506,14 +525,14 @@ public class MasterFrame extends javax.swing.JFrame {
         refreshClientsTable();
     }//GEN-LAST:event_miClientsActionPerformed
 
-    private void refreshClientsTable() {
+    private synchronized void refreshClientsTable() {
         DefaultTableModel model = (DefaultTableModel) tClients.getModel();
         model.setRowCount(0);
         master.getSlaves().forEach((client) -> {
             String ip = null;
             String name = null;
             try {
-                ip = client.getIp();
+                ip = client.getConnectionInfo().isLocalhost() ? "localhost" : client.getIp();
             } catch (RemoteException ex) {
                 log.error("Error retrieveing remote ip", ex);
             }
@@ -522,18 +541,24 @@ public class MasterFrame extends javax.swing.JFrame {
             } catch (RemoteException ex) {
                 log.error("Error retrieveing remote name", ex);
             }
-            model.addRow(new Object[]{ip, name});
+            String ping;
+            long start = System.currentTimeMillis();
+            try {
+                client.ping();
+                long time = System.currentTimeMillis() - start;
+                ping = (time > 1 ? time + " ms" : "< 1 ms");
+            } catch (RemoteException ex) {
+                log.error("Error pinging", ex);
+                ping = "Error";
+            }
+            model.addRow(new Object[]{ip, name, ping});
         });
     }
 
     private void bKickClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bKickClientActionPerformed
         int selectedRow = tClients.getSelectedRow();
         if (selectedRow >= 0) {
-            try {
-                master.kick(master.getSlaves().get(selectedRow));
-            } catch (RemoteException ex) {
-                log.error("Unable to kick remote connection.", ex);
-            }
+            master.kick(master.getSlaves().get(selectedRow));
             refreshClientsTable();
         }
     }//GEN-LAST:event_bKickClientActionPerformed
@@ -568,6 +593,16 @@ public class MasterFrame extends javax.swing.JFrame {
     private void miArmorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miArmorsActionPerformed
         changeView("Armors");
     }//GEN-LAST:event_miArmorsActionPerformed
+
+    private void tbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbRefreshActionPerformed
+        if (tbRefresh.isSelected() != refreshTimer.isRunning()) {
+            if (tbRefresh.isSelected()) {
+                refreshTimer.start();
+            } else {
+                refreshTimer.stop();
+            }
+        }
+    }//GEN-LAST:event_tbRefreshActionPerformed
 
     private void changeView(String cardName) {
         CardLayout layout = (CardLayout) (pView.getLayout());
@@ -614,6 +649,7 @@ public class MasterFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane spSettings;
     private com.wouter.dndbattle.view.master.spells.SpellsPanel spellsPanel;
     private javax.swing.JTable tClients;
+    private javax.swing.JToggleButton tbRefresh;
     private javax.swing.JTabbedPane tpBattle;
     private com.wouter.dndbattle.view.master.weapons.WeaponsPanel weaponsPanel;
     // End of variables declaration//GEN-END:variables
@@ -623,24 +659,24 @@ public class MasterFrame extends javax.swing.JFrame {
         while (tpBattle.getTabCount() > 1) {
             tpBattle.remove(1);
         }
-        List<ICharacter> characters = new ArrayList<>();
+        List<ICombatant> characters = new ArrayList<>();
         log.debug("Removed all from view to leave a total of [{}] components in the view", pCombatants.getComponents().length);
         for (int i = activeIndex; i < combatants.size(); i++) {
             final Combatant combatant = (Combatant) combatants.get(i);
             addCombatant(combatant);
-            characters.add(combatant.getCharacter());
+            addCharacterToList(characters, combatant);
         }
         for (int i = 0; i < activeIndex; i++) {
             final Combatant combatant = (Combatant) combatants.get(i);
             addCombatant(combatant);
-            characters.add(combatant.getCharacter());
+            addCharacterToList(characters, combatant);
         }
-        Collections.sort(characters);
+        Collections.sort(characters, (ICombatant t, ICombatant t1) -> t.getCharacter().compareTo(t1.getCharacter()));
         ICharacter previousCharacter = null;
-        for (ICharacter character : characters) {
-            if (!character.equals(previousCharacter)) {
-                tpBattle.add(new SlaveCharacterPanel(character));
-                previousCharacter = character;
+        for (ICombatant combatant : characters) {
+            if (!combatant.getCharacter().equals(previousCharacter)) {
+                tpBattle.add(new SlaveCharacterPanel(combatant));
+                previousCharacter = combatant.getCharacter();
             }
         }
         log.debug("Added all combatants to get a new total of [{}] components in the view", pCombatants.getComponents().length);
@@ -648,6 +684,13 @@ public class MasterFrame extends javax.swing.JFrame {
             pCombatants.add(new JPanel());
         }
         pCombatants.revalidate();
+    }
+
+    private void addCharacterToList(List<ICombatant> list, Combatant combatant) {
+        list.add(combatant);
+        if (combatant.isTransformed()) {
+            addCharacterToList(list, combatant.getTransformation());
+        }
     }
 
     private void addCombatant(Combatant combatant) {

@@ -16,15 +16,19 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
+import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 /**
  *
@@ -43,6 +47,16 @@ public class Combatant implements ICombatant {
     private static final String DAMAGE_RECIEVED_FORMAT = "Total damage recieved: %d.";
     private static final String DAMAGE_RECIEVED_FORMAT_AND_DOWNED = "Total damage recieved: %d. Times downed: %d.";
 
+    private static final Map<SpellLevel, Integer> BASE_USED_SPELLSLOTS_MAP;
+
+    static {
+        final SpellLevel[] values = SpellLevel.values();
+        BASE_USED_SPELLSLOTS_MAP = new HashMap<>(values.length);
+        for (SpellLevel spellLevel : values) {
+            BASE_USED_SPELLSLOTS_MAP.put(spellLevel, 0);
+        }
+    }
+
     private final String name;
 
     private final ICharacter character;
@@ -57,6 +71,7 @@ public class Combatant implements ICombatant {
     private Boolean rollForDeath;
     private int totalDamageRecieved = 0;
     private boolean friendly;
+    private Map<SpellLevel, Integer> usedSpellSlotsMap;
 
     public Combatant(ICharacter character, String name, int initiative) {
         this(character, name, initiative, character.getMaxHealth());
@@ -69,6 +84,7 @@ public class Combatant implements ICombatant {
         this.dead = false;
         this.initiative = initiative;
         friendly = character.isFriendly();
+        resetSpellSlots();
     }
 
     private Combatant(ICharacter character, String name, int initiative, Boolean rollForDeath) {
@@ -78,9 +94,6 @@ public class Combatant implements ICombatant {
 
     @Override
     public ICharacter getCharacter() {
-        if (isTransformed()) {
-            transformation.getCharacter();
-        }
         return character;
     }
 
@@ -275,15 +288,19 @@ public class Combatant implements ICombatant {
     @Override
     public String getName() {
         if (isTransformed()) {
-            return String.format(TRANSFORM_NAME_FORMAT, transformation.getName(), name);
+            return transformation.getTransformationName(name);
         }
         return name;
+    }
+
+    protected String getTransformationName(String previousName) {
+        return String.format(TRANSFORM_NAME_FORMAT, getName(), previousName);
     }
 
     public void transform(ICharacter transform) {
         if (isTransformed()) {
             transformation.transform(transform);
-        } else if (character.isCanTransform()) {
+        } else {
             log.debug("Transforming [{}] into [{}]", character.getName(), transform.getName());
             transformation = new Combatant(transform, transform.getName(), initiative, false);
             return;
@@ -293,11 +310,15 @@ public class Combatant implements ICombatant {
 
     @Override
     public boolean isTransformed() {
-        return character.isCanTransform() && transformation != null && !transformation.isDead();
+        return transformation != null && !transformation.isDead();
     }
 
     public void leaveTransformation() {
-        transformation = null;
+        if (transformation.isTransformed()) {
+            transformation.leaveTransformation();
+        } else {
+            transformation = null;
+        }
     }
 
     @Override
@@ -327,5 +348,20 @@ public class Combatant implements ICombatant {
     @Override
     public String toString() {
         return getName();
+    }
+
+    @Override
+    public int getUsedSpellSlots(SpellLevel level) {
+        return usedSpellSlotsMap.get(level);
+    }
+
+    public void useSpellSlot(SpellLevel level) {
+        Integer value = usedSpellSlotsMap.get(level);
+        value++;
+        usedSpellSlotsMap.put(level, value);
+    }
+
+    public final void resetSpellSlots() {
+        usedSpellSlotsMap = new HashMap<>(BASE_USED_SPELLSLOTS_MAP);
     }
 }

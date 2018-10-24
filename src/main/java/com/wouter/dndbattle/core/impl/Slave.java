@@ -42,6 +42,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     /**
      * @return the connectionInfo
      */
+    @Override
     public IMasterConnectionInfo getConnectionInfo() {
         return connectionInfo;
     }
@@ -111,5 +112,10 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     @Override
     public String getName() {
         return connectionInfo.getPlayerName();
+    }
+
+    @Override
+    public void ping() throws RemoteException {
+        // Nothing to do, just let the function return.
     }
 }

@@ -54,11 +54,14 @@ public class GlobalUtils {
 
     public static final String DAMAGE_FORMAT_SHORT = "%s %s";
     public static final String DAMAGE_FORMAT = "%d%s %s %s";
-    /*
-     ************************************
-     * File Functions ***********************************
-     */
 
+    public static final int NAME = 0;
+    public static final int ATTACK = 2;
+    public static final int DAMAGE = 3;
+
+    /*
+     * File Functions
+     */
     public static String getFileExtension(File file) {
         return getFileExtension(file.getName());
     }
@@ -179,16 +182,17 @@ public class GlobalUtils {
         }
         return null;
     }
+
     /*
      *
      * Character Functions
      */
-
     public static String modifierToString(int modifier) {
         return modifier > 0 ? "+" + modifier : Integer.toString(modifier);
     }
 
     public static Object[] getWeaponRow(ICharacter character, IWeapon weapon) {
+        // If changed also change the static integers that point the to variables.
         return new Object[]{
             weapon.getName(),
             character.isProficient(weapon),

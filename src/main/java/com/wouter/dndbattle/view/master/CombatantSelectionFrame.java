@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
+import com.wouter.dndbattle.objects.impl.Combatant;
 import com.wouter.dndbattle.utils.Characters;
 
 /**
@@ -22,9 +23,15 @@ import com.wouter.dndbattle.utils.Characters;
 public class CombatantSelectionFrame extends JFrame {
 
     private final Master master;
+    private final Combatant combatant;
 
     public CombatantSelectionFrame(Master master) {
+        this(master, null);
+    }
+
+    public CombatantSelectionFrame(Master master, Combatant combatant) {
         this.master = master;
+        this.combatant = combatant;
         initComponents();
     }
 
@@ -124,10 +131,16 @@ public class CombatantSelectionFrame extends JFrame {
     }//GEN-LAST:event_bCancelActionPerformed
 
     private void bNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNextActionPerformed
-        AbstractCharacter selectedCharacter = (AbstractCharacter) listCharacters.getSelectedValue();
-        AddCombatantFrame addCombatantFrame = new AddCombatantFrame(master, selectedCharacter);
-        addCombatantFrame.setLocationRelativeTo(this);
-        addCombatantFrame.setVisible(true);
+        if (combatant == null) {
+            AbstractCharacter selectedCharacter = (AbstractCharacter) listCharacters.getSelectedValue();
+            AddCombatantFrame addCombatantFrame = new AddCombatantFrame(master, selectedCharacter);
+            addCombatantFrame.setLocationRelativeTo(this);
+            addCombatantFrame.setVisible(true);
+        } else {
+            ICharacter transformation = (ICharacter) listCharacters.getSelectedValue();
+            combatant.transform(transformation);
+            master.updateAll();
+        }
         dispose();
     }//GEN-LAST:event_bNextActionPerformed
 

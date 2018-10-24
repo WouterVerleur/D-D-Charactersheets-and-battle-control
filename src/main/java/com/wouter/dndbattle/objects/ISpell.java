@@ -28,6 +28,8 @@ public interface ISpell extends ISaveableClass, Cloneable {
 
     SpellLevel getLevel();
 
+    String getType();
+
     String getName();
 
     String getDescription();

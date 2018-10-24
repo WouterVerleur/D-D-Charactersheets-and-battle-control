@@ -50,6 +50,7 @@ public class Weapon implements IWeapon {
     private WeaponType type;
     private WeaponRange weaponRange = WeaponRange.MELEE;
     private WeaponWeight weight = WeaponWeight.NORMAL;
+    private boolean proficient = false;
 
     public Weapon() {
     }
@@ -251,6 +252,15 @@ public class Weapon implements IWeapon {
 
     public void setTwoHanded(boolean twoHanded) {
         this.twoHanded = twoHanded;
+    }
+
+    public void setProficient(boolean proficient) {
+        this.proficient = proficient;
+    }
+
+    @Override
+    public boolean isProficient() {
+        return type == WeaponType.PERSONAL && proficient;
     }
 
     @Override

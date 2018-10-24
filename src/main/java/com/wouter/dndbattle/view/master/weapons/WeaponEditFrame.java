@@ -17,20 +17,22 @@
 package com.wouter.dndbattle.view.master.weapons;
 
 import com.wouter.dndbattle.objects.enums.WeaponRange;
+import com.wouter.dndbattle.objects.enums.WeaponType;
 import com.wouter.dndbattle.objects.impl.Weapon;
 import com.wouter.dndbattle.utils.Weapons;
 import com.wouter.dndbattle.view.IUpdateablePanel;
+import com.wouter.dndbattle.view.master.character.weapon.CharacterWeaponPanel;
 
 /**
  *
  * @author Wouter
  */
-class WeaponEditFrame extends javax.swing.JFrame {
+public class WeaponEditFrame extends javax.swing.JFrame {
 
     private final Weapon weapon;
     private final IUpdateablePanel parent;
 
-    WeaponEditFrame(Weapon weapon, IUpdateablePanel parent) {
+    public WeaponEditFrame(Weapon weapon, IUpdateablePanel parent) {
         this.weapon = weapon;
         this.parent = parent;
         initComponents();
@@ -61,6 +63,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         cbTwoHanded = new javax.swing.JCheckBox();
         cbLoading = new javax.swing.JCheckBox();
         cbCanUseMagicStats = new javax.swing.JCheckBox();
+        cbProficient = new javax.swing.JCheckBox();
         lWeight = new javax.swing.JLabel();
         cbWeight = new com.wouter.dndbattle.view.comboboxes.WeaponWeightComboBox();
         lAttackModifier = new javax.swing.JLabel();
@@ -104,7 +107,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         getContentPane().add(lDamage, gridBagConstraints);
 
-        sDiceAmount.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        sDiceAmount.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         sDiceAmount.setValue(weapon.getAmountOfAttackDice());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -157,7 +160,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         getContentPane().add(cbRange, gridBagConstraints);
 
-        sRange.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(10)));
+        sRange.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 10));
         sRange.setEnabled(weapon.getWeaponRange().isRanged());
         sRange.setValue(weapon.getRange());
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -179,7 +182,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         getContentPane().add(lSlash, gridBagConstraints);
 
-        sMaxRange.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(10)));
+        sMaxRange.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 10));
         sMaxRange.setEnabled(weapon.getWeaponRange().isRanged());
         sMaxRange.setValue(weapon.getMaxRange());
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -233,10 +236,22 @@ class WeaponEditFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         getContentPane().add(cbCanUseMagicStats, gridBagConstraints);
 
-        lWeight.setText("Weight");
+        cbProficient.setSelected(weapon.isProficient());
+        cbProficient.setText("Proficient");
+        cbProficient.setVisible(weapon.getType() == WeaponType.PERSONAL);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        getContentPane().add(cbProficient, gridBagConstraints);
+
+        lWeight.setText("Weight");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -245,7 +260,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         cbWeight.setSelectedItem(weapon.getWeight());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -256,7 +271,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         lAttackModifier.setText("Attack modifier");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -266,7 +281,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         sAttackModifier.setValue(weapon.getAttackModifier());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -277,7 +292,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         lDamageModifier.setText("Damage modifier");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -287,7 +302,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         sDamageModifier.setValue(weapon.getDamageModifier());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -298,7 +313,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         lNotes.setText("Notes");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -307,7 +322,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         tfNotes.setText(weapon.getActualNotes());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -323,7 +338,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weighty = 1.0;
@@ -338,7 +353,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.weighty = 1.0;
@@ -374,12 +389,18 @@ class WeaponEditFrame extends javax.swing.JFrame {
         weapon.setTwoHanded(cbTwoHanded.isSelected());
         weapon.setWeaponRange(cbRange.getSelectedItem());
         weapon.setWeight(cbWeight.getSelectedItem());
+        if (parent instanceof CharacterWeaponPanel) {
+            CharacterWeaponPanel weaponPanel = (CharacterWeaponPanel) parent;
+            weapon.setProficient(cbProficient.isSelected());
+            weaponPanel.updateWeapon(weapon);
+        } else {
+            Weapons weapons = Weapons.getInstance();
+            if (weapon.getName().equals(originalName)) {
+                weapons.update(weapon);
+            } else if (weapons.add(weapon) && !originalName.isEmpty()) {
+                weapons.remove(weapon);
+            }
 
-        Weapons weapons = Weapons.getInstance();
-        if (weapon.getName().equals(originalName)) {
-            weapons.update(weapon);
-        } else if (weapons.add(weapon) && !originalName.isEmpty()) {
-            weapons.remove(weapon);
         }
         parent.update();
         this.dispose();
@@ -398,6 +419,7 @@ class WeaponEditFrame extends javax.swing.JFrame {
     private com.wouter.dndbattle.view.comboboxes.DiceComboBox cbDice;
     private javax.swing.JCheckBox cbFinesse;
     private javax.swing.JCheckBox cbLoading;
+    private javax.swing.JCheckBox cbProficient;
     private com.wouter.dndbattle.view.comboboxes.WeaponRangeComboBox cbRange;
     private javax.swing.JCheckBox cbTwoHanded;
     private com.wouter.dndbattle.view.comboboxes.WeaponWeightComboBox cbWeight;

@@ -8,8 +8,6 @@ package com.wouter.dndbattle.core.impl;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
-import java.rmi.server.RemoteServer;
-import java.rmi.server.ServerNotActiveException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +43,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     private final List<ISlave> slaves = new ArrayList<>();
     private int activeIndex = 0;
 
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public Master(MasterFrame frame) {
         this.frame = frame;
@@ -71,14 +69,21 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     @Override
     public void connect(ISlave slave, String playerName) throws RemoteException {
+        connect(slave, playerName, slave.getIp());
+    }
+
+    @Override
+    public void connect(ISlave slave, String playerName, String slaveIp) throws RemoteException {
         slaves.add(slave);
         boolean localhost = false;
+        String localhostAddress = null;
         try {
-            localhost = RemoteServer.getClientHost().equalsIgnoreCase(InetAddress.getLocalHost().getHostAddress());
-        } catch (ServerNotActiveException | UnknownHostException e) {
+            localhostAddress = InetAddress.getLocalHost().getHostAddress();
+            localhost = slaveIp.equalsIgnoreCase(localhostAddress);
+        } catch (UnknownHostException e) {
             log.error("Error while determining if connection if from localhost", e);
         }
-        log.debug("Recieved new slave connection from [{}] for which localhost was [{}]", playerName, localhost);
+        log.debug("Recieved new slave connection from [{}] for which localhost was [{}] fors remote host [{}] and localhost [{}]", playerName, localhost, slaveIp, localhostAddress);
         slave.setConnectionInfo(new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName));
         slave.refreshView(combatants, activeIndex);
     }
@@ -141,8 +146,12 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         System.exit(0);
     }
 
-    public void kick(ISlave slave) throws RemoteException {
-        slave.shutdown();
+    public void kick(ISlave slave) {
+        try {
+            slave.shutdown();
+        } catch (RemoteException ex) {
+            log.error("Attempt to kick [{}] resulted in an error.", slave, ex);
+        }
         slaves.remove(slave);
     }
 

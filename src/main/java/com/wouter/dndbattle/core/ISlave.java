@@ -20,6 +20,8 @@ public interface ISlave extends Remote, Serializable {
 
     public void refreshView(List<ICombatant> combatants, int activeIndex) throws RemoteException;
 
+    public IMasterConnectionInfo getConnectionInfo() throws RemoteException;
+
     public void setConnectionInfo(IMasterConnectionInfo connectionInfo) throws RemoteException;
 
     public void shutdown() throws RemoteException;

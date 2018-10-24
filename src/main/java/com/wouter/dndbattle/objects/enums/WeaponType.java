@@ -23,5 +23,6 @@ package com.wouter.dndbattle.objects.enums;
 public enum WeaponType {
 
     SIMPLE,
-    MARTIAL;
+    MARTIAL,
+    PERSONAL;
 }

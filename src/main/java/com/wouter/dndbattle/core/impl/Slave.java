@@ -42,6 +42,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     /**
      * @return the connectionInfo
      */
+    @Override
     public IMasterConnectionInfo getConnectionInfo() {
         return connectionInfo;
     }

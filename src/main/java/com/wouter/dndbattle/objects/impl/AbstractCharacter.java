@@ -72,6 +72,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private AbilityType spellCastingAbility;
     private Map<SpellLevel, Integer> spellSlots = new HashMap<>(SpellLevel.values().length);
     private WeaponProficiency weaponProficiency;
+    private List<IWeapon> privateWeapons = new ArrayList<>();
 
     public AbstractCharacter() {
         createEmptySettings();
@@ -385,11 +386,11 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     @Override
-    public int getSpellSlots(SpellLevel level) {
+    public int getSpellSlotsByLevel(SpellLevel level) {
         return spellSlots.get(level);
     }
 
-    public void setSpellSlots(SpellLevel level, int slots) {
+    public void setSpellSlotsByLevel(SpellLevel level, int slots) {
         spellSlots.put(level, slots);
     }
 
@@ -404,6 +405,24 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public boolean isProficient(IWeapon weapon) {
         return weaponProficiency.isProficient(weapon);
+    }
+
+    public void setPrivateWeapons(List<IWeapon> privateWeapons) {
+        this.privateWeapons = privateWeapons;
+    }
+
+    @Override
+    public List<IWeapon> getPrivateWeapons() {
+        return privateWeapons;
+    }
+
+    public void addPrivateWeapon(IWeapon weapon) {
+        privateWeapons.add(weapon);
+        Collections.sort(privateWeapons);
+    }
+
+    public void removePrivateWeapon(IWeapon weapon) {
+        privateWeapons.remove(weapon);
     }
 
     @Override
@@ -576,6 +595,9 @@ public abstract class AbstractCharacter implements ICharacter {
         }
 
         public boolean isProficient(IWeapon weapon) {
+            if (weapon.getType() == WeaponType.PERSONAL) {
+                return weapon.isProficient();
+            }
             if (allWeapons) {
                 return true;
             }

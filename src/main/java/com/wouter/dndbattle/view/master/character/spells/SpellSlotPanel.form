@@ -46,7 +46,7 @@
         </Property>
         <Property name="opaque" type="boolean" value="false"/>
         <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="character.getSpellSlots(level)" type="code"/>
+          <Connection code="character.getSpellSlotsByLevel(level)" type="code"/>
         </Property>
       </Properties>
       <Events>

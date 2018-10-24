@@ -18,6 +18,8 @@ package com.wouter.dndbattle.view.slave.character;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -31,8 +33,10 @@ import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.objects.ISpell;
+import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
+import com.wouter.dndbattle.objects.enums.WeaponType;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Weapons;
@@ -52,21 +56,24 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private static final Logger log = LoggerFactory.getLogger(SlaveCharacterPanel.class);
 
     private static final Settings SETTINGS = Settings.getInstance();
+    private static final String WEAPON_SELECTION_FORMAT = "gui.slave.%s.weapons.selection";
 
     private final ICombatant combatant;
     private final ICharacter character;
+    private final String selectionString;
+    private WeaponSelection selection;
 
     public SlaveCharacterPanel(ICombatant combatant) {
         this.combatant = combatant;
         this.character = combatant.getCharacter();
+        selectionString = String.format(WEAPON_SELECTION_FORMAT, character.getClass().getSimpleName());
+        selection = WeaponSelection.valueOf(SETTINGS.getProperty(selectionString, WeaponSelection.ALL.name()));
+
         setName(character.getName());
         initComponents();
-        fillTables();
+        updateWeaponTable();
+        updateSpellTable();
         updateSpellSlots();
-    }
-
-    public void updateAll() {
-        update();
     }
 
     public int getCurrentTab() {
@@ -85,34 +92,44 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
             }
         }
         updateSpellSlots();
+        updateWeaponTable();
+        updateSpellTable();
     }
 
     private void updateSpellSlots() {
         int panels = 0;
         for (SpellLevel level : SpellLevel.values()) {
-            if (level != SpellLevel.CANTRIP && level != SpellLevel.FEATURE) {
-                int spellSlots = character.getSpellSlots(level);
-                int usedSpellSlots = combatant.getUsedSpellSlots(level);
+            GridBagConstraints gridBagConstraints = new GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.gridy = panels++;
+            gridBagConstraints.weightx = 1;
+            gridBagConstraints.weighty = 0;
+            gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+            switch (level) {
+                case CANTRIP:
+                    panels--;
+                    break;
+                case FEATURE:
+                    gridBagConstraints.weighty = 1;
+                    pSpellSlots.add(new JLabel(), gridBagConstraints);
+                    break;
+                default:
+                    int spellSlots = character.getSpellSlotsByLevel(level);
+                    int usedSpellSlots = combatant.getUsedSpellSlots(level);
 
-                JPanel panel = new JPanel();
-                BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-                panel.setLayout(boxLayout);
+                    JPanel panel = new JPanel();
+                    BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.X_AXIS);
+                    panel.setLayout(boxLayout);
 
-                panel.add(new JLabel(level.toString()));
+                    panel.add(new JLabel(level.toString()));
 
-                for (int i = 0; i < spellSlots; i++) {
-                    panel.add(new SpellSlotRadioButton(i < usedSpellSlots));
-                }
+                    for (int i = 0; i < spellSlots; i++) {
+                        panel.add(new SpellSlotRadioButton(i < usedSpellSlots));
+                    }
 
-                GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-                gridBagConstraints.gridx = 0;
-                gridBagConstraints.gridy = panels++;
-                gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-                gridBagConstraints.weightx = 1;
-                gridBagConstraints.weighty = 1;
-                gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
-
-                pSpellSlots.add(panel, gridBagConstraints);
+                    pSpellSlots.add(panel, gridBagConstraints);
+                    break;
             }
         }
     }
@@ -127,25 +144,33 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        bgSelection = new javax.swing.ButtonGroup();
         lName = new javax.swing.JLabel();
         tpCharacterPages = new javax.swing.JTabbedPane();
+        pWeapons = new javax.swing.JPanel();
         spWeapon = new javax.swing.JScrollPane();
         tWeapons = new javax.swing.JTable();
+        lWeaponsSelection = new javax.swing.JLabel();
+        rbAllWeapons = new javax.swing.JRadioButton();
+        rbProficientWeapons = new javax.swing.JRadioButton();
+        rbPersonalWeapons = new javax.swing.JRadioButton();
         pSpells = new javax.swing.JPanel();
         lAbility = new javax.swing.JLabel();
         lSpellcastingAbility = new javax.swing.JLabel();
         lSpellSaveDC = new javax.swing.JLabel();
         lSpellAttackBonus = new javax.swing.JLabel();
         spSpells = new javax.swing.JSplitPane();
-        SPSpellTable = new javax.swing.JScrollPane();
+        spTableAndSlots = new javax.swing.JSplitPane();
+        spSpellTable = new javax.swing.JScrollPane();
         tSpells = new javax.swing.JTable();
+        spSpellSlots = new javax.swing.JScrollPane();
+        pSpellSlots = new javax.swing.JPanel();
         spInformation = new javax.swing.JScrollPane();
         pInformation = new javax.swing.JPanel();
         spDescription = new javax.swing.JScrollPane();
         taDescription = new javax.swing.JTextArea();
         spNotes = new javax.swing.JScrollPane();
         taNotes = new javax.swing.JTextArea();
-        pSpellSlots = new javax.swing.JPanel();
 
         lName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -162,6 +187,8 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         if (character instanceof IExtendedCharacter){
             tpCharacterPages.addTab("Character", new com.wouter.dndbattle.view.slave.character.SlaveExtendedCharacterPanel((IExtendedCharacter) character));
         }
+
+        pWeapons.setLayout(new java.awt.GridBagLayout());
 
         tWeapons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -190,7 +217,74 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         tWeapons.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         spWeapon.setViewportView(tWeapons);
 
-        tpCharacterPages.addTab("Weapons", spWeapon);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pWeapons.add(spWeapon, gridBagConstraints);
+
+        lWeaponsSelection.setText("Weapons:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        pWeapons.add(lWeaponsSelection, gridBagConstraints);
+
+        bgSelection.add(rbAllWeapons);
+        rbAllWeapons.setSelected(selection == WeaponSelection.ALL);
+        rbAllWeapons.setText("All");
+        rbAllWeapons.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbAllWeaponsStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        pWeapons.add(rbAllWeapons, gridBagConstraints);
+
+        bgSelection.add(rbProficientWeapons);
+        rbProficientWeapons.setSelected(selection == WeaponSelection.PROFICIENT);
+        rbProficientWeapons.setText("Proficient & Personal");
+        rbProficientWeapons.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbProficientWeaponsStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        pWeapons.add(rbProficientWeapons, gridBagConstraints);
+
+        bgSelection.add(rbPersonalWeapons);
+        rbPersonalWeapons.setSelected(selection == WeaponSelection.PERSONAL);
+        rbPersonalWeapons.setText("Personal");
+        rbPersonalWeapons.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbPersonalWeaponsStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        pWeapons.add(rbPersonalWeapons, gridBagConstraints);
+
+        tpCharacterPages.addTab("Weapons", pWeapons);
 
         pSpells.setLayout(new java.awt.GridBagLayout());
 
@@ -233,7 +327,6 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 0.25;
@@ -241,6 +334,8 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
         spSpells.setDividerLocation(250);
         spSpells.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        spTableAndSlots.setResizeWeight(1.0);
 
         tSpells.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -266,9 +361,16 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
             }
         });
         tSpells.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        SPSpellTable.setViewportView(tSpells);
+        spSpellTable.setViewportView(tSpells);
 
-        spSpells.setTopComponent(SPSpellTable);
+        spTableAndSlots.setTopComponent(spSpellTable);
+
+        pSpellSlots.setLayout(new java.awt.GridBagLayout());
+        spSpellSlots.setViewportView(pSpellSlots);
+
+        spTableAndSlots.setRightComponent(spSpellSlots);
+
+        spSpells.setLeftComponent(spTableAndSlots);
 
         pInformation.setLayout(new java.awt.GridBagLayout());
 
@@ -320,14 +422,6 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
             pSpells.add(spSpells, gridBagConstraints);
         }
 
-        pSpellSlots.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        pSpells.add(pSpellSlots, gridBagConstraints);
-
         tpCharacterPages.addTab("Spells", pSpells);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -335,7 +429,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tpCharacterPages, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(tpCharacterPages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,20 +444,48 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         GlobalUtils.browseCharacter(character);
     }//GEN-LAST:event_lNameMouseClicked
 
+    private void rbAllWeaponsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbAllWeaponsStateChanged
+        changeWeaponSelection(rbAllWeapons, WeaponSelection.ALL);
+    }//GEN-LAST:event_rbAllWeaponsStateChanged
+
+    private void rbProficientWeaponsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbProficientWeaponsStateChanged
+        changeWeaponSelection(rbProficientWeapons, WeaponSelection.PROFICIENT);
+    }//GEN-LAST:event_rbProficientWeaponsStateChanged
+
+    private void rbPersonalWeaponsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbPersonalWeaponsStateChanged
+        changeWeaponSelection(rbPersonalWeapons, WeaponSelection.PERSONAL);
+    }//GEN-LAST:event_rbPersonalWeaponsStateChanged
+
+    private void changeWeaponSelection(JRadioButton radioButton, WeaponSelection selection) {
+        if (radioButton.isSelected()) {
+            this.selection = selection;
+            SETTINGS.setProperty(selectionString, selection.name());
+            updateWeaponTable();
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane SPSpellTable;
+    private javax.swing.ButtonGroup bgSelection;
     private javax.swing.JLabel lAbility;
     private javax.swing.JLabel lName;
     private javax.swing.JLabel lSpellAttackBonus;
     private javax.swing.JLabel lSpellSaveDC;
     private javax.swing.JLabel lSpellcastingAbility;
+    private javax.swing.JLabel lWeaponsSelection;
     private javax.swing.JPanel pInformation;
     private javax.swing.JPanel pSpellSlots;
     private javax.swing.JPanel pSpells;
+    private javax.swing.JPanel pWeapons;
+    private javax.swing.JRadioButton rbAllWeapons;
+    private javax.swing.JRadioButton rbPersonalWeapons;
+    private javax.swing.JRadioButton rbProficientWeapons;
     private javax.swing.JScrollPane spDescription;
     private javax.swing.JScrollPane spInformation;
     private javax.swing.JScrollPane spNotes;
+    private javax.swing.JScrollPane spSpellSlots;
+    private javax.swing.JScrollPane spSpellTable;
     private javax.swing.JSplitPane spSpells;
+    private javax.swing.JSplitPane spTableAndSlots;
     private javax.swing.JScrollPane spWeapon;
     private javax.swing.JTable tSpells;
     private javax.swing.JTable tWeapons;
@@ -372,16 +494,25 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private javax.swing.JTabbedPane tpCharacterPages;
     // End of variables declaration//GEN-END:variables
 
-    private void fillTables() {
-        DefaultTableModel weaponModel = (DefaultTableModel) tWeapons.getModel();
-        Weapons.getInstance().getAll().forEach((weapon) -> {
-            weaponModel.addRow(GlobalUtils.getWeaponRow(character, weapon));
-        });
+    private void updateSpellTable() {
         List<ISpell> spells = character.getSpells();
-        if (!spells.isEmpty()) {
-            DefaultTableModel spellModel = (DefaultTableModel) tSpells.getModel();
+        DefaultTableModel spellModel = (DefaultTableModel) tSpells.getModel();
+        spellModel.setRowCount(0);
+        if (spells.isEmpty()) {
+            tpCharacterPages.remove(pSpells);
+        } else {
             spells.forEach((spell) -> {
-                spellModel.addRow(new Object[]{spell.getName(), spell.getLevel(), spell.getCastingTime(), spell.getRange(), spell.getComponents(), spell.getDuration()});
+                String type;
+                switch (spell.getLevel()) {
+                    case CANTRIP:
+                    case FEATURE:
+                        type = spell.getType() + ' ' + spell.getLevel().toString();
+                        break;
+                    default:
+                        type = "Level " + spell.getLevel() + " " + spell.getType();
+                        break;
+                }
+                spellModel.addRow(new Object[]{spell.getName(), type, spell.getCastingTime(), spell.getRange(), spell.getComponents(), spell.getDuration()});
             });
             spSpells.setDividerLocation(SETTINGS.getProperty(SLAVE_SPELLS_SEPERATOR, spSpells.getDividerLocation()));
             tSpells.getSelectionModel().addListSelectionListener((ListSelectionEvent evt) -> {
@@ -390,6 +521,21 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
                     taDescription.setText(spells.get(tSpells.getSelectedRow()).getDescription());
                 }
             });
+        }
+    }
+
+    private void updateWeaponTable() {
+        DefaultTableModel weaponModel = (DefaultTableModel) tWeapons.getModel();
+        weaponModel.setRowCount(0);
+        List<IWeapon> weapons = new ArrayList<>(character.getPrivateWeapons());
+        if (selection != WeaponSelection.PERSONAL) {
+            weapons.addAll(Weapons.getInstance().getAll());
+        }
+        Collections.sort(weapons);
+        for (IWeapon weapon : weapons) {
+            if (weapon.getType() == WeaponType.PERSONAL || selection == WeaponSelection.ALL || character.isProficient(weapon)) {
+                weaponModel.addRow(GlobalUtils.getWeaponRow(character, weapon));
+            }
         }
     }
 
@@ -421,6 +567,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
     public ICharacter getCharacter() {
         return character;
+
     }
 
     private static class SpellSlotRadioButton extends JRadioButton {
@@ -434,4 +581,9 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         }
     }
 
+    private enum WeaponSelection {
+        ALL,
+        PROFICIENT,
+        PERSONAL;
+    }
 }

@@ -318,7 +318,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         int totalUsedSpellSlots = 0;
         for (SpellLevel level : SpellLevel.values()) {
             if (level != SpellLevel.CANTRIP && level != SpellLevel.FEATURE) {
-                final int spellSlots = combatant.getCharacter().getSpellSlots(level);
+                final int spellSlots = combatant.getCharacter().getSpellSlotsByLevel(level);
                 final int usedSpellSlots = combatant.getUsedSpellSlots(level);
 
                 totalSpellSlots += spellSlots;

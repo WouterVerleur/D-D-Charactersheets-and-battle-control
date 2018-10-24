@@ -32,7 +32,7 @@ import com.wouter.dndbattle.view.master.MasterCharactersPanel;
 import com.wouter.dndbattle.view.master.character.abiliyAndSkill.AbilityAndSkillPanel;
 import com.wouter.dndbattle.view.master.character.extendedCharacter.ExtendedCharacterPanel;
 import com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel;
-import com.wouter.dndbattle.view.master.character.weapon.WeaponProficiencyPanel;
+import com.wouter.dndbattle.view.master.character.weapon.CharacterWeaponPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +86,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         if (character instanceof AbstractExtendedCharacter) {
             tpCharacterPages.addTab("Character", new ExtendedCharacterPanel((AbstractExtendedCharacter) character, this));
         }
-        tpCharacterPages.addTab("Weapons", new WeaponProficiencyPanel(character));
+        tpCharacterPages.addTab("Weapons", new CharacterWeaponPanel(character));
         tpCharacterPages.addTab("Spells", new SpellOverviewPanel(character));
     }
 

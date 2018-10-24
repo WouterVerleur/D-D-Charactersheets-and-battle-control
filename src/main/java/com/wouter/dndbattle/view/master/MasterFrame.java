@@ -525,14 +525,14 @@ public class MasterFrame extends javax.swing.JFrame {
         refreshClientsTable();
     }//GEN-LAST:event_miClientsActionPerformed
 
-    private void refreshClientsTable() {
+    private synchronized void refreshClientsTable() {
         DefaultTableModel model = (DefaultTableModel) tClients.getModel();
         model.setRowCount(0);
         master.getSlaves().forEach((client) -> {
             String ip = null;
             String name = null;
             try {
-                ip = client.getIp();
+                ip = client.getConnectionInfo().isLocalhost() ? "localhost" : client.getIp();
             } catch (RemoteException ex) {
                 log.error("Error retrieveing remote ip", ex);
             }
@@ -671,12 +671,12 @@ public class MasterFrame extends javax.swing.JFrame {
             addCombatant(combatant);
             addCharacterToList(characters, combatant);
         }
-        Collections.sort(characters);
-        ICombatant previousCharacter = null;
+        Collections.sort(characters, (ICombatant t, ICombatant t1) -> t.getCharacter().compareTo(t1.getCharacter()));
+        ICharacter previousCharacter = null;
         for (ICombatant combatant : characters) {
-            if (!combatant.equals(previousCharacter)) {
+            if (!combatant.getCharacter().equals(previousCharacter)) {
                 tpBattle.add(new SlaveCharacterPanel(combatant));
-                previousCharacter = combatant;
+                previousCharacter = combatant.getCharacter();
             }
         }
         log.debug("Added all combatants to get a new total of [{}] components in the view", pCombatants.getComponents().length);

@@ -62,7 +62,9 @@ public interface ICharacter extends ISaveableClass, Cloneable {
     AbilityType getSpellCastingAbility();
 
     @JsonIgnore
-    int getSpellSlots(SpellLevel spellLevel);
+    int getSpellSlotsByLevel(SpellLevel spellLevel);
+
+    List<IWeapon> getPrivateWeapons();
 
     boolean isProficient(IWeapon weapon);
 

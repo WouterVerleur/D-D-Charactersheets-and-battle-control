@@ -51,7 +51,7 @@ public class SpellSlotPanel extends javax.swing.JPanel {
         sSpellSlots.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         sSpellSlots.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), level.toString(), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         sSpellSlots.setOpaque(false);
-        sSpellSlots.setValue(character.getSpellSlots(level));
+        sSpellSlots.setValue(character.getSpellSlotsByLevel(level));
         sSpellSlots.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sSpellSlotsStateChanged(evt);
@@ -73,7 +73,7 @@ public class SpellSlotPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sSpellSlotsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sSpellSlotsStateChanged
-        character.setSpellSlots(level, (Integer) sSpellSlots.getValue());
+        character.setSpellSlotsByLevel(level, (Integer) sSpellSlots.getValue());
         CHARACTERS.update(character);
     }//GEN-LAST:event_sSpellSlotsStateChanged
 

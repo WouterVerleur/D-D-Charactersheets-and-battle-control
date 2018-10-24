@@ -34,6 +34,8 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Spell implements ISpell {
 
+    private final List<ICharacter> users = new ArrayList<>();
+
     private String castingTime;
     private String components;
     private String description;
@@ -42,13 +44,12 @@ public class Spell implements ISpell {
     private String name;
     private String notes;
     private String range;
-    private List<ICharacter> users = new ArrayList<>();
+    private String type;
 
     public Spell() {
     }
 
     public Spell(ISpell spell) {
-
         this.castingTime = spell.getCastingTime();
         this.components = spell.getComponents();
         this.description = spell.getDescription();
@@ -57,6 +58,7 @@ public class Spell implements ISpell {
         this.name = spell.getName();
         this.notes = spell.getNotes();
         this.range = spell.getRange();
+        this.type = spell.getType();
     }
 
     @Override
@@ -136,6 +138,15 @@ public class Spell implements ISpell {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

@@ -156,7 +156,7 @@ public class Settings extends Properties {
         public void saveToFile() {
             try {
                 log.debug("Saving properties to file [{}]", PROPERTIES_FILE);
-                getInstance().store(new FileOutputStream(PROPERTIES_FILE), null);
+                getInstance().store(new FileOutputStream(PROPERTIES_FILE), "Properties for D&D charactersheets & Battle Control");
             } catch (IOException e) {
                 log.error("Exception while saving properties to file [{}]", PROPERTIES_FILE, e);
             }

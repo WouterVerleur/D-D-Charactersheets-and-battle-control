@@ -59,8 +59,8 @@ public class MasterFrame extends javax.swing.JFrame {
     /**
      * Creates new form MasterFrame
      */
-    public MasterFrame() {
-        master = new Master(this);
+    public MasterFrame(Master master) {
+        this.master = master;
         initComponents();
         spCombatants.getVerticalScrollBar().setUnitIncrement(20);
         setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, Integer.MIN_VALUE), SETTINGS.getProperty(MASTER_LOCATION_Y, Integer.MIN_VALUE));
@@ -494,7 +494,7 @@ public class MasterFrame extends javax.swing.JFrame {
                     }
                 }
                 master.setCombatants(combatants);
-                master.updateAll();
+                master.updateAll(true);
                 break;
             case JOptionPane.NO_OPTION:
                 master.startNewBattle();
@@ -546,7 +546,7 @@ public class MasterFrame extends javax.swing.JFrame {
             try {
                 client.ping();
                 long time = System.currentTimeMillis() - start;
-                ping = (time > 1 ? time + " ms" : "< 1 ms");
+                ping = (time > 0 ? time + " ms" : "< 1 ms");
             } catch (RemoteException ex) {
                 log.error("Error pinging", ex);
                 ping = "Error";

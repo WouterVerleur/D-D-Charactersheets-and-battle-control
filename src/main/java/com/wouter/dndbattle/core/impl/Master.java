@@ -39,27 +39,47 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     private static final Settings SETTINGS = Settings.getInstance();
     private boolean battleStarted;
     private List<ICombatant> combatants = new ArrayList<>();
-    private final MasterFrame frame;
+    private MasterFrame frame;
     private final List<ISlave> slaves = new ArrayList<>();
-    private int activeIndex = 0;
+    private int currentIndex = 0;
 
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newWorkStealingPool();
 
-    public Master(MasterFrame frame) {
-        this.frame = frame;
+    public Master() {
+    }
+
+    /**
+     * @return the frame
+     */
+    public MasterFrame getFrame() {
+        if (frame == null) {
+            createFrame();
+        }
+        return frame;
+    }
+
+    private synchronized void createFrame() {
+        if (frame == null) {
+            frame = new MasterFrame(this);
+        }
     }
 
     public void addCombatant(Combatant combatant) {
         ICombatant currectActive = null;
         if (combatants.size() > 0 && battleStarted) {
-            currectActive = combatants.get(activeIndex);
+            currectActive = combatants.get(currentIndex);
         }
         combatants.add(combatant);
         Collections.sort(combatants);
         if (currectActive != null) {
-            activeIndex = combatants.indexOf(currectActive);
+            currentIndex = combatants.indexOf(currectActive);
         }
-        updateAll();
+        updateAll(true);
+    }
+
+    public void removeCombatant(ICombatant combatant) {
+        combatants.remove(combatant);
+        updateAll(true);
     }
 
     @Override
@@ -85,7 +105,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         }
         log.debug("Recieved new slave connection from [{}] for which localhost was [{}] fors remote host [{}] and localhost [{}]", playerName, localhost, slaveIp, localhostAddress);
         slave.setConnectionInfo(new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName));
-        slave.refreshView(combatants, activeIndex);
+        slave.refreshView(true);
     }
 
     @Override
@@ -110,27 +130,27 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     public void nextTurn() {
         battleStarted = true;
         boolean keepSearching = true;
-        activeIndex++;
+        currentIndex++;
         while (keepSearching) {
             if (combatants.isEmpty()) {
                 break;
             }
-            if (activeIndex >= combatants.size()) {
-                activeIndex = 0;
+            if (currentIndex >= combatants.size()) {
+                currentIndex = 0;
             }
-            ICombatant next = combatants.get(activeIndex);
+            ICombatant next = combatants.get(currentIndex);
             if (next.isDead()) {
-                combatants.remove(next);
+                removeCombatant(next);
                 continue;
             }
             if (next.rollingForDeath() && !SETTINGS.getProperty(ROLLFORDEATH, true)) {
                 log.debug("Adding deathroll to [{}]", next);
-                JOptionPane.showMessageDialog(frame, "An automatic deathroll was added to " + next, "Automatic deathroll.", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(getFrame(), "An automatic deathroll was added to " + next, "Automatic deathroll.", JOptionPane.INFORMATION_MESSAGE);
                 ((Combatant) next).addDeathRoll();
                 if (next.isDead()) {
-                    combatants.remove(next);
+                    removeCombatant(next);
                 } else {
-                    activeIndex++;
+                    currentIndex++;
                 }
                 continue;
             }
@@ -139,7 +159,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         if (combatants.isEmpty()) {
             startNewBattle();
         }
-        updateAll();
+        updateAll(false);
     }
 
     public void shutdown() {
@@ -157,17 +177,17 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     public void startNewBattle() {
         combatants = new ArrayList<>();
-        activeIndex = 0;
+        currentIndex = 0;
         battleStarted = false;
-        updateAll();
+        updateAll(true);
     }
 
-    public void updateAll() {
-        frame.refreshBattle(combatants, activeIndex);
+    public void updateAll(boolean refreshCombatants) {
+        getFrame().refreshBattle(combatants, currentIndex);
         slaves.forEach((slave) -> {
             executor.submit(() -> {
                 try {
-                    slave.refreshView(combatants, activeIndex);
+                    slave.refreshView(refreshCombatants);
                 } catch (RemoteException e) {
                     log.error("Unable to refresh slave [{}]", slave, e);
                 }
@@ -186,14 +206,19 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         });
     }
 
+    @Override
     public List<ICombatant> getCombatants() {
         return combatants;
     }
 
     public void setCombatants(List<ICombatant> combatants) {
         Collections.sort(combatants);
-        activeIndex = 0;
+        currentIndex = 0;
         this.combatants = combatants;
     }
 
+    @Override
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
 }

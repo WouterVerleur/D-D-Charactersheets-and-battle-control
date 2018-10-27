@@ -7,6 +7,9 @@ package com.wouter.dndbattle.core;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
+
+import com.wouter.dndbattle.objects.ICombatant;
 
 /**
  *
@@ -25,5 +28,9 @@ public interface IMaster extends Remote {
     public int getProperty(String key, int defaultValue) throws RemoteException;
 
     public void setProperty(String key, int value) throws RemoteException;
+
+    public List<ICombatant> getCombatants() throws RemoteException;
+
+    public int getCurrentIndex() throws RemoteException;
 
 }

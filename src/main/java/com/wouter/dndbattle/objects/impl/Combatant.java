@@ -39,6 +39,7 @@ public class Combatant implements ICombatant {
     private static final Logger log = LoggerFactory.getLogger(Combatant.class);
 
     private static final String TRANSFORM_NAME_FORMAT = "%s (%s)";
+    private static final String TRANSFORM_DESCRIPTION_FORMAT = "%s transformed into %s";
     private static final String HEALTH_FORMAT = "%d (%d%%)";
     private static final String HEALTH_ZERO_WITH_LIFE = "0 (Rolls Life: %d/3 Death: %d/3)";
     private static final String HEALTH_ZERO = "0 (Deathrolls: %d/3)";
@@ -287,6 +288,16 @@ public class Combatant implements ICombatant {
 
     @Override
     public String getName() {
+        if (isFriendly()) {
+            return getFriendlyName();
+        }
+        if (isTransformed()) {
+            return transformation.getName();
+        }
+        return name;
+    }
+
+    public String getFriendlyName() {
         if (isTransformed()) {
             return transformation.getTransformationName(name);
         }
@@ -295,6 +306,28 @@ public class Combatant implements ICombatant {
 
     protected String getTransformationName(String previousName) {
         return String.format(TRANSFORM_NAME_FORMAT, getName(), previousName);
+    }
+
+    @Override
+    public String getDescription() {
+        if (isFriendly()) {
+            return getFriendlyDescription();
+        }
+        if (isTransformed()) {
+            return transformation.getDescription();
+        }
+        return character.getDescription();
+    }
+
+    public String getFriendlyDescription() {
+        if (isTransformed()) {
+            return transformation.getTransformationDescription(character.getDescription());
+        }
+        return character.getDescription();
+    }
+
+    protected String getTransformationDescription(String previousName) {
+        return String.format(TRANSFORM_DESCRIPTION_FORMAT, previousName, getDescription());
     }
 
     public void transform(ICharacter transform) {

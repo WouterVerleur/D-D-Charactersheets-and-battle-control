@@ -30,6 +30,8 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
 
     String getName();
 
+    String getDescription();
+
     ICharacter getCharacter();
 
     int getHealth();
@@ -59,4 +61,5 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
     boolean isFriendly();
 
     int getUsedSpellSlots(SpellLevel level);
+
 }

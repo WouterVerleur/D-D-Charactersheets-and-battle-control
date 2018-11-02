@@ -116,7 +116,7 @@ public class TransformFrame extends javax.swing.JFrame {
     private void bSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSelectActionPerformed
         ICharacter transformation = (ICharacter) lCharacters.getSelectedValue();
         combatant.transform(transformation);
-        master.updateAll();
+        master.updateAll(true);
         this.dispose();
     }//GEN-LAST:event_bSelectActionPerformed
 

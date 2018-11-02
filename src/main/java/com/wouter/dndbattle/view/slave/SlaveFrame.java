@@ -5,11 +5,10 @@
  */
 package com.wouter.dndbattle.view.slave;
 
+import java.awt.Component;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -19,6 +18,7 @@ import com.wouter.dndbattle.core.IMasterConnectionInfo;
 import com.wouter.dndbattle.core.ISlave;
 import com.wouter.dndbattle.core.impl.Slave;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,6 +92,13 @@ public class SlaveFrame extends javax.swing.JFrame {
             }
         });
 
+        tpSelection.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tpSelectionStateChanged(evt);
+            }
+        });
+
+        spCombatants.setBorder(null);
         spCombatants.setName("Battle"); // NOI18N
 
         pCombatants.setLayout(new javax.swing.BoxLayout(pCombatants, javax.swing.BoxLayout.Y_AXIS));
@@ -130,42 +137,46 @@ public class SlaveFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formComponentResized
 
+    private void tpSelectionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tpSelectionStateChanged
+        final Component selectedComponent = tpSelection.getSelectedComponent();
+        if (selectedComponent instanceof IUpdateablePanel) {
+            ((IUpdateablePanel) selectedComponent).update();
+        }
+    }//GEN-LAST:event_tpSelectionStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pCombatants;
     private javax.swing.JScrollPane spCombatants;
     private javax.swing.JTabbedPane tpSelection;
     // End of variables declaration//GEN-END:variables
 
-    public void showCombatants(List<ICombatant> combatants, int activeIndex) {
+    public void refreshBattle(List<ICombatant> combatants, int activeIndex) {
         pCombatants.removeAll();
-        int selectedIndex = tpSelection.getSelectedIndex();
-        List<ICombatant> ownedCombatants = new ArrayList<>();
         log.debug("Removed all from view to leave a total of [{}] components in the view", pCombatants.getComponents().length);
         for (int i = activeIndex; i < combatants.size(); i++) {
             final ICombatant combatant = combatants.get(i);
             addCombatant(combatant);
-            if (checkOwnCharacter(combatant)) {
-                ownedCombatants.add(combatant);
-            }
         }
         for (int i = 0; i < activeIndex; i++) {
             final ICombatant combatant = combatants.get(i);
             addCombatant(combatant);
-            if (checkOwnCharacter(combatant)) {
-                ownedCombatants.add(combatant);
-            }
         }
         log.debug("Added all combatants to get a new total of [{}] components in the view", pCombatants.getComponents().length);
         if (pCombatants.getComponents().length == 0) {
             pCombatants.add(new JPanel());
         }
-        Collections.sort(ownedCombatants);
+        pCombatants.revalidate();
+    }
+
+    public void refreshCombatants(List<ICombatant> combatants) {
+        int selectedIndex = tpSelection.getSelectedIndex();
         tpSelection.removeAll();
         tpSelection.add(spCombatants);
-        ownedCombatants.forEach((ownedCombatant) -> {
-            createCharacterPanel(ownedCombatant);
-        });
-        pCombatants.revalidate();
+        for (ICombatant combatant : combatants) {
+            if (checkOwnCharacter(combatant)) {
+                createCharacterPanel(combatant);
+            }
+        }
         tpSelection.setSelectedIndex(selectedIndex);
     }
 

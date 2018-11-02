@@ -17,14 +17,10 @@
 package com.wouter.dndbattle.view.slave.character;
 
 import java.awt.Component;
-import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +31,6 @@ import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.enums.WeaponType;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
@@ -73,7 +68,6 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         initComponents();
         updateWeaponTable();
         updateSpellTable();
-        updateSpellSlots();
     }
 
     public int getCurrentTab() {
@@ -91,47 +85,8 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
                 ((IUpdateablePanel) component).update();
             }
         }
-        updateSpellSlots();
         updateWeaponTable();
         updateSpellTable();
-    }
-
-    private void updateSpellSlots() {
-        int panels = 0;
-        for (SpellLevel level : SpellLevel.values()) {
-            GridBagConstraints gridBagConstraints = new GridBagConstraints();
-            gridBagConstraints.gridx = 0;
-            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-            gridBagConstraints.gridy = panels++;
-            gridBagConstraints.weightx = 1;
-            gridBagConstraints.weighty = 0;
-            gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-            switch (level) {
-                case CANTRIP:
-                    panels--;
-                    break;
-                case FEATURE:
-                    gridBagConstraints.weighty = 1;
-                    pSpellSlots.add(new JLabel(), gridBagConstraints);
-                    break;
-                default:
-                    int spellSlots = character.getSpellSlotsByLevel(level);
-                    int usedSpellSlots = combatant.getUsedSpellSlots(level);
-
-                    JPanel panel = new JPanel();
-                    BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.X_AXIS);
-                    panel.setLayout(boxLayout);
-
-                    panel.add(new JLabel(level.toString()));
-
-                    for (int i = 0; i < spellSlots; i++) {
-                        panel.add(new SpellSlotRadioButton(i < usedSpellSlots));
-                    }
-
-                    pSpellSlots.add(panel, gridBagConstraints);
-                    break;
-            }
-        }
     }
 
     /**
@@ -160,11 +115,8 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         lSpellSaveDC = new javax.swing.JLabel();
         lSpellAttackBonus = new javax.swing.JLabel();
         spSpells = new javax.swing.JSplitPane();
-        spTableAndSlots = new javax.swing.JSplitPane();
         spSpellTable = new javax.swing.JScrollPane();
         tSpells = new javax.swing.JTable();
-        spSpellSlots = new javax.swing.JScrollPane();
-        pSpellSlots = new javax.swing.JPanel();
         spInformation = new javax.swing.JScrollPane();
         pInformation = new javax.swing.JPanel();
         spDescription = new javax.swing.JScrollPane();
@@ -335,8 +287,6 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         spSpells.setDividerLocation(250);
         spSpells.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        spTableAndSlots.setResizeWeight(1.0);
-
         tSpells.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -363,14 +313,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         tSpells.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         spSpellTable.setViewportView(tSpells);
 
-        spTableAndSlots.setTopComponent(spSpellTable);
-
-        pSpellSlots.setLayout(new java.awt.GridBagLayout());
-        spSpellSlots.setViewportView(pSpellSlots);
-
-        spTableAndSlots.setRightComponent(spSpellSlots);
-
-        spSpells.setLeftComponent(spTableAndSlots);
+        spSpells.setTopComponent(spSpellTable);
 
         pInformation.setLayout(new java.awt.GridBagLayout());
 
@@ -473,7 +416,6 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private javax.swing.JLabel lSpellcastingAbility;
     private javax.swing.JLabel lWeaponsSelection;
     private javax.swing.JPanel pInformation;
-    private javax.swing.JPanel pSpellSlots;
     private javax.swing.JPanel pSpells;
     private javax.swing.JPanel pWeapons;
     private javax.swing.JRadioButton rbAllWeapons;
@@ -482,10 +424,8 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private javax.swing.JScrollPane spDescription;
     private javax.swing.JScrollPane spInformation;
     private javax.swing.JScrollPane spNotes;
-    private javax.swing.JScrollPane spSpellSlots;
     private javax.swing.JScrollPane spSpellTable;
     private javax.swing.JSplitPane spSpells;
-    private javax.swing.JSplitPane spTableAndSlots;
     private javax.swing.JScrollPane spWeapon;
     private javax.swing.JTable tSpells;
     private javax.swing.JTable tWeapons;
@@ -568,17 +508,6 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     public ICharacter getCharacter() {
         return character;
 
-    }
-
-    private static class SpellSlotRadioButton extends JRadioButton {
-
-        public SpellSlotRadioButton(boolean selected) {
-            setSelected(selected);
-            setFocusable(false);
-            addActionListener((evt) -> {
-                setSelected(selected);
-            });
-        }
     }
 
     private enum WeaponSelection {

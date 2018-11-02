@@ -79,12 +79,12 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         bPolyMorph = new javax.swing.JButton();
         pUseSpellSlots = new javax.swing.JPanel();
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(""), javax.swing.BorderFactory.createEtchedBorder()));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         lName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lName.setText(combatant.getName());
+        lName.setText(combatant.getFriendlyName());
 
-        lDescription.setText(character.getDescription());
+        lDescription.setText(combatant.getFriendlyDescription());
 
         jProgressBar1.setMaximum(character.getMaxHealth());
         jProgressBar1.setValue(combatant.getHealth());
@@ -230,34 +230,34 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
 
     private void bDamageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDamageActionPerformed
         combatant.giveDamage(requestNumber("damage"));
-        master.updateAll();
+        master.updateAll(false);
     }//GEN-LAST:event_bDamageActionPerformed
 
     private void bHealthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bHealthActionPerformed
         combatant.giveHeal(requestNumber("health"));
-        master.updateAll();
+        master.updateAll(false);
     }//GEN-LAST:event_bHealthActionPerformed
 
     private void bTempHitpointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTempHitpointsActionPerformed
         combatant.setHealthBuff(requestNumber("temporary hitpoints"));
-        master.updateAll();
+        master.updateAll(false);
     }//GEN-LAST:event_bTempHitpointsActionPerformed
 
     private void bDeathRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeathRollActionPerformed
         combatant.addDeathRoll();
-        master.updateAll();
+        master.updateAll(false);
     }//GEN-LAST:event_bDeathRollActionPerformed
 
     private void bLifeRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLifeRollActionPerformed
         combatant.addLifeRoll();
-        master.updateAll();
+        master.updateAll(false);
     }//GEN-LAST:event_bLifeRollActionPerformed
 
     private void bLeaveTransformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLeaveTransformationActionPerformed
         if (combatant.isTransformed()) {
             combatant.leaveTransformation();
         }
-        master.updateAll();
+        master.updateAll(false);
     }//GEN-LAST:event_bLeaveTransformationActionPerformed
 
     private void bTransformActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTransformActionPerformed
@@ -328,7 +328,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                     JButton button = new JButton(String.format(SPELL_SLOT_BUTTON_FORMAT, level.toString(), usedSpellSlots, spellSlots));
                     button.addActionListener((evt) -> {
                         combatant.useSpellSlot(level);
-                        master.updateAll();
+                        master.updateAll(false);
                     });
                     button.setEnabled(usedSpellSlots < spellSlots);
                     pUseSpellSlots.add(button);
@@ -339,7 +339,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
             JButton reset = new JButton("Reset");
             reset.addActionListener((evt) -> {
                 combatant.resetSpellSlots();
-                master.updateAll();
+                master.updateAll(false);
             });
             reset.setEnabled(totalUsedSpellSlots > 0);
             pUseSpellSlots.add(reset);

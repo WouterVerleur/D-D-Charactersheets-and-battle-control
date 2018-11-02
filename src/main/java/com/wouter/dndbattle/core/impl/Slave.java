@@ -33,6 +33,8 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     private IMasterConnectionInfo connectionInfo;
     private final String ip;
 
+    private List<ICombatant> combatants;
+
     public Slave(IMaster master, SlaveFrame frame, String ip) {
         this.master = master;
         this.frame = frame;
@@ -93,9 +95,17 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     }
 
     @Override
-    public void refreshView(final List<ICombatant> combatants, int activeIndex) {
-        log.debug("Recieving [{}] combatants and active index [{}]", combatants.size(), activeIndex);
-        frame.showCombatants(combatants, activeIndex);
+    public void refreshView(boolean forceRefresh) throws RemoteException {
+        try {
+            combatants = master.getCombatants();
+            if (forceRefresh || combatants == null) {
+                frame.refreshCombatants(combatants);
+            }
+            frame.refreshBattle(combatants, master.getCurrentIndex());
+        } catch (RemoteException e) {
+            log.error("Unable to refresh the view", e);
+        }
+
     }
 
     @Override

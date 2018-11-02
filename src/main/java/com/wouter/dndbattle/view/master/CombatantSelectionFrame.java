@@ -139,7 +139,7 @@ public class CombatantSelectionFrame extends JFrame {
         } else {
             ICharacter transformation = (ICharacter) listCharacters.getSelectedValue();
             combatant.transform(transformation);
-            master.updateAll();
+            master.updateAll(true);
         }
         dispose();
     }//GEN-LAST:event_bNextActionPerformed

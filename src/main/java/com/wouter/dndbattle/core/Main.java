@@ -26,9 +26,9 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.master.MasterFrame;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,12 +174,12 @@ public class Main extends javax.swing.JFrame {
         Registry registry;
         try {
             registry = LocateRegistry.createRegistry(port);
-            logToScreen("Loading characters, weapons, spells and armor.");
-            final MasterFrame masterFrame = new MasterFrame();
+            final Master master = new Master();
             logToScreen(String.format("Attempting to create a master on port %d", port));
-            IMaster stub = (IMaster) UnicastRemoteObject.exportObject(masterFrame.getMaster(), port);
+            IMaster stub = (IMaster) UnicastRemoteObject.exportObject(master, port);
             registry.bind("dnd", stub);
-            startFrame(masterFrame);
+            logToScreen("Loading characters, weapons, spells and armor.");
+            startFrame(master.getFrame());
         } catch (RemoteException | AlreadyBoundException ex) {
             log.error("Master can't be started [" + ex + "]");
             JOptionPane.showMessageDialog(MAIN, "Unable to start.", "Error", JOptionPane.ERROR_MESSAGE);

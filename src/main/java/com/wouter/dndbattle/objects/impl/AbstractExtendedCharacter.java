@@ -333,7 +333,7 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     @JsonIgnore
     @Override
     public String getDescription() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("Level " + getTotalLevel() + ' ');
         if (race != null) {
             builder.append(race);
         }

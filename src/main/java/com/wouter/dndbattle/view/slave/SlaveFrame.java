@@ -98,6 +98,7 @@ public class SlaveFrame extends javax.swing.JFrame {
             }
         });
 
+        spCombatants.setBorder(null);
         spCombatants.setName("Battle"); // NOI18N
 
         pCombatants.setLayout(new javax.swing.BoxLayout(pCombatants, javax.swing.BoxLayout.Y_AXIS));

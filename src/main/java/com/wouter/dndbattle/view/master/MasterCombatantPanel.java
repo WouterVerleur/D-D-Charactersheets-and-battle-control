@@ -79,12 +79,12 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         bPolyMorph = new javax.swing.JButton();
         pUseSpellSlots = new javax.swing.JPanel();
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(""), javax.swing.BorderFactory.createEtchedBorder()));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         lName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lName.setText(combatant.getName());
+        lName.setText(combatant.getFriendlyName());
 
-        lDescription.setText(character.getDescription());
+        lDescription.setText(combatant.getFriendlyDescription());
 
         jProgressBar1.setMaximum(character.getMaxHealth());
         jProgressBar1.setValue(combatant.getHealth());

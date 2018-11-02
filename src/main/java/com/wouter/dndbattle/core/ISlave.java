@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
  */
 public interface ISlave extends Remote, Serializable {
 
-    public void refreshView(boolean refreshCombatants) throws RemoteException;
+    public void refreshView(boolean forceRefresh) throws RemoteException;
 
     public IMasterConnectionInfo getConnectionInfo() throws RemoteException;
 

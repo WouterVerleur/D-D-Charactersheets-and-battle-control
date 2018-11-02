@@ -95,10 +95,10 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     }
 
     @Override
-    public void refreshView(boolean refreshCombatants) throws RemoteException {
+    public void refreshView(boolean forceRefresh) throws RemoteException {
         try {
-            if (refreshCombatants || combatants == null) {
-                combatants = master.getCombatants();
+            combatants = master.getCombatants();
+            if (forceRefresh || combatants == null) {
                 frame.refreshCombatants(combatants);
             }
             frame.refreshBattle(combatants, master.getCurrentIndex());

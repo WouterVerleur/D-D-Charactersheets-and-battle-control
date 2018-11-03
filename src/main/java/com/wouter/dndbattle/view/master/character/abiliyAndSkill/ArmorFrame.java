@@ -67,6 +67,7 @@ public class ArmorFrame extends javax.swing.JFrame {
         bSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setType(java.awt.Window.Type.UTILITY);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lArmor.setText("Armor");
@@ -176,6 +177,7 @@ public class ArmorFrame extends javax.swing.JFrame {
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
         character.setArmor((IArmor) cbArmor.getSelectedItem());
+        character.setArmorOverride((int) sOverride.getValue());
         character.setConditionalArmorBonus((int) sExtraArmor.getValue());
         character.setUsingShield(cbShield.isSelected());
         Characters.getInstance().update(character);

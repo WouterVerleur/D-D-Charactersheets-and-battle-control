@@ -5,6 +5,19 @@
  */
 package com.wouter.dndbattle.core;
 
+import static java.awt.Frame.NORMAL;
+
+import static javax.swing.JOptionPane.CANCEL_OPTION;
+import static javax.swing.JOptionPane.YES_OPTION;
+
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_NAME;
+import static com.wouter.dndbattle.utils.Settings.CONNECTION_PORT;
+import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
+import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
+import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
+
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.net.InetAddress;
@@ -32,19 +45,6 @@ import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static java.awt.Frame.NORMAL;
-
-import static javax.swing.JOptionPane.CANCEL_OPTION;
-import static javax.swing.JOptionPane.YES_OPTION;
-
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_NAME;
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_PORT;
-import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
 
 /**
  *
@@ -236,8 +236,8 @@ public class Main extends javax.swing.JFrame {
         taDisplayLog = new javax.swing.JTextArea();
         jProgressBar1 = new javax.swing.JProgressBar();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Starting program");
+        setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);

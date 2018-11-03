@@ -47,6 +47,13 @@ public class Armor implements IArmor {
         this.baseArmorRating = baseArmorRating;
     }
 
+    public Armor(IArmor armor) {
+        this.name = armor.getName();
+        this.armorType = armor.getArmorType();
+        this.baseArmorRating = armor.getBaseArmorRating();
+        this.additionalAbilityTypes = armor.getAdditionalAbilityTypes();
+    }
+
     @Override
     public String getName() {
         return name;

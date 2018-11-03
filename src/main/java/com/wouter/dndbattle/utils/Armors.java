@@ -37,6 +37,7 @@ public class Armors extends AbstractObjectStorer<IArmor> {
     @Override
     public boolean add(IArmor armor) {
         if (!canCreate(armor)) {
+            log.debug("Unable to add new armor. Already exists.");
             return false;
         }
         getAll().add(armor);

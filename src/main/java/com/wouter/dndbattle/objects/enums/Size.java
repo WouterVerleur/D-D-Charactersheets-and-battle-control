@@ -22,22 +22,24 @@ package com.wouter.dndbattle.objects.enums;
  */
 public enum Size {
 
-    TINY("Tiny", "0.5"),
-    SMALL("Small", "1"),
-    MEDIUM("Medium", "1"),
-    LARGE("Large", "2"),
-    HUGE("Huge", "3"),
-    GARGANTUAN("Gargantuan", "4");
+    TINY("Tiny", "2½", Dice.D4),
+    SMALL("Small", "5", Dice.D6),
+    MEDIUM("Medium", "5", Dice.D8),
+    LARGE("Large", "10", Dice.D10),
+    HUGE("Huge", "15", Dice.D12),
+    GARGANTUAN("Gargantuan", "20", Dice.D20);
 
     private static final String SIZE_FORMAT = "%1$s x %1$s";
     private static final String STRING_FORMAT = "%s (%s)";
 
     private final String displayName;
+    private final Dice hitDice;
     private final String size;
 
-    private Size(final String displayName, final String size) {
+    private Size(final String displayName, final String size, final Dice hitDice) {
         this.displayName = displayName;
         this.size = size;
+        this.hitDice = hitDice;
     }
 
     public String getSize() {

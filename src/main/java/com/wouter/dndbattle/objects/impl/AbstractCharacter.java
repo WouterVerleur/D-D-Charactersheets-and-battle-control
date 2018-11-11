@@ -38,6 +38,7 @@ import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
+import com.wouter.dndbattle.objects.enums.Size;
 import com.wouter.dndbattle.objects.enums.SkillType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.enums.WeaponType;
@@ -73,6 +74,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private Map<SpellLevel, Integer> spellSlots = new HashMap<>(SpellLevel.values().length);
     private WeaponProficiency weaponProficiency;
     private List<IWeapon> privateWeapons = new ArrayList<>();
+    private Size size = Size.MEDIUM;
 
     public AbstractCharacter() {
         createEmptySettings();
@@ -103,6 +105,7 @@ public abstract class AbstractCharacter implements ICharacter {
         this.transformChallengeRating = character.getTransformChallengeRating();
         this.challengeRating = character.getChallengeRating();
         this.spellCastingAbility = character.getSpellCastingAbility();
+        this.size = character.getSize();
     }
 
     @Override
@@ -199,8 +202,7 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in
-     * filenames.
+     * Funtion to return a name based string that is save for usage in filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -535,6 +537,15 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public WeaponProficiency getWeaponProficiency() {
         return weaponProficiency;
+    }
+
+    @Override
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")

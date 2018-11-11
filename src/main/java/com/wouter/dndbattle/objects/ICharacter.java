@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.ChallengeRating;
 import com.wouter.dndbattle.objects.enums.Proficiency;
+import com.wouter.dndbattle.objects.enums.Size;
 import com.wouter.dndbattle.objects.enums.SkillType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 
@@ -96,4 +97,6 @@ public interface ICharacter extends ISaveableClass, Cloneable {
     Proficiency getSkillProficiency(SkillType skillType);
 
     String getNotes();
+
+    Size getSize();
 }

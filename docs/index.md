@@ -21,6 +21,7 @@ Requires Java.
   * Opens a relevant page on roll20.net in your browser
 
 ## Planned features
+* Battle calculator
 * Exporting to a PDF
 * Other options for information lookup
 

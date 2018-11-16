@@ -5,6 +5,13 @@
  */
 package com.wouter.dndbattle.view.master;
 
+import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
+import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
+import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
+import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
+
 import java.awt.CardLayout;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -32,13 +39,6 @@ import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
 import com.wouter.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
-import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
 
 /**
  *
@@ -119,6 +119,7 @@ public class MasterFrame extends javax.swing.JFrame {
         armorsPanel = new com.wouter.dndbattle.view.master.armor.ArmorsPanel();
         spellsPanel = new com.wouter.dndbattle.view.master.spells.SpellsPanel();
         weaponsPanel = new com.wouter.dndbattle.view.master.weapons.WeaponsPanel();
+        pEncounterCalculator = new com.wouter.dndbattle.view.master.encounter.EncounterCalculator();
         mbMain = new javax.swing.JMenuBar();
         mBattle = new javax.swing.JMenu();
         miBattleView = new javax.swing.JMenuItem();
@@ -132,6 +133,7 @@ public class MasterFrame extends javax.swing.JFrame {
         miSpells = new javax.swing.JMenuItem();
         miWeapons = new javax.swing.JMenuItem();
         mView = new javax.swing.JMenu();
+        miEncounter = new javax.swing.JMenuItem();
         miDice = new javax.swing.JMenuItem();
         miAudio = new javax.swing.JMenuItem();
         miSettings = new javax.swing.JMenuItem();
@@ -299,6 +301,7 @@ public class MasterFrame extends javax.swing.JFrame {
         pView.add(armorsPanel, "Armors");
         pView.add(spellsPanel, "Spells");
         pView.add(weaponsPanel, "Weapons");
+        pView.add(pEncounterCalculator, "Encounter");
 
         mBattle.setText("Battle");
 
@@ -375,7 +378,14 @@ public class MasterFrame extends javax.swing.JFrame {
 
         mView.setText("Other");
 
-        miDice.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.ALT_MASK));
+        miEncounter.setText("Encounter Calculator");
+        miEncounter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miEncounterActionPerformed(evt);
+            }
+        });
+        mView.add(miEncounter);
+
         miDice.setText("Dice");
         miDice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -384,7 +394,6 @@ public class MasterFrame extends javax.swing.JFrame {
         });
         mView.add(miDice);
 
-        miAudio.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         miAudio.setText("Audio");
         miAudio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,7 +402,6 @@ public class MasterFrame extends javax.swing.JFrame {
         });
         mView.add(miAudio);
 
-        miSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         miSettings.setText("Settings");
         miSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -604,6 +612,10 @@ public class MasterFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tbRefreshActionPerformed
 
+    private void miEncounterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miEncounterActionPerformed
+        changeView("Encounter");
+    }//GEN-LAST:event_miEncounterActionPerformed
+
     private void changeView(String cardName) {
         CardLayout layout = (CardLayout) (pView.getLayout());
         layout.show(pView, cardName);
@@ -629,6 +641,7 @@ public class MasterFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem miBattleView;
     private javax.swing.JMenuItem miClients;
     private javax.swing.JMenuItem miDice;
+    private javax.swing.JMenuItem miEncounter;
     private javax.swing.JMenuItem miSettings;
     private javax.swing.JMenuItem miShutdown;
     private javax.swing.JMenuItem miSpells;
@@ -637,6 +650,7 @@ public class MasterFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pCharacters;
     private javax.swing.JPanel pClients;
     private javax.swing.JPanel pCombatants;
+    private com.wouter.dndbattle.view.master.encounter.EncounterCalculator pEncounterCalculator;
     private javax.swing.JPanel pMain;
     private javax.swing.JPanel pView;
     private javax.swing.JPopupMenu.Separator sBattle;

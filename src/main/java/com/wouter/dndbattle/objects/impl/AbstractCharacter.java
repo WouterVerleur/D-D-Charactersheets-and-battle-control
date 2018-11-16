@@ -96,6 +96,7 @@ public abstract class AbstractCharacter implements ICharacter {
             this.savingThrows = aCharacter.getSavingThrows();
             this.skills = aCharacter.getSkills();
             this.spellSlots = aCharacter.getSpellSlots();
+            this.weaponProficiency = ((AbstractCharacter) character).getWeaponProficiency();
         } else {
             createEmptySettings();
         }
@@ -202,7 +203,8 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in filenames.
+     * Funtion to return a name based string that is save for usage in
+     * filenames.
      *
      * @return a filename save representation of the name of this character.
      */

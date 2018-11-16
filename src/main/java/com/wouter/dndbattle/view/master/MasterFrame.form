@@ -101,11 +101,16 @@
             <Property name="text" type="java.lang.String" value="Other"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="miEncounter">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Encounter Calculator"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miEncounterActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miDice">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+D"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Dice"/>
               </Properties>
               <Events>
@@ -114,9 +119,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miAudio">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+A"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Audio"/>
               </Properties>
               <Events>
@@ -125,9 +127,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miSettings">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Alt+S"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Settings"/>
               </Properties>
               <Events>
@@ -468,6 +467,13 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Weapons"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="com.wouter.dndbattle.view.master.encounter.EncounterCalculator" name="pEncounterCalculator">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="Encounter"/>
             </Constraint>
           </Constraints>
         </Component>

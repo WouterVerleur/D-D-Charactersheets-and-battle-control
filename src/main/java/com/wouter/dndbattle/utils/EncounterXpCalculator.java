@@ -31,7 +31,7 @@ public class EncounterXpCalculator {
     /*
      * This array was generated from the DMG and holds the easy, medium, hard, deathly & daily exp for a character per level.
      */
-    private final long[][] levelXpList = {
+    private static final int[][] LEVEL_XP_TABLE = {
         {25, 50, 75, 100, 300},
         {50, 100, 150, 200, 600},
         {75, 150, 225, 400, 1200},
@@ -54,36 +54,42 @@ public class EncounterXpCalculator {
         {2800, 5700, 8500, 12700, 40000}
     };
 
-    private long getExperience(final int level, final int setting) {
-        return levelXpList[level - 1][setting];
+    private static int getExperience(final int level, final int setting) {
+        if (level < 1) {
+            return getExperience(1, setting);
+        }
+        if (level > 20) {
+            return getExperience(20, setting);
+        }
+        return LEVEL_XP_TABLE[level - 1][setting];
     }
 
-    public long getEasyExperience(final int level) {
+    public static int getEasyExperience(final int level) {
         return getExperience(level, EASY);
     }
 
-    public long getMediumExperience(final int level) {
+    public static int getMediumExperience(final int level) {
         return getExperience(level, MEDIUM);
     }
 
-    public long getHardExperience(final int level) {
+    public static int getHardExperience(final int level) {
         return getExperience(level, HARD);
     }
 
-    public long getDeathlyExperience(final int level) {
+    public static int getDeathlyExperience(final int level) {
         return getExperience(level, DEATHLY);
     }
 
-    public long getDailyExperience(final int level) {
+    public static int getDailyExperience(final int level) {
         return getExperience(level, DAILY);
     }
 
     /*
      * This array was taken from the DMG
      */
-    private final double[] encouterMultiplier = {0.5, 1, 1.5, 2, 2.5, 3, 4, 5};
+    private static final double[] ENCOUNTER_MULTIPLIER = {0.5, 1, 1.5, 2, 2.5, 3, 4, 5};
 
-    public double getEncounterMultiplier(final int partySize, final int numberOfMonsters) {
+    public static double getEncounterMultiplier(final int partySize, final int numberOfMonsters) {
         int base = 1;
         if (numberOfMonsters > 1) {
             base++;
@@ -100,11 +106,11 @@ public class EncounterXpCalculator {
                 }
             }
         }
-        if (partySize < 3) {
+        if (partySize < 3 && base > 0) {
             base--;
-        } else if (partySize > 6) {
+        } else if (partySize > 6 && base < (ENCOUNTER_MULTIPLIER.length - 1)) {
             base++;
         }
-        return encouterMultiplier[base];
+        return ENCOUNTER_MULTIPLIER[base];
     }
 }

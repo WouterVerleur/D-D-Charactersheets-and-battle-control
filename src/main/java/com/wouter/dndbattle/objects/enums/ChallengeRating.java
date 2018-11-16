@@ -84,4 +84,19 @@ public enum ChallengeRating {
     public int getExp() {
         return exp;
     }
+
+    public int getLevel() {
+        try {
+            return Integer.parseInt(displayName);
+        } catch (NumberFormatException e) {
+            return 1;
+        }
+    }
+
+    public static ChallengeRating getForLevel(final int level) {
+        if (level == 0) {
+            return ZERO;
+        }
+        return ChallengeRating.values()[level + 3];
+    }
 }

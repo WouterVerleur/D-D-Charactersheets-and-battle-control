@@ -19,9 +19,10 @@ Requires Java.
   * Both as a seperate view and from the character pages
 * Quick lookup of information
   * Opens a relevant page on roll20.net in your browser
+* Encounter calculator
+  * You can use the creted characters in a build in encounter calculator
 
 ## Planned features
-* Battle calculator
 * Exporting to a PDF
 * Other options for information lookup
 

@@ -178,6 +178,7 @@ public class Main extends javax.swing.JFrame {
             logToScreen(String.format("Attempting to create a master on port %d", port));
             IMaster stub = (IMaster) UnicastRemoteObject.exportObject(master, port);
             registry.bind("dnd", stub);
+            logToScreen("Done.");
             logToScreen("Loading characters, weapons, spells and armor.");
             startFrame(master.getFrame());
         } catch (RemoteException | AlreadyBoundException ex) {

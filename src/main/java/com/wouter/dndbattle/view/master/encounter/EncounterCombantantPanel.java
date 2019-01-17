@@ -26,11 +26,11 @@ import com.wouter.dndbattle.objects.enums.ChallengeRating;
  */
 public class EncounterCombantantPanel extends javax.swing.JPanel {
 
-    private final EncounterCalculator calculator;
+    private final IEncounterCombatantPanelParent parent;
     private final ICharacter character;
 
-    public EncounterCombantantPanel(final EncounterCalculator calculator, final ICharacter character) {
-        this.calculator = calculator;
+    public EncounterCombantantPanel(final IEncounterCombatantPanelParent parent, final ICharacter character) {
+        this.parent = parent;
         this.character = character;
         initComponents();
     }
@@ -88,7 +88,7 @@ public class EncounterCombantantPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sAmountStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sAmountStateChanged
-        calculator.updateLabels();
+        parent.update();
     }//GEN-LAST:event_sAmountStateChanged
 
     public int getLevel() {

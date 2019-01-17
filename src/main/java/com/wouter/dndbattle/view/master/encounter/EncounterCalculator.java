@@ -20,7 +20,10 @@ import static com.wouter.dndbattle.utils.EncounterXpCalculator.*;
 
 import java.awt.Component;
 import java.awt.event.ItemEvent;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultListModel;
@@ -29,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.ListModel;
 
 import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.character.Enemy;
 import com.wouter.dndbattle.objects.impl.character.Player;
 import com.wouter.dndbattle.utils.Characters;
 
@@ -37,11 +39,21 @@ import com.wouter.dndbattle.utils.Characters;
  *
  * @author wverl
  */
-public class EncounterCalculator extends javax.swing.JPanel {
+public class EncounterCalculator extends javax.swing.JPanel implements IEncounterCombatantPanelParent {
 
     private static final Characters CHARACTERS = Characters.getInstance();
+    private static final String TOTAL_FORMAT = "%d / %d";
+
     private final Map<ICharacter, EncounterCombantantPanel> friendlyCharacterPanelMap = new HashMap<>();
     private final Map<ICharacter, EncounterCombantantPanel> enemyCharacterPanelMap = new HashMap<>();
+    private final List<EnemiesPanel> enemiesPanels = new ArrayList<>(1);
+
+    private int easyTotal = 0;
+    private int mediumTotal = 0;
+    private int hardTotal = 0;
+    private int deathlyTotal = 0;
+    private int dailyTotal = 0;
+    private int partySize = 0;
 
     /**
      * Creates new form EncounterCalculator
@@ -50,13 +62,8 @@ public class EncounterCalculator extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void updateLabels() {
-        int easyTotal = 0;
-        int mediumTotal = 0;
-        int hardTotal = 0;
-        int deathlyTotal = 0;
-        int dailyTotal = 0;
-        int party = 0;
+    @Override
+    public void update() {
         for (Component component : pFriendlyCombatants.getComponents()) {
             if (component instanceof EncounterCombantantPanel) {
                 EncounterCombantantPanel ecp = (EncounterCombantantPanel) component;
@@ -67,7 +74,7 @@ public class EncounterCalculator extends javax.swing.JPanel {
                 hardTotal += (getHardExperience(level) * amount);
                 deathlyTotal += (getDeathlyExperience(level) * amount);
                 dailyTotal += (getDailyExperience(level) * amount);
-                party += amount;
+                partySize += amount;
             }
         }
         lEasy.setText(Integer.toString(easyTotal));
@@ -76,38 +83,32 @@ public class EncounterCalculator extends javax.swing.JPanel {
         lDeathly.setText(Integer.toString(deathlyTotal));
         lDaily.setText(Integer.toString(dailyTotal));
 
-        long totalExp = 0;
-        int amountOfEnemies = 0;
-        for (Component component : pEnemyCombatants.getComponents()) {
-            if (component instanceof EncounterCombantantPanel) {
-                EncounterCombantantPanel ecp = (EncounterCombantantPanel) component;
-                int amount = ecp.getAmount();
-                totalExp += (ecp.getExp() * amount);
-                amountOfEnemies += amount;
-            }
-        }
-        lTotal.setText(Long.toString(totalExp));
-        double multiplier = getEncounterMultiplier(party, amountOfEnemies);
-        lMultiplier.setText(Double.toString(multiplier));
-        int adjusted = (int) (multiplier * (double) totalExp);
-        lAdjusted.setText(Integer.toString(adjusted));
-
-        if (adjusted < easyTotal) {
-            lResult.setText("Very Easy");
-        } else if (adjusted < mediumTotal) {
-            lResult.setText("Easy");
-        } else if (adjusted < hardTotal) {
-            lResult.setText("Medium");
-        } else if (adjusted < deathlyTotal) {
-            lResult.setText("Hard");
-        } else if (adjusted < deathlyTotal) {
-            lResult.setText("Deathly");
-        } else {
-            lResult.setText("DAILY!!!");
-        }
+        updateEnemies();
     }
 
-    private ListModel<ICharacter> getListModel(Class<? extends ICharacter> clazz) {
+    public void updateEnemies() {
+        long totalExp = 0;
+        for (EnemiesPanel enemiesPanel : enemiesPanels) {
+            final int enemyXp = enemiesPanel.getTotalXp();
+            if (enemyXp < easyTotal) {
+                enemiesPanel.setResult("Very Easy (<" + easyTotal + ')');
+            } else if (enemyXp < mediumTotal) {
+                enemiesPanel.setResult("Easy (" + easyTotal + '-' + mediumTotal + ')');
+            } else if (enemyXp < hardTotal) {
+                enemiesPanel.setResult("Medium (" + mediumTotal + '-' + hardTotal + ')');
+            } else if (enemyXp < deathlyTotal) {
+                enemiesPanel.setResult("Hard (" + hardTotal + '-' + deathlyTotal + ')');
+            } else if (enemyXp < dailyTotal) {
+                enemiesPanel.setResult("Deathly (" + deathlyTotal + '-' + dailyTotal + ')');
+            } else {
+                enemiesPanel.setResult("DAILY!!! (>=" + dailyTotal + ')');
+            }
+            totalExp += enemyXp;
+        }
+        lTotal.setText(String.format(TOTAL_FORMAT, totalExp, dailyTotal));
+    }
+
+    public static ListModel<ICharacter> getListModel(Class<? extends ICharacter> clazz) {
         DefaultListModel<ICharacter> model = new DefaultListModel<>();
         CHARACTERS.getCharacters(clazz).forEach((character) -> {
             model.addElement(character);
@@ -142,20 +143,10 @@ public class EncounterCalculator extends javax.swing.JPanel {
         lDailyText = new javax.swing.JLabel();
         lDaily = new javax.swing.JLabel();
         sMiddle = new javax.swing.JSeparator();
-        spEnemyCombatants = new javax.swing.JScrollPane();
-        pEnemyCombatants = new javax.swing.JPanel();
-        bAddEnemy = new javax.swing.JButton();
-        cbEnemyClass = new com.wouter.dndbattle.view.comboboxes.ClassComboBox();
-        splEnemy = new javax.swing.JScrollPane();
-        lEnemy = new javax.swing.JList<>();
         lTotal = new javax.swing.JLabel();
         lTotalText = new javax.swing.JLabel();
-        lMultiplier = new javax.swing.JLabel();
-        lMultiplierText = new javax.swing.JLabel();
-        lAdjusted = new javax.swing.JLabel();
-        lAdjustedText = new javax.swing.JLabel();
-        lResult = new javax.swing.JLabel();
-        lResultText = new javax.swing.JLabel();
+        tpEnemies = new javax.swing.JTabbedPane();
+        bAddBattle = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -203,7 +194,7 @@ public class EncounterCalculator extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weightx = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(splFriendlyCombatants, gridBagConstraints);
 
@@ -302,126 +293,50 @@ public class EncounterCalculator extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         add(sMiddle, gridBagConstraints);
 
-        pEnemyCombatants.setLayout(new java.awt.GridLayout(0, 1));
-        spEnemyCombatants.setViewportView(pEnemyCombatants);
-
+        lTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        add(spEnemyCombatants, gridBagConstraints);
-
-        bAddEnemy.setText("<");
-        bAddEnemy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAddEnemyActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        add(bAddEnemy, gridBagConstraints);
-
-        cbEnemyClass.setSelectedItem(Enemy.class);
-        cbEnemyClass.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbEnemyClassItemStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(cbEnemyClass, gridBagConstraints);
-
-        lEnemy.setModel(getListModel(Enemy.class));
-        splEnemy.setViewportView(lEnemy);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(splEnemy, gridBagConstraints);
-
-        lTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         add(lTotal, gridBagConstraints);
 
-        lTotalText.setText("Total XP");
+        lTotalText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lTotalText.setText("Total");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(lTotalText, gridBagConstraints);
-
-        lMultiplier.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        add(lMultiplier, gridBagConstraints);
-
-        lMultiplierText.setText("Multiplier");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(lMultiplierText, gridBagConstraints);
-
-        lAdjusted.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        add(lAdjusted, gridBagConstraints);
-
-        lAdjustedText.setText("Adjusted XP");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(lAdjustedText, gridBagConstraints);
-
-        lResult.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        add(lResult, gridBagConstraints);
+        add(lTotalText, gridBagConstraints);
 
-        lResultText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lResultText.setText("Result");
+        tpEnemies.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        bAddBattleActionPerformed(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        add(tpEnemies, gridBagConstraints);
+
+        bAddBattle.setText("Add");
+        bAddBattle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAddBattleActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        add(lResultText, gridBagConstraints);
+        add(bAddBattle, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbFriendlyClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFriendlyClassItemStateChanged
@@ -436,69 +351,57 @@ public class EncounterCalculator extends javax.swing.JPanel {
     }//GEN-LAST:event_cbFriendlyClassItemStateChanged
 
     private void bAddFriendlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddFriendlyActionPerformed
-        addCharacter(lFriendly, friendlyCharacterPanelMap, pFriendlyCombatants);
+        addCharacter(lFriendly, pFriendlyCombatants);
     }//GEN-LAST:event_bAddFriendlyActionPerformed
 
-    private void bAddEnemyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddEnemyActionPerformed
-        addCharacter(lEnemy, enemyCharacterPanelMap, pEnemyCombatants);
-    }//GEN-LAST:event_bAddEnemyActionPerformed
+    private void bAddBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddBattleActionPerformed
+        int number = tpEnemies.getComponentCount();
+        String name = "Battle " + (number + 1);
+        EnemiesPanel panel = new EnemiesPanel(this);
+        enemiesPanels.add(panel);
+        tpEnemies.addTab(name, panel);
+        tpEnemies.setSelectedIndex(number);
+    }//GEN-LAST:event_bAddBattleActionPerformed
 
-    private void addCharacter(JList<ICharacter> list, Map<ICharacter, EncounterCombantantPanel> map, JPanel panel) {
+    public void addCharacter(JList<ICharacter> list, JPanel panel) {
         ICharacter selectedValue = list.getSelectedValue();
         if (selectedValue != null) {
-            if (map.containsKey(selectedValue)) {
-                map.get(selectedValue).addOne();
+            if (friendlyCharacterPanelMap.containsKey(selectedValue)) {
+                friendlyCharacterPanelMap.get(selectedValue).addOne();
             } else {
                 final EncounterCombantantPanel ecp = new EncounterCombantantPanel(this, selectedValue);
-                map.put(selectedValue, ecp);
+                friendlyCharacterPanelMap.put(selectedValue, ecp);
                 panel.add(ecp);
             }
-            updateLabels();
+            update();
         }
     }
 
-    private void cbEnemyClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbEnemyClassItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-            final DefaultListModel model = (DefaultListModel) lEnemy.getModel();
-            model.removeAllElements();
-            lEnemy.clearSelection();
-            CHARACTERS.getCharacters(cbEnemyClass.getSelectedItem()).forEach((character) -> {
-                model.addElement(character);
-            });
-        }
-    }//GEN-LAST:event_cbEnemyClassItemStateChanged
+    public int getPartySize() {
+        return partySize;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bAddEnemy;
+    private javax.swing.JButton bAddBattle;
     private javax.swing.JButton bAddFriendly;
-    private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbEnemyClass;
     private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbFriendlyClass;
-    private javax.swing.JLabel lAdjusted;
-    private javax.swing.JLabel lAdjustedText;
     private javax.swing.JLabel lDaily;
     private javax.swing.JLabel lDailyText;
     private javax.swing.JLabel lDeathly;
     private javax.swing.JLabel lDeathlyText;
     private javax.swing.JLabel lEasy;
     private javax.swing.JLabel lEasyText;
-    private javax.swing.JList<ICharacter> lEnemy;
     private javax.swing.JList<ICharacter> lFriendly;
     private javax.swing.JLabel lHard;
     private javax.swing.JLabel lHardText;
     private javax.swing.JLabel lMedium;
     private javax.swing.JLabel lMediumTest;
-    private javax.swing.JLabel lMultiplier;
-    private javax.swing.JLabel lMultiplierText;
-    private javax.swing.JLabel lResult;
-    private javax.swing.JLabel lResultText;
     private javax.swing.JLabel lTotal;
     private javax.swing.JLabel lTotalText;
-    private javax.swing.JPanel pEnemyCombatants;
     private javax.swing.JPanel pFriendlyCombatants;
     private javax.swing.JSeparator sMiddle;
-    private javax.swing.JScrollPane spEnemyCombatants;
-    private javax.swing.JScrollPane splEnemy;
     private javax.swing.JScrollPane splFriendly;
     private javax.swing.JScrollPane splFriendlyCombatants;
+    private javax.swing.JTabbedPane tpEnemies;
     // End of variables declaration//GEN-END:variables
 }

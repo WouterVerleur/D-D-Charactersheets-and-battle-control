@@ -20,6 +20,7 @@ import static com.wouter.dndbattle.utils.EncounterXpCalculator.*;
 
 import java.awt.Component;
 import java.awt.event.ItemEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

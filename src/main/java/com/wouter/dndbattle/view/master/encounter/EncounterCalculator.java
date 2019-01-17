@@ -20,7 +20,6 @@ import static com.wouter.dndbattle.utils.EncounterXpCalculator.*;
 
 import java.awt.Component;
 import java.awt.event.ItemEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +63,13 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
 
     @Override
     public void update() {
+        easyTotal = 0;
+        mediumTotal = 0;
+        hardTotal = 0;
+        deathlyTotal = 0;
+        dailyTotal = 0;
+        partySize = 0;
+
         for (Component component : pFriendlyCombatants.getComponents()) {
             if (component instanceof EncounterCombantantPanel) {
                 EncounterCombantantPanel ecp = (EncounterCombantantPanel) component;

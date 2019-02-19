@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.view.master.character.spells;
 
+import static com.wouter.dndbattle.utils.Settings.CHARACTER_SPELLS_COLUMNS;
+
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -33,7 +35,6 @@ import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.Spell;
 import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
@@ -41,8 +42,6 @@ import com.wouter.dndbattle.utils.Spells;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.utils.Settings.CHARACTER_SPELLS_COLUMNS;
 
 /**
  *
@@ -241,6 +240,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
         sSpellColumns.setMaximum(10);
         sSpellColumns.setMinimum(1);
         sSpellColumns.setMinorTickSpacing(1);
+        sSpellColumns.setPaintLabels(true);
         sSpellColumns.setPaintTicks(true);
         sSpellColumns.setSnapToTicks(true);
         sSpellColumns.setValue(getSpellColumns());
@@ -317,10 +317,6 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
             modifier += character.getAbilityModifier(spellAbility);
         }
         return Integer.toString(modifier);
-    }
-
-    public void removeSpell(Spell spell) {
-        character.removeSpell(spell);
     }
 
     private class SpellCheckBox extends JCheckBox {

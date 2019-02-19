@@ -5,6 +5,8 @@
  */
 package com.wouter.dndbattle.utils;
 
+import static com.wouter.dndbattle.utils.Settings.WEBSITE;
+
 import java.awt.Color;
 import java.awt.Desktop;
 import java.io.BufferedReader;
@@ -35,6 +37,7 @@ import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.enums.WeaponRange;
+import com.wouter.dndbattle.objects.enums.Website;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +55,8 @@ public class GlobalUtils {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalUtils.class);
 
+    private static final Settings SETTINGS = Settings.getInstance();
+
     public static final String DAMAGE_FORMAT_SHORT = "%s %s";
     public static final String DAMAGE_FORMAT = "%d%s %s %s";
 
@@ -59,9 +64,9 @@ public class GlobalUtils {
     public static final int ATTACK = 2;
     public static final int DAMAGE = 3;
 
-    /*
-     * File Functions
-     */
+    //******************************
+    // File Functions
+    //******************************
     public static String getFileExtension(File file) {
         return getFileExtension(file.getName());
     }
@@ -183,10 +188,9 @@ public class GlobalUtils {
         return null;
     }
 
-    /*
-     *
-     * Character Functions
-     */
+    //******************************
+    // Character Functions
+    //******************************
     public static String modifierToString(int modifier) {
         return modifier > 0 ? "+" + modifier : Integer.toString(modifier);
     }
@@ -252,10 +256,9 @@ public class GlobalUtils {
         return String.format(DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType()).trim();
     }
 
-    /*
-     ************************************
-     * Browser Functions ***********************************
-     */
+    //******************************
+    // Browser Functions
+    //******************************
     public static void browseCharacter(ICharacter character) {
         String searchQuery = null;
         if (character instanceof AbstractExtendedCharacter) {
@@ -273,17 +276,17 @@ public class GlobalUtils {
     public static void browseSearch(String searchQuery) {
         if (Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
-                Desktop.getDesktop().browse(new URI("https://roll20.net/compendium/dnd5e/searchbook/?terms=" + searchQuery.replace(" ", "%20")));
+                Website website = Website.valueOf(SETTINGS.getProperty(WEBSITE, Website.ROLL20.name()));
+                Desktop.getDesktop().browse(new URI(website.getBasePath() + searchQuery.replace(" ", "+")));
             } catch (IOException | URISyntaxException e) {
                 log.error("Error while opening search in browser", e);
             }
         }
     }
 
-    /*
-     ************************************
-     * Background Functions ***********************************
-     */
+    //******************************
+    // Background Functions
+    //******************************
     public static Color getBackgroundTransparent() {
         return new Color(0, 0, 0, 0);
     }

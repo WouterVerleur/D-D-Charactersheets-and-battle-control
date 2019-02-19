@@ -17,7 +17,6 @@
 package com.wouter.dndbattle.objects.impl.character;
 
 import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 
 /**
@@ -36,17 +35,5 @@ public class Fiend extends AbstractCharacter {
     @Override
     public AbstractCharacter clone() {
         return new Fiend(this);
-    }
-
-    @Override
-    public int compareTo(ISaveableClass other) {
-        if (other instanceof Fiend) {
-            Fiend beast = (Fiend) other;
-            int crCompare = getChallengeRating().compareTo(beast.getChallengeRating());
-            if (crCompare != 0) {
-                return crCompare;
-            }
-        }
-        return super.compareTo(other);
     }
 }

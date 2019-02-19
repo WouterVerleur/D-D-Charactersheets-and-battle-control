@@ -20,6 +20,7 @@ import java.awt.Component;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
@@ -82,9 +83,9 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
     }
 
     private void createTabs() {
-        tpCharacterPages.addTab("Abilities", new AbilityAndSkillPanel(character, this));
+        tpCharacterPages.addTab("Abilities", new JScrollPane(new AbilityAndSkillPanel(character, this)));
         if (character instanceof AbstractExtendedCharacter) {
-            tpCharacterPages.addTab("Character", new ExtendedCharacterPanel((AbstractExtendedCharacter) character, this));
+            tpCharacterPages.addTab("Character", new JScrollPane(new ExtendedCharacterPanel((AbstractExtendedCharacter) character, this)));
         }
         tpCharacterPages.addTab("Weapons", new CharacterWeaponPanel(character));
         tpCharacterPages.addTab("Spells", new SpellOverviewPanel(character));
@@ -149,7 +150,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(bRename, gridBagConstraints);
 
-        bRoll20.setText("Roll20.net");
+        bRoll20.setText("Website");
         bRoll20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bRoll20ActionPerformed(evt);
@@ -210,6 +211,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
                 "Confirmation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             Characters.getInstance().remove(character);
         }
+        presetPanel.updateList(true);
     }//GEN-LAST:event_bDeleteActionPerformed
 
     private void bChangeClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeClassActionPerformed

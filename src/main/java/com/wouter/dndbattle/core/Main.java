@@ -88,8 +88,21 @@ public class Main extends javax.swing.JFrame {
         }
         logToScreen("IP found to be " + ip);
         System.setProperty("java.rmi.server.hostname", ip);
-        if (args.length > 0 && args[0].equalsIgnoreCase("--alpha")) {
-            Settings.setAlpha(true);
+        String hostOverride = null;
+
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            switch (arg.toLowerCase()) {
+                case "--alpha":
+                    Settings.setAlpha(true);
+                    break;
+                case "--localhost":
+                    hostOverride = LOCALHOST;
+                    break;
+                default:
+                    log.debug("Unknown option [{}]", arg);
+                    break;
+            }
         }
 
         String lookAndFeel = SETTINGS.getProperty(LOOKANDFEEL, "Nimbus");
@@ -108,11 +121,11 @@ public class Main extends javax.swing.JFrame {
         defaults.put("nimbusOrange", Color.GREEN);
 
         logToScreen("Starting main program");
-        start(false);
+        start(false, hostOverride);
     }
 
-    private static void start(boolean requestPort) throws HeadlessException {
-        String host;
+    private static void start(boolean requestPort, String hostOverride) throws HeadlessException {
+        String host = hostOverride;
         if (requestPort) {
             port = 0;
             while (port == 0) {
@@ -132,17 +145,19 @@ public class Main extends javax.swing.JFrame {
         } else {
             port = SETTINGS.getProperty("connection.port", DEFAULT_PORT);
         }
-        if (Settings.isAlpha()) {
-            host = SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST);
-        } else {
-            logToScreen("Requesting host");
-            host = JOptionPane.showInputDialog(MAIN, "What host?", SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST));
-            if (host == null) {
-                log.debug("User cancelled");
-                System.exit(0);
+        if (host == null || host.isEmpty()) {
+            if (Settings.isAlpha()) {
+                host = SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST);
+            } else {
+                logToScreen("Requesting host");
+                host = JOptionPane.showInputDialog(MAIN, "What host?", SETTINGS.getProperty(CONNECTION_HOST, LOCALHOST));
+                if (host == null) {
+                    log.debug("User cancelled");
+                    System.exit(0);
+                }
+                SETTINGS.setProperty(CONNECTION_HOST, host);
+                log.debug("User input on host request: [{}]", host);
             }
-            SETTINGS.setProperty(CONNECTION_HOST, host);
-            log.debug("User input on host request: [{}]", host);
         }
         try {
             connectSlave(host);
@@ -156,7 +171,7 @@ public class Main extends javax.swing.JFrame {
                         createMaster = true;
                         break;
                     case CANCEL_OPTION:
-                        start(true);
+                        start(true, host);
                         break;
                     default:
                         System.exit(1);
@@ -237,8 +252,8 @@ public class Main extends javax.swing.JFrame {
         taDisplayLog = new javax.swing.JTextArea();
         jProgressBar1 = new javax.swing.JProgressBar();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Starting program");
-        setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);

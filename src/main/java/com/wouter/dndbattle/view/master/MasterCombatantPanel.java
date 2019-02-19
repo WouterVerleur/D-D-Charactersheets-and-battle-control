@@ -5,8 +5,12 @@
  */
 package com.wouter.dndbattle.view.master;
 
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+
+import java.util.Iterator;
+import java.util.List;
+
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.wouter.dndbattle.core.impl.Master;
@@ -14,12 +18,11 @@ import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.impl.Combatant;
+import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 /**
  *
@@ -262,18 +265,43 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
 
     private void bTransformActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bTransformActionPerformed
         if (checkCanTransform(combatant)) {
-            showFrame(new TransformFrame(combatant, master));
+            List<ICharacter> characters = Characters.getInstance().getCharacters(character.getTransformType());
+            for (Iterator<ICharacter> iterator = characters.iterator(); iterator.hasNext();) {
+                if (checkChallengeRatingToHigh(iterator.next())) {
+                    iterator.remove();
+                }
+            }
+            ICharacter[] presets = characters.toArray(new ICharacter[characters.size()]);
+            Object selection = JOptionPane.showInputDialog(this, "Message", "Title", JOptionPane.QUESTION_MESSAGE, null, presets, null);
+            if (selection != null) {
+                combatant.transform((ICharacter) selection);
+                master.updateAll(true);
+            }
         }
     }//GEN-LAST:event_bTransformActionPerformed
 
-    private void bPolyMorphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPolyMorphActionPerformed
-        showFrame(new CombatantSelectionFrame(master, combatant));
-    }//GEN-LAST:event_bPolyMorphActionPerformed
-
-    private void showFrame(JFrame frame) {
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
+    private boolean checkChallengeRatingToHigh(ICharacter transformation) {
+        if (transformation.getChallengeRating() == null) {
+            return false;
+        }
+        if (character.getTransformChallengeRating() == null) {
+            return true;
+        }
+        return transformation.getChallengeRating().compareTo(character.getTransformChallengeRating()) > 0;
     }
+
+    private void bPolyMorphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPolyMorphActionPerformed
+        CombatantSelectionPanel selectionPanel = new CombatantSelectionPanel();
+        switch (JOptionPane.showConfirmDialog(this, selectionPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+            case JOptionPane.OK_OPTION:
+                ICharacter selection = selectionPanel.getSelection();
+                combatant.transform(selection);
+                master.updateAll(true);
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_bPolyMorphActionPerformed
 
     private int requestNumber(String description) {
         int value = 0;

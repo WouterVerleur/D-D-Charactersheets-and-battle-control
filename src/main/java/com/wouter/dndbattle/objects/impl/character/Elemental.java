@@ -17,7 +17,6 @@
 package com.wouter.dndbattle.objects.impl.character;
 
 import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 
 /**
@@ -25,8 +24,6 @@ import com.wouter.dndbattle.objects.impl.AbstractCharacter;
  * @author wverl
  */
 public class Elemental extends AbstractCharacter {
-
-    private static final String STRING_FORMAT = "%s (CR: %s)";
 
     public Elemental() {
     }
@@ -38,22 +35,5 @@ public class Elemental extends AbstractCharacter {
     @Override
     public AbstractCharacter clone() {
         return new Elemental(this);
-    }
-
-    @Override
-    public int compareTo(ISaveableClass other) {
-        if (other instanceof Elemental) {
-            Elemental beast = (Elemental) other;
-            int crCompare = getChallengeRating().compareTo(beast.getChallengeRating());
-            if (crCompare != 0) {
-                return crCompare;
-            }
-        }
-        return super.compareTo(other);
-    }
-
-    @Override
-    public String toString() {
-        return String.format(STRING_FORMAT, getName(), getChallengeRating());
     }
 }

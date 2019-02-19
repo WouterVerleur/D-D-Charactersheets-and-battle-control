@@ -42,6 +42,8 @@ public interface ICharacter extends ISaveableClass, Cloneable {
 
     int getConditionalArmorBonus();
 
+    int getShieldBonus();
+
     String getName();
 
     String getDescription();

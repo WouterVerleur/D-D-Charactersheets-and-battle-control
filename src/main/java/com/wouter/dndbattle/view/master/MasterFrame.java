@@ -33,6 +33,7 @@ import com.wouter.dndbattle.core.IMaster;
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.Combatant;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
@@ -56,9 +57,6 @@ public class MasterFrame extends javax.swing.JFrame {
         refreshClientsTable();
     });
 
-    /**
-     * Creates new form MasterFrame
-     */
     public MasterFrame(Master master) {
         this.master = master;
         initComponents();
@@ -473,9 +471,30 @@ public class MasterFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_bNextActionPerformed
 
     private void bAddCombatantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddCombatantActionPerformed
-        CombatantSelectionFrame frame = new CombatantSelectionFrame(master);
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
+        CombatantSelectionPanel selectionPanel = new CombatantSelectionPanel();
+        switch (JOptionPane.showConfirmDialog(this, selectionPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+            case JOptionPane.OK_OPTION:
+                AbstractCharacter selection = selectionPanel.getSelection();
+                boolean keepAsking = true;
+                AddCombatantPanel addCombatantFrame = new AddCombatantPanel(selection);
+                do {
+                    switch (JOptionPane.showConfirmDialog(this, addCombatantFrame, "Add character", JOptionPane.OK_CANCEL_OPTION)) {
+                        case JOptionPane.OK_OPTION:
+                            Combatant combatant = addCombatantFrame.getCombatant();
+                            if (combatant == null) {
+                                continue;
+                            }
+                            master.addCombatant(combatant);
+                            break;
+                        default:
+                            break;
+                    }
+                    keepAsking = false;
+                } while (keepAsking);
+                break;
+            default:
+                break;
+        }
     }//GEN-LAST:event_bAddCombatantActionPerformed
 
     private void bNewBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNewBattleActionPerformed

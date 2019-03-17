@@ -156,9 +156,17 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(abilityType).getModifier();
     }
 
+    public int getAbilityModifier(String typeName) {
+        return getAbilityModifier(AbilityType.valueOf(typeName.toUpperCase()));
+    }
+
     @Override
     public int getAbilityScore(AbilityType abilityType) {
         return abilities.get(abilityType).getScore();
+    }
+
+    public int getAbilityScore(String typeName) {
+        return getAbilityScore(AbilityType.valueOf(typeName.toUpperCase()));
     }
 
     public int getArmorOverride() {
@@ -241,6 +249,10 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public int getSavingThrowModifier(AbilityType abilityType) {
         return abilities.get(abilityType).getModifier() + savingThrows.get(abilityType).getProficiency().getMultiplier() * getProficiencyScore();
+    }
+
+    public int getSavingThrowModifier(String typeName) {
+        return getSavingThrowModifier(AbilityType.valueOf(typeName.toUpperCase()));
     }
 
     @Override

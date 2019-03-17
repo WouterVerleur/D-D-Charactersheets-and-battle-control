@@ -29,7 +29,7 @@ import com.lowagie.text.DocumentException;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.objects.impl.CharacterClass;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
+import com.wouter.dndbattle.utils.PdfExporter;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.master.character.CharacterPanel;
@@ -961,8 +961,9 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
     }//GEN-LAST:event_taFeaturesFocusLost
 
     private void bExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportActionPerformed
-        File startLocation = new File(SETTINGS.getProperty(EXPORT_FILESELECTION));
-        JFileChooser chooser = new JFileChooser(startLocation);
+        File startLocation = new File(SETTINGS.getProperty(EXPORT_FILESELECTION, System.getProperty("user.home")), character.getSaveFileName() + ".pdf");
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(startLocation);
         chooser.setSelectedFile(startLocation);
         chooser.setMultiSelectionEnabled(false);
         chooser.setAcceptAllFileFilterUsed(false);
@@ -985,7 +986,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
             SETTINGS.setProperty(EXPORT_FILESELECTION, file.getParent());
         }
         try {
-            GlobalUtils.createPDF(character, file);
+            PdfExporter.create(character, file);
         } catch (IOException | DocumentException e) {
             log.error("Exception while creating export for character [{}]", character, e);
         }

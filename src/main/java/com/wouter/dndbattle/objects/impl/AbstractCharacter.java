@@ -277,6 +277,10 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(skillType.getAbilityType()).getModifier() + getSkillProficiency(skillType).getMultiplier() * getProficiencyScore();
     }
 
+    public int getSkillModifier(String typeName) {
+        return getSkillModifier(SkillType.valueOf(typeName));
+    }
+
     @Override
     public Proficiency getSkillProficiency(SkillType skillType) {
         try {

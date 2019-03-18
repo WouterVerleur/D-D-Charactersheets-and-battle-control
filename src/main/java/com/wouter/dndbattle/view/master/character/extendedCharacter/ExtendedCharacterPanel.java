@@ -192,7 +192,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 21;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(bAddClass, gridBagConstraints);
 
         sepClass.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -218,7 +218,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         pCharacterFields.add(lPlayerName, gridBagConstraints);
 
         tfPlayerName.setText(character.getPlayerName());
@@ -234,7 +234,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         pCharacterFields.add(tfPlayerName, gridBagConstraints);
 
         lRace.setText("Race");
@@ -691,7 +691,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(spFlaws, gridBagConstraints);
 
         spEquipment.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Equipment", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -794,7 +794,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pCharacterFields.add(spBackstory, gridBagConstraints);
 
         spCharacterFields.setViewportView(pCharacterFields);
@@ -871,7 +871,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(bExport, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 

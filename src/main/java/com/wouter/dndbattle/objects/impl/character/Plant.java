@@ -17,7 +17,6 @@
 package com.wouter.dndbattle.objects.impl.character;
 
 import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 
 /**
@@ -36,17 +35,5 @@ public class Plant extends AbstractCharacter {
     @Override
     public AbstractCharacter clone() {
         return new Plant(this);
-    }
-
-    @Override
-    public int compareTo(ISaveableClass other) {
-        if (other instanceof Plant) {
-            Plant beast = (Plant) other;
-            int crCompare = getChallengeRating().compareTo(beast.getChallengeRating());
-            if (crCompare != 0) {
-                return crCompare;
-            }
-        }
-        return super.compareTo(other);
     }
 }

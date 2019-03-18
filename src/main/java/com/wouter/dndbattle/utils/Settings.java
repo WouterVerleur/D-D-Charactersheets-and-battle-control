@@ -44,6 +44,7 @@ public class Settings extends Properties {
     public static final String SLAVE_SPELLS_SEPERATOR = "gui.slave.spells.seperator";
     public static final String SLAVE_TITLE = "gui.slave.title";
     public static final String SPELLS_GRID_COLUMNS = "gui.spells.grid.columns";
+    public static final String WEBSITE = "gui.website";
 
     private static boolean alpha = false;
 
@@ -59,14 +60,6 @@ public class Settings extends Properties {
 
     public static Settings getInstance() {
         return INSTANCE;
-    }
-
-    public static void setAlpha(boolean alpha) {
-        Settings.alpha = alpha;
-    }
-
-    public static boolean isAlpha() {
-        return alpha;
     }
 
     private Settings() {
@@ -161,5 +154,19 @@ public class Settings extends Properties {
                 log.error("Exception while saving properties to file [{}]", PROPERTIES_FILE, e);
             }
         }
+    }
+
+    /**
+     * @return the alpha
+     */
+    public static boolean isAlpha() {
+        return alpha;
+    }
+
+    /**
+     * @param aAlpha the alpha to set
+     */
+    public static void setAlpha(boolean aAlpha) {
+        alpha = aAlpha;
     }
 }

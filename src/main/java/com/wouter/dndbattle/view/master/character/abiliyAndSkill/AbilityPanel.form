@@ -30,7 +30,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="lModifier" max="32767" attributes="0"/>
-          <Component id="sScore" alignment="0" pref="62" max="32767" attributes="0"/>
+          <Component id="sScore" alignment="0" pref="59" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">

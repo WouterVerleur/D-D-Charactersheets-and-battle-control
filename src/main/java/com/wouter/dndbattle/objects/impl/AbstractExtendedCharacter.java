@@ -100,6 +100,14 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
         return characterClasses;
     }
 
+    public String getClassLevel() {
+        StringBuilder builder = new StringBuilder();
+        for (ICharacterClass characterClass : characterClasses) {
+            builder.append("Level ").append(characterClass.getLevel()).append(' ').append(characterClass.getName()).append(' ');
+        }
+        return builder.toString().trim();
+    }
+
     public void setCharacterClasses(List<ICharacterClass> characterClasses) {
         this.characterClasses = characterClasses;
     }

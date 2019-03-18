@@ -20,11 +20,29 @@ This template is used to create character export in PDF format.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>#{CharacterName}</title>
+        <title>#{Name}</title>
         <style type="text/css">
             h1 {
-                text-align:center;
-                border-bottom:1px solid black;
+                text-align: center;
+                vertical-align: middle;
+                width: available;
+            }
+            .top {
+                border-bottom: 1px solid black;
+                display: table;
+                width: 100%;
+            }
+            .top > h1{
+                width: 100%;
+            }
+            .top > table{
+                white-space: nowrap;
+            }
+            .top > * {
+                display: table-cell;
+            }
+            .numbers {
+                text-align: right;
             }
             .right {
                 float: right;
@@ -36,49 +54,93 @@ This template is used to create character export in PDF format.
                 background: rgb(221,228,255);
             }
             table {
-                border-spacing: 5px 0px;
+                border-spacing: 3px 0px;
             }
             table * {
                 padding: 5px;
             }
+            table.rows > tr:nth-child(even){
+                background: rgba(0,0,0,0.1);
+            }
+            table.cols > tr > *:nth-child(even){
+                background: rgba(0,0,0,0.1);
+            }
         </style>
     </head>
     <body>
-        <h1>#{Name}</h1>
-        <table class="right">
-            <tr class="input">
-                <td>#{ClassLevel}</td>
-                <td>#{Background}</td>
-                <td>#{PlayerName}</td>
+        <div class="top">
+            <h1>#{Name}</h1>
+            <table>
+                <tr class="input">
+                    <td>#{ClassLevel}</td>
+                    <td>#{Background}</td>
+                    <td>#{PlayerName}</td>
+                </tr>
+                <tr>
+                    <td>Class &amp; Level</td>
+                    <td>Background</td>
+                    <td>Player Name</td>
+                </tr>
+                <tr class="input">
+                    <td>#{Race}</td>
+                    <td>#{Alignment}</td>
+                    <td>#{ExperiencePoints}</td>
+                </tr>
+                <tr>
+                    <td>Race</td>
+                    <td>Alignment</td>
+                    <td>Experience points</td>
+                </tr>
+            </table>
+        </div>
+        <table class="rows">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Score</th>
+                <th scope="col">Modifier</th>
+                <th scope="col">Saving Throw</th>
             </tr>
             <tr>
-                <td>Class &amp; Level</td>
-                <td>Background</td>
-                <td>Player Name</td>
-            </tr>
-            <tr class="input">
-                <td>#{Race}</td>
-                <td>#{Alignment}</td>
-                <td>#{ExperiencePoints}</td>
+                <th scope="row">STR</th>
+                <td class="numbers">#{AbilityScore.STR}</td>
+                <td class="numbers">#{AbilityModifier.STR}</td>
+                <td class="numbers">#{SavingThrowModifier.STR}</td>
             </tr>
             <tr>
-                <td>Race</td>
-                <td>Alignment</td>
-                <td>Experience points</td>
+                <th scope="row">DEX</th>
+                <td class="numbers">#{AbilityScore.DEX}</td>
+                <td class="numbers">#{AbilityModifier.DEX}</td>
+                <td class="numbers">#{SavingThrowModifier.DEX}</td>
+            </tr>
+            <tr>
+                <th scope="row">CON</th>
+                <td class="numbers">#{AbilityScore.CON}</td>
+                <td class="numbers">#{AbilityModifier.CON}</td>
+                <td class="numbers">#{SavingThrowModifier.CON}</td>
+            </tr>
+            <tr>
+                <th scope="row">INT</th>
+                <td class="numbers">#{AbilityScore.INT}</td>
+                <td class="numbers">#{AbilityModifier.INT}</td>
+                <td class="numbers">#{SavingThrowModifier.INT}</td>
+            </tr>
+            <tr>
+                <th scope="row">WIS</th>
+                <td class="numbers">#{AbilityScore.WIS}</td>
+                <td class="numbers">#{AbilityModifier.WIS}</td>
+                <td class="numbers">#{SavingThrowModifier.WIS}</td>
+            </tr>
+            <tr>
+                <th scope="row">CHA</th>
+                <td class="numbers">#{AbilityScore.CHA}</td>
+                <td class="numbers">#{AbilityModifier.CHA}</td>
+                <td class="numbers">#{SavingThrowModifier.CHA}</td>
             </tr>
         </table>
         <div class="left">
-            <div class="left">
-				#{abilities}
-			</div>
-            <div class="left">
-				<div>
-					#{savingthrows}
-				</div>
-				<div>
-					#{proficiencies}
-				</div>
-			</div>
+            <div>
+                    #{proficiencies}
+            </div>
         </div>
     </body>
 </html>

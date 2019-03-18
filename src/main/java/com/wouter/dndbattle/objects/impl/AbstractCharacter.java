@@ -56,6 +56,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private int armorOverride = 0;
     private IArmor armor;
     private int conditionalArmorBonus = 0;
+    private int shieldBonus = 2;
     private boolean friendly;
     private String name;
     private String notes;
@@ -155,9 +156,17 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(abilityType).getModifier();
     }
 
+    public int getAbilityModifier(String typeName) {
+        return getAbilityModifier(AbilityType.valueOf(typeName.toUpperCase()));
+    }
+
     @Override
     public int getAbilityScore(AbilityType abilityType) {
         return abilities.get(abilityType).getScore();
+    }
+
+    public int getAbilityScore(String typeName) {
+        return getAbilityScore(AbilityType.valueOf(typeName.toUpperCase()));
     }
 
     public int getArmorOverride() {
@@ -176,7 +185,7 @@ public abstract class AbstractCharacter implements ICharacter {
         } else {
             armorClass = armor.getArmorClass(this);
         }
-        if (armorOverride > armorClass) {
+        if (armorOverride > 0) {
             armorClass = armorOverride;
         }
         StringBuilder builder = new StringBuilder();
@@ -185,10 +194,10 @@ public abstract class AbstractCharacter implements ICharacter {
             builder.append('/').append(armorClass + conditionalArmorBonus);
         }
         if (isShieldWearer()) {
-            builder.append('/').append(armorClass + 2);
+            builder.append('/').append(armorClass + shieldBonus);
         }
         if (conditionalArmorBonus > 0 && isShieldWearer()) {
-            builder.append('/').append(armorClass + conditionalArmorBonus + 2);
+            builder.append('/').append(armorClass + conditionalArmorBonus + shieldBonus);
         }
         return builder.toString();
     }
@@ -200,6 +209,15 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public void setConditionalArmorBonus(int conditionalArmorBonus) {
         this.conditionalArmorBonus = conditionalArmorBonus;
+    }
+
+    @Override
+    public int getShieldBonus() {
+        return shieldBonus;
+    }
+
+    public void setShieldBonus(int shieldBonus) {
+        this.shieldBonus = shieldBonus;
     }
 
     /**
@@ -233,6 +251,10 @@ public abstract class AbstractCharacter implements ICharacter {
         return abilities.get(abilityType).getModifier() + savingThrows.get(abilityType).getProficiency().getMultiplier() * getProficiencyScore();
     }
 
+    public int getSavingThrowModifier(String typeName) {
+        return getSavingThrowModifier(AbilityType.valueOf(typeName.toUpperCase()));
+    }
+
     @Override
     public Proficiency getSavingThrowProficiency(AbilityType abilityType) {
         return savingThrows.get(abilityType).getProficiency();
@@ -253,6 +275,10 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public int getSkillModifier(SkillType skillType) {
         return abilities.get(skillType.getAbilityType()).getModifier() + getSkillProficiency(skillType).getMultiplier() * getProficiencyScore();
+    }
+
+    public int getSkillModifier(String typeName) {
+        return getSkillModifier(SkillType.valueOf(typeName));
     }
 
     @Override

@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.utils;
 
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,17 +49,59 @@ import org.xml.sax.InputSource;
  *
  * @author wverl
  */
-public class PdfExporter {
+public class FileExporter {
 
     private static final String PARAM_SPLITTER = "\\.";
 
-    private static final Logger log = LoggerFactory.getLogger(PdfExporter.class);
+    private static final Logger log = LoggerFactory.getLogger(FileExporter.class);
 
     private static final String TEMPLATE_REPLACEMENT_STRING = "#\\{\\w+(\\.\\w+)*\\}";
 
-    public static void create(IExtendedCharacter character, File pdf) throws IOException, DocumentException {
-        String contents = GlobalUtils.getResourceFileAsString("templates/character.xhtml");
+    public static void createPDF(IExtendedCharacter character, File pdf) throws IOException, DocumentException {
+        String contents = createHtmlContent(character);
 
+        File tempFile = File.createTempFile("export_" + character.getSaveFileName(), ".xhtml");
+        try (PrintWriter out = new PrintWriter(tempFile)) {
+            out.println(contents);
+        }
+
+        try (OutputStream os = new FileOutputStream(pdf)) {
+            log.debug("Creating pdf from tempfile [{}]", tempFile);
+            ITextRenderer renderer = new ITextRenderer();
+            ITextUserAgent callback = new ITextUserAgent(renderer.getOutputDevice());
+            callback.setSharedContext(renderer.getSharedContext());
+            renderer.getSharedContext().setUserAgentCallback(callback);
+
+            Document doc = XMLResource.load(new InputSource(new FileInputStream(tempFile))).getDocument();
+
+            renderer.setDocument(doc, tempFile.getName());
+            renderer.layout();
+            renderer.createPDF(os);
+
+            log.debug("PDF [{}] was created", pdf);
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(pdf);
+            }
+        }
+
+        if (tempFile.exists()) {
+            tempFile.delete();
+        }
+    }
+
+    public static void createHTML(IExtendedCharacter character, File file) throws IOException {
+        try (PrintWriter out = new PrintWriter(file)) {
+            out.println(createHtmlContent(character));
+
+            log.debug("HTML [{}] was created", file);
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            }
+        }
+    }
+
+    private static String createHtmlContent(IExtendedCharacter character) throws SecurityException {
+        String contents = GlobalUtils.getResourceFileAsString("templates/character.xhtml");
         Class<? extends IExtendedCharacter> aClass = character.getClass();
         Map<String, List<Method>> methodMap = new HashMap<>();
         for (Method method : aClass.getMethods()) {
@@ -71,7 +115,6 @@ public class PdfExporter {
                 methodMap.get(name).add(method);
             }
         }
-
         Pattern pattern = Pattern.compile(TEMPLATE_REPLACEMENT_STRING);
         Matcher matcher = pattern.matcher(contents);
         while (matcher.find()) {
@@ -131,40 +174,10 @@ public class PdfExporter {
                 }
             }
         }
-
-        File tempFile = File.createTempFile("export_" + character.getSaveFileName(), ".xhtml");
-        try (PrintWriter out = new PrintWriter(tempFile)) {
-            out.println(contents);
-        }
-
-        PdfExporter.create(tempFile, pdf);
-        if (tempFile.exists()) {
-            tempFile.delete();
-        }
-    }
-
-    public static void create(File tempFile, File pdf) throws IOException, DocumentException {
-        try (OutputStream os = new FileOutputStream(pdf)) {
-            log.debug("Creating pdf from tempfile [{}]", tempFile);
-            ITextRenderer renderer = new ITextRenderer();
-            ITextUserAgent callback = new ITextUserAgent(renderer.getOutputDevice());
-            callback.setSharedContext(renderer.getSharedContext());
-            renderer.getSharedContext().setUserAgentCallback(callback);
-
-            Document doc = XMLResource.load(new InputSource(new FileInputStream(tempFile))).getDocument();
-
-            renderer.setDocument(doc, tempFile.getName());
-            renderer.layout();
-            renderer.createPDF(os);
-
-            log.debug("PDF [{}] was created", pdf);
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(pdf);
-            }
-        }
+        return contents;
     }
 
     private static String replaceInTemplate(String template, String search, String replacement) {
-        return template.replace(search, replacement.replace("\n", "<br/>"));
+        return template.replace(search, escapeHtml(replacement).replace("\n", "<br/>"));
     }
 }

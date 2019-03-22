@@ -278,7 +278,7 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     public int getSkillModifier(String typeName) {
-        return getSkillModifier(SkillType.valueOf(typeName));
+        return getSkillModifier(SkillType.valueOf(typeName.toUpperCase()));
     }
 
     @Override

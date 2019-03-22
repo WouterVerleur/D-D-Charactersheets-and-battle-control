@@ -741,12 +741,6 @@
               <Connection code="character.getFeaturesAndTraits()" type="code"/>
             </Property>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 22]"/>
-            </Property>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[100, 94]"/>
-            </Property>
           </Properties>
         </Component>
       </SubComponents>

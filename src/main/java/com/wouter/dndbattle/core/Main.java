@@ -35,6 +35,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
+import javax.swing.ToolTipManager;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -64,6 +65,7 @@ public class Main extends javax.swing.JFrame {
     private static String ip = null;
 
     public static void main(String[] args) {
+        ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
         java.awt.EventQueue.invokeLater(() -> {
             MAIN.setVisible(true);
         });

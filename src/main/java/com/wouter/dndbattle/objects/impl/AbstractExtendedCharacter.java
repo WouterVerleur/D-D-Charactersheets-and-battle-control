@@ -62,37 +62,15 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
     public AbstractExtendedCharacter(ICharacter character) {
         super(character);
         if (character instanceof AbstractExtendedCharacter) {
-            AbstractExtendedCharacter aeCharacter = (AbstractExtendedCharacter) character;
-            this.age = aeCharacter.age;
-            this.aliesAndOrganizations = aeCharacter.aliesAndOrganizations;
-            this.alignment = aeCharacter.alignment;
-            this.backstory = aeCharacter.backstory;
-            this.bonds = aeCharacter.bonds;
-            this.background = aeCharacter.background;
-            this.characterClasses = aeCharacter.characterClasses;
-            this.equipment = aeCharacter.equipment;
-            this.experiencePoints = aeCharacter.experiencePoints;
-            this.eyes = aeCharacter.eyes;
-            this.featuresAndTraits = aeCharacter.featuresAndTraits;
-            this.flaws = aeCharacter.flaws;
-            this.hair = aeCharacter.hair;
-            this.height = aeCharacter.height;
-            this.ideals = aeCharacter.ideals;
-            this.languages = aeCharacter.languages;
-            this.personalityTraits = aeCharacter.personalityTraits;
-            this.playerName = aeCharacter.playerName;
-            this.proficiencies = aeCharacter.proficiencies;
-            this.race = aeCharacter.race;
-            this.skin = aeCharacter.skin;
-            this.treasure = aeCharacter.treasure;
-            this.weight = aeCharacter.weight;
+            setAllFromInstance((AbstractExtendedCharacter) character);
         }
     }
 
     @Override
     public AbstractCharacter clone() {
-        return new AbstractExtendedCharacter(this) {
-        };
+        AbstractExtendedCharacter clone = (AbstractExtendedCharacter) super.clone();
+        setAllFromInstance(clone, this);
+        return clone;
     }
 
     @Override
@@ -100,11 +78,12 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
         return characterClasses;
     }
 
+    @JsonIgnore
     public String getClassLevel() {
         StringBuilder builder = new StringBuilder();
-        for (ICharacterClass characterClass : characterClasses) {
+        characterClasses.forEach((characterClass) -> {
             builder.append("Level ").append(characterClass.getLevel()).append(' ').append(characterClass.getName()).append(' ');
-        }
+        });
         return builder.toString().trim();
     }
 
@@ -360,5 +339,35 @@ public abstract class AbstractExtendedCharacter extends AbstractCharacter implem
             return getDescription();
         }
         return getName();
+    }
+
+    private void setAllFromInstance(AbstractExtendedCharacter source) {
+        setAllFromInstance(this, source);
+    }
+
+    private void setAllFromInstance(AbstractExtendedCharacter target, AbstractExtendedCharacter source) {
+        target.age = source.age;
+        target.aliesAndOrganizations = source.aliesAndOrganizations;
+        target.alignment = source.alignment;
+        target.backstory = source.backstory;
+        target.bonds = source.bonds;
+        target.background = source.background;
+        target.characterClasses = source.characterClasses;
+        target.equipment = source.equipment;
+        target.experiencePoints = source.experiencePoints;
+        target.eyes = source.eyes;
+        target.featuresAndTraits = source.featuresAndTraits;
+        target.flaws = source.flaws;
+        target.hair = source.hair;
+        target.height = source.height;
+        target.ideals = source.ideals;
+        target.languages = source.languages;
+        target.personalityTraits = source.personalityTraits;
+        target.playerName = source.playerName;
+        target.proficiencies = source.proficiencies;
+        target.race = source.race;
+        target.skin = source.skin;
+        target.treasure = source.treasure;
+        target.weight = source.weight;
     }
 }

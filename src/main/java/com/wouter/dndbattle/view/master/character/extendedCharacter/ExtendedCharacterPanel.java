@@ -29,7 +29,7 @@ import com.lowagie.text.DocumentException;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.objects.impl.CharacterClass;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.PdfExporter;
+import com.wouter.dndbattle.utils.FileExporter;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.master.character.CharacterPanel;
@@ -150,7 +150,8 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lFeatures = new javax.swing.JLabel();
         spFeatures = new javax.swing.JScrollPane();
         taFeatures = new javax.swing.JTextArea();
-        bExport = new javax.swing.JButton();
+        bExportPDF = new javax.swing.JButton();
+        bExportHTML = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -827,6 +828,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 19;
         gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
@@ -852,6 +854,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 100;
         gridBagConstraints.weightx = 0.25;
@@ -859,20 +862,35 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(spFeatures, gridBagConstraints);
 
-        bExport.setText("Export");
-        bExport.setToolTipText("This button is disabled until there is a nice template.");
-        bExport.setEnabled(Settings.isAlpha());
-        bExport.addActionListener(new java.awt.event.ActionListener() {
+        bExportPDF.setText("Export PDF");
+        bExportPDF.setToolTipText("This button is disabled until there is a nice template.");
+        bExportPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bExportActionPerformed(evt);
+                bExportPDFActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.125;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-        add(bExport, gridBagConstraints);
+        add(bExportPDF, gridBagConstraints);
+
+        bExportHTML.setText("Export HTML");
+        bExportHTML.setToolTipText("This button is disabled until there is a nice template.");
+        bExportHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExportHTMLActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.125;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        add(bExportHTML, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAddClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddClassActionPerformed
@@ -960,37 +978,16 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         saveCharacter();
     }//GEN-LAST:event_taFeaturesFocusLost
 
-    private void bExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportActionPerformed
-        File startLocation = new File(SETTINGS.getProperty(EXPORT_FILESELECTION, System.getProperty("user.home")), character.getSaveFileName() + ".pdf");
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(startLocation);
-        chooser.setSelectedFile(startLocation);
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        chooser.setFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
-        log.debug("Opening filechooser for directory [{}]", startLocation);
-        int selection = chooser.showDialog(this, "Select export file");
-        if (selection != JFileChooser.APPROVE_OPTION) {
-            return;
+    private void bExportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportHTMLActionPerformed
+        File file = requestFile("html");
+        if (file != null) {
+            try {
+                FileExporter.createHTML(character, file);
+            } catch (IOException e) {
+                log.error("Exception while creating export for character [{}]", character, e);
+            }
         }
-        File file = chooser.getSelectedFile();
-
-        if (file == null) {
-            return;
-        }
-        if (file.isDirectory()) {
-            SETTINGS.setProperty(EXPORT_FILESELECTION, file.getAbsolutePath());
-            file = new File(file, character.getSaveFileName() + ".pdf");
-        } else {
-            SETTINGS.setProperty(EXPORT_FILESELECTION, file.getParent());
-        }
-        try {
-            PdfExporter.create(character, file);
-        } catch (IOException | DocumentException e) {
-            log.error("Exception while creating export for character [{}]", character, e);
-        }
-    }//GEN-LAST:event_bExportActionPerformed
+    }//GEN-LAST:event_bExportHTMLActionPerformed
 
     private void tfPlayerNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfPlayerNameFocusLost
         character.setPlayerName(tfPlayerName.getText());
@@ -1050,10 +1047,49 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         saveCharacter();
     }//GEN-LAST:event_bExperiencePointsActionPerformed
 
+    private void bExportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportPDFActionPerformed
+        File file = requestFile("pdf");
+        if (file != null) {
+            try {
+                FileExporter.createPDF(character, file);
+            } catch (IOException | DocumentException e) {
+                log.error("Exception while creating export for character [{}]", character, e);
+            }
+        }
+    }//GEN-LAST:event_bExportPDFActionPerformed
+
+    private File requestFile(String extension) {
+        File startLocation = new File(SETTINGS.getProperty(EXPORT_FILESELECTION, System.getProperty("user.home")), character.getSaveFileName() + '.' + extension);
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(startLocation);
+        chooser.setSelectedFile(startLocation);
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        chooser.setFileFilter(new FileNameExtensionFilter(extension.toUpperCase() + " Files", extension));
+        log.debug("Opening filechooser for directory [{}]", startLocation);
+        int selection = chooser.showDialog(this, "Select export file");
+        if (selection != JFileChooser.APPROVE_OPTION) {
+            return null;
+        }
+        File file = chooser.getSelectedFile();
+
+        if (file != null) {
+            if (file.isDirectory()) {
+                SETTINGS.setProperty(EXPORT_FILESELECTION, file.getAbsolutePath());
+                file = new File(file, character.getSaveFileName() + '.' + extension);
+            } else {
+                SETTINGS.setProperty(EXPORT_FILESELECTION, file.getParent());
+            }
+        }
+        return file;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddClass;
     private javax.swing.JButton bExperiencePoints;
-    private javax.swing.JButton bExport;
+    private javax.swing.JButton bExportHTML;
+    private javax.swing.JButton bExportPDF;
     private javax.swing.JLabel lAge;
     private javax.swing.JLabel lAlignment;
     private javax.swing.JLabel lBackground;

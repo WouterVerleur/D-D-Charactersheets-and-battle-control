@@ -16,6 +16,9 @@
  */
 package com.wouter.dndbattle.view.slave.character;
 
+import static com.wouter.dndbattle.utils.Settings.SLAVE_SPELLS_SEPERATOR;
+import static com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
+
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +34,7 @@ import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
+import com.wouter.dndbattle.objects.enums.WeaponSelection;
 import com.wouter.dndbattle.objects.enums.WeaponType;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
@@ -38,9 +42,6 @@ import com.wouter.dndbattle.utils.Weapons;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.utils.Settings.SLAVE_SPELLS_SEPERATOR;
-import static com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
 
 /**
  *
@@ -508,11 +509,5 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     public ICharacter getCharacter() {
         return character;
 
-    }
-
-    private enum WeaponSelection {
-        ALL,
-        PROFICIENT,
-        PERSONAL;
     }
 }

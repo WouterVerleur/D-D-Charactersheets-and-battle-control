@@ -16,17 +16,27 @@
  */
 package com.wouter.dndbattle.view.master.character;
 
+import static com.wouter.dndbattle.utils.Settings.EXPORT_FILESELECTION;
+import static com.wouter.dndbattle.utils.Settings.EXPORT_WEAPONSELECTION;
+
 import java.awt.Component;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.enums.WeaponSelection;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.utils.Characters;
+import com.wouter.dndbattle.utils.FileExporter;
 import com.wouter.dndbattle.utils.GlobalUtils;
+import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
 import com.wouter.dndbattle.view.master.MasterCharactersPanel;
@@ -42,6 +52,8 @@ import org.slf4j.LoggerFactory;
  * @author Wouter
  */
 public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePanel {
+
+    private static final Settings SETTINGS = Settings.getInstance();
 
     private static final Logger log = LoggerFactory.getLogger(CharacterPanel.class);
 
@@ -85,7 +97,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
     private void createTabs() {
         tpCharacterPages.addTab("Abilities", new JScrollPane(new AbilityAndSkillPanel(character, this)));
         if (character instanceof AbstractExtendedCharacter) {
-            tpCharacterPages.addTab("Character", new JScrollPane(new ExtendedCharacterPanel((AbstractExtendedCharacter) character, this)));
+            tpCharacterPages.addTab("Character", new ExtendedCharacterPanel((AbstractExtendedCharacter) character, this));
         }
         tpCharacterPages.addTab("Weapons", new CharacterWeaponPanel(character));
         tpCharacterPages.addTab("Spells", new SpellOverviewPanel(character));
@@ -102,11 +114,13 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         java.awt.GridBagConstraints gridBagConstraints;
 
         lName = new javax.swing.JLabel();
-        tpCharacterPages = new javax.swing.JTabbedPane();
+        bChangeType = new javax.swing.JButton();
+        bWebsite = new javax.swing.JButton();
+        bExportPDF = new javax.swing.JButton();
         bRename = new javax.swing.JButton();
-        bRoll20 = new javax.swing.JButton();
-        bChangeClass = new javax.swing.JButton();
         bDelete = new javax.swing.JButton();
+        bExportHTML = new javax.swing.JButton();
+        tpCharacterPages = new javax.swing.JTabbedPane();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -118,24 +132,52 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(lName, gridBagConstraints);
 
-        tpCharacterPages.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
-        tpCharacterPages.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        createTabs();
-
+        bChangeType.setText("Change type");
+        bChangeType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bChangeTypeActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        add(tpCharacterPages, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(bChangeType, gridBagConstraints);
+
+        bWebsite.setText("Website");
+        bWebsite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bWebsiteActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(bWebsite, gridBagConstraints);
+
+        bExportPDF.setText("Export PDF");
+        bExportPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExportPDFActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        add(bExportPDF, gridBagConstraints);
 
         bRename.setText("Rename");
         bRename.addActionListener(new java.awt.event.ActionListener() {
@@ -145,36 +187,11 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        add(bRename, gridBagConstraints);
-
-        bRoll20.setText("Website");
-        bRoll20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bRoll20ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(bRoll20, gridBagConstraints);
-
-        bChangeClass.setText("Change class");
-        bChangeClass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bChangeClassActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        add(bChangeClass, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(bRename, gridBagConstraints);
 
         bDelete.setText("Delete");
         bDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -183,16 +200,46 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(bDelete, gridBagConstraints);
+
+        bExportHTML.setText("Export HTML");
+        bExportHTML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExportHTMLActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        add(bExportHTML, gridBagConstraints);
+
+        tpCharacterPages.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        tpCharacterPages.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        createTabs();
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(tpCharacterPages, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bRoll20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRoll20ActionPerformed
+    private void bWebsiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bWebsiteActionPerformed
         GlobalUtils.browseCharacter(character);
-    }//GEN-LAST:event_bRoll20ActionPerformed
+    }//GEN-LAST:event_bWebsiteActionPerformed
 
     private void bRenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRenameActionPerformed
         String newName = JOptionPane.showInputDialog(this, "Please enter the new name", "Rename", JOptionPane.QUESTION_MESSAGE);
@@ -214,10 +261,10 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         presetPanel.updateList(true);
     }//GEN-LAST:event_bDeleteActionPerformed
 
-    private void bChangeClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeClassActionPerformed
+    private void bChangeTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bChangeTypeActionPerformed
         ClassComboBox comboBox = new ClassComboBox();
         comboBox.setSelectedItem(character.getClass());
-        JOptionPane.showMessageDialog(this, comboBox, "Please select the class", JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.showMessageDialog(this, comboBox, "Please select the new type", JOptionPane.QUESTION_MESSAGE);
         Class<? extends ICharacter> selection = comboBox.getSelectedItem();
         if (selection != null && selection != character.getClass()
                 && JOptionPane.showConfirmDialog(this, "Are you sure you wish to change " + character + " into a " + selection.getSimpleName() + ". Some information may be lost in the process.", "Please confirm change", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
@@ -231,14 +278,88 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
             }
         }
         presetPanel.updateList();
-    }//GEN-LAST:event_bChangeClassActionPerformed
+    }//GEN-LAST:event_bChangeTypeActionPerformed
+
+    private void bExportPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportPDFActionPerformed
+        File file = requestFile("pdf");
+        if (file != null) {
+            WeaponSelection weaponSelection = requestWeaponSelection();
+            if (weaponSelection != null) {
+                try {
+                    FileExporter.createPDF(character, weaponSelection, file);
+                } catch (Exception e) {
+                    log.error("Exception while creating export for character [{}]", character, e);
+                    JOptionPane.showMessageDialog(this, "Unable to export the file.\nThe error was:\n" + e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_bExportPDFActionPerformed
+
+    private void bExportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportHTMLActionPerformed
+        File file = requestFile("html");
+        if (file != null) {
+            WeaponSelection weaponSelection = requestWeaponSelection();
+            if (weaponSelection != null) {
+                try {
+                    FileExporter.createHTML(character, weaponSelection, file);
+                } catch (IOException e) {
+                    log.error("Exception while creating export for character [{}]", character, e);
+                    JOptionPane.showMessageDialog(this, "Unable to export the file.\nThe error was:\n" + e.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_bExportHTMLActionPerformed
+
+    private File requestFile(String extension) {
+        File startLocation = new File(SETTINGS.getProperty(EXPORT_FILESELECTION, System.getProperty("user.home")), character.getSaveFileName() + '.' + extension);
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(startLocation.getParentFile());
+        chooser.setSelectedFile(startLocation);
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setFileFilter(new FileNameExtensionFilter(extension.toUpperCase() + " Files", extension));
+        log.debug("Opening filechooser for directory [{}]", startLocation);
+        int selection = chooser.showDialog(this, "Select export file");
+        if (selection != JFileChooser.APPROVE_OPTION) {
+            return null;
+        }
+        File file = chooser.getSelectedFile();
+
+        if (file != null) {
+            if (file.isDirectory()) {
+                SETTINGS.setProperty(EXPORT_FILESELECTION, file.getAbsolutePath());
+                file = new File(file, character.getSaveFileName() + '.' + extension);
+            } else {
+                SETTINGS.setProperty(EXPORT_FILESELECTION, file.getParent());
+            }
+        }
+        return file;
+    }
+
+    private WeaponSelection requestWeaponSelection() {
+        WeaponSelection initialSelection;
+        try {
+            initialSelection = WeaponSelection.valueOf(SETTINGS.getProperty(EXPORT_WEAPONSELECTION, WeaponSelection.ALL.name()));
+        } catch (IllegalArgumentException e) {
+            initialSelection = null;
+        }
+        WeaponSelection selection = (WeaponSelection) JOptionPane.showInputDialog(this, "What weapons do you want in the export?", "Weapon selection", JOptionPane.QUESTION_MESSAGE, null, WeaponSelection.values(), initialSelection);
+        if (selection != null) {
+            SETTINGS.setProperty(EXPORT_WEAPONSELECTION, selection.name());
+        }
+        return selection;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bChangeClass;
+    private javax.swing.JButton bChangeType;
     private javax.swing.JButton bDelete;
+    private javax.swing.JButton bExportHTML;
+    private javax.swing.JButton bExportPDF;
     private javax.swing.JButton bRename;
-    private javax.swing.JButton bRoll20;
+    private javax.swing.JButton bWebsite;
     private javax.swing.JLabel lName;
     private javax.swing.JTabbedPane tpCharacterPages;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,7 +1,7 @@
 # D&D Charactersheets and battle control
 A simple program designed for a D&amp;D group to create Character sheets and use them as a guide for a battle. This program creates a battle master when started on a computer that does not have the program running. Any other computer in the network can than connect to the battle master to create a slave of this master. This way the DM has control over the battle and party members can view information like the order and the health of friendly characters.
 
-You can download a jar of the latest version [here]({{ site.url }}/downloads/dndbattle-2.2.jar).  
+You can download a jar of the latest version [here]({{ site.url }}/downloads/dndbattle-2.3.jar).  
 Requires Java.
 
 ## Current features
@@ -27,6 +27,7 @@ Requires Java.
 * Other options for information lookup
 
 ## All versions:
+[Version 2.3]({{ site.url }}/downloads/dndbattle-2.3.jar).  
 [Version 2.2]({{ site.url }}/downloads/dndbattle-2.2.jar).  
 [Version 2.1]({{ site.url }}/downloads/dndbattle-2.1.jar).  
 [Version 2]({{ site.url }}/downloads/dndbattle-2.jar).  

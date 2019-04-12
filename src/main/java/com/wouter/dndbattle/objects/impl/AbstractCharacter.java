@@ -420,6 +420,10 @@ public abstract class AbstractCharacter implements ICharacter {
         return spellSlots.get(level);
     }
 
+    public int getSpellSlotsByLevel(String level) {
+        return getSpellSlotsByLevel(SpellLevel.valueOf(level.toUpperCase()));
+    }
+
     public void setSpellSlotsByLevel(SpellLevel level, int slots) {
         spellSlots.put(level, slots);
     }

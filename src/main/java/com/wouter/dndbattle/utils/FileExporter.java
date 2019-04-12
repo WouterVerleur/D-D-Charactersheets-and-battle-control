@@ -16,11 +16,14 @@
  */
 package com.wouter.dndbattle.utils;
 
+import static com.wouter.dndbattle.utils.GlobalUtils.ATTACK;
+import static com.wouter.dndbattle.utils.GlobalUtils.DAMAGE;
+import static com.wouter.dndbattle.utils.GlobalUtils.NAME;
+import static com.wouter.dndbattle.utils.GlobalUtils.NOTES;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,21 +32,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.lowagie.text.DocumentException;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
+import com.wouter.dndbattle.objects.ISpell;
+import com.wouter.dndbattle.objects.IWeapon;
+import com.wouter.dndbattle.objects.enums.WeaponSelection;
+import com.wouter.dndbattle.objects.enums.WeaponType;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.W3CDom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xhtmlrenderer.pdf.ITextUserAgent;
-import org.xhtmlrenderer.resource.XMLResource;
-import org.xml.sax.InputSource;
 
 /**
  *
@@ -56,9 +62,13 @@ public class FileExporter {
     private static final Logger log = LoggerFactory.getLogger(FileExporter.class);
 
     private static final String TEMPLATE_REPLACEMENT_STRING = "#\\{\\w+(\\.\\w+)*\\}";
+    private static final String WEAPONS_PLACEHOLDER = "#{weapons}";
+    private static final String SPELLS_PLACEHOLDER = "#{spells}";
+    private static final String WEAPON_ROW_FORMAT = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
+    private static final String SPELL_BLOCK_FORMAT = "<table class=\"fullwidth top nopagebreak spell\"><tr><th colspan=\"2\">%s</th><td rowspan=\"8\"><p>%s</p></td></tr><tr><td colspan=\"2\">%s</td></tr><tr><td>Casting Time:</td><td>%s</td></tr><tr><td>Range:</td><td>%s</td></tr><tr><td>Components:</td><td>%s</td></tr><tr><td>Duration:</td><td>%s</td></tr><tr><td colspan=\"2\">Notes:</td></tr><tr><td colspan=\"2\"><p>%s</p></td></tr></table>";
 
-    public static void createPDF(IExtendedCharacter character, File pdf) throws IOException, DocumentException {
-        String contents = createHtmlContent(character);
+    public static void createPDF(ICharacter character, WeaponSelection weaponSelection, File pdf) throws Exception {
+        String contents = createHtmlContent(character, weaponSelection);
 
         File tempFile = File.createTempFile("export_" + character.getSaveFileName(), ".xhtml");
         try (PrintWriter out = new PrintWriter(tempFile)) {
@@ -67,16 +77,12 @@ public class FileExporter {
 
         try (OutputStream os = new FileOutputStream(pdf)) {
             log.debug("Creating pdf from tempfile [{}]", tempFile);
-            ITextRenderer renderer = new ITextRenderer();
-            ITextUserAgent callback = new ITextUserAgent(renderer.getOutputDevice());
-            callback.setSharedContext(renderer.getSharedContext());
-            renderer.getSharedContext().setUserAgentCallback(callback);
 
-            Document doc = XMLResource.load(new InputSource(new FileInputStream(tempFile))).getDocument();
-
-            renderer.setDocument(doc, tempFile.getName());
-            renderer.layout();
-            renderer.createPDF(os);
+            PdfRendererBuilder builder = new PdfRendererBuilder();
+            builder.useFastMode();
+            builder.withW3cDocument(new W3CDom().fromJsoup(Jsoup.parse(tempFile, "UTF-8")), tempFile.toURI().toString());
+            builder.toStream(os);
+            builder.run();
 
             log.debug("PDF [{}] was created", pdf);
             if (Desktop.isDesktopSupported()) {
@@ -89,9 +95,9 @@ public class FileExporter {
         }
     }
 
-    public static void createHTML(IExtendedCharacter character, File file) throws IOException {
+    public static void createHTML(ICharacter character, WeaponSelection weaponSelection, File file) throws IOException {
         try (PrintWriter out = new PrintWriter(file)) {
-            out.println(createHtmlContent(character));
+            out.println(createHtmlContent(character, weaponSelection));
 
             log.debug("HTML [{}] was created", file);
             if (Desktop.isDesktopSupported()) {
@@ -100,9 +106,14 @@ public class FileExporter {
         }
     }
 
-    private static String createHtmlContent(IExtendedCharacter character) throws SecurityException {
-        String contents = GlobalUtils.getResourceFileAsString("templates/character.xhtml");
-        Class<? extends IExtendedCharacter> aClass = character.getClass();
+    private static String createHtmlContent(ICharacter character, WeaponSelection weaponSelection) throws SecurityException {
+        String contents;
+        if (character instanceof IExtendedCharacter) {
+            contents = GlobalUtils.getResourceFileAsString("templates/extended-character.xhtml");
+        } else {
+            contents = GlobalUtils.getResourceFileAsString("templates/character.xhtml");
+        }
+        Class<? extends ICharacter> aClass = character.getClass();
         Map<String, List<Method>> methodMap = new HashMap<>();
         for (Method method : aClass.getMethods()) {
             log.debug("Checking method [{}]", method.getName());
@@ -115,6 +126,38 @@ public class FileExporter {
                 methodMap.get(name).add(method);
             }
         }
+
+        List<IWeapon> weapons = character.getPrivateWeapons();
+        if (weaponSelection != WeaponSelection.PERSONAL) {
+            weapons.addAll(Weapons.getInstance().getAll());
+        }
+        Collections.sort(weapons);
+
+        StringBuilder weaponRows = new StringBuilder();
+        for (IWeapon weapon : weapons) {
+            if (weaponSelection == WeaponSelection.ALL || character.isProficient(weapon) || weapon.getType() == WeaponType.PERSONAL) {
+                Object[] weaponRow = GlobalUtils.getWeaponRow(character, weapon);
+                weaponRows.append(String.format(WEAPON_ROW_FORMAT, weaponRow[NAME], weaponRow[ATTACK], weaponRow[DAMAGE], weaponRow[NOTES]));
+            }
+        }
+        contents = replaceInTemplateNoEscape(contents, WEAPONS_PLACEHOLDER, weaponRows.toString());
+
+        StringBuilder spellBlocks = new StringBuilder();
+        for (ISpell spell : character.getSpells()) {
+            String type;
+            switch (spell.getLevel()) {
+                case CANTRIP:
+                case FEATURE:
+                    type = spell.getType() + ' ' + spell.getLevel().toString();
+                    break;
+                default:
+                    type = "Level " + spell.getLevel() + " " + spell.getType();
+                    break;
+            }
+            spellBlocks.append(String.format(SPELL_BLOCK_FORMAT, spell.getName(), spell.getDescription(), type, spell.getCastingTime(), spell.getRange(), spell.getComponents(), spell.getDuration(), spell.getNotes()));
+        }
+        contents = replaceInTemplateNoEscape(contents, SPELLS_PLACEHOLDER, spellBlocks.toString());
+
         Pattern pattern = Pattern.compile(TEMPLATE_REPLACEMENT_STRING);
         Matcher matcher = pattern.matcher(contents);
         while (matcher.find()) {
@@ -137,12 +180,14 @@ public class FileExporter {
             } else {
                 log.debug("Found [{}] method(s) for name [{}]", methods.size(), name);
                 Object value = null;
+                boolean invoked = false;
                 for (Method method : methods) {
                     log.debug("Checking method [{}] if it can be used", method);
                     if (method.getParameterCount() == paramCount) {
                         try {
                             if (paramCount == 0) {
                                 value = method.invoke(character);
+                                invoked = true;
                             } else {
                                 boolean tryNext = false;
                                 for (Class<?> parameterType : method.getParameterTypes()) {
@@ -157,6 +202,7 @@ public class FileExporter {
                                     continue;
                                 }
                                 value = method.invoke(character, (Object[]) params);
+                                invoked = true;
                             }
                             if (value != null) {
                                 break;
@@ -168,9 +214,9 @@ public class FileExporter {
                         log.debug("The method [{}] does not have the required amount of paramenters [{}]", method, paramCount);
                     }
                 }
-                if (value != null) {
-                    log.debug("The value for [{}] was detemined to be [{}]", name, value);
-                    contents = replaceInTemplate(contents, match, value.toString());
+                if (value != null || invoked) {
+                    log.debug("The value for [{}] was determined to be [{}]", name, value);
+                    contents = replaceInTemplate(contents, match, value == null ? "" : value.toString());
                 }
             }
         }
@@ -178,6 +224,10 @@ public class FileExporter {
     }
 
     private static String replaceInTemplate(String template, String search, String replacement) {
-        return template.replace(search, escapeHtml(replacement).replace("\n", "<br/>"));
+        return replaceInTemplateNoEscape(template, search, escapeHtml(replacement));
+    }
+
+    private static String replaceInTemplateNoEscape(String template, String search, String replacement) {
+        return template.replace(search, replacement);
     }
 }

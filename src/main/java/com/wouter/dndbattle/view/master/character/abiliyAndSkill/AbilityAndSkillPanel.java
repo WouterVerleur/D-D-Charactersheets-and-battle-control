@@ -88,6 +88,8 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         cbChallengeRating = new com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox();
         pSize = new javax.swing.JPanel();
         cbSize = new com.wouter.dndbattle.view.comboboxes.SizeComboBox();
+        pSpeed = new javax.swing.JPanel();
+        sSpeed = new javax.swing.JSpinner();
         pHitDice = new javax.swing.JPanel();
         lHitDice = new javax.swing.JLabel();
         pTransform = new javax.swing.JPanel();
@@ -109,7 +111,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 10;
+        gridBagConstraints.gridheight = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 75;
         gridBagConstraints.weighty = 1.0;
@@ -126,7 +128,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 10;
+        gridBagConstraints.gridheight = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 125;
         gridBagConstraints.weighty = 1.0;
@@ -143,7 +145,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 10;
+        gridBagConstraints.gridheight = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 175;
         gridBagConstraints.weighty = 1.0;
@@ -163,7 +165,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pHealth.setLayout(pHealthLayout);
         pHealthLayout.setHorizontalGroup(
             pHealthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sHealth, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(sHealth, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pHealthLayout.setVerticalGroup(
             pHealthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +191,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pPassiveWisdom.setLayout(pPassiveWisdomLayout);
         pPassiveWisdomLayout.setHorizontalGroup(
             pPassiveWisdomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lPassiveWisdomModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(lPassiveWisdomModifier, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pPassiveWisdomLayout.setVerticalGroup(
             pPassiveWisdomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +218,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pInitiative.setLayout(pInitiativeLayout);
         pInitiativeLayout.setHorizontalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pInitiativeLayout.setVerticalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +242,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pProficiency.setLayout(pProficiencyLayout);
         pProficiencyLayout.setHorizontalGroup(
             pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lProficiency, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(lProficiency, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pProficiencyLayout.setVerticalGroup(
             pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -395,7 +397,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pChallengeRating.setLayout(pChallengeRatingLayout);
         pChallengeRatingLayout.setHorizontalGroup(
             pChallengeRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(cbChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pChallengeRatingLayout.setVerticalGroup(
             pChallengeRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,7 +428,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pSize.setLayout(pSizeLayout);
         pSizeLayout.setHorizontalGroup(
             pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbSize, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(cbSize, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pSizeLayout.setVerticalGroup(
             pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,6 +443,36 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
         add(pSize, gridBagConstraints);
 
+        pSpeed.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Speed", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+        pSpeed.setEnabled(character.hasChallengeRating());
+
+        sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 5, null, 5));
+        sSpeed.setValue(character.getSpeed());
+        sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sSpeedStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pSpeedLayout = new javax.swing.GroupLayout(pSpeed);
+        pSpeed.setLayout(pSpeedLayout);
+        pSpeedLayout.setHorizontalGroup(
+            pSpeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(sSpeed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+        );
+        pSpeedLayout.setVerticalGroup(
+            pSpeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(sSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        add(pSpeed, gridBagConstraints);
+
         pHitDice.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Hit dice", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
         lHitDice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -450,7 +482,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pHitDice.setLayout(pHitDiceLayout);
         pHitDiceLayout.setHorizontalGroup(
             pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lHitDice, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(lHitDice, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
         pHitDiceLayout.setVerticalGroup(
             pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,7 +529,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pTransform.setLayout(pTransformLayout);
         pTransformLayout.setHorizontalGroup(
             pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbCanTransform, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+            .addComponent(cbCanTransform, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
             .addComponent(cbTransformClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(cbTransformChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -533,7 +565,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 100;
         gridBagConstraints.ipady = 50;
@@ -584,11 +616,6 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         CHARACTERS.update(character);
     }//GEN-LAST:event_taNotesFocusLost
 
-    private void cbSizeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSizeItemStateChanged
-        character.setSize(cbSize.getSelectedItem());
-        CHARACTERS.update(character);
-    }//GEN-LAST:event_cbSizeItemStateChanged
-
     private void cbArmorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbArmorItemStateChanged
         character.setArmor((IArmor) cbArmor.getSelectedItem());
         CHARACTERS.update(character);
@@ -621,6 +648,16 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         CHARACTERS.update(character);
     }//GEN-LAST:event_sShieldBonusStateChanged
 
+    private void cbSizeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSizeItemStateChanged
+        character.setSize(cbSize.getSelectedItem());
+        CHARACTERS.update(character);
+    }//GEN-LAST:event_cbSizeItemStateChanged
+
+    private void sSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sSpeedStateChanged
+        character.setSpeed((int) sSpeed.getValue());
+        CHARACTERS.update(character);
+    }//GEN-LAST:event_sSpeedStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<IArmor> cbArmor;
     private javax.swing.JCheckBox cbCanTransform;
@@ -648,11 +685,13 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     private javax.swing.JPanel pSavingThrow;
     private javax.swing.JPanel pSize;
     private javax.swing.JPanel pSkill;
+    private javax.swing.JPanel pSpeed;
     private javax.swing.JPanel pTransform;
     private javax.swing.JSpinner sExtraArmor;
     private javax.swing.JSpinner sHealth;
     private javax.swing.JSpinner sOverride;
     private javax.swing.JSpinner sShieldBonus;
+    private javax.swing.JSpinner sSpeed;
     private javax.swing.JScrollPane spNotes;
     private javax.swing.JTextArea taNotes;
     // End of variables declaration//GEN-END:variables

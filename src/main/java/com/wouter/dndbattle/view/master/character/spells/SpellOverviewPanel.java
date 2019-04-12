@@ -32,11 +32,9 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Spells;
 import com.wouter.dndbattle.view.IUpdateablePanel;
@@ -111,9 +109,9 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
     }
 
     private void updateLabels() {
-        lSpellcastingAbility.setText(getAbilityString());
-        lSpellSaveDC.setText(getSpellSaveDC());
-        lSpellAttackBonus.setText(getSpellAttackBonus());
+        lSpellcastingAbility.setText(character.getSpellCastingAbilityString());
+        lSpellSaveDC.setText(character.getSpellSaveDC());
+        lSpellAttackBonus.setText(character.getSpellAttackBonus());
     }
 
     /**
@@ -153,7 +151,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
         add(cbSpellModifier, gridBagConstraints);
 
         lSpellcastingAbility.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lSpellcastingAbility.setText(getAbilityString());
+        lSpellcastingAbility.setText(character.getSpellCastingAbilityString());
         lSpellcastingAbility.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Spellcasting Ability", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -164,7 +162,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
         add(lSpellcastingAbility, gridBagConstraints);
 
         lSpellSaveDC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lSpellSaveDC.setText(getSpellSaveDC());
+        lSpellSaveDC.setText(character.getSpellSaveDC());
         lSpellSaveDC.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Spell Save DC", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -175,7 +173,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
         add(lSpellSaveDC, gridBagConstraints);
 
         lSpellAttackBonus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lSpellAttackBonus.setText(getSpellAttackBonus());
+        lSpellAttackBonus.setText(character.getSpellAttackBonus());
         lSpellAttackBonus.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Spell Attack Bonus", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -290,32 +288,6 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
     public void saveCharacter() {
         character.sortSpells();
         Characters.getInstance().update(character);
-    }
-
-    private String getAbilityString() {
-        AbilityType spellAbility = character.getSpellCastingAbility();
-        if (spellAbility != null) {
-            return String.format(ABILITY_FORMAT, character.getAbilityScore(spellAbility), GlobalUtils.modifierToString(character.getAbilityModifier(spellAbility)));
-        }
-        return " ";
-    }
-
-    private String getSpellAttackBonus() {
-        AbilityType spellAbility = character.getSpellCastingAbility();
-        int modifier = character.getProficiencyScore();
-        if (spellAbility != null) {
-            modifier += character.getAbilityModifier(spellAbility);
-        }
-        return GlobalUtils.modifierToString(modifier);
-    }
-
-    private String getSpellSaveDC() {
-        AbilityType spellAbility = character.getSpellCastingAbility();
-        int modifier = 8 + character.getProficiencyScore();
-        if (spellAbility != null) {
-            modifier += character.getAbilityModifier(spellAbility);
-        }
-        return Integer.toString(modifier);
     }
 
     private class SpellCheckBox extends JCheckBox {

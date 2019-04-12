@@ -13,6 +13,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <dep.jackson.version>2.9.8</dep.jackson.version>
         <dep.commons.version>2.6</dep.commons.version>
+        <dep.openhtml.version>0.0.1-RC19</dep.openhtml.version>
     </properties>
 
     <dependencies>
@@ -63,9 +64,19 @@
             <version>2.10.1</version>
         </dependency>
         <dependency>
-            <groupId>org.xhtmlrenderer</groupId>
-            <artifactId>flying-saucer-pdf</artifactId>
-            <version>9.1.18</version>
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-core</artifactId>
+            <version>${dep.openhtml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-pdfbox</artifactId>
+            <version>${dep.openhtml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
         </dependency>
     </dependencies>
 

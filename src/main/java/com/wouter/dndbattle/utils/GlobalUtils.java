@@ -46,6 +46,7 @@ public class GlobalUtils {
     public static final int NAME = 0;
     public static final int ATTACK = 2;
     public static final int DAMAGE = 3;
+    public static final int NOTES = 4;
 
     //******************************
     // File Functions

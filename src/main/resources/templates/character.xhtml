@@ -20,56 +20,105 @@ This template is used to create character export in PDF format.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>#{Name}</title>
-        <style type="text/css">
-            /* Headers */
+        <title>#{Name}&#160;</title>
+        <style>
+            html {
+                background-color: #000;
+            }
+            
+            body {
+                width: 698px;
+                margin: auto;
+                background-color: #fff;
+            }
+
+            body > * {
+                margin: 5px 0px;
+            }
+
+            /* Headers + paragraphs */
             h1 {
                 text-align: center;
+                border-radius: 5px;
+                border-width: 2px 1px;
+                border-style: solid;
+                border-color: black;
+            }
+
+            * + h1 {
+                page-break-before: always;
+            }
+
+            h3 {
+                text-align: center;
+                border-radius: 5px;
+                border-width: 1px 0px;
+                border-style: solid;
+                border-color: rgb(150,150,150);
+            }
+
+            p {
+                white-space: pre-wrap;
+                max-width: 100%;
+            }
+
+            p, tr, .nopagebreak {
+                page-break-inside: avoid;
             }
 
             /* Size + formatting */
             .fullwidth {
                 width: 100%;
             }
-            .top {
+
+            .top, table.top td {
                 vertical-align: top;
-            }
-            .fleft {
-                float: left;
-            }
-            .fright {
-                float: right;
             }
 
             /* Tables */
             tr.input td {
-                background: rgb(221,228,255);
+                background: rgb(220,220,220);
             }
+
             table {
                 border-collapse: collapse;
             }
+
             table * {
                 padding: 5px;
             }
+
             table.rows tr:nth-child(even) {
-                background: rgba(0,0,0,0.1);
+                background: rgb(220,220,220);
             }
+
             table.cols tr *:nth-child(even) {
-                background: rgba(0,0,0,0.1);
+                background: rgb(220,220,220);
             }
 
             /* Text */
-            .center {
-                text-align: center;
-            }
             .left {
                 text-align: left;
             }
+
             .numbers, .right {
                 text-align: right;
             }
+
+            .center, .numbers th {
+                text-align: center;
+            }
+
             .nobreak {
                 white-space: nowrap;
+            }
+
+            table.spell p {
+                padding: 0px;
+                margin: 0px;
+            }
+            table.spell th {
+                width: 33.333333%;
             }
         </style>
     </head>
@@ -77,51 +126,43 @@ This template is used to create character export in PDF format.
         <h1>#{Name}</h1>
         <table class="center fullwidth">
             <tr class="input">
-                <td>#{ClassLevel}</td>
-                <td>#{ExperiencePoints}</td>
-                <td>#{Background}</td>
-                <td>#{Race}</td>
-                <td>#{Alignment}</td>
-                <td>#{PlayerName}</td>
+                <td>#{ChallengeRating}</td>
+                <td class="nobreak">#{Size}</td>
+                <td>#{speed}</td>
+                <td>#{initiative}</td>
             </tr>
             <tr>
-                <th>Class &amp; Level</th>
-                <th>Experience points</th>
-                <th>Background</th>
-                <th>Race</th>
-                <th>Alignment</th>
-                <th>Player Name</th>
+                <th>Challenge Rating</th>
+                <th>Size</th>
+                <th>Speed</th>
+                <th>Initiative</th>
             </tr>
             <tr class="input">
+                <td>#{passiveWisdom}</td>
                 <td class="nobreak">#{Armor}<br/>AC: #{ArmorClassString}</td>
                 <td>#{maxHealth}</td>
                 <td></td>
-                <td>#{hitDice}</td>
-                <td>#{initiative}</td>
-                <td>#{passiveWisdom}</td>
             </tr>
             <tr>
+                <th>Passive Wisdom</th>
                 <th>Armor</th>
                 <th>Hitpoints</th>
                 <th></th>
-                <th>Hit Dice</th>
-                <th>Initiative</th>
-                <th>Passive Wisdom</th>
             </tr>
         </table>
         <hr/>
-        <table class="numbers cols fullwidth">
+        <table class="numbers rows fullwidth">
             <tr>
-                <th scope="row" class="left">Name</th>
-                <th scope="col">STR</th>
-                <th scope="col">DEX</th>
-                <th scope="col">CON</th>
-                <th scope="col">INT</th>
-                <th scope="col">WIS</th>
-                <th scope="col">CHA</th>
+                <th>Name</th>
+                <th>STR</th>
+                <th>DEX</th>
+                <th>CON</th>
+                <th>INT</th>
+                <th>WIS</th>
+                <th>CHA</th>
             </tr>
             <tr>
-                <th scope="row" class="left">Score</th>
+                <th>Score</th>
                 <td>#{AbilityScore.STR}</td>
                 <td>#{AbilityScore.DEX}</td>
                 <td>#{AbilityScore.CON}</td>
@@ -130,7 +171,7 @@ This template is used to create character export in PDF format.
                 <td>#{AbilityScore.CHA}</td>
             </tr>
             <tr>
-                <th scope="row" class="left">Modifier</th>
+                <th>Modifier</th>
                 <td>#{AbilityModifier.STR}</td>
                 <td>#{AbilityModifier.DEX}</td>
                 <td>#{AbilityModifier.CON}</td>
@@ -139,7 +180,7 @@ This template is used to create character export in PDF format.
                 <td>#{AbilityModifier.CHA}</td>
             </tr>
             <tr>
-                <th scope="row" class="left">Saving Throw</th>
+                <th>Saving Throw</th>
                 <td>#{SavingThrowModifier.STR}</td>
                 <td>#{SavingThrowModifier.DEX}</td>
                 <td>#{SavingThrowModifier.CON}</td>
@@ -149,82 +190,121 @@ This template is used to create character export in PDF format.
             </tr>
         </table>
         <hr/>
-        <table class="fleft">
+        <table class="fullwidth rows numbers">
             <tr>
-                <th scope="row">Acrobatics</th>
+                <th>Acrobatics</th>
+                <th>Animal Handling</th>
+                <th>Arcana</th>
+                <th>Athlethics</th>
+                <th>Deception</th>
+            </tr>
+            <tr>
                 <td>#{skillModifier.ACROBATICS}</td>
-            </tr>
-            <tr>
-                <th scope="row">Animal Handling</th>
                 <td>#{skillModifier.ANIMAL_HANDLING}</td>
-            </tr>
-            <tr>
-                <th scope="row">Arcana</th>
                 <td>#{skillModifier.ARCANA}</td>
-            </tr>
-            <tr>
-                <th scope="row">Athlethics</th>
                 <td>#{skillModifier.ATHLETHICS}</td>
-            </tr>
-            <tr>
-                <th scope="row">Deception</th>
                 <td>#{skillModifier.DECEPTION}</td>
             </tr>
             <tr>
-                <th scope="row">History</th>
+                <th>History</th>
+                <th>Insight</th>
+                <th>Intimidation</th>
+                <th>Investigation</th>
+                <th>Medicine</th>
+            </tr>
+            <tr>
                 <td>#{skillModifier.HISTORY}</td>
-            </tr>
-            <tr>
-                <th scope="row">Insight</th>
                 <td>#{skillModifier.INSIGHT}</td>
-            </tr>
-            <tr>
-                <th scope="row">Intimidation</th>
                 <td>#{skillModifier.INTIMIDATION}</td>
-            </tr>
-            <tr>
-                <th scope="row">Investigation</th>
                 <td>#{skillModifier.INVESTIGATION}</td>
-            </tr>
-            <tr>
-                <th scope="row">Medicine</th>
                 <td>#{skillModifier.MEDICINE}</td>
             </tr>
             <tr>
-                <th scope="row">Nature</th>
+                <th>Nature</th>
+                <th>Perception</th>
+                <th>Performance</th>
+                <th>Persuasion</th>
+                <th>Religion</th>
+            </tr>
+            <tr>
                 <td>#{skillModifier.NATURE}</td>
-            </tr>
-            <tr>
-                <th scope="row">Perception</th>
                 <td>#{skillModifier.PERCEPTION}</td>
-            </tr>
-            <tr>
-                <th scope="row">Performance</th>
                 <td>#{skillModifier.PERFORMANCE}</td>
-            </tr>
-            <tr>
-                <th scope="row">Persuasion</th>
                 <td>#{skillModifier.PERSUASION}</td>
-            </tr>
-            <tr>
-                <th scope="row">Religion</th>
                 <td>#{skillModifier.RELIGION}</td>
             </tr>
             <tr>
-                <th scope="row">Sleight of Hand</th>
+                <th></th>
+                <th>Sleight of Hand</th>
+                <th>Stealth</th>
+                <th>Survival</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td></td>
                 <td>#{skillModifier.SLEIGHT_OF_HAND}</td>
-            </tr>
-            <tr>
-                <th scope="row">Stealth</th>
                 <td>#{skillModifier.STEALTH}</td>
-            </tr>
-            <tr>
-                <th scope="row">Survival</th>
                 <td>#{skillModifier.SURVIVAL}</td>
+                <td></td>
             </tr>
         </table>
-        <div class="fright">
-            <h3>Proficiencies</h3><p>#{proficiencies}</p>
+        <div class="nopagebreak">
+            <h3>Notes</h3>
+            <p>#{notes}</p>
         </div>
+        <h1>#{Name}</h1>
+        <table class="fullwidth rows">
+            <tr>
+                <th>Name</th>
+                <th>Attack bonus</th>
+                <th>Damage</th>
+                <th>Notes</th>
+            </tr>
+            #{weapons}
+        </table>
+        <h1>#{Name}</h1>
+        <table class="fullwidth cols">
+            <tr>
+                <th>Spellcasting Ability</th>
+                <th>Score</th>
+                <th>Spell Save DC</th>
+                <th>Spell Attack Bonus</th>
+            </tr>
+            <tr>
+                <td>#{SpellCastingAbility}</td>
+                <td>#{SpellCastingAbilityString}</td>
+                <td>#{SpellSaveDC}</td>
+                <td>#{SpellAttackBonus}</td>
+            </tr>
+        </table>
+        <h3>Spellslots</h3>
+        <table class="fullwidth cols">
+            <tr>
+                <th>Level</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>#{spellSlotsByLevel.one}</td>
+                <td>#{spellSlotsByLevel.two}</td>
+                <td>#{spellSlotsByLevel.three}</td>
+                <td>#{spellSlotsByLevel.four}</td>
+                <td>#{spellSlotsByLevel.five}</td>
+                <td>#{spellSlotsByLevel.six}</td>
+                <td>#{spellSlotsByLevel.seven}</td>
+                <td>#{spellSlotsByLevel.eight}</td>
+                <td>#{spellSlotsByLevel.nine}</td>
+            </tr>
+        </table>
+        <h3>Spells</h3>
+        #{spells}
     </body>
 </html>

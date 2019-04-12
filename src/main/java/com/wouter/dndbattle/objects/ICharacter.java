@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.objects;
 
+import static com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +28,7 @@ import com.wouter.dndbattle.objects.enums.Proficiency;
 import com.wouter.dndbattle.objects.enums.Size;
 import com.wouter.dndbattle.objects.enums.SkillType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
+import com.wouter.dndbattle.utils.GlobalUtils;
 
 /**
  *
@@ -63,6 +66,35 @@ public interface ICharacter extends ISaveableClass, Cloneable {
     List<ISpell> getSpells();
 
     AbilityType getSpellCastingAbility();
+
+    @JsonIgnore
+    default String getSpellCastingAbilityString() {
+        AbilityType spellAbility = getSpellCastingAbility();
+        if (spellAbility != null) {
+            return String.format(ABILITY_FORMAT, getAbilityScore(spellAbility), GlobalUtils.modifierToString(getAbilityModifier(spellAbility)));
+        }
+        return " ";
+    }
+
+    @JsonIgnore
+    default String getSpellAttackBonus() {
+        AbilityType spellAbility = getSpellCastingAbility();
+        int modifier = getProficiencyScore();
+        if (spellAbility != null) {
+            modifier += getAbilityModifier(spellAbility);
+        }
+        return GlobalUtils.modifierToString(modifier);
+    }
+
+    @JsonIgnore
+    default String getSpellSaveDC() {
+        AbilityType spellAbility = getSpellCastingAbility();
+        int modifier = 8 + getProficiencyScore();
+        if (spellAbility != null) {
+            modifier += getAbilityModifier(spellAbility);
+        }
+        return Integer.toString(modifier);
+    }
 
     @JsonIgnore
     int getSpellSlotsByLevel(SpellLevel spellLevel);

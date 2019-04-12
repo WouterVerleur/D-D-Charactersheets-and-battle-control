@@ -23,6 +23,7 @@ import java.awt.HeadlessException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.URL;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -31,6 +32,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
@@ -60,6 +62,8 @@ public class Main extends javax.swing.JFrame {
     private static final String LOCALHOST = "localhost";
     private static final int DEFAULT_PORT = 4144; // d = 4, n = 14, dnd=4144
     private static final Main MAIN = new Main();
+
+    private final ImageIcon image;
 
     private static int port = DEFAULT_PORT;
     private static String ip = null;
@@ -197,6 +201,7 @@ public class Main extends javax.swing.JFrame {
             registry.bind("dnd", stub);
             logToScreen("Done.");
             logToScreen("Loading characters, weapons, spells and armor.");
+            master.getFrame().setIconImage(MAIN.getIconImage());
             startFrame(master.getFrame());
         } catch (RemoteException | AlreadyBoundException ex) {
             log.error("Master can't be started [" + ex + "]");
@@ -211,6 +216,7 @@ public class Main extends javax.swing.JFrame {
         registry = LocateRegistry.getRegistry(host, port);
         IMaster master = (IMaster) registry.lookup("dnd");
         final SlaveFrame slaveFrame = new SlaveFrame(master, ip);
+        slaveFrame.setIconImage(MAIN.getIconImage());
         ISlave remoteSlave = (ISlave) UnicastRemoteObject.exportObject(slaveFrame.getSlave(), 0);
         String playerName = JOptionPane.showInputDialog(MAIN, "What is your name?", SETTINGS.getProperty(CONNECTION_NAME));
         if (playerName != null && !playerName.isEmpty()) {
@@ -242,6 +248,10 @@ public class Main extends javax.swing.JFrame {
 
     private Main() {
         initComponents();
+        final URL resource = getClass().getClassLoader().getResource("images/Font_Awesome_5_solid_dice-d20.png");
+        log.debug("Resource = [{}]", resource);
+        image = new ImageIcon(resource.getFile());
+        setIconImage(image.getImage());
         setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, 0), SETTINGS.getProperty(MASTER_LOCATION_Y, 0));
         setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
     }

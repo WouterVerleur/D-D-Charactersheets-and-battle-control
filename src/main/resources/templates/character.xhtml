@@ -20,65 +20,291 @@ This template is used to create character export in PDF format.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>#{CharacterName}</title>
-        <style type="text/css">
+        <title>#{Name}&#160;</title>
+        <style>
+            html {
+                background-color: #000;
+            }
+            
+            body {
+                width: 698px;
+                margin: auto;
+                background-color: #fff;
+            }
+
+            body > * {
+                margin: 5px 0px;
+            }
+
+            /* Headers + paragraphs */
             h1 {
-                text-align:center;
-                border-bottom:1px solid black;
+                text-align: center;
+                border-radius: 5px;
+                border-width: 2px 1px;
+                border-style: solid;
+                border-color: black;
             }
-            .right {
-                float: right;
+
+            * + h1 {
+                page-break-before: always;
             }
-            .left {
-                float: left;
+
+            h3 {
+                text-align: center;
+                border-radius: 5px;
+                border-width: 1px 0px;
+                border-style: solid;
+                border-color: rgb(150,150,150);
             }
+
+            p {
+                white-space: pre-wrap;
+                max-width: 100%;
+            }
+
+            p, tr, .nopagebreak {
+                page-break-inside: avoid;
+            }
+
+            /* Size + formatting */
+            .fullwidth {
+                width: 100%;
+            }
+
+            .top, table.top td {
+                vertical-align: top;
+            }
+
+            /* Tables */
             tr.input td {
-                background: rgb(221,228,255);
+                background: rgb(220,220,220);
             }
+
             table {
-                border-spacing: 5px 0px;
+                border-collapse: collapse;
             }
+
             table * {
                 padding: 5px;
+            }
+
+            table.rows tr:nth-child(even) {
+                background: rgb(220,220,220);
+            }
+
+            table.cols tr *:nth-child(even) {
+                background: rgb(220,220,220);
+            }
+
+            /* Text */
+            .left {
+                text-align: left;
+            }
+
+            .numbers, .right {
+                text-align: right;
+            }
+
+            .center, .numbers th {
+                text-align: center;
+            }
+
+            .nobreak {
+                white-space: nowrap;
+            }
+
+            table.spell p {
+                padding: 0px;
+                margin: 0px;
+            }
+            table.spell th {
+                width: 33.333333%;
             }
         </style>
     </head>
     <body>
         <h1>#{Name}</h1>
-        <table class="right">
+        <table class="center fullwidth">
             <tr class="input">
-                <td>#{ClassLevel}</td>
-                <td>#{Background}</td>
-                <td>#{PlayerName}</td>
+                <td>#{ChallengeRating}</td>
+                <td class="nobreak">#{Size}</td>
+                <td>#{speed}</td>
+                <td>#{initiative}</td>
             </tr>
             <tr>
-                <td>Class &amp; Level</td>
-                <td>Background</td>
-                <td>Player Name</td>
+                <th>Challenge Rating</th>
+                <th>Size</th>
+                <th>Speed</th>
+                <th>Initiative</th>
             </tr>
             <tr class="input">
-                <td>#{Race}</td>
-                <td>#{Alignment}</td>
-                <td>#{ExperiencePoints}</td>
+                <td>#{passiveWisdom}</td>
+                <td class="nobreak">#{Armor}<br/>AC: #{ArmorClassString}</td>
+                <td>#{maxHealth}</td>
+                <td></td>
             </tr>
             <tr>
-                <td>Race</td>
-                <td>Alignment</td>
-                <td>Experience points</td>
+                <th>Passive Wisdom</th>
+                <th>Armor</th>
+                <th>Hitpoints</th>
+                <th></th>
             </tr>
         </table>
-        <div class="left">
-            <div class="left">
-				#{abilities}
-			</div>
-            <div class="left">
-				<div>
-					#{savingthrows}
-				</div>
-				<div>
-					#{proficiencies}
-				</div>
-			</div>
+        <hr/>
+        <table class="numbers rows fullwidth">
+            <tr>
+                <th>Name</th>
+                <th>STR</th>
+                <th>DEX</th>
+                <th>CON</th>
+                <th>INT</th>
+                <th>WIS</th>
+                <th>CHA</th>
+            </tr>
+            <tr>
+                <th>Score</th>
+                <td>#{AbilityScore.STR}</td>
+                <td>#{AbilityScore.DEX}</td>
+                <td>#{AbilityScore.CON}</td>
+                <td>#{AbilityScore.INT}</td>
+                <td>#{AbilityScore.WIS}</td>
+                <td>#{AbilityScore.CHA}</td>
+            </tr>
+            <tr>
+                <th>Modifier</th>
+                <td>#{AbilityModifier.STR}</td>
+                <td>#{AbilityModifier.DEX}</td>
+                <td>#{AbilityModifier.CON}</td>
+                <td>#{AbilityModifier.INT}</td>
+                <td>#{AbilityModifier.WIS}</td>
+                <td>#{AbilityModifier.CHA}</td>
+            </tr>
+            <tr>
+                <th>Saving Throw</th>
+                <td>#{SavingThrowModifier.STR}</td>
+                <td>#{SavingThrowModifier.DEX}</td>
+                <td>#{SavingThrowModifier.CON}</td>
+                <td>#{SavingThrowModifier.INT}</td>
+                <td>#{SavingThrowModifier.WIS}</td>
+                <td>#{SavingThrowModifier.CHA}</td>
+            </tr>
+        </table>
+        <hr/>
+        <table class="fullwidth rows numbers">
+            <tr>
+                <th>Acrobatics</th>
+                <th>Animal Handling</th>
+                <th>Arcana</th>
+                <th>Athlethics</th>
+                <th>Deception</th>
+            </tr>
+            <tr>
+                <td>#{skillModifier.ACROBATICS}</td>
+                <td>#{skillModifier.ANIMAL_HANDLING}</td>
+                <td>#{skillModifier.ARCANA}</td>
+                <td>#{skillModifier.ATHLETHICS}</td>
+                <td>#{skillModifier.DECEPTION}</td>
+            </tr>
+            <tr>
+                <th>History</th>
+                <th>Insight</th>
+                <th>Intimidation</th>
+                <th>Investigation</th>
+                <th>Medicine</th>
+            </tr>
+            <tr>
+                <td>#{skillModifier.HISTORY}</td>
+                <td>#{skillModifier.INSIGHT}</td>
+                <td>#{skillModifier.INTIMIDATION}</td>
+                <td>#{skillModifier.INVESTIGATION}</td>
+                <td>#{skillModifier.MEDICINE}</td>
+            </tr>
+            <tr>
+                <th>Nature</th>
+                <th>Perception</th>
+                <th>Performance</th>
+                <th>Persuasion</th>
+                <th>Religion</th>
+            </tr>
+            <tr>
+                <td>#{skillModifier.NATURE}</td>
+                <td>#{skillModifier.PERCEPTION}</td>
+                <td>#{skillModifier.PERFORMANCE}</td>
+                <td>#{skillModifier.PERSUASION}</td>
+                <td>#{skillModifier.RELIGION}</td>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Sleight of Hand</th>
+                <th>Stealth</th>
+                <th>Survival</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td></td>
+                <td>#{skillModifier.SLEIGHT_OF_HAND}</td>
+                <td>#{skillModifier.STEALTH}</td>
+                <td>#{skillModifier.SURVIVAL}</td>
+                <td></td>
+            </tr>
+        </table>
+        <div class="nopagebreak">
+            <h3>Notes</h3>
+            <p>#{notes}</p>
         </div>
+        <h1>#{Name}</h1>
+        <table class="fullwidth rows">
+            <tr>
+                <th>Name</th>
+                <th>Attack bonus</th>
+                <th>Damage</th>
+                <th>Notes</th>
+            </tr>
+            #{weapons}
+        </table>
+        <h1>#{Name}</h1>
+        <table class="fullwidth cols">
+            <tr>
+                <th>Spellcasting Ability</th>
+                <th>Score</th>
+                <th>Spell Save DC</th>
+                <th>Spell Attack Bonus</th>
+            </tr>
+            <tr>
+                <td>#{SpellCastingAbility}</td>
+                <td>#{SpellCastingAbilityString}</td>
+                <td>#{SpellSaveDC}</td>
+                <td>#{SpellAttackBonus}</td>
+            </tr>
+        </table>
+        <h3>Spellslots</h3>
+        <table class="fullwidth cols">
+            <tr>
+                <th>Level</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>#{spellSlotsByLevel.one}</td>
+                <td>#{spellSlotsByLevel.two}</td>
+                <td>#{spellSlotsByLevel.three}</td>
+                <td>#{spellSlotsByLevel.four}</td>
+                <td>#{spellSlotsByLevel.five}</td>
+                <td>#{spellSlotsByLevel.six}</td>
+                <td>#{spellSlotsByLevel.seven}</td>
+                <td>#{spellSlotsByLevel.eight}</td>
+                <td>#{spellSlotsByLevel.nine}</td>
+            </tr>
+        </table>
+        <h3>Spells</h3>
+        #{spells}
     </body>
 </html>

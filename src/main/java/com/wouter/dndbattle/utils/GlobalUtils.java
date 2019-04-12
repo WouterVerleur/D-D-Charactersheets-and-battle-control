@@ -11,28 +11,16 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.lowagie.text.DocumentException;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICharacterClass;
-import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.Dice;
@@ -41,11 +29,6 @@ import com.wouter.dndbattle.objects.enums.Website;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xhtmlrenderer.pdf.ITextUserAgent;
-import org.xhtmlrenderer.resource.XMLResource;
-import org.xml.sax.InputSource;
 
 /**
  *
@@ -63,6 +46,7 @@ public class GlobalUtils {
     public static final int NAME = 0;
     public static final int ATTACK = 2;
     public static final int DAMAGE = 3;
+    public static final int NOTES = 4;
 
     //******************************
     // File Functions
@@ -105,77 +89,6 @@ public class GlobalUtils {
             log.error("Error while getting filename without extention from [{}]", fileName, e);
             return fileName;
         }
-    }
-
-    public static void createPDF(IExtendedCharacter character, File pdf) throws IOException, DocumentException {
-        String contents = GlobalUtils.getResourceFileAsString("templates/character.xhtml");
-
-        Class<? extends IExtendedCharacter> aClass = character.getClass();
-        Map<String, Object> valuesMap = new HashMap<>();
-        for (Method method : aClass.getMethods()) {
-            if (method.getParameterCount() != 0) {
-                continue;
-            }
-            try {
-                if (method.getName().startsWith("get")) {
-                    String name = method.getName().substring(3).toLowerCase();
-                    Object value = method.invoke(character);
-                    if (value == null && method.getReturnType() == String.class) {
-                        value = "";
-                    }
-                    log.debug("Found value [{}] for name [{}], adding to map", value, name);
-                    valuesMap.put(name, value);
-                }
-            } catch (IllegalArgumentException | InvocationTargetException | IllegalAccessException e) {
-                log.error("Error while executing method [{}] on character [{}]", method, character, e);
-            }
-        }
-
-        Pattern pattern = Pattern.compile(TEMPLATE_REPLACEMENT_STRING);
-        Matcher matcher = pattern.matcher(contents);
-        while (matcher.find()) {
-            String match = matcher.group();
-            String matchName = match.substring(2, match.length() - 1).toLowerCase();
-            Object value = valuesMap.get(matchName);
-            log.debug("Found a match with [{}] that resulted in the name [{}] and value [{}]", match, matchName, value);
-            if (value != null) {
-                contents = replaceInTemplate(contents, match, value.toString());
-            }
-        }
-
-        File tempFile = File.createTempFile("export_" + character.getSaveFileName(), ".xhtml");
-        try (PrintWriter out = new PrintWriter(tempFile)) {
-            out.println(contents);
-        }
-
-        createPDF(tempFile, pdf);
-        if (tempFile.exists()) {
-            tempFile.delete();
-        }
-    }
-
-    public static void createPDF(File tempFile, File pdf) throws IOException, DocumentException {
-        try (OutputStream os = new FileOutputStream(pdf)) {
-            log.debug("Creating pdf from tempfile [{}]", tempFile);
-            ITextRenderer renderer = new ITextRenderer();
-            ITextUserAgent callback = new ITextUserAgent(renderer.getOutputDevice());
-            callback.setSharedContext(renderer.getSharedContext());
-            renderer.getSharedContext().setUserAgentCallback(callback);
-
-            Document doc = XMLResource.load(new InputSource(new FileInputStream(tempFile))).getDocument();
-
-            renderer.setDocument(doc, tempFile.getName());
-            renderer.layout();
-            renderer.createPDF(os);
-
-            log.debug("PDF [{}] was created", pdf);
-        }
-    }
-
-    private static final String TEMPLATE_REPLACEMENT_STRING = "#\\{\\w+\\}";
-
-    private static String replaceInTemplate(String template, String search, String replacement) {
-        return template.replace(search, replacement);
     }
 
     public static String getResourceFileAsString(String fileName) {

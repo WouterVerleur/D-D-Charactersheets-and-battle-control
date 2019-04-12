@@ -570,8 +570,6 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taFeatures.setRows(5);
         taFeatures.setText(character.getFeaturesAndTraits());
         taFeatures.setWrapStyleWord(true);
-        taFeatures.setMinimumSize(new java.awt.Dimension(100, 22));
-        taFeatures.setPreferredSize(new java.awt.Dimension(100, 94));
         spFeatures.setViewportView(taFeatures);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

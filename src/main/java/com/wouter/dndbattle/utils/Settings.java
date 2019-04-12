@@ -28,6 +28,7 @@ public class Settings extends Properties {
     public static final String LOOKANDFEEL = "gui.lookandfeel";
     public static final String INPUT_FILESELECTION = "gui.input.fileselection";
     public static final String EXPORT_FILESELECTION = "gui.export.fileselection";
+    public static final String EXPORT_WEAPONSELECTION = "gui.export.weaponselection";
     public static final String MASTER_LOCATION_X = "gui.master.location.x";
     public static final String MASTER_LOCATION_Y = "gui.master.location.y";
     public static final String MASTER_SIZE_HEIGHT = "gui.master.size.height";

@@ -16,20 +16,11 @@
  */
 package com.wouter.dndbattle.view.master.character.extendedCharacter;
 
-import static com.wouter.dndbattle.utils.Settings.EXPORT_FILESELECTION;
-
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.lowagie.text.DocumentException;
 import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
 import com.wouter.dndbattle.objects.impl.CharacterClass;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.master.character.CharacterPanel;
@@ -110,8 +101,6 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lExperiencePoints = new javax.swing.JLabel();
         sExperiencePoints = new javax.swing.JSpinner();
         bExperiencePoints = new javax.swing.JButton();
-        lSpeed = new javax.swing.JLabel();
-        sSpeed = new javax.swing.JSpinner();
         sepChar1 = new javax.swing.JSeparator();
         lAge = new javax.swing.JLabel();
         sAge = new javax.swing.JSpinner();
@@ -150,7 +139,6 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lFeatures = new javax.swing.JLabel();
         spFeatures = new javax.swing.JScrollPane();
         taFeatures = new javax.swing.JTextArea();
-        bExport = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -192,7 +180,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 21;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(bAddClass, gridBagConstraints);
 
         sepClass.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -218,7 +206,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         pCharacterFields.add(lPlayerName, gridBagConstraints);
 
         tfPlayerName.setText(character.getPlayerName());
@@ -234,7 +222,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         pCharacterFields.add(tfPlayerName, gridBagConstraints);
 
         lRace.setText("Race");
@@ -350,35 +338,9 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pCharacterFields.add(bExperiencePoints, gridBagConstraints);
-
-        lSpeed.setText("Speed");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        pCharacterFields.add(lSpeed, gridBagConstraints);
-
-        sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 0, null, 5));
-        sSpeed.setValue(character.getSpeed());
-        sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sSpeedStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        pCharacterFields.add(sSpeed, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -389,7 +351,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lAge.setText("Age");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -404,7 +366,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -415,7 +377,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lHeight.setText("Height");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -429,7 +391,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -440,7 +402,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lWeight.setText("Weight");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -454,7 +416,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -465,7 +427,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lEyes.setText("Eyes");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -479,7 +441,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -490,7 +452,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lSkin.setText("Skin");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -504,7 +466,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -515,7 +477,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         lHair.setText("Hair");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -529,7 +491,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -538,7 +500,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         pCharacterFields.add(tfHair, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -560,7 +522,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -585,7 +547,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -610,7 +572,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 17;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -635,7 +597,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 17;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -660,7 +622,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 19;
+        gridBagConstraints.gridy = 18;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -685,13 +647,13 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 19;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pCharacterFields.add(spFlaws, gridBagConstraints);
 
         spEquipment.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Equipment", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -711,7 +673,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 15;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -736,7 +698,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 15;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -761,7 +723,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 15;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -787,14 +749,14 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 15;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pCharacterFields.add(spBackstory, gridBagConstraints);
 
         spCharacterFields.setViewportView(pCharacterFields);
@@ -852,27 +814,13 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 100;
         gridBagConstraints.weightx = 0.25;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         add(spFeatures, gridBagConstraints);
-
-        bExport.setText("Export");
-        bExport.setToolTipText("This button is disabled until there is a nice template.");
-        bExport.setEnabled(Settings.isAlpha());
-        bExport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bExportActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        add(bExport, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAddClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddClassActionPerformed
@@ -889,11 +837,6 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         character.setExperiencePoints((int) sExperiencePoints.getValue());
         saveCharacter();
     }//GEN-LAST:event_sExperiencePointsStateChanged
-
-    private void sSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sSpeedStateChanged
-        character.setSpeed((int) sSpeed.getValue());
-        saveCharacter();
-    }//GEN-LAST:event_sSpeedStateChanged
 
     private void sAgeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sAgeStateChanged
         character.setAge((int) sAge.getValue());
@@ -960,37 +903,6 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         saveCharacter();
     }//GEN-LAST:event_taFeaturesFocusLost
 
-    private void bExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExportActionPerformed
-        File startLocation = new File(SETTINGS.getProperty(EXPORT_FILESELECTION));
-        JFileChooser chooser = new JFileChooser(startLocation);
-        chooser.setSelectedFile(startLocation);
-        chooser.setMultiSelectionEnabled(false);
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        chooser.setFileFilter(new FileNameExtensionFilter("PDF Files", "pdf"));
-        log.debug("Opening filechooser for directory [{}]", startLocation);
-        int selection = chooser.showDialog(this, "Select export file");
-        if (selection != JFileChooser.APPROVE_OPTION) {
-            return;
-        }
-        File file = chooser.getSelectedFile();
-
-        if (file == null) {
-            return;
-        }
-        if (file.isDirectory()) {
-            SETTINGS.setProperty(EXPORT_FILESELECTION, file.getAbsolutePath());
-            file = new File(file, character.getSaveFileName() + ".pdf");
-        } else {
-            SETTINGS.setProperty(EXPORT_FILESELECTION, file.getParent());
-        }
-        try {
-            GlobalUtils.createPDF(character, file);
-        } catch (IOException | DocumentException e) {
-            log.error("Exception while creating export for character [{}]", character, e);
-        }
-    }//GEN-LAST:event_bExportActionPerformed
-
     private void tfPlayerNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfPlayerNameFocusLost
         character.setPlayerName(tfPlayerName.getText());
         saveCharacter();
@@ -1052,7 +964,6 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddClass;
     private javax.swing.JButton bExperiencePoints;
-    private javax.swing.JButton bExport;
     private javax.swing.JLabel lAge;
     private javax.swing.JLabel lAlignment;
     private javax.swing.JLabel lBackground;
@@ -1065,13 +976,11 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
     private javax.swing.JLabel lPlayerName;
     private javax.swing.JLabel lRace;
     private javax.swing.JLabel lSkin;
-    private javax.swing.JLabel lSpeed;
     private javax.swing.JLabel lWeight;
     private javax.swing.JPanel pCharacterFields;
     private javax.swing.JPanel pClasses;
     private javax.swing.JSpinner sAge;
     private javax.swing.JSpinner sExperiencePoints;
-    private javax.swing.JSpinner sSpeed;
     private javax.swing.JSeparator sepChar1;
     private javax.swing.JSeparator sepChar2;
     private javax.swing.JSeparator sepClass;

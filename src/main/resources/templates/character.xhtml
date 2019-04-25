@@ -21,14 +21,17 @@ This template is used to create character export in PDF format.
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>#{Name}&#160;</title>
+        <meta name="viewport" content="width=698, initial-scale=1" />
         <style>
             html {
                 background-color: #000;
+                height: 100%;
             }
-            
+
             body {
                 width: 698px;
-                margin: auto;
+                height: 100%;
+                margin: 0px auto;
                 background-color: #fff;
             }
 
@@ -125,12 +128,6 @@ This template is used to create character export in PDF format.
     <body>
         <h1>#{Name}</h1>
         <table class="center fullwidth">
-            <tr class="input">
-                <td>#{ChallengeRating}</td>
-                <td class="nobreak">#{Size}</td>
-                <td>#{speed}</td>
-                <td>#{initiative}</td>
-            </tr>
             <tr>
                 <th>Challenge Rating</th>
                 <th>Size</th>
@@ -138,16 +135,22 @@ This template is used to create character export in PDF format.
                 <th>Initiative</th>
             </tr>
             <tr class="input">
-                <td>#{passiveWisdom}</td>
-                <td class="nobreak">#{Armor}<br/>AC: #{ArmorClassString}</td>
-                <td>#{maxHealth}</td>
-                <td></td>
+                <td>#{ChallengeRating}</td>
+                <td class="nobreak">#{Size}</td>
+                <td>#{speed}</td>
+                <td>#{initiative}</td>
             </tr>
             <tr>
                 <th>Passive Wisdom</th>
                 <th>Armor</th>
                 <th>Hitpoints</th>
                 <th></th>
+            </tr>
+            <tr class="input">
+                <td>#{passiveWisdom}</td>
+                <td class="nobreak">#{Armor}<br/>AC: #{ArmorClassString}</td>
+                <td>#{maxHealth}</td>
+                <td></td>
             </tr>
         </table>
         <hr/>

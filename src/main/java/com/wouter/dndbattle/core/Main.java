@@ -23,6 +23,7 @@ import java.awt.HeadlessException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.URL;
 import java.rmi.AlreadyBoundException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -31,6 +32,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Enumeration;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
@@ -60,6 +62,8 @@ public class Main extends javax.swing.JFrame {
     private static final String LOCALHOST = "localhost";
     private static final int DEFAULT_PORT = 4144; // d = 4, n = 14, dnd=4144
     private static final Main MAIN = new Main();
+
+    private final ImageIcon image;
 
     private static int port = DEFAULT_PORT;
     private static String ip = null;
@@ -92,8 +96,7 @@ public class Main extends javax.swing.JFrame {
         System.setProperty("java.rmi.server.hostname", ip);
         String hostOverride = null;
 
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
+        for (String arg : args) {
             switch (arg.toLowerCase()) {
                 case "--alpha":
                     Settings.setAlpha(true);
@@ -165,7 +168,7 @@ public class Main extends javax.swing.JFrame {
             connectSlave(host);
         } catch (RemoteException | NotBoundException e) {
             logToScreen("Unable to connect to master on host " + host);
-            log.debug("Master doesn't seem present [" + e + "] creating now.");
+            log.debug("Master doesn't seem present [" + e + "] creating now.", e);
             boolean createMaster = host.equalsIgnoreCase(LOCALHOST);
             if (!createMaster) {
                 switch (JOptionPane.showConfirmDialog(MAIN, "No connection could be made to host " + host + ".\nWould you like to create a master on this machine?", "No connection", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
@@ -191,12 +194,13 @@ public class Main extends javax.swing.JFrame {
         Registry registry;
         try {
             registry = LocateRegistry.createRegistry(port);
-            final Master master = new Master();
+            final Master master = new Master(ip);
             logToScreen(String.format("Attempting to create a master on port %d", port));
             IMaster stub = (IMaster) UnicastRemoteObject.exportObject(master, port);
             registry.bind("dnd", stub);
             logToScreen("Done.");
             logToScreen("Loading characters, weapons, spells and armor.");
+            master.getFrame().setIconImage(MAIN.getIconImage());
             startFrame(master.getFrame());
         } catch (RemoteException | AlreadyBoundException ex) {
             log.error("Master can't be started [" + ex + "]");
@@ -211,6 +215,7 @@ public class Main extends javax.swing.JFrame {
         registry = LocateRegistry.getRegistry(host, port);
         IMaster master = (IMaster) registry.lookup("dnd");
         final SlaveFrame slaveFrame = new SlaveFrame(master, ip);
+        slaveFrame.setIconImage(MAIN.getIconImage());
         ISlave remoteSlave = (ISlave) UnicastRemoteObject.exportObject(slaveFrame.getSlave(), 0);
         String playerName = JOptionPane.showInputDialog(MAIN, "What is your name?", SETTINGS.getProperty(CONNECTION_NAME));
         if (playerName != null && !playerName.isEmpty()) {
@@ -242,6 +247,19 @@ public class Main extends javax.swing.JFrame {
 
     private Main() {
         initComponents();
+        final ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("/images/font_awesome_5_solid_dice-d20.png");
+        if (resource == null) {
+            resource = classLoader.getResource("images/font_awesome_5_solid_dice-d20.png");
+        }
+        log.debug("Resource = [{}]", resource);
+        if (resource != null) {
+            image = new ImageIcon(resource);
+            log.debug("Resource is an image of [{}] by [{}] pixels", image.getIconHeight(), image.getIconWidth());
+            setIconImage(image.getImage());
+        } else {
+            image = null;
+        }
         setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, 0), SETTINGS.getProperty(MASTER_LOCATION_Y, 0));
         setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
     }
@@ -256,6 +274,7 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Starting program");
+        setName("Starting"); // NOI18N
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);
@@ -274,7 +293,7 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
+            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
             .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

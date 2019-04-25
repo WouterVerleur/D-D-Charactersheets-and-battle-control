@@ -5,6 +5,9 @@
  */
 package com.wouter.dndbattle.core.impl;
 
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
@@ -17,6 +20,7 @@ import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
 
 import com.wouter.dndbattle.core.IMaster;
+import com.wouter.dndbattle.core.IMasterConnectionInfo;
 import com.wouter.dndbattle.core.ISlave;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.Combatant;
@@ -24,9 +28,6 @@ import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.master.MasterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
 
 /**
  *
@@ -40,12 +41,14 @@ public class Master extends AbstractRemoteConnector implements IMaster {
     private boolean battleStarted;
     private List<ICombatant> combatants = new ArrayList<>();
     private MasterFrame frame;
-    private final List<ISlave> slaves = new ArrayList<>();
+    private final String ip;
+    private final List<MasterConnectionInfo> slaves = new ArrayList<>();
     private int currentIndex = 0;
 
     private final ExecutorService executor = Executors.newWorkStealingPool();
 
-    public Master() {
+    public Master(String ip) {
+        this.ip = ip;
     }
 
     /**
@@ -94,23 +97,38 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     @Override
     public void connect(ISlave slave, String playerName, String slaveIp) throws RemoteException {
-        slaves.add(slave);
-        boolean localhost = false;
+        boolean localhost = slaveIp.equalsIgnoreCase(ip);
         String localhostAddress = null;
-        try {
-            localhostAddress = InetAddress.getLocalHost().getHostAddress();
-            localhost = slaveIp.equalsIgnoreCase(localhostAddress);
-        } catch (UnknownHostException e) {
-            log.error("Error while determining if connection if from localhost", e);
+        if (!localhost) {
+            try {
+                localhostAddress = InetAddress.getLocalHost().getHostAddress();
+                localhost = slaveIp.equalsIgnoreCase(localhostAddress);
+                InetAddress[] allForLocalhost = InetAddress.getAllByName("localhost");
+                int i = 0;
+                while (!localhost && i < allForLocalhost.length) {
+                    localhost = slaveIp.equalsIgnoreCase(allForLocalhost[i].getHostAddress());
+                    i++;
+                }
+            } catch (UnknownHostException e) {
+                log.error("Error while determining if connection is from localhost", e);
+            }
         }
-        log.debug("Recieved new slave connection from [{}] for which localhost was [{}] fors remote host [{}] and localhost [{}]", playerName, localhost, slaveIp, localhostAddress);
-        slave.setConnectionInfo(new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName));
+        log.debug("Recieved new slave connection from [{}] for which localhost was [{}] for remote host [{}] and localhost [{}]", playerName, localhost, slaveIp, localhostAddress);
+        MasterConnectionInfo connectionInfo = new MasterConnectionInfo(SETTINGS.getProperty(SLAVE_TITLE, "Slave"), localhost, playerName, slave);
+        slaves.add(connectionInfo);
+        slave.setConnectionInfo(connectionInfo);
         slave.refreshView(true);
     }
 
     @Override
-    public void disconnect(ISlave slave) throws RemoteException {
-        slaves.remove(slave);
+    public void disconnect(IMasterConnectionInfo connectionInfo) throws RemoteException {
+        if (connectionInfo instanceof MasterConnectionInfo) {
+            disconnect((MasterConnectionInfo) connectionInfo);
+        }
+    }
+
+    public void disconnect(MasterConnectionInfo connectionInfo) {
+        slaves.remove(connectionInfo);
     }
 
     @Override
@@ -123,7 +141,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         SETTINGS.setProperty(key, value);
     }
 
-    public List<ISlave> getSlaves() {
+    public List<MasterConnectionInfo> getSlaves() {
         return slaves;
     }
 
@@ -166,13 +184,13 @@ public class Master extends AbstractRemoteConnector implements IMaster {
         System.exit(0);
     }
 
-    public void kick(ISlave slave) {
+    public void kick(MasterConnectionInfo connectionInfo) {
         try {
-            slave.shutdown();
+            connectionInfo.getSlave().shutdown();
         } catch (RemoteException ex) {
-            log.error("Attempt to kick [{}] resulted in an error.", slave, ex);
+            log.error("Attempt to kick [{}] resulted in an error.", connectionInfo, ex);
         }
-        slaves.remove(slave);
+        slaves.remove(connectionInfo);
     }
 
     public void startNewBattle() {
@@ -184,12 +202,19 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     public void updateAll(boolean refreshCombatants) {
         getFrame().refreshBattle(combatants, currentIndex);
-        slaves.forEach((slave) -> {
+        slaves.forEach((connectionInfo) -> {
             executor.submit(() -> {
+                ISlave slave = connectionInfo.getSlave();
                 try {
                     slave.refreshView(refreshCombatants);
+                    connectionInfo.resetCounter();
                 } catch (RemoteException e) {
-                    log.error("Unable to refresh slave [{}]", slave, e);
+                    int failures = connectionInfo.increaseCounter();
+                    log.error("Unable to refresh slave [{}] [{}] times in a row.", connectionInfo, failures, e);
+                    if (failures >= 3) {
+                        kick(connectionInfo);
+                        log.warn("Slave [{}] has [{}] failures and has been kicked.", connectionInfo, failures);
+                    }
                 }
             });
         });
@@ -197,11 +222,11 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     @Override
     protected void shutdownHook() {
-        slaves.forEach((slave) -> {
+        slaves.forEach((connectionInfo) -> {
             try {
-                slave.shutdown();
+                connectionInfo.getSlave().shutdown();
             } catch (RemoteException e) {
-                System.out.println("Unable to shutdown slave " + e);
+                log.warn("Unable to shutdown slave [{}]", connectionInfo, e);
             }
         });
     }

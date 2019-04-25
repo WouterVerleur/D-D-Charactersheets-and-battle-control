@@ -473,11 +473,9 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
             weapons.addAll(Weapons.getInstance().getAll());
         }
         Collections.sort(weapons);
-        for (IWeapon weapon : weapons) {
-            if (weapon.getType() == WeaponType.PERSONAL || selection == WeaponSelection.ALL || character.isProficient(weapon)) {
-                weaponModel.addRow(GlobalUtils.getWeaponRow(character, weapon));
-            }
-        }
+        weapons.stream().filter((weapon) -> (weapon.getType() == WeaponType.PERSONAL || selection == WeaponSelection.ALL || character.isProficient(weapon))).forEachOrdered((weapon) -> {
+            weaponModel.addRow(GlobalUtils.getWeaponRow(character, weapon));
+        });
     }
 
     private String getAbilityString() {

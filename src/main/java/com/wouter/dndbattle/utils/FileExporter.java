@@ -127,19 +127,16 @@ public class FileExporter {
             }
         }
 
-        List<IWeapon> weapons = character.getPrivateWeapons();
+        List<IWeapon> weapons = new ArrayList<>(character.getPrivateWeapons());
         if (weaponSelection != WeaponSelection.PERSONAL) {
             weapons.addAll(Weapons.getInstance().getAll());
         }
         Collections.sort(weapons);
 
         StringBuilder weaponRows = new StringBuilder();
-        for (IWeapon weapon : weapons) {
-            if (weaponSelection == WeaponSelection.ALL || character.isProficient(weapon) || weapon.getType() == WeaponType.PERSONAL) {
-                Object[] weaponRow = GlobalUtils.getWeaponRow(character, weapon);
-                weaponRows.append(String.format(WEAPON_ROW_FORMAT, weaponRow[NAME], weaponRow[ATTACK], weaponRow[DAMAGE], weaponRow[NOTES]));
-            }
-        }
+        weapons.stream().filter((weapon) -> (weaponSelection == WeaponSelection.ALL || character.isProficient(weapon) || weapon.getType() == WeaponType.PERSONAL)).map((weapon) -> GlobalUtils.getWeaponRow(character, weapon)).forEachOrdered((weaponRow) -> {
+            weaponRows.append(String.format(WEAPON_ROW_FORMAT, weaponRow[NAME], weaponRow[ATTACK], weaponRow[DAMAGE], weaponRow[NOTES]));
+        });
         contents = replaceInTemplateNoEscape(contents, WEAPONS_PLACEHOLDER, weaponRows.toString());
 
         StringBuilder spellBlocks = new StringBuilder();

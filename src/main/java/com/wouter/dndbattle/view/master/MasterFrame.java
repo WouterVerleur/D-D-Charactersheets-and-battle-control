@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.wouter.dndbattle.core.IMaster;
 import com.wouter.dndbattle.core.impl.Master;
+import com.wouter.dndbattle.core.impl.MasterConnectionInfo;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
 import com.wouter.dndbattle.objects.impl.AbstractCharacter;
@@ -555,23 +556,20 @@ public class MasterFrame extends javax.swing.JFrame {
     private synchronized void refreshClientsTable() {
         DefaultTableModel model = (DefaultTableModel) tClients.getModel();
         model.setRowCount(0);
-        master.getSlaves().forEach((client) -> {
-            String ip = null;
-            String name = null;
+        for (MasterConnectionInfo connectionInfo : master.getSlaves()) {
+            String ip = "Unknown";
             try {
-                ip = client.getConnectionInfo().isLocalhost() ? "localhost" : client.getIp();
+                ip = connectionInfo.isLocalhost() ? "localhost" : connectionInfo.getSlave().getIp();
             } catch (RemoteException ex) {
                 log.error("Error retrieveing remote ip", ex);
             }
-            try {
-                name = client.getName();
-            } catch (RemoteException ex) {
-                log.error("Error retrieveing remote name", ex);
-            }
+
+            String name = connectionInfo.getPlayerName();
+
             String ping;
             long start = System.currentTimeMillis();
             try {
-                client.ping();
+                connectionInfo.getSlave().ping();
                 long time = System.currentTimeMillis() - start;
                 ping = (time > 0 ? time + " ms" : "< 1 ms");
             } catch (RemoteException ex) {
@@ -579,7 +577,7 @@ public class MasterFrame extends javax.swing.JFrame {
                 ping = "Error";
             }
             model.addRow(new Object[]{ip, name, ping});
-        });
+        }
     }
 
     private void bKickClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bKickClientActionPerformed

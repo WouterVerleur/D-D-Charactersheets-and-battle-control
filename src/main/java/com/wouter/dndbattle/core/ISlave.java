@@ -28,4 +28,5 @@ public interface ISlave extends Remote, Serializable {
     public String getName() throws RemoteException;
 
     public void ping() throws RemoteException;
+
 }

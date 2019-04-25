@@ -87,7 +87,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
     protected void shutdownHook() {
         if (master != null) {
             try {
-                master.disconnect(this);
+                master.disconnect(connectionInfo);
             } catch (RemoteException e) {
                 log.error("Unable to disconnect.", e);
             }

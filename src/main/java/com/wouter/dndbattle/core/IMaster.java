@@ -23,7 +23,7 @@ public interface IMaster extends Remote {
 
     public void connect(ISlave slave, String name, String slaveIp) throws RemoteException;
 
-    public void disconnect(ISlave slave) throws RemoteException;
+    public void disconnect(IMasterConnectionInfo connectionInfo) throws RemoteException;
 
     public int getProperty(String key, int defaultValue) throws RemoteException;
 

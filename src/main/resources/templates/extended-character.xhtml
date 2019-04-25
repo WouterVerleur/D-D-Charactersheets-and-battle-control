@@ -21,19 +21,24 @@ This template is used to create character export in PDF format.
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>#{Name}&#160;</title>
+        <meta name="viewport" content="width=698, initial-scale=1" />
         <style>
             html {
                 background-color: #000;
+                background: linear-gradient(to right, #000, #fff,#000);
+                height: 100%;
             }
             
             body {
                 width: 698px;
-                margin: auto;
+                min-height: 100%;
+                margin: 0px auto;
                 background-color: #fff;
             }
 
             body > * {
-                margin: 5px 0px;
+                margin: 0px;
+                margin-top: 5px;
             }
 
             /* Headers + paragraphs */
@@ -49,12 +54,28 @@ This template is used to create character export in PDF format.
                 page-break-before: always;
             }
 
-            h3 {
+            h3, table.numbers > tr > * {
                 text-align: center;
                 border-radius: 5px;
-                border-width: 1px 0px;
+                border-width: 1px;
                 border-style: solid;
                 border-color: rgb(150,150,150);
+            }
+            
+            h3 {
+                border-width: 1px 0px;
+            }
+            table.numbers > tr > *:first-child {
+                border-left-width: 0px;
+            }
+            table.numbers > tr > *:last-child {
+                border-right-width: 0px;
+            }
+            table.numbers > tr:first-child > * {
+                border-top-width: 0px;
+            }
+            table.numbers > tr:last-child > * {
+                border-bottom-width: 0px;
             }
 
             p {
@@ -82,6 +103,10 @@ This template is used to create character export in PDF format.
 
             table {
                 border-collapse: collapse;
+            }
+            
+            table, hr {
+                margin: 0px;
             }
 
             table * {
@@ -125,14 +150,6 @@ This template is used to create character export in PDF format.
     <body>
         <h1>#{Name}</h1>
         <table class="center fullwidth">
-            <tr class="input">
-                <td>#{ClassLevel}</td>
-                <td>#{ExperiencePoints}</td>
-                <td>#{Background}</td>
-                <td class="nobreak">#{Race}<br/>#{Size}</td>
-                <td>#{Alignment}</td>
-                <td>#{PlayerName}</td>
-            </tr>
             <tr>
                 <th>Class &amp; Level</th>
                 <th>Experience points</th>
@@ -142,12 +159,12 @@ This template is used to create character export in PDF format.
                 <th>Player Name</th>
             </tr>
             <tr class="input">
-                <td class="nobreak">#{Armor}<br/>AC: #{ArmorClassString}</td>
-                <td>#{maxHealth}</td>
-                <td></td>
-                <td>#{hitDice}</td>
-                <td>#{initiative}</td>
-                <td>#{passiveWisdom}</td>
+                <td>#{ClassLevel}</td>
+                <td>#{ExperiencePoints}</td>
+                <td>#{Background}</td>
+                <td class="nobreak">#{Race}<br/>#{Size}</td>
+                <td>#{Alignment}</td>
+                <td>#{PlayerName}</td>
             </tr>
             <tr>
                 <th>Armor</th>
@@ -158,12 +175,12 @@ This template is used to create character export in PDF format.
                 <th>Passive Wisdom</th>
             </tr>
             <tr class="input">
-                <td>#{speed}</td>
-                <td>#{Height}</td>
-                <td>#{Weight}</td>
-                <td>#{Skin}</td>
-                <td>#{Hair}</td>
-                <td>#{Eyes}</td>
+                <td class="nobreak">#{Armor}<br/>AC: #{ArmorClassString}</td>
+                <td>#{maxHealth}</td>
+                <td></td>
+                <td>#{hitDice}</td>
+                <td>#{initiative}</td>
+                <td>#{passiveWisdom}</td>
             </tr>
             <tr>
                 <th>Speed</th>
@@ -172,6 +189,14 @@ This template is used to create character export in PDF format.
                 <th>Skin</th>
                 <th>Hair</th>
                 <th>Eyes</th>
+            </tr>
+            <tr class="input">
+                <td>#{speed}</td>
+                <td>#{Height}</td>
+                <td>#{Weight}</td>
+                <td>#{Skin}</td>
+                <td>#{Hair}</td>
+                <td>#{Eyes}</td>
             </tr>
         </table>
         <hr/>

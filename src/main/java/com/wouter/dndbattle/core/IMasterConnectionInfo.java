@@ -27,6 +27,6 @@ public interface IMasterConnectionInfo extends Serializable {
     String getSlaveTitle();
 
     boolean isLocalhost();
-    
+
     String getPlayerName();
 }

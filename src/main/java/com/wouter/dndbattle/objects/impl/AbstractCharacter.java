@@ -447,7 +447,7 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public List<IWeapon> getPrivateWeapons() {
-        return privateWeapons;
+        return Collections.unmodifiableList(privateWeapons);
     }
 
     public void addPrivateWeapon(IWeapon weapon) {

@@ -148,7 +148,7 @@ public class Weapon implements IWeapon {
         switch (weaponRange) {
             case REACH:
                 checkBuilder(builder);
-                builder.append("Reach");
+                builder.append("Reach ").append(range).append("ft.");
                 break;
             case THROWN:
                 checkBuilder(builder);

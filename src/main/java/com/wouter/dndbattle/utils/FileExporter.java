@@ -65,7 +65,7 @@ public class FileExporter {
     private static final String WEAPONS_PLACEHOLDER = "#{weapons}";
     private static final String SPELLS_PLACEHOLDER = "#{spells}";
     private static final String WEAPON_ROW_FORMAT = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
-    private static final String SPELL_BLOCK_FORMAT = "<table class=\"fullwidth top nopagebreak spell\"><tr><th colspan=\"2\">%s</th><td rowspan=\"8\"><p>%s</p></td></tr><tr><td colspan=\"2\">%s</td></tr><tr><td>Casting Time:</td><td>%s</td></tr><tr><td>Range:</td><td>%s</td></tr><tr><td>Components:</td><td>%s</td></tr><tr><td>Duration:</td><td>%s</td></tr><tr><td colspan=\"2\">Notes:</td></tr><tr><td colspan=\"2\"><p>%s</p></td></tr></table>";
+    private static final String SPELL_BLOCK_FORMAT = "<table class=\"fullwidth top nopagebreak spell\"><tr><th colspan=\"2\">%s</th><td rowspan=\"7\"><p>%s</p></td></tr><tr><td colspan=\"2\">%s</td></tr><tr><td>Casting Time:</td><td>%s</td></tr><tr><td>Range:</td><td>%s</td></tr><tr><td>Components:</td><td>%s</td></tr><tr><td>Duration:</td><td>%s</td></tr><tr><td colspan=\"2\">Notes:<p>%s</p></td></tr></table>";
 
     public static void createPDF(ICharacter character, WeaponSelection weaponSelection, File pdf) throws Exception {
         String contents = createHtmlContent(character, weaponSelection);

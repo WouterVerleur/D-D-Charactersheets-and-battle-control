@@ -54,9 +54,8 @@ This template is used to create character export in PDF format.
                 page-break-before: always;
             }
 
-            h3, table.numbers > tr > * {
+            h3, table.numbers tr > * {
                 text-align: center;
-                border-radius: 5px;
                 border-width: 1px;
                 border-style: solid;
                 border-color: rgb(150,150,150);
@@ -64,17 +63,18 @@ This template is used to create character export in PDF format.
 
             h3 {
                 border-width: 1px 0px;
+                border-radius: 5px;
             }
-            table.numbers > tr > *:first-child {
+            table.numbers tr > *:first-child {
                 border-left-width: 0px;
             }
-            table.numbers > tr > *:last-child {
+            table.numbers tr > *:last-child {
                 border-right-width: 0px;
             }
-            table.numbers > tr:first-child > * {
+            table.numbers tr:first-child > * {
                 border-top-width: 0px;
             }
-            table.numbers > tr:last-child > * {
+            table.numbers tr:last-child > * {
                 border-bottom-width: 0px;
             }
 
@@ -106,14 +106,14 @@ This template is used to create character export in PDF format.
             }
 
             table, hr {
-                margin: 0px;
+                margin-top: 0px;
             }
 
             table * {
                 padding: 5px;
             }
 
-            table.rows tr:nth-child(even) {
+            table.rows tr:nth-child(even), div table.spell:nth-child(even) {
                 background: rgb(220,220,220);
             }
 
@@ -397,6 +397,8 @@ This template is used to create character export in PDF format.
             </tr>
         </table>
         <h3>Spells</h3>
-        #{spells}
+        <div>
+            #{spells}
+        </div>
     </body>
 </html>

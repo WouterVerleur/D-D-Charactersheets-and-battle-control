@@ -24,6 +24,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
 
 import javax.swing.JOptionPane;
 
@@ -60,18 +66,37 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
 
     protected List<T> loadFromFiles(Class<? extends T> clazz) {
         File[] files = presetFolder.listFiles(new ClassFileFilter(clazz));
-        List<T> returnList = new ArrayList<>();
+        List<Callable<T>> callables = new ArrayList<>();
         for (File file : files) {
-            try {
-                log.debug("Found preset file [{}]", file);
-                T preset = getFromFile(file, clazz);
+            log.debug("Found preset file [{}]", file);
+            callables.add((Callable<T>) () -> {
+                try {
+                    return getFromFile(file, clazz);
+                } catch (ObjectReadException | IllegalArgumentException e) {
+                    log.error("Error while reading preset of class [{}] from file [{}]", clazz, file, e);
+                }
+                return null;
+            });
+        }
+
+        List<T> returnList = new ArrayList<>();
+        final ExecutorService executor = Executors.newWorkStealingPool();
+        try {
+            for (Future<T> future : executor.invokeAll(callables)) {
+                T preset = null;
+                try {
+                    preset = future.get();
+                } catch (ExecutionException ex) {
+                    java.util.logging.Logger.getLogger(AbstractObjectStorer.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 if (preset != null) {
                     returnList.add(preset);
                 }
-            } catch (ObjectReadException | IllegalArgumentException e) {
-                log.error("Error while reading preset of class [{}] from file [{}]", clazz, file, e);
             }
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(AbstractObjectStorer.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         Collections.sort(returnList);
         return returnList;
     }

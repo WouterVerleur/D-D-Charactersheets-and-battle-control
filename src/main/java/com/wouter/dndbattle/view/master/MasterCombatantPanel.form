@@ -4,7 +4,12 @@
   <Properties>
     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-        <TitledBorder/>
+        <TitledBorder position="2" title="&lt;User Code&gt;">
+          <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+          <Connection PropertyName="titleX" code="String.format(TITLE_FORMAT, combatant.getInitiative(), combatant.getCharacter().getAbilityScore(AbilityType.DEX))" type="code"/>
+        </TitledBorder>
       </Border>
     </Property>
   </Properties>
@@ -24,74 +29,78 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="pUseSpellSlots" max="32767" attributes="0"/>
-                  <Component id="lName" max="32767" attributes="0"/>
                   <Component id="lDescription" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="lName" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="bInfo" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jProgressBar1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jProgressBar2" min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="jProgressBar2" min="-2" pref="145" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bDeathRoll" max="32767" attributes="0"/>
                           <Component id="bDamage" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="bLifeRoll" max="32767" attributes="0"/>
                           <Component id="bHealth" max="32767" attributes="0"/>
+                          <Component id="bLifeRoll" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lTotalDamageRecieved" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="bTransform" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="bPolyMorph" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="lTotalDamageRecieved" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="bLeaveTransformation" max="32767" attributes="0"/>
                           <Component id="bTempHitpoints" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lName" min="-2" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lName" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lDescription" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jProgressBar2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jProgressBar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jProgressBar2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="bDamage" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="bHealth" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lTotalDamageRecieved" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="bTempHitpoints" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="bDamage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bHealth" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lTotalDamageRecieved" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bTempHitpoints" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="bDeathRoll" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bLeaveTransformation" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bLifeRoll" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bTransform" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bPolyMorph" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bLeaveTransformation" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pUseSpellSlots" min="-2" max="-2" attributes="0"/>
@@ -110,6 +119,14 @@
           <Connection code="combatant.getFriendlyName()" type="code"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bInfo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Information"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bInfoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lDescription">
       <Properties>

@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JOptionPane;
 
@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @author wverleur
  * @param <T> the class of the objects to store using this class.
  */
-public abstract class AbstractObjectStorer<T extends ISaveableClass> {
+public abstract class AbstractObjectStorer<T extends ISaveableClass> extends Initializable {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractObjectStorer.class);
 
@@ -65,17 +65,27 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
     }
 
     protected List<T> loadFromFiles(Class<? extends T> clazz) {
+        return loadFromFiles(clazz, true);
+    }
+
+    protected List<T> loadFromFiles(Class<? extends T> clazz, final boolean setProgress) {
         File[] files = presetFolder.listFiles(new ClassFileFilter(clazz));
         List<Callable<T>> callables = new ArrayList<>();
+        int totalFiles = files.length;
+        AtomicInteger completedFiles = new AtomicInteger();
         for (File file : files) {
             log.debug("Found preset file [{}]", file);
             callables.add((Callable<T>) () -> {
+                T fromFile = null;
                 try {
-                    return getFromFile(file, clazz);
+                    fromFile = getFromFile(file, clazz);
+                    if (setProgress) {
+                        setProgress(Math.floorDiv(completedFiles.incrementAndGet() * 100, totalFiles));
+                    }
                 } catch (ObjectReadException | IllegalArgumentException e) {
                     log.error("Error while reading preset of class [{}] from file [{}]", clazz, file, e);
                 }
-                return null;
+                return fromFile;
             });
         }
 
@@ -86,15 +96,15 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> {
                 T preset = null;
                 try {
                     preset = future.get();
-                } catch (ExecutionException ex) {
-                    java.util.logging.Logger.getLogger(AbstractObjectStorer.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ExecutionException e) {
+                    log.error("Future caught an exception", e);
                 }
                 if (preset != null) {
                     returnList.add(preset);
                 }
             }
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(AbstractObjectStorer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException e) {
+            log.error("Loading interrupted while waiting for loading to complete", e);
         }
 
         Collections.sort(returnList);

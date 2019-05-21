@@ -32,7 +32,7 @@ import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Weapons;
 import com.wouter.dndbattle.view.IUpdateablePanel;
-import com.wouter.dndbattle.view.master.weapons.WeaponEditFrame;
+import com.wouter.dndbattle.view.master.weapons.WeaponEditPanel;
 
 /**
  *
@@ -386,17 +386,18 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         Characters.getInstance().update(character);
     }
 
-    public void updateWeapon(Weapon weapon) {
-        if (!character.getPrivateWeapons().contains(weapon)) {
-            character.addPrivateWeapon(weapon);
-        }
-        saveCharacterAndUpdate();
-    }
-
     private void editPrivateWeapon(Weapon weapon) {
-        WeaponEditFrame weaponEditFrame = new WeaponEditFrame(weapon, this);
-        weaponEditFrame.setLocationRelativeTo(this);
-        weaponEditFrame.setVisible(true);
+        WeaponEditPanel weaponEditPanel = new WeaponEditPanel(weapon);
+        switch (JOptionPane.showConfirmDialog(this, weaponEditPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+            case JOptionPane.OK_OPTION:
+                Weapon newWeapon = weaponEditPanel.getWeapon();
+                if (!character.getPrivateWeapons().contains(newWeapon)) {
+                    character.addPrivateWeapon(newWeapon);
+                }
+                saveCharacterAndUpdate();
+            default:
+                break;
+        }
     }
 
     private Weapon getSelectedPrivateWeapon() {

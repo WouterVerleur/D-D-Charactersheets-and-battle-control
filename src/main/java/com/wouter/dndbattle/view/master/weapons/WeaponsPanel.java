@@ -331,9 +331,14 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
         if (weapon == null) {
             return;
         }
-        WeaponEditFrame weaponEditFrame = new WeaponEditFrame(weapon, this);
-        weaponEditFrame.setLocationRelativeTo(this);
-        weaponEditFrame.setVisible(true);
+        WeaponEditPanel weaponEditPanel = new WeaponEditPanel(weapon);
+        switch (JOptionPane.showConfirmDialog(this, weaponEditPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+            case JOptionPane.OK_OPTION:
+                weapons.update(weaponEditPanel.getWeapon());
+            default:
+                break;
+        }
+        update();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -353,9 +358,5 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
 
     public void removeWeapon(Weapon weapon) {
         weapons.remove(weapon);
-    }
-
-    void saveWeapon(Weapon weapon) {
-        weapons.update(weapon);
     }
 }

@@ -28,16 +28,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="spDisplayLog" pref="388" max="32767" attributes="0"/>
-          <Component id="jProgressBar1" alignment="0" max="32767" attributes="0"/>
+          <Component id="spDisplayLog" pref="348" max="32767" attributes="0"/>
+          <Component id="pbMain" alignment="0" max="32767" attributes="0"/>
+          <Component id="pbSub" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="spDisplayLog" pref="185" max="32767" attributes="0"/>
+              <Component id="spDisplayLog" pref="212" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
+              <Component id="pbMain" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="pbSub" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -62,10 +65,15 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+    <Component class="javax.swing.JProgressBar" name="pbMain">
       <Properties>
         <Property name="indeterminate" type="boolean" value="true"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JProgressBar" name="pbSub">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="pbSub.setVisible(false);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

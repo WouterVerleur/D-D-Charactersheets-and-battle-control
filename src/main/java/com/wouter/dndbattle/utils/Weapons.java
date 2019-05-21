@@ -54,10 +54,15 @@ public class Weapons extends AbstractObjectStorer<IWeapon> {
 
     @Override
     public List<IWeapon> getAll() {
-        if (weapons == null) {
-            weapons = loadFromFiles(Weapon.class);
+        if (!isInitialized()) {
+            initialize();
         }
         return weapons;
+    }
+
+    @Override
+    protected void initializeHook() {
+        weapons = loadFromFiles(Weapon.class);
     }
 
     @Override

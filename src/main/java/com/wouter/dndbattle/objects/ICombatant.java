@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.objects;
 
+import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
+
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -62,4 +64,12 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
 
     int getUsedSpellSlots(SpellLevel level);
 
+    @Override
+    public default int compareTo(ICombatant t) {
+        int returnValue = t.getInitiative() - getInitiative();
+        if (returnValue == 0) {
+            returnValue = t.getCharacter().getAbilityScore(DEX) - getCharacter().getAbilityScore(DEX);
+        }
+        return returnValue;
+    }
 }

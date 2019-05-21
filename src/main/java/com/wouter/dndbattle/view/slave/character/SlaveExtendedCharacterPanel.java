@@ -53,8 +53,6 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lAlignmentValue = new javax.swing.JLabel();
         lExperiencePoints = new javax.swing.JLabel();
         lExperiencePointsValue = new javax.swing.JLabel();
-        lSpeed = new javax.swing.JLabel();
-        lSpeedValue = new javax.swing.JLabel();
         sepChar1 = new javax.swing.JSeparator();
         lAge = new javax.swing.JLabel();
         lAgeValue = new javax.swing.JLabel();
@@ -189,27 +187,9 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pCharacterFields.add(lExperiencePointsValue, gridBagConstraints);
-
-        lSpeed.setText("Speed");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        pCharacterFields.add(lSpeed, gridBagConstraints);
-
-        lSpeedValue.setText(Integer.toString(character.getSpeed()));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        pCharacterFields.add(lSpeedValue, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -220,7 +200,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lAge.setText("Age");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -229,7 +209,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lAgeValue.setText(Integer.toString(character.getAge()));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -238,7 +218,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lHeight.setText("Height");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -247,7 +227,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lHeightValue.setText(character.getHeight());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -256,7 +236,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lWeight.setText("Weight");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -265,7 +245,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lWeightValue.setText(character.getWeight());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -274,7 +254,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lEyes.setText("Eyes");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -283,7 +263,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lEyesValue.setText(character.getEyes());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -292,7 +272,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lSkin.setText("Skin");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -301,7 +281,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lSkinValue.setText(character.getSkin());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -310,7 +290,7 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lHair.setText("Hair");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -319,14 +299,14 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         lHeirValue.setText(character.getHair());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pCharacterFields.add(lHeirValue, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -338,12 +318,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taProficiencies.setLineWrap(true);
         taProficiencies.setText(character.getProficiencies());
         taProficiencies.setWrapStyleWord(true);
-        taProficiencies.setPreferredSize(new java.awt.Dimension(0, 0));
         spProficiencies.setViewportView(taProficiencies);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -358,12 +337,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taLanguages.setLineWrap(true);
         taLanguages.setText(character.getLanguages());
         taLanguages.setWrapStyleWord(true);
-        taLanguages.setPreferredSize(new java.awt.Dimension(0, 0));
         spLanguages.setViewportView(taLanguages);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -377,12 +355,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taPersonalityTraits.setLineWrap(true);
         taPersonalityTraits.setText(character.getPersonalityTraits());
         taPersonalityTraits.setWrapStyleWord(true);
-        taPersonalityTraits.setPreferredSize(new java.awt.Dimension(0, 0));
         spPersonalityTraits.setViewportView(taPersonalityTraits);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 15;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -397,12 +374,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taIdeals.setLineWrap(true);
         taIdeals.setText(character.getIdeals());
         taIdeals.setWrapStyleWord(true);
-        taIdeals.setPreferredSize(new java.awt.Dimension(0, 0));
         spIdeals.setViewportView(taIdeals);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 15;
+        gridBagConstraints.gridy = 14;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -416,12 +392,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taBonds.setLineWrap(true);
         taBonds.setText(character.getBonds());
         taBonds.setWrapStyleWord(true);
-        taBonds.setPreferredSize(new java.awt.Dimension(0, 0));
         spBonds.setViewportView(taBonds);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 15;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -436,12 +411,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taFlaws.setLineWrap(true);
         taFlaws.setText(character.getFlaws());
         taFlaws.setWrapStyleWord(true);
-        taFlaws.setPreferredSize(new java.awt.Dimension(0, 0));
         spFlaws.setViewportView(taFlaws);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 15;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -456,12 +430,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taEquipment.setLineWrap(true);
         taEquipment.setText(character.getEquipment());
         taEquipment.setWrapStyleWord(true);
-        taEquipment.setPreferredSize(new java.awt.Dimension(0, 0));
         spEquipment.setViewportView(taEquipment);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 17;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -476,12 +449,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taTreasure.setLineWrap(true);
         taTreasure.setText(character.getTreasure());
         taTreasure.setWrapStyleWord(true);
-        taTreasure.setPreferredSize(new java.awt.Dimension(0, 0));
         spTreasure.setViewportView(taTreasure);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 17;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -495,12 +467,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taAlliesAndOrganisations.setLineWrap(true);
         taAlliesAndOrganisations.setText(character.getAliesAndOrganizations());
         taAlliesAndOrganisations.setWrapStyleWord(true);
-        taAlliesAndOrganisations.setPreferredSize(new java.awt.Dimension(0, 0));
         spAlliesAndOrganisations.setViewportView(taAlliesAndOrganisations);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 17;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -516,12 +487,11 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
         taBackstory.setLineWrap(true);
         taBackstory.setText(character.getBackstory());
         taBackstory.setWrapStyleWord(true);
-        taBackstory.setPreferredSize(new java.awt.Dimension(0, 0));
         spBackstory.setViewportView(taBackstory);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 18;
+        gridBagConstraints.gridy = 17;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -606,8 +576,6 @@ public class SlaveExtendedCharacterPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lRaceValue;
     private javax.swing.JLabel lSkin;
     private javax.swing.JLabel lSkinValue;
-    private javax.swing.JLabel lSpeed;
-    private javax.swing.JLabel lSpeedValue;
     private javax.swing.JLabel lWeight;
     private javax.swing.JLabel lWeightValue;
     private javax.swing.JPanel pCharacterFields;

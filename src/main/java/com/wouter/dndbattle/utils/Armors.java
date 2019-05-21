@@ -55,11 +55,16 @@ public class Armors extends AbstractObjectStorer<IArmor> {
 
     @Override
     public List<IArmor> getAll() {
-        if (armors == null) {
-            armors = loadFromFiles(Armor.class);
+        if (!isInitialized()) {
+            initialize();
         }
-        Collections.sort(armors);
         return armors;
+    }
+
+    @Override
+    protected void initializeHook() {
+        armors = loadFromFiles(Armor.class);
+        Collections.sort(armors);
     }
 
     @Override

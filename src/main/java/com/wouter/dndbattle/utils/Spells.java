@@ -77,12 +77,17 @@ public class Spells extends AbstractObjectStorer<ISpell> {
     }
 
     private Map<String, ISpell> getSpells() {
-        if (spells == null) {
-            spells = new HashMap<>();
-            loadFromFiles(Spell.class).forEach((spell) -> {
-                spells.put(spell.toString(), spell);
-            });
+        if (!isInitialized()) {
+            initialize();
         }
         return spells;
+    }
+
+    @Override
+    protected void initializeHook() {
+        spells = new HashMap<>();
+        loadFromFiles(Spell.class).forEach((spell) -> {
+            spells.put(spell.toString(), spell);
+        });
     }
 }

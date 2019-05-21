@@ -388,7 +388,7 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
 
     private void editPrivateWeapon(Weapon weapon) {
         WeaponEditPanel weaponEditPanel = new WeaponEditPanel(weapon);
-        switch (JOptionPane.showConfirmDialog(this, weaponEditPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+        switch (JOptionPane.showConfirmDialog(this, weaponEditPanel, "Edit personal weapon", JOptionPane.OK_CANCEL_OPTION)) {
             case JOptionPane.OK_OPTION:
                 Weapon newWeapon = weaponEditPanel.getWeapon();
                 if (!character.getPrivateWeapons().contains(newWeapon)) {

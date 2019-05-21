@@ -332,7 +332,7 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
             return;
         }
         WeaponEditPanel weaponEditPanel = new WeaponEditPanel(weapon);
-        switch (JOptionPane.showConfirmDialog(this, weaponEditPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+        switch (JOptionPane.showConfirmDialog(this, weaponEditPanel, "Edit weapon", JOptionPane.OK_CANCEL_OPTION)) {
             case JOptionPane.OK_OPTION:
                 weapons.update(weaponEditPanel.getWeapon());
             default:

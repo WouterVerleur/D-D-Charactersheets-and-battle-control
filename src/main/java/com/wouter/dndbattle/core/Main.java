@@ -43,8 +43,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.wouter.dndbattle.core.impl.Master;
+import com.wouter.dndbattle.utils.Armors;
+import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
+import com.wouter.dndbattle.utils.Initializable;
 import com.wouter.dndbattle.utils.Settings;
+import com.wouter.dndbattle.utils.Spells;
+import com.wouter.dndbattle.utils.Weapons;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +58,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Wouter
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements Initializable.IProgressKeeper {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
@@ -69,10 +74,32 @@ public class Main extends javax.swing.JFrame {
     private static String ip = null;
 
     public static void main(String[] args) {
+        String hostOverride = null;
+        for (String arg : args) {
+            switch (arg.toLowerCase()) {
+                case "--alpha":
+                    Settings.setAlpha(true);
+                    break;
+                case "--localhost":
+                    hostOverride = LOCALHOST;
+                    break;
+                default:
+                    log.debug("Unknown option [{}]", arg);
+                    break;
+            }
+        }
         ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
         java.awt.EventQueue.invokeLater(() -> {
             MAIN.setVisible(true);
         });
+        final String runHost = hostOverride;
+        Thread thread = new Thread(() -> {
+            startup(runHost);
+        });
+        thread.start();
+    }
+
+    private static void startup(final String hostOverride) {
         logToScreen("Attempting to determine primary IP");
         try {
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
@@ -94,21 +121,6 @@ public class Main extends javax.swing.JFrame {
         }
         logToScreen("IP found to be " + ip);
         System.setProperty("java.rmi.server.hostname", ip);
-        String hostOverride = null;
-
-        for (String arg : args) {
-            switch (arg.toLowerCase()) {
-                case "--alpha":
-                    Settings.setAlpha(true);
-                    break;
-                case "--localhost":
-                    hostOverride = LOCALHOST;
-                    break;
-                default:
-                    log.debug("Unknown option [{}]", arg);
-                    break;
-            }
-        }
 
         String lookAndFeel = SETTINGS.getProperty(LOOKANDFEEL, "Nimbus");
         logToScreen("Settings look and feel to " + lookAndFeel);
@@ -199,14 +211,41 @@ public class Main extends javax.swing.JFrame {
             IMaster stub = (IMaster) UnicastRemoteObject.exportObject(master, port);
             registry.bind("dnd", stub);
             logToScreen("Done.");
-            logToScreen("Loading characters, weapons, spells and armor.");
+            MAIN.pbSub.setVisible(true);
+            MAIN.pbSub.setStringPainted(true);
+            logToScreen("Loading armor.");
+            Armors armors = Armors.getInstance();
+            armors.registerProgressKeeper(MAIN);
+            armors.initialize();
+            armors.unregisterProgressKeeper(MAIN);
+            logToScreen("Loading spells.");
+            Spells spells = Spells.getInstance();
+            spells.registerProgressKeeper(MAIN);
+            spells.initialize();
+            spells.unregisterProgressKeeper(MAIN);
+            logToScreen("Loading weapons.");
+            Weapons weapons = Weapons.getInstance();
+            weapons.registerProgressKeeper(MAIN);
+            weapons.initialize();
+            weapons.unregisterProgressKeeper(MAIN);
+            logToScreen("Loading characters.");
+            Characters characters = Characters.getInstance();
+            characters.registerProgressKeeper(MAIN);
+            characters.initialize();
+            characters.unregisterProgressKeeper(MAIN);
+            logToScreen("Starting interface.");
             master.getFrame().setIconImage(MAIN.getIconImage());
             startFrame(master.getFrame());
-        } catch (RemoteException | AlreadyBoundException ex) {
-            log.error("Master can't be started [" + ex + "]");
+        } catch (RemoteException | AlreadyBoundException e) {
+            log.error("Master can't be started [" + e + "]", e);
             JOptionPane.showMessageDialog(MAIN, "Unable to start.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         }
+    }
+
+    @Override
+    public void notifyProgress(int progress) {
+        pbSub.setValue(progress);
     }
 
     private static void connectSlave(String host) throws RemoteException, NotBoundException {
@@ -270,7 +309,8 @@ public class Main extends javax.swing.JFrame {
 
         spDisplayLog = new javax.swing.JScrollPane();
         taDisplayLog = new javax.swing.JTextArea();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        pbMain = new javax.swing.JProgressBar();
+        pbSub = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Starting program");
@@ -287,21 +327,26 @@ public class Main extends javax.swing.JFrame {
         taDisplayLog.setRows(5);
         spDisplayLog.setViewportView(taDisplayLog);
 
-        jProgressBar1.setIndeterminate(true);
+        pbMain.setIndeterminate(true);
+
+        pbSub.setVisible(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-            .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+            .addComponent(pbMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pbSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pbMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pbSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -323,7 +368,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar pbMain;
+    private javax.swing.JProgressBar pbSub;
     private javax.swing.JScrollPane spDisplayLog;
     private javax.swing.JTextArea taDisplayLog;
     // End of variables declaration//GEN-END:variables

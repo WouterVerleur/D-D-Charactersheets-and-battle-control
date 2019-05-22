@@ -65,12 +65,22 @@ public class Characters extends AbstractObjectStorer<ICharacter> {
     }
 
     public List<ICharacter> getCharacters(Class<? extends ICharacter> clazz) {
-        if (!CLASS_CHARACTER_MAP.containsKey(clazz)) {
-            log.debug("Loading list of characters of class [{}]", clazz.getSimpleName());
-            CLASS_CHARACTER_MAP.put(clazz, loadFromFiles(clazz));
+        if (!isInitialized()) {
+            initialize();
         }
         log.debug("Returning list of characters of class [{}]", clazz.getSimpleName());
         return CLASS_CHARACTER_MAP.get(clazz);
+    }
+
+    @Override
+    protected void initializeHook() {
+        Class<? extends ICharacter>[] classes = ClassComboBox.getAllClasses();
+        for (int i = 0; i < classes.length; i++) {
+            Class<? extends ICharacter> clazz = classes[i];
+            log.debug("Loading list of characters of class [{}]", clazz.getSimpleName());
+            CLASS_CHARACTER_MAP.put(clazz, loadFromFiles(clazz, false));
+            setProgress(Math.floorDiv((i + 1) * 100, classes.length));
+        }
     }
 
     @Override

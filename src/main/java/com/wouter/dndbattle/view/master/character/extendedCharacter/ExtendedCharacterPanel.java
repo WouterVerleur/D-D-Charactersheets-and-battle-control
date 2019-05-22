@@ -949,7 +949,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
     }//GEN-LAST:event_tfHairFocusLost
 
     private void bExperiencePointsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExperiencePointsActionPerformed
-        String input = (String) JOptionPane.showInputDialog(this, "mess", "Title", JOptionPane.QUESTION_MESSAGE, null, null, 1);
+        String input = (String) JOptionPane.showInputDialog(this, "How much experience would you like to add?", "Add experience", JOptionPane.QUESTION_MESSAGE, null, null, 1);
         if (input != null) {
             try {
                 character.setExperiencePoints(character.getExperiencePoints() + Integer.parseInt(input));

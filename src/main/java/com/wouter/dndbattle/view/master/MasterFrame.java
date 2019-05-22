@@ -13,6 +13,7 @@ import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
 import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -158,6 +159,8 @@ public class MasterFrame extends javax.swing.JFrame {
         });
 
         pView.setLayout(new java.awt.CardLayout());
+
+        pMain.setName(""); // NOI18N
 
         bAddCombatant.setText("Add combatant");
         bAddCombatant.addActionListener(new java.awt.event.ActionListener() {
@@ -473,28 +476,34 @@ public class MasterFrame extends javax.swing.JFrame {
 
     private void bAddCombatantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddCombatantActionPerformed
         CombatantSelectionPanel selectionPanel = new CombatantSelectionPanel();
-        switch (JOptionPane.showConfirmDialog(this, selectionPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
-            case JOptionPane.OK_OPTION:
-                AbstractCharacter selection = selectionPanel.getSelection();
-                boolean keepAsking = true;
-                AddCombatantPanel addCombatantFrame = new AddCombatantPanel(selection);
-                do {
-                    switch (JOptionPane.showConfirmDialog(this, addCombatantFrame, "Add character", JOptionPane.OK_CANCEL_OPTION)) {
-                        case JOptionPane.OK_OPTION:
-                            Combatant combatant = addCombatantFrame.getCombatant();
-                            if (combatant == null) {
-                                continue;
-                            }
-                            master.addCombatant(combatant);
-                            break;
-                        default:
-                            break;
-                    }
-                    keepAsking = false;
-                } while (keepAsking);
-                break;
-            default:
-                break;
+        boolean addAnother = true;
+        while (addAnother) {
+            switch (JOptionPane.showConfirmDialog(this, selectionPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
+                case JOptionPane.OK_OPTION:
+                    AbstractCharacter selection = selectionPanel.getSelection();
+                    boolean keepAsking = true;
+                    AddCombatantPanel addCombatantFrame = new AddCombatantPanel(selection);
+                    do {
+                        switch (JOptionPane.showConfirmDialog(this, addCombatantFrame, "Add character", JOptionPane.OK_CANCEL_OPTION)) {
+                            case JOptionPane.OK_OPTION:
+                                Combatant combatant = addCombatantFrame.getCombatant();
+                                if (combatant == null) {
+                                    continue;
+                                }
+                                master.addCombatant(combatant);
+                                addAnother = addCombatantFrame.isAddAnother();
+                                break;
+                            default:
+                                addAnother = false;
+                                break;
+                        }
+                        keepAsking = false;
+                    } while (keepAsking);
+                    break;
+                default:
+                    addAnother = false;
+                    break;
+            }
         }
     }//GEN-LAST:event_bAddCombatantActionPerformed
 
@@ -736,6 +745,16 @@ public class MasterFrame extends javax.swing.JFrame {
             final String previous = (i == 0 ? classes[classes.length - 1] : classes[i - 1]).getSimpleName();
             final String next = (i == classes.length - 1 ? classes[0] : classes[i + 1]).getSimpleName();
             mCharacters.add(new ClassMenuItem(clazz, previous, next));
+        }
+    }
+
+    public void setBattleTab(String name) {
+        for (int i = 0; i < tpBattle.getComponents().length; i++) {
+            Component component = tpBattle.getComponents()[i];
+            if (component.getName() != null && component.getName().equalsIgnoreCase(name)) {
+                tpBattle.setSelectedIndex(i);
+                break;
+            }
         }
     }
 

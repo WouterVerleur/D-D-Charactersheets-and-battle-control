@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
+import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,9 +28,6 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 /**
  *
@@ -191,15 +190,6 @@ public class Combatant implements ICombatant {
             return String.format(HEALTH_ZERO, getDeathRolls());
         }
         return String.format(HEALTH_FORMAT, health, getHealthPercent());
-    }
-
-    @Override
-    public int compareTo(ICombatant t) {
-        int returnValue = t.getInitiative() - initiative;
-        if (returnValue == 0) {
-            returnValue = t.getCharacter().getAbilityModifier(DEX) - character.getAbilityModifier(DEX);
-        }
-        return returnValue;
     }
 
     @Override

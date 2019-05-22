@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.objects.enums.AbilityType;
 import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.objects.impl.Combatant;
 import com.wouter.dndbattle.utils.Characters;
@@ -34,12 +35,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
 
     private static final Settings SETTINGS = Settings.getInstance();
     private static final String SPELL_SLOT_BUTTON_FORMAT = "Level %s (%d/%d used)";
+    private static final String TITLE_FORMAT = "Initiative %d (DEX: %d)";
 
     private final Combatant combatant;
     private final ICharacter character;
     private final Master master;
 
-    MasterCombatantPanel(Master master, Combatant combatant) {
+    public MasterCombatantPanel(Master master, Combatant combatant) {
         this.master = master;
         this.combatant = combatant;
         this.character = getCombatantCharacter(combatant);
@@ -66,8 +68,10 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         lName = new javax.swing.JLabel();
+        bInfo = new javax.swing.JButton();
         lDescription = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jProgressBar2 = new javax.swing.JProgressBar();
@@ -82,10 +86,17 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         bPolyMorph = new javax.swing.JButton();
         pUseSpellSlots = new javax.swing.JPanel();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), String.format(TITLE_FORMAT, combatant.getInitiative(), combatant.getCharacter().getAbilityScore(AbilityType.DEX)), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
 
         lName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lName.setText(combatant.getFriendlyName());
+
+        bInfo.setText("Information");
+        bInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bInfoActionPerformed(evt);
+            }
+        });
 
         lDescription.setText(combatant.getFriendlyDescription());
 
@@ -173,58 +184,61 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pUseSpellSlots, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bInfo))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bDeathRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(bDamage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bLifeRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bHealth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(bHealth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bLifeRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lTotalDamageRecieved, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(bTransform, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bPolyMorph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(4, 4, 4)
+                                .addComponent(bPolyMorph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(2, 2, 2))
+                            .addComponent(lTotalDamageRecieved, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bLeaveTransformation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bTempHitpoints, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(bTempHitpoints, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lName)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bInfo)
+                    .addComponent(lName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lDescription)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bDamage)
-                        .addComponent(bHealth)
-                        .addComponent(lTotalDamageRecieved))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bDamage)
+                    .addComponent(bHealth)
+                    .addComponent(lTotalDamageRecieved)
                     .addComponent(bTempHitpoints))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bDeathRoll)
-                    .addComponent(bLeaveTransformation)
                     .addComponent(bLifeRoll)
                     .addComponent(bTransform)
-                    .addComponent(bPolyMorph))
+                    .addComponent(bPolyMorph)
+                    .addComponent(bLeaveTransformation))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pUseSpellSlots, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -303,6 +317,10 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_bPolyMorphActionPerformed
 
+    private void bInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInfoActionPerformed
+        master.getFrame().setBattleTab(combatant.getCharacter().getName());
+    }//GEN-LAST:event_bInfoActionPerformed
+
     private int requestNumber(String description) {
         int value = 0;
         String input = JOptionPane.showInputDialog(this, "Please enter the amount of " + description + " should be given to " + combatant, "Please enter a number.", JOptionPane.QUESTION_MESSAGE);
@@ -321,6 +339,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     private javax.swing.JButton bDamage;
     private javax.swing.JButton bDeathRoll;
     private javax.swing.JButton bHealth;
+    private javax.swing.JButton bInfo;
     private javax.swing.JButton bLeaveTransformation;
     private javax.swing.JButton bLifeRoll;
     private javax.swing.JButton bPolyMorph;

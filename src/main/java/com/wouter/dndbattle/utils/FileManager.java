@@ -60,7 +60,11 @@ public class FileManager {
     }
 
     public static File getPresetFolder() {
-        return new File(Settings.getInstance().getProperty(PRESETFOLDER, new File(fileStorage, "presets").getPath()));
+        File folder = Settings.getInstance().getProperty(PRESETFOLDER, getFolder("presets"));
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return folder;
     }
 
     private FileManager() {

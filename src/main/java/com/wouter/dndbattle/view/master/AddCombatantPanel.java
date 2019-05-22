@@ -67,6 +67,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
         cbArmor = new javax.swing.JComboBox<>();
         lArmorClass = new javax.swing.JLabel();
         lSpacer = new javax.swing.JLabel();
+        cbAddAnother = new javax.swing.JCheckBox();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -144,6 +145,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     gridBagConstraints.gridx = 3;
     gridBagConstraints.gridy = 2;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
     add(bRoll, gridBagConstraints);
 
@@ -153,6 +155,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 1;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 0.25;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
     add(sHealth, gridBagConstraints);
@@ -164,6 +167,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     gridBagConstraints.gridy = 3;
     gridBagConstraints.gridwidth = 3;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
     add(cbFriendly, gridBagConstraints);
 
@@ -172,8 +176,8 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
     add(lArmor, gridBagConstraints);
 
     cbArmor.setModel(getArmorCbModel());
@@ -187,9 +191,9 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     gridBagConstraints.gridx = 1;
     gridBagConstraints.gridy = 4;
     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 0.5;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
     add(cbArmor, gridBagConstraints);
 
     lArmorClass.setText(character.getArmorClassString());
@@ -200,15 +204,27 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 0.5;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
     add(lArmorClass, gridBagConstraints);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 2;
     gridBagConstraints.gridy = 5;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
     gridBagConstraints.weighty = 1.0;
     add(lSpacer, gridBagConstraints);
+
+    cbAddAnother.setText("Add another");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 5;
+    gridBagConstraints.gridwidth = 4;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.weighty = 1.0;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+    add(cbAddAnother, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbHealthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHealthActionPerformed
@@ -232,6 +248,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bRoll;
+    private javax.swing.JCheckBox cbAddAnother;
     private javax.swing.JComboBox<IArmor> cbArmor;
     private javax.swing.JCheckBox cbFriendly;
     private javax.swing.JCheckBox cbHealth;
@@ -282,5 +299,9 @@ public class AddCombatantPanel extends javax.swing.JPanel {
         }
         combatant.setFriendly(cbFriendly.isSelected());
         return combatant;
+    }
+
+    public boolean isAddAnother() {
+        return cbAddAnother.isSelected();
     }
 }

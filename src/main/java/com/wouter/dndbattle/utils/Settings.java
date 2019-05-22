@@ -97,6 +97,10 @@ public class Settings extends Properties {
         }
     }
 
+    public File getProperty(String key, File defaultValue) {
+        return new File(super.getProperty(key, defaultValue.getPath()));
+    }
+
     @Override
     public synchronized Object setProperty(String key, String value) {
         Object oldValue = super.setProperty(key, value);

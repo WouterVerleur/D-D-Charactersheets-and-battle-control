@@ -35,6 +35,8 @@ import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.master.character.CharacterPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -42,6 +44,7 @@ import com.wouter.dndbattle.view.master.character.CharacterPanel;
  */
 public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
+    private static final Logger log = LoggerFactory.getLogger(AbilityAndSkillPanel.class);
     private static final Characters CHARACTERS = Characters.getInstance();
 
     private final AbstractCharacter character;
@@ -721,6 +724,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
 
     private void updatePanels(JPanel panel) {
         for (Component component : panel.getComponents()) {
+            log.debug("Attempting update of [{}]", component);
             if (component instanceof IUpdateablePanel) {
                 ((IUpdateablePanel) component).update();
             }

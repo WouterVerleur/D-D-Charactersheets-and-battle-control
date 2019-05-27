@@ -18,7 +18,8 @@
         <prudent>true</prudent>
     </appender>
 
-    <logger name="com.wouter.dndbattle" level="DEBUG"/>
+    <!--logger name="com.wouter.dndbattle.view" level="DEBUG"/-->
+    <logger name="com.wouter.dndbattle" level="WARN"/>
 
     <root level="ERROR">
         <appender-ref ref="STDOUT" />

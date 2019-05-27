@@ -162,10 +162,10 @@ public class GlobalUtils {
 
     public static String getWeaponDamage(IWeapon weapon, String modifierString) {
         if (weapon.getAttackDice() == Dice.NONE) {
-            log.debug("Formatting [{}] with [{}], [{}]", DAMAGE_FORMAT_SHORT, modifierString.trim(), weapon.getDamageType());
+            log.trace("Formatting [{}] with [{}], [{}]", DAMAGE_FORMAT_SHORT, modifierString.trim(), weapon.getDamageType());
             return String.format(DAMAGE_FORMAT_SHORT, modifierString.trim(), weapon.getDamageType()).trim();
         }
-        log.debug("Formatting [{}] with [{}], [{}], [{}], [{}]", DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType());
+        log.trace("Formatting [{}] with [{}], [{}], [{}], [{}]", DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType());
         return String.format(DAMAGE_FORMAT, weapon.getAmountOfAttackDice(), weapon.getAttackDice(), modifierString.trim(), weapon.getDamageType()).trim();
     }
 

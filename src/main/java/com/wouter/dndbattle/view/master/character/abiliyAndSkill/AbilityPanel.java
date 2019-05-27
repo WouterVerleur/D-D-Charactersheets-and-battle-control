@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Wouter
  */
-class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel {
+public class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel {
 
     private static final Logger log = LoggerFactory.getLogger(AbilityPanel.class);
 
@@ -43,16 +43,12 @@ class AbilityPanel extends javax.swing.JPanel implements IUpdateablePanel {
         this.abilityType = abilityType;
         this.abilityAndSkillPanel = abilityAndSkillPanel;
         initComponents();
-        updateLabel();
+        update();
     }
 
     @Override
-    public void update() {
-        updateLabel();
-        sScore.setValue(character.getAbilityScore(abilityType));
-    }
-
-    private void updateLabel() {
+    public final void update() {
+        log.debug("Recieved an update for [{}]", abilityType);
         int modifier = character.getAbilityModifier(abilityType);
         lModifier.setText(modifier > 0 ? "+" + modifier : Integer.toString(modifier));
     }

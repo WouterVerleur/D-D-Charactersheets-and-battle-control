@@ -20,6 +20,7 @@ import static com.wouter.dndbattle.utils.Settings.EXPORT_FILESELECTION;
 import static com.wouter.dndbattle.utils.Settings.EXPORT_WEAPONSELECTION;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -71,9 +72,6 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
     }
 
     public void updateAll() {
-        if (presetPanel != null) {
-            presetPanel.updateList();
-        }
         update();
     }
 
@@ -87,9 +85,16 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
 
     @Override
     public void update() {
-        for (Component component : tpCharacterPages.getComponents()) {
+        recursiveUpdate(tpCharacterPages);
+    }
+
+    private void recursiveUpdate(Container parent) {
+        for (Component component : parent.getComponents()) {
+            log.debug("Attempting update of [{}]", component);
             if (component instanceof IUpdateablePanel) {
                 ((IUpdateablePanel) component).update();
+            } else if (component instanceof Container) {
+                recursiveUpdate((Container) component);
             }
         }
     }

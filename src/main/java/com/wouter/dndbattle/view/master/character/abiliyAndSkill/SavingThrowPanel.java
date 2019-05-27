@@ -16,6 +16,8 @@
  */
 package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
 
+import static com.wouter.dndbattle.objects.enums.Dice.D20;
+
 import java.awt.event.ItemEvent;
 
 import com.wouter.dndbattle.objects.enums.AbilityType;
@@ -24,14 +26,16 @@ import com.wouter.dndbattle.utils.Characters;
 import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.view.DicePopup;
 import com.wouter.dndbattle.view.IUpdateablePanel;
-
-import static com.wouter.dndbattle.objects.enums.Dice.D20;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Wouter
  */
 class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
+
+    private static final Logger log = LoggerFactory.getLogger(SavingThrowPanel.class);
 
     private final AbilityAndSkillPanel abilityAndSkillPanel;
 
@@ -43,15 +47,12 @@ class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
         this.abilityType = abilityType;
         this.abilityAndSkillPanel = abilityAndSkillPanel;
         initComponents();
-        updateLabel();
+        update();
     }
 
     @Override
-    public void update() {
-        updateLabel();
-    }
-
-    private void updateLabel() {
+    public final void update() {
+        log.debug("Recieved an update for [{}]", abilityType);
         lModifier.setText(GlobalUtils.modifierToString(character.getSavingThrowModifier(abilityType)));
     }
 

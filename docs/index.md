@@ -3,27 +3,39 @@ A simple program designed for a D&amp;D group to create Character sheets and use
 
 You can download a jar of the latest version [here]({{ site.url }}/downloads/dndbattle-2.4.jar).  
 Requires Java.
+[![Known Vulnerabilities](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=pom.xml)
 
 ## Current features
-* D&D style character sheets
+* D&D 5e style character sheets
   * With automatic calculations
 * Database like storage
-  * Weapons, spells & armor are stored in a shared pool
+  * Weapons, spells & armor are stored in a shared pool and can be attached to characters
 * Battle assistant
   * Tells you the amount of health everybody has
 * Network connection
   * Allow the players to watch a part of your information on their own screen
+  * They can only see the order, the health of frendly characters and character sheets of their own characters
 * Compatible with most shared storage providers (Dropbox, one drive, etc.)
+  * All information is stored in a set of folders
   * Just change the storage location in the settings
 * Dice rolling
   * Both as a seperate view and from the character pages
 * Quick lookup of information
-  * Opens a relevant page on roll20.net in your browser
+  * Opens a relevant page in your browser
+  * The website can be set to one of the following:
+    * dndbeyond.com
+	* dnd5e.fandom.com
+	* roll20.net
 * Encounter calculator
-  * You can use the creted characters in a build in encounter calculator
+  * You can use the created characters in the build-in encounter calculator
+* Exporting to a PDF & HTML
+  * For the player that don't want to use a laptop.
+  * Custom build templates for this software
 
 ## Planned features
-* Exporting to a PDF
+* Additional export templates
+* Batle log
+* Equipment Management
 * Other options for information lookup
 
 ## All versions:

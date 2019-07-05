@@ -43,8 +43,8 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
 
     private static final Weapons weapons = Weapons.getInstance();
 
-    private List<Weapon> simpleWeapons;
-    private List<Weapon> martialWeapons;
+    private List<IWeapon> simpleWeapons;
+    private List<IWeapon> martialWeapons;
 
     public WeaponsPanel() {
         initComponents();
@@ -60,21 +60,19 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
         tSimpleModel.setRowCount(0);
         tMartialModel.setRowCount(0);
         for (IWeapon weapon : weapons.getAll()) {
-            if (weapon instanceof Weapon) {
-                Object[] row = new Object[]{weapon.getName(), GlobalUtils.getWeaponDamage(weapon, weapon.getAttackDice() == Dice.NONE ? Integer.toString(weapon.getAmountOfAttackDice()) : ""), weapon.getNotes()};
-                switch (weapon.getType()) {
-                    case MARTIAL:
-                        tMartialModel.addRow(row);
-                        martialWeapons.add((Weapon) weapon);
-                        break;
-                    case SIMPLE:
-                        tSimpleModel.addRow(row);
-                        simpleWeapons.add((Weapon) weapon);
-                        break;
-                    default:
-                        log.error("The type of the weapon [{}] was set to [{}], but the code does not allow that setting.", weapon, weapon.getType());
-                        break;
-                }
+            Object[] row = new Object[]{weapon.getName(), GlobalUtils.getWeaponDamage(weapon, weapon.getAttackDice() == Dice.NONE ? Integer.toString(weapon.getAmountOfAttackDice()) : ""), weapon.getWeight(), weapon.getValue(), weapon.getNotes()};
+            switch (weapon.getType()) {
+                case MARTIAL:
+                    tMartialModel.addRow(row);
+                    martialWeapons.add(weapon);
+                    break;
+                case SIMPLE:
+                    tSimpleModel.addRow(row);
+                    simpleWeapons.add(weapon);
+                    break;
+                default:
+                    log.error("The type of the weapon [{}] was set to [{}], but the code does not allow that setting.", weapon, weapon.getType());
+                    break;
             }
         }
     }
@@ -91,12 +89,13 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
 
     }
 
-    private Weapon getSelectedObject(List<Weapon> list, JTable table) {
+    private Weapon getSelectedObject(List<IWeapon> list, JTable table) {
         int selection = table.getSelectedRow();
         if (selection < 0 || selection >= list.size()) {
             return null;
         }
-        return list.get(table.getSelectedRow());
+        IWeapon weapon = list.get(table.getSelectedRow());
+        return (weapon instanceof Weapon) ? (Weapon) weapon : null;
     }
 
     /**
@@ -180,14 +179,14 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
 
             },
             new String [] {
-                "Name", "Damage", "Notes"
+                "Name", "Damage", "Weight", "Value", "Notes"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -269,14 +268,14 @@ public class WeaponsPanel extends javax.swing.JPanel implements IUpdateablePanel
 
             },
             new String [] {
-                "Name", "Damage", "Notes"
+                "Name", "Damage", "Weight", "Value", "Notes"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

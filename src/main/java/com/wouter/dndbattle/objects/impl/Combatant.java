@@ -16,7 +16,6 @@
  */
 package com.wouter.dndbattle.objects.impl;
 
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +27,8 @@ import com.wouter.dndbattle.objects.enums.SpellLevel;
 import com.wouter.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *
@@ -184,7 +185,7 @@ public class Combatant implements ICombatant {
             return DEAD;
         }
         if (health == 0) {
-            if (Settings.getInstance().getProperty(ROLLFORDEATH, false)) {
+            if (Settings.getInstance().getProperty(ROLL_FOR_DEATH, false)) {
                 return String.format(HEALTH_ZERO_WITH_LIFE, getLifeRolls(), getDeathRolls());
             }
             return String.format(HEALTH_ZERO, getDeathRolls());

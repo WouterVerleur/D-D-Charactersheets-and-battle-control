@@ -42,6 +42,10 @@ public enum Size {
         this.hitDice = hitDice;
     }
 
+    public Dice getHitDice() {
+        return hitDice;
+    }
+
     public String getSize() {
         return size;
     }

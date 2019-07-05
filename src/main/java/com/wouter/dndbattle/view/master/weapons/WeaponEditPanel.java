@@ -61,6 +61,7 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         cbCanUseMagicStats = new javax.swing.JCheckBox();
         cbProficient = new javax.swing.JCheckBox();
         lWeight = new javax.swing.JLabel();
+        sWeight = new javax.swing.JSpinner();
         cbWeight = new com.wouter.dndbattle.view.comboboxes.WeaponWeightComboBox();
         lAttackModifier = new javax.swing.JLabel();
         sAttackModifier = new javax.swing.JSpinner();
@@ -68,6 +69,8 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         sDamageModifier = new javax.swing.JSpinner();
         lNotes = new javax.swing.JLabel();
         tfNotes = new javax.swing.JTextField();
+        lValue = new javax.swing.JLabel();
+        tfValue = new javax.swing.JTextField();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -250,11 +253,20 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(lWeight, gridBagConstraints);
 
-        cbWeight.setSelectedItem(weapon.getWeight());
+        sWeight.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        sWeight.setValue(weapon.getWeight());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(sWeight, gridBagConstraints);
+
+        cbWeight.setSelectedItem(weapon.getWeightClass());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -322,6 +334,23 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(tfNotes, gridBagConstraints);
+
+        lValue.setText("Value");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lValue, gridBagConstraints);
+
+        tfValue.setText(weapon.getValue());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        add(tfValue, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbRangeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbRangeItemStateChanged
@@ -346,15 +375,18 @@ public class WeaponEditPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lNotes;
     private javax.swing.JLabel lRange;
     private javax.swing.JLabel lSlash;
+    private javax.swing.JLabel lValue;
     private javax.swing.JLabel lWeight;
     private javax.swing.JSpinner sAttackModifier;
     private javax.swing.JSpinner sDamageModifier;
     private javax.swing.JSpinner sDiceAmount;
     private javax.swing.JSpinner sMaxRange;
     private javax.swing.JSpinner sRange;
+    private javax.swing.JSpinner sWeight;
     private javax.swing.JTextField tfDamage;
     private javax.swing.JTextField tfName;
     private javax.swing.JTextField tfNotes;
+    private javax.swing.JTextField tfValue;
     // End of variables declaration//GEN-END:variables
 
     public Weapon getWeapon() {
@@ -382,7 +414,8 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         returnWeapon.setMaxRange((int) sMaxRange.getValue());
         returnWeapon.setType(returnWeapon.getType());
         returnWeapon.setWeaponRange(cbRange.getSelectedItem());
-        returnWeapon.setWeight(cbWeight.getSelectedItem());
+        returnWeapon.setWeight((float) sWeight.getValue());
+        returnWeapon.setWeightClass(cbWeight.getSelectedItem());
         returnWeapon.setCanUseMagicStats(cbCanUseMagicStats.isSelected());
         returnWeapon.setLoading(cbLoading.isSelected());
         returnWeapon.setActualNotes(tfNotes.getText());
@@ -390,6 +423,7 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         returnWeapon.setFinesse(cbFinesse.isSelected());
         returnWeapon.setTwoHanded(cbTwoHanded.isSelected());
         returnWeapon.setProficient(cbProficient.isSelected());
+        returnWeapon.setValue(tfValue.getText());
         return returnWeapon;
     }
 }

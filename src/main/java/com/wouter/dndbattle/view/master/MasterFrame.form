@@ -86,6 +86,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miSpellsActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="miUtilities">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Utilities"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miUtilitiesActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miWeapons">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Weapons"/>
@@ -477,6 +485,13 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Encounter"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="com.wouter.dndbattle.view.master.utilities.UtilitiesPanel" name="utilitiesPanel">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="Utilities"/>
             </Constraint>
           </Constraints>
         </Component>

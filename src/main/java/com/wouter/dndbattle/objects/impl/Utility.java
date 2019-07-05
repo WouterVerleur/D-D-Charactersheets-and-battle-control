@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Wouter
+ * Copyright (C) 2019 wverl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.enums;
+package com.wouter.dndbattle.objects.impl;
+
+import com.wouter.dndbattle.objects.IUtility;
 
 /**
  *
- * @author Wouter
+ * @author wverl
  */
-public enum WeaponType {
+public class Utility extends AbstractInventoryItem implements IUtility {
 
-    SIMPLE("Simple"),
-    MARTIAL("Martial"),
-    PERSONAL("Personal");
+    private String description;
 
-    private String niceName;
+    public Utility() {
+    }
 
-    private WeaponType(String niceName) {
-        this.niceName = niceName;
+    public Utility(IUtility utility) {
+        super(utility);
+        description = utility.getDescription();
     }
 
     @Override
-    public String toString() {
-        return niceName;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

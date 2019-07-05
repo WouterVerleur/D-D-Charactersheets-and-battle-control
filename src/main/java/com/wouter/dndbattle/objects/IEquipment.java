@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Wouter
+ * Copyright (C) 2019 wverl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.enums;
+package com.wouter.dndbattle.objects;
 
 /**
  *
- * @author Wouter
+ * @author wverl
  */
-public enum WeaponType {
+public interface IEquipment extends ISaveableClass {
 
-    SIMPLE("Simple"),
-    MARTIAL("Martial"),
-    PERSONAL("Personal");
+    IInventoryItem getInventoryItem();
 
-    private String niceName;
+    int getAmount();
 
-    private WeaponType(String niceName) {
-        this.niceName = niceName;
-    }
-
-    @Override
-    public String toString() {
-        return niceName;
-    }
-
+    float getTotalWeight();
 }

@@ -36,7 +36,8 @@ public class Settings extends Properties {
     public static final String MASTER_SIZE_WIDTH = "gui.master.size.width";
     public static final String MASTER_TITLE = "gui.master.title";
     public static final String PRESETFOLDER = "storage.presets.home";
-    public static final String ROLLFORDEATH = "gameplay.rollfordeath";
+    public static final String ROLL_FOR_DEATH = "gameplay.rollfordeath";
+    public static final String CARRYING_CAPACITY_MULTIPLIER = "gameplay.carryingcapacity.multiplier";
     public static final String SLAVE_LOCATION_X = "gui.slave.location.x";
     public static final String SLAVE_LOCATION_Y = "gui.slave.location.y";
     public static final String SLAVE_SIZE_HEIGHT = "gui.slave.size.height";

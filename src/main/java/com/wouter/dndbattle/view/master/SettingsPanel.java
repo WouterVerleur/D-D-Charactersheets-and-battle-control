@@ -17,12 +17,13 @@
 package com.wouter.dndbattle.view.master;
 
 import static com.wouter.dndbattle.utils.AbstractFileWriterThread.DEFAULT_TIMEOUT;
+import static com.wouter.dndbattle.utils.Settings.CARRYING_CAPACITY_MULTIPLIER;
 import static com.wouter.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
 import static com.wouter.dndbattle.utils.Settings.INPUT_FILESELECTION;
 import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
 import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
 import static com.wouter.dndbattle.utils.Settings.PRESETFOLDER;
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
 import static com.wouter.dndbattle.utils.Settings.WEBSITE;
 
@@ -96,6 +97,8 @@ public class SettingsPanel extends javax.swing.JPanel {
         bPresetFolder = new javax.swing.JButton();
         lWebsite = new javax.swing.JLabel();
         cbWebsite = new com.wouter.dndbattle.view.comboboxes.WebsiteComboBox();
+        lCarryingCapacity = new javax.swing.JLabel();
+        sCarryingCapacityMultiplier = new javax.swing.JSpinner();
         bReset = new javax.swing.JButton();
         lSaveTimeout = new javax.swing.JLabel();
         sSaveTimeout = new javax.swing.JSpinner();
@@ -162,7 +165,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
@@ -172,7 +175,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         lIp.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -217,8 +220,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         add(lRollForDeath, gridBagConstraints);
 
         bgRollForDeath.add(rbRollForDeath);
-        rbRollForDeath.setSelected(SETTINGS.getProperty(ROLLFORDEATH, true)
-        );
+        rbRollForDeath.setSelected(SETTINGS.getProperty(ROLL_FOR_DEATH, true));
         rbRollForDeath.setText("Roll for life and death");
         rbRollForDeath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,8 +237,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         add(rbRollForDeath, gridBagConstraints);
 
         bgRollForDeath.add(rbAutomaticDeath);
-        rbAutomaticDeath.setSelected(!SETTINGS.getProperty(ROLLFORDEATH, true)
-        );
+        rbAutomaticDeath.setSelected(!SETTINGS.getProperty(ROLL_FOR_DEATH, true));
         rbAutomaticDeath.setText("Automatic death");
         rbAutomaticDeath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,7 +291,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(lWebsite, gridBagConstraints);
 
@@ -308,6 +309,29 @@ public class SettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(cbWebsite, gridBagConstraints);
 
+        lCarryingCapacity.setText("Carrying Capacity Multiplier");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lCarryingCapacity, gridBagConstraints);
+
+        sCarryingCapacityMultiplier.setModel(new javax.swing.SpinnerNumberModel(1, 1, 50, 1));
+        sCarryingCapacityMultiplier.setValue(SETTINGS.getProperty(CARRYING_CAPACITY_MULTIPLIER, 15));
+        sCarryingCapacityMultiplier.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sCarryingCapacityMultiplierStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        add(sCarryingCapacityMultiplier, gridBagConstraints);
+
         bReset.setText("Reset");
         bReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,7 +340,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
@@ -361,10 +385,11 @@ public class SettingsPanel extends javax.swing.JPanel {
         SETTINGS.setProperty(MASTER_TITLE, tfMasterTitle.getText());
         SETTINGS.setProperty(SLAVE_TITLE, tfSlaveTitle.getText());
         Object oldLookAndFeel = SETTINGS.setProperty(LOOKANDFEEL, (String) cbLookAndFeel.getSelectedItem());
-        SETTINGS.setProperty(ROLLFORDEATH, rbRollForDeath.isSelected());
+        SETTINGS.setProperty(ROLL_FOR_DEATH, rbRollForDeath.isSelected());
         Object oldPresetFolder = SETTINGS.setProperty(PRESETFOLDER, tfPresetFolder.getText());
         SETTINGS.setProperty(FILE_WRITER_SAVE_TIMEOUT, (int) sSaveTimeout.getValue());
         SETTINGS.setProperty(WEBSITE, (String) cbWebsite.getSelectedItem().name());
+        SETTINGS.setProperty(CARRYING_CAPACITY_MULTIPLIER, (int) sCarryingCapacityMultiplier.getValue());
         if (checkValues(oldLookAndFeel, cbLookAndFeel.getSelectedItem()) || checkValues(oldPresetFolder, tfPresetFolder.getText())) {
             JOptionPane.showMessageDialog(this, "Some settings require a restart to take effect.", "Settings saved.", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -417,6 +442,10 @@ public class SettingsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbWebsiteItemStateChanged
 
+    private void sCarryingCapacityMultiplierStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sCarryingCapacityMultiplierStateChanged
+        save();
+    }//GEN-LAST:event_sCarryingCapacityMultiplierStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bPresetFolder;
     private javax.swing.JButton bReset;
@@ -424,6 +453,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.ButtonGroup bgRollForDeath;
     private javax.swing.JComboBox cbLookAndFeel;
     private com.wouter.dndbattle.view.comboboxes.WebsiteComboBox cbWebsite;
+    private javax.swing.JLabel lCarryingCapacity;
     private javax.swing.JLabel lIp;
     private javax.swing.JLabel lLookAndFeel;
     private javax.swing.JLabel lMasterTitle;
@@ -434,6 +464,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lWebsite;
     private javax.swing.JRadioButton rbAutomaticDeath;
     private javax.swing.JRadioButton rbRollForDeath;
+    private javax.swing.JSpinner sCarryingCapacityMultiplier;
     private javax.swing.JSpinner sSaveTimeout;
     private javax.swing.JTextField tfMasterTitle;
     private javax.swing.JTextField tfPresetFolder;

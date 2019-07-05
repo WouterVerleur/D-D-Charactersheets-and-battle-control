@@ -31,9 +31,10 @@ import com.wouter.dndbattle.objects.enums.ArmorType;
  * @author wverl
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public class Armor implements IArmor {
+public class Armor extends AbstractInventoryItem implements IArmor {
 
-    private String name;
+    private static final String DESCRIPTION_FORMAT = "%s armor (Base AC %d)";
+
     private ArmorType armorType = ArmorType.LIGHT;
     private int baseArmorRating = 10;
     private List<AbilityType> additionalAbilityTypes = new ArrayList<>();
@@ -42,25 +43,16 @@ public class Armor implements IArmor {
     }
 
     public Armor(String name, ArmorType armorType, int baseArmorRating) {
-        this.name = name;
+        super(name);
         this.armorType = armorType;
         this.baseArmorRating = baseArmorRating;
     }
 
     public Armor(IArmor armor) {
-        this.name = armor.getName();
+        super(armor);
         this.armorType = armor.getArmorType();
         this.baseArmorRating = armor.getBaseArmorRating();
         this.additionalAbilityTypes = armor.getAdditionalAbilityTypes();
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
@@ -101,11 +93,6 @@ public class Armor implements IArmor {
     }
 
     @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
     public int getArmorClass(ICharacter character) {
         int dex = character.getAbilityModifier(AbilityType.DEX);
         int ac = baseArmorRating;
@@ -127,12 +114,17 @@ public class Armor implements IArmor {
     }
 
     @Override
+    public String getDescription() {
+        return String.format(DESCRIPTION_FORMAT, armorType, baseArmorRating);
+    }
+
+    @Override
     public int compareTo(ISaveableClass other) {
         if (other instanceof IArmor) {
             IArmor armor = (IArmor) other;
             if (armorType == armor.getArmorType()) {
                 if (baseArmorRating == armor.getBaseArmorRating()) {
-                    return name.compareToIgnoreCase(armor.getName());
+                    return getName().compareToIgnoreCase(armor.getName());
                 }
                 return baseArmorRating - armor.getBaseArmorRating();
             }

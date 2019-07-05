@@ -110,6 +110,10 @@ public class EncounterCombantantPanel extends javax.swing.JPanel {
         return (int) sAmount.getValue();
     }
 
+    public ICharacter getCharacter() {
+        return character;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lDescription;
     private javax.swing.JLabel lName;

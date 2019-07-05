@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Wouter
+ * Copyright (C) 2019 wverl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,34 @@
  */
 package com.wouter.dndbattle.objects;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.ArmorType;
 
 /**
  *
- * @author Wouter
+ * @author wverl
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface IArmor extends IInventoryItem {
+public interface IInventoryItem extends ISaveableClass {
 
-    ArmorType getArmorType();
+    String getName();
 
-    int getBaseArmorRating();
+    float getWeight();
 
-    List<AbilityType> getAdditionalAbilityTypes();
+    String getNotes();
 
-    public int getArmorClass(ICharacter aThis);
+    String getValue();
 
+    String getDescription();
+
+    @Override
+    public default int compareTo(ISaveableClass other) {
+        if (other instanceof IInventoryItem) {
+            int compare = getClass().getName().compareTo(other.getClass().getName());
+            if (compare == 0) {
+                compare = getName().compareTo(((IInventoryItem) other).getName());
+            }
+            return compare;
+        }
+        return ISaveableClass.super.compareTo(other);
+    }
 }

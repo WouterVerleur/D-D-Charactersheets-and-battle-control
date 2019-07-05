@@ -27,7 +27,6 @@ import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.ListModel;
 
 import com.wouter.dndbattle.objects.ICharacter;
@@ -43,9 +42,8 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
     private static final Characters CHARACTERS = Characters.getInstance();
     private static final String TOTAL_FORMAT = "%d / %d";
 
-    private final Map<ICharacter, EncounterCombantantPanel> friendlyCharacterPanelMap = new HashMap<>();
-    private final Map<ICharacter, EncounterCombantantPanel> enemyCharacterPanelMap = new HashMap<>();
-    private final List<EnemiesPanel> enemiesPanels = new ArrayList<>(1);
+    private final Map<ICharacter, EncounterCombantantPanel> characterPanelMap = new HashMap<>();
+    private final List<EnemiesPanel> enemyPanels = new ArrayList<>(1);
 
     private int easyTotal = 0;
     private int mediumTotal = 0;
@@ -73,14 +71,18 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
         for (Component component : pFriendlyCombatants.getComponents()) {
             if (component instanceof EncounterCombantantPanel) {
                 EncounterCombantantPanel ecp = (EncounterCombantantPanel) component;
-                int level = ecp.getLevel();
-                int amount = ecp.getAmount();
-                easyTotal += (getEasyExperience(level) * amount);
-                mediumTotal += (getMediumExperience(level) * amount);
-                hardTotal += (getHardExperience(level) * amount);
-                deathlyTotal += (getDeathlyExperience(level) * amount);
-                dailyTotal += (getDailyExperience(level) * amount);
-                partySize += amount;
+                if (ecp.getAmount() <= 0) {
+                    removeCharacter(ecp);
+                } else {
+                    int level = ecp.getLevel();
+                    int amount = ecp.getAmount();
+                    easyTotal += (getEasyExperience(level) * amount);
+                    mediumTotal += (getMediumExperience(level) * amount);
+                    hardTotal += (getHardExperience(level) * amount);
+                    deathlyTotal += (getDeathlyExperience(level) * amount);
+                    dailyTotal += (getDailyExperience(level) * amount);
+                    partySize += amount;
+                }
             }
         }
         lEasy.setText(Integer.toString(easyTotal));
@@ -94,7 +96,7 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
 
     public void updateEnemies() {
         long totalExp = 0;
-        for (EnemiesPanel enemiesPanel : enemiesPanels) {
+        for (EnemiesPanel enemiesPanel : enemyPanels) {
             final int enemyXp = enemiesPanel.getTotalXp();
             if (enemyXp < easyTotal) {
                 enemiesPanel.setResult("Very Easy (<" + easyTotal + ')');
@@ -357,30 +359,35 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
     }//GEN-LAST:event_cbFriendlyClassItemStateChanged
 
     private void bAddFriendlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddFriendlyActionPerformed
-        addCharacter(lFriendly, pFriendlyCombatants);
+        addCharacter(lFriendly);
     }//GEN-LAST:event_bAddFriendlyActionPerformed
 
     private void bAddBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddBattleActionPerformed
         int number = tpEnemies.getComponentCount();
         String name = "Battle " + (number + 1);
         EnemiesPanel panel = new EnemiesPanel(this);
-        enemiesPanels.add(panel);
+        enemyPanels.add(panel);
         tpEnemies.addTab(name, panel);
         tpEnemies.setSelectedIndex(number);
     }//GEN-LAST:event_bAddBattleActionPerformed
 
-    public void addCharacter(JList<ICharacter> list, JPanel panel) {
+    public void addCharacter(JList<ICharacter> list) {
         ICharacter selectedValue = list.getSelectedValue();
         if (selectedValue != null) {
-            if (friendlyCharacterPanelMap.containsKey(selectedValue)) {
-                friendlyCharacterPanelMap.get(selectedValue).addOne();
+            if (characterPanelMap.containsKey(selectedValue)) {
+                characterPanelMap.get(selectedValue).addOne();
             } else {
                 final EncounterCombantantPanel ecp = new EncounterCombantantPanel(this, selectedValue);
-                friendlyCharacterPanelMap.put(selectedValue, ecp);
-                panel.add(ecp);
+                characterPanelMap.put(selectedValue, ecp);
+                pFriendlyCombatants.add(ecp);
             }
             update();
         }
+    }
+
+    public void removeCharacter(EncounterCombantantPanel panel) {
+        characterPanelMap.remove(panel.getCharacter());
+        pFriendlyCombatants.remove(panel);
     }
 
     public int getPartySize() {

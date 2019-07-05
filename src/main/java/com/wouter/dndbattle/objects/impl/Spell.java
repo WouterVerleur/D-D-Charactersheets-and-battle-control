@@ -36,15 +36,15 @@ public class Spell implements ISpell {
 
     private final List<ICharacter> users = new ArrayList<>();
 
-    private String castingTime;
-    private String components;
-    private String description;
-    private String duration;
+    private String castingTime = "";
+    private String components = "";
+    private String description = "";
+    private String duration = "";
     private SpellLevel level = SpellLevel.CANTRIP;
     private String name;
-    private String notes;
-    private String range;
-    private String type;
+    private String notes = "";
+    private String range = "";
+    private String type = "";
 
     public Spell() {
     }

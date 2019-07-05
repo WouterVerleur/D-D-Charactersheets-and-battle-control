@@ -296,7 +296,9 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
 
         public SpellCheckBox(ISpell spell, boolean isSelected) {
             super(spell.getName(), isSelected);
-            setToolTipText(String.format(TOOL_TIP_FORMAT, spell.getDescription().replaceAll("\n", "</p><p>")));
+            if (spell.getDescription() != null) {
+                setToolTipText(String.format(TOOL_TIP_FORMAT, spell.getDescription().replaceAll("\n", "</p><p>")));
+            }
             log.trace("Creating checkbox for spell [{}]", spell);
             addActionListener((ActionEvent e) -> {
                 if (isSelected()) {

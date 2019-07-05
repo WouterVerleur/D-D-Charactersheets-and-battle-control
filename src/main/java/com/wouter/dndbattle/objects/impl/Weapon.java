@@ -32,7 +32,9 @@ import com.wouter.dndbattle.objects.enums.WeaponWeight;
  * @author Wouter
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public class Weapon implements IWeapon {
+public class Weapon extends AbstractInventoryItem implements IWeapon {
+
+    private static final String DESCRIPTION_FORMAT = "%s weapon";
 
     private int amountOfAttackDice = 1;
     private Dice attackDice;
@@ -44,12 +46,10 @@ public class Weapon implements IWeapon {
     private boolean loading;
     private int range;
     private int maxRange;
-    private String name;
-    private String actualNotes;
     private boolean twoHanded;
     private WeaponType type;
     private WeaponRange weaponRange = WeaponRange.MELEE;
-    private WeaponWeight weight = WeaponWeight.NORMAL;
+    private WeaponWeight weightClass = WeaponWeight.NORMAL;
     private boolean proficient = false;
 
     public Weapon() {
@@ -113,15 +113,6 @@ public class Weapon implements IWeapon {
         this.maxRange = maxRange;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @JsonIgnore
     @Override
     public String getNotes() {
@@ -141,9 +132,9 @@ public class Weapon implements IWeapon {
             checkBuilder(builder);
             builder.append("Magical");
         }
-        if (weight != WeaponWeight.NORMAL) {
+        if (weightClass != WeaponWeight.NORMAL) {
             checkBuilder(builder);
-            builder.append(weight);
+            builder.append(weightClass);
         }
         switch (weaponRange) {
             case REACH:
@@ -161,9 +152,9 @@ public class Weapon implements IWeapon {
             default:
                 break;
         }
-        if (actualNotes != null && !actualNotes.isEmpty()) {
+        if (getActualNotes() != null && !getActualNotes().isEmpty()) {
             checkBuilder(builder);
-            builder.append(actualNotes);
+            builder.append(getActualNotes());
         }
         return builder.toString();
     }
@@ -187,12 +178,12 @@ public class Weapon implements IWeapon {
     }
 
     @Override
-    public WeaponWeight getWeight() {
-        return weight;
+    public WeaponWeight getWeightClass() {
+        return weightClass;
     }
 
-    public void setWeight(WeaponWeight weight) {
-        this.weight = weight;
+    public void setWeightClass(WeaponWeight weightClass) {
+        this.weightClass = weightClass;
     }
 
     @Override
@@ -220,11 +211,11 @@ public class Weapon implements IWeapon {
     }
 
     public String getActualNotes() {
-        return actualNotes;
+        return super.getNotes();
     }
 
     public void setActualNotes(String actualNotes) {
-        this.actualNotes = actualNotes;
+        super.setNotes(actualNotes);
     }
 
     @Override
@@ -263,11 +254,17 @@ public class Weapon implements IWeapon {
         return type == WeaponType.PERSONAL && proficient;
     }
 
+    @JsonIgnore
+    @Override
+    public String getDescription() {
+        return String.format(DESCRIPTION_FORMAT, type);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Weapon) {
             Weapon other = (Weapon) obj;
-            return name.equalsIgnoreCase(other.name) && attackDice.equals(other.attackDice) && amountOfAttackDice == other.amountOfAttackDice;
+            return getName().equalsIgnoreCase(other.getName()) && attackDice.equals(other.attackDice) && amountOfAttackDice == other.amountOfAttackDice;
         }
         return false;
     }
@@ -277,7 +274,7 @@ public class Weapon implements IWeapon {
         int hash = 7;
         hash = 37 * hash + this.amountOfAttackDice;
         hash = 37 * hash + Objects.hashCode(this.attackDice);
-        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.getName());
         return hash;
     }
 
@@ -285,7 +282,7 @@ public class Weapon implements IWeapon {
     public int compareTo(ISaveableClass other) {
         if (other instanceof IWeapon) {
             IWeapon weapon = (IWeapon) other;
-            int returnValue = name.compareToIgnoreCase(weapon.getName());
+            int returnValue = getName().compareToIgnoreCase(weapon.getName());
             if (returnValue == 0) {
                 returnValue = attackDice.compareTo(weapon.getAttackDice());
             }

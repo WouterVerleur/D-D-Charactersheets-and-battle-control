@@ -74,6 +74,10 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pPassiveWisdom = new javax.swing.JPanel();
         lPassiveWisdomModifier = new javax.swing.JLabel();
         pInitiative = new javax.swing.JPanel();
+        lInitativeDex = new javax.swing.JLabel();
+        lInitiativeAdd = new javax.swing.JLabel();
+        sInitiativeBonus = new javax.swing.JSpinner();
+        lInitiativeEquals = new javax.swing.JLabel();
         lInitiative = new javax.swing.JLabel();
         pProficiency = new javax.swing.JPanel();
         lProficiency = new javax.swing.JLabel();
@@ -214,6 +218,21 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pInitiative.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Initiative", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
         pInitiative.setMinimumSize(new java.awt.Dimension(100, 40));
 
+        lInitativeDex.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lInitativeDex.setText(GlobalUtils.modifierToString(character.getAbilityModifier(AbilityType.DEX)));
+
+        lInitiativeAdd.setText("+");
+
+        sInitiativeBonus.setModel(new javax.swing.SpinnerNumberModel());
+        sInitiativeBonus.setValue(character.getInitiativeBonus());
+        sInitiativeBonus.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sInitiativeBonusStateChanged(evt);
+            }
+        });
+
+        lInitiativeEquals.setText("=");
+
         lInitiative.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lInitiative.setText(GlobalUtils.modifierToString(character.getInitiative()));
 
@@ -221,11 +240,25 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pInitiative.setLayout(pInitiativeLayout);
         pInitiativeLayout.setHorizontalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pInitiativeLayout.createSequentialGroup()
+                .addComponent(lInitativeDex, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lInitiativeAdd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sInitiativeBonus, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lInitiativeEquals)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
         );
         pInitiativeLayout.setVerticalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lInitiative)
+            .addGroup(pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(lInitativeDex)
+                .addComponent(sInitiativeBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lInitiativeAdd)
+                .addComponent(lInitiativeEquals)
+                .addComponent(lInitiative))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -661,6 +694,12 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         CHARACTERS.update(character);
     }//GEN-LAST:event_sSpeedStateChanged
 
+    private void sInitiativeBonusStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sInitiativeBonusStateChanged
+        character.setInitiativeBonus((int) sInitiativeBonus.getValue());
+        lInitiative.setText(GlobalUtils.modifierToString(character.getInitiative()));
+        CHARACTERS.update(character);
+    }//GEN-LAST:event_sInitiativeBonusStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<IArmor> cbArmor;
     private javax.swing.JCheckBox cbCanTransform;
@@ -673,7 +712,10 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     private javax.swing.JLabel lArmorClass;
     private javax.swing.JLabel lExtraArmor;
     private javax.swing.JLabel lHitDice;
+    private javax.swing.JLabel lInitativeDex;
     private javax.swing.JLabel lInitiative;
+    private javax.swing.JLabel lInitiativeAdd;
+    private javax.swing.JLabel lInitiativeEquals;
     private javax.swing.JLabel lOverride;
     private javax.swing.JLabel lPassiveWisdomModifier;
     private javax.swing.JLabel lProficiency;
@@ -692,6 +734,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     private javax.swing.JPanel pTransform;
     private javax.swing.JSpinner sExtraArmor;
     private javax.swing.JSpinner sHealth;
+    private javax.swing.JSpinner sInitiativeBonus;
     private javax.swing.JSpinner sOverride;
     private javax.swing.JSpinner sShieldBonus;
     private javax.swing.JSpinner sSpeed;

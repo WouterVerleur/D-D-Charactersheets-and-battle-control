@@ -88,11 +88,13 @@
                   <Component id="jProgressBar2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bDamage" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="bHealth" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="lTotalDamageRecieved" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bTempHitpoints" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="bDamage" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lTotalDamageRecieved" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bTempHitpoints" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -189,7 +191,7 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add death roll"/>
         <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="SETTINGS.getProperty(ROLLFORDEATH, true)" type="code"/>
+          <Connection code="SETTINGS.getProperty(ROLL_FOR_DEATH, true)" type="code"/>
         </Property>
       </Properties>
       <Events>
@@ -200,7 +202,7 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add life roll"/>
         <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="SETTINGS.getProperty(ROLLFORDEATH, true)" type="code"/>
+          <Connection code="SETTINGS.getProperty(ROLL_FOR_DEATH, true)" type="code"/>
         </Property>
       </Properties>
       <Events>

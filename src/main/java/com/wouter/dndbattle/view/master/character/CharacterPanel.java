@@ -42,6 +42,7 @@ import com.wouter.dndbattle.view.IUpdateablePanel;
 import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
 import com.wouter.dndbattle.view.master.MasterCharactersPanel;
 import com.wouter.dndbattle.view.master.character.abiliyAndSkill.AbilityAndSkillPanel;
+import com.wouter.dndbattle.view.master.character.equipment.EquipmentPanel;
 import com.wouter.dndbattle.view.master.character.extendedCharacter.ExtendedCharacterPanel;
 import com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel;
 import com.wouter.dndbattle.view.master.character.weapon.CharacterWeaponPanel;
@@ -106,6 +107,7 @@ public class CharacterPanel extends javax.swing.JPanel implements IUpdateablePan
         }
         tpCharacterPages.addTab("Weapons", new CharacterWeaponPanel(character));
         tpCharacterPages.addTab("Spells", new SpellOverviewPanel(character));
+        tpCharacterPages.addTab("Equipment", new EquipmentPanel(character));
     }
 
     /**

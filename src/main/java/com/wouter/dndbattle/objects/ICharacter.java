@@ -53,6 +53,8 @@ public interface ICharacter extends ISaveableClass, Cloneable {
 
     int getInitiative();
 
+    int getInitiativeBonus();
+
     int getMaxHealth();
 
     int getPassiveWisdom();
@@ -66,6 +68,10 @@ public interface ICharacter extends ISaveableClass, Cloneable {
     List<ISpell> getSpells();
 
     AbilityType getSpellCastingAbility();
+
+    boolean isPowerfulBuild();
+
+    List<IEquipment> getInventoryItems();
 
     @JsonIgnore
     default String getSpellCastingAbilityString() {

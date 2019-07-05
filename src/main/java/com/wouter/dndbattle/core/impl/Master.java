@@ -5,7 +5,6 @@
  */
 package com.wouter.dndbattle.core.impl;
 
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
 import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
 
 import java.net.InetAddress;
@@ -28,6 +27,8 @@ import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.view.master.MasterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *
@@ -161,7 +162,7 @@ public class Master extends AbstractRemoteConnector implements IMaster {
                 removeCombatant(next);
                 continue;
             }
-            if (next.rollingForDeath() && !SETTINGS.getProperty(ROLLFORDEATH, true)) {
+            if (next.rollingForDeath() && !SETTINGS.getProperty(ROLL_FOR_DEATH, true)) {
                 log.debug("Adding deathroll to [{}]", next);
                 JOptionPane.showMessageDialog(getFrame(), "An automatic deathroll was added to " + next, "Automatic deathroll.", JOptionPane.INFORMATION_MESSAGE);
                 ((Combatant) next).addDeathRoll();

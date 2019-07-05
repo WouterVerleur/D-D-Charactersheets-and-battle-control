@@ -5,7 +5,7 @@
  */
 package com.wouter.dndbattle.view.master;
 
-import static com.wouter.dndbattle.utils.Settings.ROLLFORDEATH;
+import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 import java.util.Iterator;
 import java.util.List;
@@ -68,7 +68,6 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         lName = new javax.swing.JLabel();
         bInfo = new javax.swing.JButton();
@@ -132,7 +131,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         });
 
         bDeathRoll.setText("Add death roll");
-        bDeathRoll.setEnabled(SETTINGS.getProperty(ROLLFORDEATH, true));
+        bDeathRoll.setEnabled(SETTINGS.getProperty(ROLL_FOR_DEATH, true));
         bDeathRoll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bDeathRollActionPerformed(evt);
@@ -140,7 +139,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         });
 
         bLifeRoll.setText("Add life roll");
-        bLifeRoll.setEnabled(SETTINGS.getProperty(ROLLFORDEATH, true));
+        bLifeRoll.setEnabled(SETTINGS.getProperty(ROLL_FOR_DEATH, true));
         bLifeRoll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bLifeRollActionPerformed(evt);
@@ -227,11 +226,12 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bDamage)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bHealth)
-                    .addComponent(lTotalDamageRecieved)
-                    .addComponent(bTempHitpoints))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bDamage)
+                        .addComponent(lTotalDamageRecieved)
+                        .addComponent(bTempHitpoints)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bDeathRoll)

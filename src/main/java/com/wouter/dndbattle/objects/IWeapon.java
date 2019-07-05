@@ -16,7 +16,6 @@
  */
 package com.wouter.dndbattle.objects;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.enums.Dice;
 import com.wouter.dndbattle.objects.enums.WeaponRange;
 import com.wouter.dndbattle.objects.enums.WeaponType;
@@ -26,10 +25,7 @@ import com.wouter.dndbattle.objects.enums.WeaponWeight;
  *
  * @author Wouter
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public interface IWeapon extends ISaveableClass {
-
-    String getName();
+public interface IWeapon extends IInventoryItem {
 
     WeaponType getType();
 
@@ -38,8 +34,6 @@ public interface IWeapon extends ISaveableClass {
     int getAmountOfAttackDice();
 
     String getDamageType();
-
-    String getNotes();
 
     boolean isFinesse();
 
@@ -55,7 +49,7 @@ public interface IWeapon extends ISaveableClass {
 
     int getMaxRange();
 
-    WeaponWeight getWeight();
+    WeaponWeight getWeightClass();
 
     int getAttackModifier();
 

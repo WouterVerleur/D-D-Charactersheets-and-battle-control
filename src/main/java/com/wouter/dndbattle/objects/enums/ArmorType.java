@@ -22,10 +22,22 @@ package com.wouter.dndbattle.objects.enums;
  */
 public enum ArmorType {
 
-    LIGHT,
-    MEDIUM,
-    HEAVY,
-    NATURAL,
-    UNARMORED,
-    MAGICAL;
+    LIGHT("Light"),
+    MEDIUM("Medium"),
+    HEAVY("Heavy"),
+    NATURAL("Natural"),
+    UNARMORED("Class"),
+    MAGICAL("Magical");
+
+    String niceName;
+
+    private ArmorType(String niceName) {
+        this.niceName = niceName;
+    }
+
+    @Override
+    public String toString() {
+        return niceName;
+    }
+
 }

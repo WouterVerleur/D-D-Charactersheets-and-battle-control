@@ -82,7 +82,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> extends Ini
                     if (setProgress) {
                         setProgress(Math.floorDiv(completedFiles.incrementAndGet() * 100, totalFiles));
                     }
-                } catch (ObjectReadException | IllegalArgumentException e) {
+                } catch (ObjectReadException | IllegalArgumentException | ExceptionInInitializerError e) {
                     log.error("Error while reading preset of class [{}] from file [{}]", clazz, file, e);
                 }
                 return fromFile;

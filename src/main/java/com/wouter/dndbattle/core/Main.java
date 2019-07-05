@@ -213,7 +213,7 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
             logToScreen("Done.");
             MAIN.pbSub.setVisible(true);
             MAIN.pbSub.setStringPainted(true);
-            logToScreen("Loading armor.");
+            logToScreen("Loading armors.");
             Armors armors = Armors.getInstance();
             armors.registerProgressKeeper(MAIN);
             armors.initialize();

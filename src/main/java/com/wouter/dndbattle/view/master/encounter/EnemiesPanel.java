@@ -25,7 +25,6 @@ import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.impl.character.Enemy;
@@ -58,8 +57,12 @@ public class EnemiesPanel extends javax.swing.JPanel implements IEncounterCombat
         int amountOfEnemies = 0;
         int totalExp = 0;
         for (EncounterCombantantPanel entry : characterMap.values()) {
-            amountOfEnemies += entry.getAmount();
-            totalExp += (entry.getExp() * entry.getAmount());
+            if (entry.getAmount() <= 0) {
+                removeCharacter(entry);
+            } else {
+                amountOfEnemies += entry.getAmount();
+                totalExp += (entry.getExp() * entry.getAmount());
+            }
         }
         lTotal.setText(Integer.toString(totalExp));
 
@@ -227,10 +230,10 @@ public class EnemiesPanel extends javax.swing.JPanel implements IEncounterCombat
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAddEnemyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddEnemyActionPerformed
-        addCharacter(lEnemy, pEnemyCombatants);
+        addCharacter(lEnemy);
     }//GEN-LAST:event_bAddEnemyActionPerformed
 
-    public void addCharacter(JList<ICharacter> list, JPanel panel) {
+    private void addCharacter(JList<ICharacter> list) {
         ICharacter selectedValue = list.getSelectedValue();
         if (selectedValue != null) {
             if (characterMap.containsKey(selectedValue)) {
@@ -238,10 +241,15 @@ public class EnemiesPanel extends javax.swing.JPanel implements IEncounterCombat
             } else {
                 final EncounterCombantantPanel ecp = new EncounterCombantantPanel(this, selectedValue);
                 characterMap.put(selectedValue, ecp);
-                panel.add(ecp);
+                pEnemyCombatants.add(ecp);
             }
             update();
         }
+    }
+
+    public void removeCharacter(EncounterCombantantPanel panel) {
+        characterMap.remove(panel.getCharacter());
+        pEnemyCombatants.remove(panel);
     }
 
     private void cbEnemyClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbEnemyClassItemStateChanged

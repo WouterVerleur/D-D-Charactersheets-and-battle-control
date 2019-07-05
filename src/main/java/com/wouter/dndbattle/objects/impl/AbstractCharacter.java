@@ -30,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.IAbility;
 import com.wouter.dndbattle.objects.IArmor;
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.IEquipment;
 import com.wouter.dndbattle.objects.ISaveableClass;
 import com.wouter.dndbattle.objects.ISavingThrow;
 import com.wouter.dndbattle.objects.ISkill;
@@ -66,6 +67,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private Map<AbilityType, IAbility> abilities = new HashMap<>(AbilityType.values().length);
     private Map<AbilityType, ISavingThrow> savingThrows = new HashMap<>(AbilityType.values().length);
     private Map<SkillType, ISkill> skills = new HashMap<>(SkillType.values().length);
+    private int initiativeBonus = 0;
     private int maxHealth = 1;
     private boolean canTransform = false;
     private Class<? extends ICharacter> transformType;
@@ -76,6 +78,8 @@ public abstract class AbstractCharacter implements ICharacter {
     private WeaponProficiency weaponProficiency;
     private List<IWeapon> privateWeapons = new ArrayList<>();
     private Size size = Size.MEDIUM;
+    private boolean powerfulBuild = false;
+    private List<IEquipment> inventoryItems = new ArrayList<>();
 
     public AbstractCharacter() {
         createEmptySettings();
@@ -220,6 +224,29 @@ public abstract class AbstractCharacter implements ICharacter {
         this.shieldBonus = shieldBonus;
     }
 
+    @Override
+    public boolean isPowerfulBuild() {
+        return powerfulBuild;
+    }
+
+    public void setPowerfulBuild(boolean powerfulBuild) {
+        this.powerfulBuild = powerfulBuild;
+    }
+
+    @JsonIgnore
+    @Override
+    public List<IEquipment> getInventoryItems() {
+        return inventoryItems;
+    }
+
+    public void setInventoryItems(List<IEquipment> inventoryItems) {
+        this.inventoryItems = inventoryItems;
+    }
+
+    public void addInventoryItem(IEquipment inventoryItem) {
+        inventoryItems.add(inventoryItem);
+    }
+
     /**
      * Funtion to return a name based string that is save for usage in
      * filenames.
@@ -331,7 +358,16 @@ public abstract class AbstractCharacter implements ICharacter {
     @JsonIgnore
     @Override
     public int getInitiative() {
-        return getAbilityModifier(AbilityType.DEX);
+        return getAbilityModifier(AbilityType.DEX) + getInitiativeBonus();
+    }
+
+    @Override
+    public int getInitiativeBonus() {
+        return initiativeBonus;
+    }
+
+    public void setInitiativeBonus(int initiativeBonus) {
+        this.initiativeBonus = initiativeBonus;
     }
 
     @Override

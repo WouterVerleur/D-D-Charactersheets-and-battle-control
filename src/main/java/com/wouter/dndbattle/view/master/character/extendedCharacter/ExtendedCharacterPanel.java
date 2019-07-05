@@ -503,7 +503,7 @@ public class ExtendedCharacterPanel extends javax.swing.JPanel implements IUpdat
         gridBagConstraints.gridy = 12;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pCharacterFields.add(sepChar2, gridBagConstraints);
 
         spProficiencies.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Other proficiencies", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));

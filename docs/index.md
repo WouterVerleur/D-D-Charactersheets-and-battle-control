@@ -7,35 +7,37 @@ Requires Java.
 
 ## Current features
 * D&D 5e style character sheets
-  * With automatic calculations
+  * With automatic calculations.
 * Database like storage
-  * Weapons, spells & armor are stored in a shared pool and can be attached to characters
+  * Weapons, spells, armor & other equipment are stored in a shared pool and can be attached to characters.
 * Battle assistant
-  * Tells you the amount of health everybody has
+  * Tells you the amount of health everybody has and the order their turns are.
 * Network connection
-  * Allow the players to watch a part of your information on their own screen
-  * They can only see the order, the health of frendly characters and character sheets of their own characters
+  * Allow the players to watch a part of your information on their own screen.
+  * They can only see the order, the health of frendly characters and character sheets of their own characters.
 * Compatible with most shared storage providers (Dropbox, one drive, etc.)
-  * All information is stored in a set of folders
-  * Just change the storage location in the settings
+  * All information is stored in a set of folders.
+  * Just change the storage location in the settings.
 * Dice rolling
-  * Both as a seperate view and from the character pages
+  * Both as a seperate view and from the character pages.
 * Quick lookup of information
-  * Opens a relevant page in your browser
+  * Opens a relevant page in your browser.
   * The website can be set to one of the following:
     * dndbeyond.com
 	* dnd5e.fandom.com
 	* roll20.net
 * Encounter calculator
-  * You can use the created characters in the build-in encounter calculator
+  * You can use the created characters in the build-in encounter calculator.
 * Exporting to a PDF & HTML
   * For the player that don't want to use a laptop.
-  * Custom build templates for this software
+  * Custom build templates for this software.
+* Equipment Management
+  * Add all types of equipment to your character and have the information rady to use.
+  * The weight of the equipment is also calculated for you.
 
 ## Planned features
 * Additional export templates
 * Batle log
-* Equipment Management
 * Other options for information lookup
 
 ## All versions:

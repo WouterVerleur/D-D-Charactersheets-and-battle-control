@@ -32,6 +32,9 @@
           <Connection code="SETTINGS.getProperty(DIVIDER_LOCATION_PROPERTY, 150)" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="spArmorsPropertyChange"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
       <SubComponents>

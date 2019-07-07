@@ -326,7 +326,16 @@ This template is used to create character export in PDF format.
         </div>
         <div class="nopagebreak">
             <h3>Equipment</h3>
-            <p>#{equipment}</p>
+            <table class="fullwidth rows">
+                <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Weight</th>
+                    <th>Value</th>
+                    <th>Notes</th>
+                </tr>
+                #{equipment}
+            </table>
         </div>
         <div class="nopagebreak">
             <h3>Notes</h3>

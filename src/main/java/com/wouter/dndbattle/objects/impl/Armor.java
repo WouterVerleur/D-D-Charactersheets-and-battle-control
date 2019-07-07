@@ -19,6 +19,7 @@ package com.wouter.dndbattle.objects.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.wouter.dndbattle.objects.IArmor;
 import com.wouter.dndbattle.objects.ICharacter;
@@ -113,6 +114,7 @@ public class Armor extends AbstractInventoryItem implements IArmor {
         return ac;
     }
 
+    @JsonIgnore
     @Override
     public String getDescription() {
         return String.format(DESCRIPTION_FORMAT, armorType, baseArmorRating);

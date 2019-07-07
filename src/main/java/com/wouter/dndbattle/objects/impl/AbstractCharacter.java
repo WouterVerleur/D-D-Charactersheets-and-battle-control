@@ -248,9 +248,12 @@ public abstract class AbstractCharacter implements ICharacter {
         Collections.sort(inventoryItems);
     }
 
+    public void removeInventoryItem(IEquipment inventoryItem) {
+        inventoryItems.remove(inventoryItem);
+    }
+
     /**
-     * Funtion to return a name based string that is save for usage in
-     * filenames.
+     * Funtion to return a name based string that is save for usage in filenames.
      *
      * @return a filename save representation of the name of this character.
      */

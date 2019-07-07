@@ -39,7 +39,7 @@ public class Equipment implements IEquipment {
     private static final Utilities UTILITIES = Utilities.getInstance();
 
     private static final String TOSTRING_MULTIPLE_FORMAT = "%d× %s";
-    private static final String INVENTORY_ITEM_FORMAT = "%s.%s";
+    private static final String INVENTORY_ITEM_FORMAT = "%s|%s";
 
     private int amount;
     private IInventoryItem inventoryItem;
@@ -64,11 +64,11 @@ public class Equipment implements IEquipment {
     }
 
     public String getInventoryItemString() {
-        return String.format(INVENTORY_ITEM_FORMAT, inventoryItem.getName(), inventoryItem.getClass().getName());
+        return String.format(INVENTORY_ITEM_FORMAT, inventoryItem.getName(), inventoryItem.getClass().getSimpleName());
     }
 
     public void setInventoryItemString(String inventoryItemString) {
-        String[] split = inventoryItemString.split("\\.");
+        String[] split = inventoryItemString.split("\\|");
         switch (split[1]) {
             case "Armor":
                 inventoryItem = ARMORS.getForString(split[0]);

@@ -22,17 +22,19 @@ package com.wouter.dndbattle.objects.enums;
  */
 public enum ArmorType {
 
-    LIGHT("Light"),
-    MEDIUM("Medium"),
-    HEAVY("Heavy"),
-    NATURAL("Natural"),
-    UNARMORED("Class"),
-    MAGICAL("Magical");
+    LIGHT("Light", true),
+    MEDIUM("Medium", true),
+    HEAVY("Heavy", true),
+    NATURAL("Natural", false),
+    UNARMORED("Unarmored / Class", false),
+    MAGICAL("Magical", false);
 
-    String niceName;
+    final String niceName;
+    final boolean equipment;
 
-    private ArmorType(String niceName) {
+    private ArmorType(String niceName, boolean equipment) {
         this.niceName = niceName;
+        this.equipment = equipment;
     }
 
     @Override
@@ -40,4 +42,7 @@ public enum ArmorType {
         return niceName;
     }
 
+    public boolean isEquipment() {
+        return equipment;
+    }
 }

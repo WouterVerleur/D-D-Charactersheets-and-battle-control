@@ -30,6 +30,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,7 +42,9 @@ import java.util.regex.Pattern;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.IEquipment;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
+import com.wouter.dndbattle.objects.IInventoryItem;
 import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.IWeapon;
 import com.wouter.dndbattle.objects.enums.WeaponSelection;
@@ -64,8 +67,11 @@ public class FileExporter {
     private static final String TEMPLATE_REPLACEMENT_STRING = "#\\{\\w+(\\.\\w+)*\\}";
     private static final String WEAPONS_PLACEHOLDER = "#{weapons}";
     private static final String SPELLS_PLACEHOLDER = "#{spells}";
+    private static final String EQUIPMENT_PLACEHOLDER = "#{equipment}";
     private static final String WEAPON_ROW_FORMAT = "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>";
     private static final String SPELL_BLOCK_FORMAT = "<table class=\"fullwidth top nopagebreak spell\"><tr><th colspan=\"2\">%s</th><td rowspan=\"7\"><p>%s</p></td></tr><tr><td colspan=\"2\">%s</td></tr><tr><td>Casting Time:</td><td>%s</td></tr><tr><td>Range:</td><td>%s</td></tr><tr><td>Components:</td><td>%s</td></tr><tr><td>Duration:</td><td>%s</td></tr><tr><td colspan=\"2\">Notes:<p>%s</p></td></tr></table>";
+    private static final String EQUIPMENT_ROW_FORMAT = "<tr><td>%s<br/>%s</td><td>%d</td><td>%s</td><td>%s</td><td>%s</td></tr>";
+    private static final DecimalFormat FORMATTER = new DecimalFormat("#.##");
 
     public static void createPDF(ICharacter character, WeaponSelection weaponSelection, File pdf) throws Exception {
         String contents = createHtmlContent(character, weaponSelection);
@@ -127,33 +133,11 @@ public class FileExporter {
             }
         }
 
-        List<IWeapon> weapons = new ArrayList<>(character.getPrivateWeapons());
-        if (weaponSelection != WeaponSelection.PERSONAL) {
-            weapons.addAll(Weapons.getInstance().getAll());
-        }
-        Collections.sort(weapons);
+        contents = replaceInTemplateNoEscape(contents, WEAPONS_PLACEHOLDER, createWeaponRows(character, weaponSelection));
 
-        StringBuilder weaponRows = new StringBuilder();
-        weapons.stream().filter((weapon) -> (weaponSelection == WeaponSelection.ALL || character.isProficient(weapon) || weapon.getType() == WeaponType.PERSONAL)).map((weapon) -> GlobalUtils.getWeaponRow(character, weapon)).forEachOrdered((weaponRow) -> {
-            weaponRows.append(String.format(WEAPON_ROW_FORMAT, weaponRow[NAME], weaponRow[ATTACK], weaponRow[DAMAGE], weaponRow[NOTES]));
-        });
-        contents = replaceInTemplateNoEscape(contents, WEAPONS_PLACEHOLDER, weaponRows.toString());
+        contents = replaceInTemplateNoEscape(contents, SPELLS_PLACEHOLDER, createSpellBlocks(character));
 
-        StringBuilder spellBlocks = new StringBuilder();
-        for (ISpell spell : character.getSpells()) {
-            String type;
-            switch (spell.getLevel()) {
-                case CANTRIP:
-                case FEATURE:
-                    type = spell.getType() + ' ' + spell.getLevel().toString();
-                    break;
-                default:
-                    type = "Level " + spell.getLevel() + " " + spell.getType();
-                    break;
-            }
-            spellBlocks.append(String.format(SPELL_BLOCK_FORMAT, spell.getName(), spell.getDescription(), type, spell.getCastingTime(), spell.getRange(), spell.getComponents(), spell.getDuration(), spell.getNotes()));
-        }
-        contents = replaceInTemplateNoEscape(contents, SPELLS_PLACEHOLDER, spellBlocks.toString());
+        contents = replaceInTemplateNoEscape(contents, EQUIPMENT_PLACEHOLDER, createEquipmentRows(character));
 
         Pattern pattern = Pattern.compile(TEMPLATE_REPLACEMENT_STRING);
         Matcher matcher = pattern.matcher(contents);
@@ -218,6 +202,64 @@ public class FileExporter {
             }
         }
         return contents;
+    }
+
+    private static String createEquipmentRows(ICharacter character) {
+        StringBuilder equipmentRows = new StringBuilder();
+        for (IEquipment equipment : character.getInventoryItems()) {
+            final IInventoryItem inventoryItem = equipment.getInventoryItem();
+            equipmentRows.append(String.format(EQUIPMENT_ROW_FORMAT, inventoryItem, inventoryItem.getDescription(), equipment.getAmount(), FORMATTER.format(inventoryItem.getWeight()), inventoryItem.getValue(), inventoryItem.getNotes()));
+        }
+        return equipmentRows.toString();
+    }
+
+    private static String createSpellBlocks(ICharacter character) {
+        StringBuilder spellBlocks = new StringBuilder();
+        for (ISpell spell : character.getSpells()) {
+            String type;
+            switch (spell.getLevel()) {
+                case CANTRIP:
+                case FEATURE:
+                    type = spell.getType() + ' ' + spell.getLevel().toString();
+                    break;
+                default:
+                    type = "Level " + spell.getLevel() + ' ' + spell.getType();
+                    break;
+            }
+            spellBlocks.append(String.format(SPELL_BLOCK_FORMAT, spell.getName(), spell.getDescription(), type, spell.getCastingTime(), spell.getRange(), spell.getComponents(), spell.getDuration(), spell.getNotes()));
+        }
+        return spellBlocks.toString();
+    }
+
+    private static String createWeaponRows(ICharacter character, WeaponSelection weaponSelection) {
+        List<IWeapon> weapons = new ArrayList<>(character.getPrivateWeapons());
+        switch (weaponSelection) {
+            case ALL:
+            case PROFICIENT:
+                weapons.addAll(Weapons.getInstance().getAll());
+                break;
+            case EQUIPMENT:
+                for (IEquipment equipment : character.getInventoryItems()) {
+                    if (equipment.getInventoryItem() instanceof IWeapon) {
+                        weapons.add((IWeapon) equipment.getInventoryItem());
+                    }
+                }
+                break;
+            case PERSONAL:
+                break;
+            default:
+                log.error("Unknown option [{}]", weaponSelection);
+                break;
+        }
+        Collections.sort(weapons);
+        StringBuilder weaponRows = new StringBuilder();
+        for (IWeapon weapon : weapons) {
+            if (weaponSelection == WeaponSelection.ALL || character.isProficient(weapon) || weapon.getType() == WeaponType.PERSONAL) {
+                Object[] weaponRow = GlobalUtils.getWeaponRow(character, weapon);
+                weaponRows.append(String.format(WEAPON_ROW_FORMAT, weaponRow[NAME], weaponRow[ATTACK], weaponRow[DAMAGE], weaponRow[NOTES]));
+            }
+        }
+        return weaponRows.toString();
     }
 
     private static String replaceInTemplate(String template, String search, String replacement) {

@@ -21,8 +21,10 @@ package com.wouter.dndbattle.objects.enums;
  * @author wverl
  */
 public enum WeaponSelection {
+
     ALL("All"),
     PROFICIENT("Proficient & personal"),
+    EQUIPMENT("Equipment & personal"),
     PERSONAL("Personal");
 
     private final String friendlyName;

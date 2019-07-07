@@ -16,15 +16,20 @@
  */
 package com.wouter.dndbattle.objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 /**
  *
  * @author wverl
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public interface IEquipment extends ISaveableClass {
 
     IInventoryItem getInventoryItem();
 
     int getAmount();
 
+    @JsonIgnore
     float getTotalWeight();
 }

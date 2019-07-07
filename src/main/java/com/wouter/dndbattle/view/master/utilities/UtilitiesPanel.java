@@ -19,6 +19,7 @@ package com.wouter.dndbattle.view.master.utilities;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
+import com.wouter.dndbattle.objects.IUtility;
 import com.wouter.dndbattle.objects.impl.Utility;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Utilities;
@@ -46,10 +47,11 @@ public class UtilitiesPanel extends javax.swing.JPanel implements IUpdateablePan
         DefaultListModel<Utility> model = (DefaultListModel<Utility>) lUtilities.getModel();
         model.removeAllElements();
 
-        UTILITIES.getAll().stream().filter((armor) -> (armor instanceof Utility)).forEachOrdered((armor) -> {
-            model.addElement((Utility) armor);
-        });
-
+        for (IUtility utility : UTILITIES.getAll()) {
+            if (utility instanceof Utility) {
+                model.addElement((Utility) utility);
+            }
+        }
         if (selection
                 != null) {
             lUtilities.setSelectedValue(selection, true);

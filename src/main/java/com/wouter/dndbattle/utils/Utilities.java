@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.wouter.dndbattle.objects.IUtility;
+import com.wouter.dndbattle.objects.impl.Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +62,8 @@ public class Utilities extends AbstractObjectStorer<IUtility> {
 
     @Override
     protected void initializeHook() {
-        utilities = loadFromFiles(IUtility.class);
+        utilities = loadFromFiles(Utility.class);
+        Collections.sort(utilities);
     }
 
     @Override

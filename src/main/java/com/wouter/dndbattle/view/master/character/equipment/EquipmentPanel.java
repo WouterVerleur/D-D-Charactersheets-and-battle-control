@@ -17,7 +17,6 @@
 package com.wouter.dndbattle.view.master.character.equipment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +35,16 @@ import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Utilities;
 import com.wouter.dndbattle.utils.Weapons;
 import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author wverl
  */
 public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePanel {
+
+    private static final Logger log = LoggerFactory.getLogger(EquipmentPanel.class);
 
     private static final Characters CHARACTERS = Characters.getInstance();
     private static final Settings SETTINGS = Settings.getInstance();
@@ -61,6 +64,7 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
         initComponents();
         for (IEquipment equipment : this.character.getInventoryItems()) {
             if (equipment instanceof Equipment) {
+                log.debug("Adding equipment [{}]", equipment);
                 addPanel((Equipment) equipment);
             }
         }
@@ -111,6 +115,8 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
             equipment.setAmount(1);
             character.addInventoryItem(equipment);
             addPanel(equipment);
+            calculateInventoryWeight();
+            save();
         }
     }
 
@@ -259,9 +265,10 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
         if (model == null) {
             List<IInventoryItem> items = new ArrayList<>();
             items.addAll(Armors.getInstance().getAll());
+            items.add(null);
             items.addAll(Weapons.getInstance().getAll());
+            items.add(null);
             items.addAll(Utilities.getInstance().getAll());
-            Collections.sort(items);
 
             model = new DefaultListModel<>();
             items.forEach((item) -> {

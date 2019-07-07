@@ -233,18 +233,19 @@ public abstract class AbstractCharacter implements ICharacter {
         this.powerfulBuild = powerfulBuild;
     }
 
-    @JsonIgnore
     @Override
     public List<IEquipment> getInventoryItems() {
         return inventoryItems;
     }
 
     public void setInventoryItems(List<IEquipment> inventoryItems) {
+        Collections.sort(inventoryItems);
         this.inventoryItems = inventoryItems;
     }
 
     public void addInventoryItem(IEquipment inventoryItem) {
         inventoryItems.add(inventoryItem);
+        Collections.sort(inventoryItems);
     }
 
     /**

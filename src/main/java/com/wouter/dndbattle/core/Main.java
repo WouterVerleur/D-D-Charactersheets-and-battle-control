@@ -49,6 +49,7 @@ import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Initializable;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Spells;
+import com.wouter.dndbattle.utils.Utilities;
 import com.wouter.dndbattle.utils.Weapons;
 import com.wouter.dndbattle.view.slave.SlaveFrame;
 import org.slf4j.Logger;
@@ -223,6 +224,11 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
             spells.registerProgressKeeper(MAIN);
             spells.initialize();
             spells.unregisterProgressKeeper(MAIN);
+            logToScreen("Loading utilities.");
+            Utilities utilities = Utilities.getInstance();
+            utilities.registerProgressKeeper(MAIN);
+            utilities.initialize();
+            utilities.unregisterProgressKeeper(MAIN);
             logToScreen("Loading weapons.");
             Weapons weapons = Weapons.getInstance();
             weapons.registerProgressKeeper(MAIN);
@@ -335,14 +341,14 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
             .addComponent(pbMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pbSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pbMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

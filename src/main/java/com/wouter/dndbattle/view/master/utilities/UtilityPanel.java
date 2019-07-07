@@ -121,6 +121,11 @@ class UtilityPanel extends javax.swing.JPanel {
         add(lDescription, gridBagConstraints);
 
         tfDescription.setText(utility.getDescription());
+        tfDescription.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfDescriptionFocusLost(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -192,6 +197,11 @@ class UtilityPanel extends javax.swing.JPanel {
         taNotes.setColumns(20);
         taNotes.setRows(5);
         taNotes.setText(utility.getNotes());
+        taNotes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                taNotesFocusLost(evt);
+            }
+        });
         spNotes.setViewportView(taNotes);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -229,13 +239,23 @@ class UtilityPanel extends javax.swing.JPanel {
 
     private void sWeightStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sWeightStateChanged
         utility.setWeight((float) sWeight.getValue());
-        saveUtility(false);
+        saveUtility();
     }//GEN-LAST:event_sWeightStateChanged
 
     private void tfValueFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfValueFocusLost
         utility.setValue(tfValue.getText());
-        saveUtility(false);
+        saveUtility();
     }//GEN-LAST:event_tfValueFocusLost
+
+    private void tfDescriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfDescriptionFocusLost
+        utility.setDescription(tfDescription.getText());
+        saveUtility();
+    }//GEN-LAST:event_tfDescriptionFocusLost
+
+    private void taNotesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_taNotesFocusLost
+        utility.setNotes(taNotes.getText());
+        saveUtility();
+    }//GEN-LAST:event_taNotesFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bDelete;
@@ -253,10 +273,7 @@ class UtilityPanel extends javax.swing.JPanel {
     private javax.swing.JTextField tfValue;
     // End of variables declaration//GEN-END:variables
 
-    private void saveUtility(boolean refresh) {
+    private void saveUtility() {
         UTILITIES.update(utility);
-        if (refresh) {
-            utilitiesPanel.update();
-        }
     }
 }

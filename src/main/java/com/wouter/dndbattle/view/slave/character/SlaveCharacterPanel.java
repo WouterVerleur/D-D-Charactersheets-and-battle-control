@@ -20,6 +20,8 @@ import static com.wouter.dndbattle.utils.Settings.SLAVE_SPELLS_SEPERATOR;
 import static com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
 
 import java.awt.Component;
+import java.awt.GridLayout;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.wouter.dndbattle.objects.ICharacter;
 import com.wouter.dndbattle.objects.ICombatant;
+import com.wouter.dndbattle.objects.IEquipment;
 import com.wouter.dndbattle.objects.IExtendedCharacter;
 import com.wouter.dndbattle.objects.ISpell;
 import com.wouter.dndbattle.objects.IWeapon;
@@ -53,14 +56,15 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
     private static final Settings SETTINGS = Settings.getInstance();
     private static final String WEAPON_SELECTION_FORMAT = "gui.slave.%s.weapons.selection";
+    private static final String EQUIPMENT_SLIDER_SETTING = "gui.slave.equipment.slider.location";
+    private static final DecimalFormat FLOAT_FORMAT = new DecimalFormat("#.##");
 
-    private final ICombatant combatant;
     private final ICharacter character;
     private final String selectionString;
+    private final GridLayout equipmentColumnsLayout = new GridLayout(0, getEquipmentColumns(), 5, 5);
     private WeaponSelection selection;
 
     public SlaveCharacterPanel(ICombatant combatant) {
-        this.combatant = combatant;
         this.character = combatant.getCharacter();
         selectionString = String.format(WEAPON_SELECTION_FORMAT, character.getClass().getSimpleName());
         selection = WeaponSelection.valueOf(SETTINGS.getProperty(selectionString, WeaponSelection.ALL.name()));
@@ -69,6 +73,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         initComponents();
         updateWeaponTable();
         updateSpellTable();
+        updateEquipment();
     }
 
     public int getCurrentTab() {
@@ -88,6 +93,39 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         }
         updateWeaponTable();
         updateSpellTable();
+        updateEquipment();
+    }
+
+    private String getCarryingCapacity() {
+        float carryingCapacity = character.getAbilityScore(AbilityType.STR) * SETTINGS.getProperty(Settings.CARRYING_CAPACITY_MULTIPLIER, 15);
+        switch (character.getSize()) {
+            case TINY:
+                carryingCapacity /= 2;
+                break;
+            case LARGE:
+                carryingCapacity *= 2;
+                break;
+            case HUGE:
+                carryingCapacity *= 4;
+                break;
+            case GARGANTUAN:
+                carryingCapacity *= 8;
+                break;
+            default:
+                break;
+        }
+        if (character.isPowerfulBuild()) {
+            carryingCapacity *= 2;
+        }
+        return FLOAT_FORMAT.format(carryingCapacity);
+    }
+
+    private String getInventoryWeight() {
+        float inventoryWeight = 0;
+        for (IEquipment inventoryItem : character.getInventoryItems()) {
+            inventoryWeight += inventoryItem.getTotalWeight();
+        }
+        return FLOAT_FORMAT.format(inventoryWeight);
     }
 
     /**
@@ -110,6 +148,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         rbAllWeapons = new javax.swing.JRadioButton();
         rbProficientWeapons = new javax.swing.JRadioButton();
         rbPersonalWeapons = new javax.swing.JRadioButton();
+        rbEquipmentWeapons = new javax.swing.JRadioButton();
         pSpells = new javax.swing.JPanel();
         lAbility = new javax.swing.JLabel();
         lSpellcastingAbility = new javax.swing.JLabel();
@@ -124,6 +163,16 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         taDescription = new javax.swing.JTextArea();
         spNotes = new javax.swing.JScrollPane();
         taNotes = new javax.swing.JTextArea();
+        pEquipment = new javax.swing.JPanel();
+        lCarryingCapacity = new javax.swing.JLabel();
+        lEquipmentWeight = new javax.swing.JLabel();
+        lCarryingCapacityValue = new javax.swing.JLabel();
+        lEquipmentWeightValue = new javax.swing.JLabel();
+        spEquipment = new javax.swing.JScrollPane();
+        pEquipmentGrid = new javax.swing.JPanel();
+        sEquipmentGridSize = new javax.swing.JSlider();
+
+        setLayout(new java.awt.GridBagLayout());
 
         lName.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -133,6 +182,13 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
                 lNameMouseClicked(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        add(lName, gridBagConstraints);
 
         tpCharacterPages.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         tpCharacterPages.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -173,7 +229,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -230,12 +286,26 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         pWeapons.add(rbPersonalWeapons, gridBagConstraints);
+
+        bgSelection.add(rbEquipmentWeapons);
+        rbEquipmentWeapons.setText("Equipment & Personal");
+        rbEquipmentWeapons.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbEquipmentWeaponsStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        pWeapons.add(rbEquipmentWeapons, gridBagConstraints);
 
         tpCharacterPages.addTab("Weapons", pWeapons);
 
@@ -368,20 +438,88 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
         tpCharacterPages.addTab("Spells", pSpells);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tpCharacterPages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(lName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tpCharacterPages, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
-        );
+        pEquipment.setLayout(new java.awt.GridBagLayout());
+
+        lCarryingCapacity.setText("Carrying Capacity");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        pEquipment.add(lCarryingCapacity, gridBagConstraints);
+
+        lEquipmentWeight.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lEquipmentWeight.setText("Equipment Weight");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        pEquipment.add(lEquipmentWeight, gridBagConstraints);
+
+        lCarryingCapacityValue.setText(getCarryingCapacity());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        pEquipment.add(lCarryingCapacityValue, gridBagConstraints);
+
+        lEquipmentWeightValue.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lEquipmentWeightValue.setText(getInventoryWeight());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        pEquipment.add(lEquipmentWeightValue, gridBagConstraints);
+
+        pEquipmentGrid.setLayout(null);
+        pEquipmentGrid.setLayout(equipmentColumnsLayout);
+        spEquipment.setViewportView(pEquipmentGrid);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        pEquipment.add(spEquipment, gridBagConstraints);
+
+        sEquipmentGridSize.setMajorTickSpacing(1);
+        sEquipmentGridSize.setMaximum(10);
+        sEquipmentGridSize.setMinimum(1);
+        sEquipmentGridSize.setPaintTicks(true);
+        sEquipmentGridSize.setSnapToTicks(true);
+        sEquipmentGridSize.setValue(getEquipmentColumns());
+        sEquipmentGridSize.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sEquipmentGridSizeStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        pEquipment.add(sEquipmentGridSize, gridBagConstraints);
+
+        tpCharacterPages.addTab("Equipment", pEquipment);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        add(tpCharacterPages, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lNameMouseClicked
@@ -400,6 +538,18 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         changeWeaponSelection(rbPersonalWeapons, WeaponSelection.PERSONAL);
     }//GEN-LAST:event_rbPersonalWeaponsStateChanged
 
+    private void rbEquipmentWeaponsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbEquipmentWeaponsStateChanged
+        changeWeaponSelection(rbEquipmentWeapons, WeaponSelection.EQUIPMENT);
+    }//GEN-LAST:event_rbEquipmentWeaponsStateChanged
+
+    private void sEquipmentGridSizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sEquipmentGridSizeStateChanged
+        SETTINGS.setProperty(EQUIPMENT_SLIDER_SETTING, sEquipmentGridSize.getValue());
+        equipmentColumnsLayout.setColumns(sEquipmentGridSize.getValue());
+        for (Component component : pEquipmentGrid.getComponents()) {
+            component.revalidate();
+        }
+    }//GEN-LAST:event_sEquipmentGridSizeStateChanged
+
     private void changeWeaponSelection(JRadioButton radioButton, WeaponSelection selection) {
         if (radioButton.isSelected()) {
             this.selection = selection;
@@ -408,21 +558,34 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         }
     }
 
+    private static int getEquipmentColumns() {
+        return SETTINGS.getProperty(EQUIPMENT_SLIDER_SETTING, 10);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgSelection;
     private javax.swing.JLabel lAbility;
+    private javax.swing.JLabel lCarryingCapacity;
+    private javax.swing.JLabel lCarryingCapacityValue;
+    private javax.swing.JLabel lEquipmentWeight;
+    private javax.swing.JLabel lEquipmentWeightValue;
     private javax.swing.JLabel lName;
     private javax.swing.JLabel lSpellAttackBonus;
     private javax.swing.JLabel lSpellSaveDC;
     private javax.swing.JLabel lSpellcastingAbility;
     private javax.swing.JLabel lWeaponsSelection;
+    private javax.swing.JPanel pEquipment;
+    private javax.swing.JPanel pEquipmentGrid;
     private javax.swing.JPanel pInformation;
     private javax.swing.JPanel pSpells;
     private javax.swing.JPanel pWeapons;
     private javax.swing.JRadioButton rbAllWeapons;
+    private javax.swing.JRadioButton rbEquipmentWeapons;
     private javax.swing.JRadioButton rbPersonalWeapons;
     private javax.swing.JRadioButton rbProficientWeapons;
+    private javax.swing.JSlider sEquipmentGridSize;
     private javax.swing.JScrollPane spDescription;
+    private javax.swing.JScrollPane spEquipment;
     private javax.swing.JScrollPane spInformation;
     private javax.swing.JScrollPane spNotes;
     private javax.swing.JScrollPane spSpellTable;
@@ -434,6 +597,13 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private javax.swing.JTextArea taNotes;
     private javax.swing.JTabbedPane tpCharacterPages;
     // End of variables declaration//GEN-END:variables
+
+    private void updateEquipment() {
+        pEquipmentGrid.removeAll();
+        character.getInventoryItems().forEach((inventoryItem) -> {
+            pEquipmentGrid.add(new SlaveInternalEquipmentPanel(inventoryItem));
+        });
+    }
 
     private void updateSpellTable() {
         List<ISpell> spells = character.getSpells();
@@ -469,8 +639,23 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
         DefaultTableModel weaponModel = (DefaultTableModel) tWeapons.getModel();
         weaponModel.setRowCount(0);
         List<IWeapon> weapons = new ArrayList<>(character.getPrivateWeapons());
-        if (selection != WeaponSelection.PERSONAL) {
-            weapons.addAll(Weapons.getInstance().getAll());
+        switch (selection) {
+            case ALL:
+            case PROFICIENT:
+                weapons.addAll(Weapons.getInstance().getAll());
+                break;
+            case EQUIPMENT:
+                for (IEquipment equipment : character.getInventoryItems()) {
+                    if (equipment.getInventoryItem() instanceof IWeapon) {
+                        weapons.add((IWeapon) equipment.getInventoryItem());
+                    }
+                }
+                break;
+            case PERSONAL:
+                break;
+            default:
+                log.error("Unknown option [{}]", selection);
+                break;
         }
         Collections.sort(weapons);
         weapons.stream().filter((weapon) -> (weapon.getType() == WeaponType.PERSONAL || selection == WeaponSelection.ALL || character.isProficient(weapon))).forEachOrdered((weapon) -> {
@@ -506,6 +691,5 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
     public ICharacter getCharacter() {
         return character;
-
     }
 }

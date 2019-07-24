@@ -12,7 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <dep.commons.version>2.6</dep.commons.version>
-        <dep.openhtml.version>0.0.1-RC21</dep.openhtml.version>
+        <dep.openhtml.version>1.0.0</dep.openhtml.version>
     </properties>
 
     <dependencies>

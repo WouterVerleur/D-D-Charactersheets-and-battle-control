@@ -99,9 +99,11 @@ public class EncounterCombantantPanel extends javax.swing.JPanel {
     }
 
     public int getExp() {
-        ChallengeRating cr = character.getChallengeRating();
-        if (cr == null) {
+        ChallengeRating cr;
+        if (character instanceof IExtendedCharacter) {
             cr = ChallengeRating.getForLevel(getLevel());
+        } else {
+            cr = character.getChallengeRating();
         }
         return cr.getExp();
     }

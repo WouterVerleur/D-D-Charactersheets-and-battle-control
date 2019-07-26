@@ -34,8 +34,6 @@ import java.util.Enumeration;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JTextArea;
 import javax.swing.ToolTipManager;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -44,7 +42,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.wouter.dndbattle.core.impl.Master;
 import com.wouter.dndbattle.utils.Armors;
 import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
 import com.wouter.dndbattle.utils.Initializable;
 import com.wouter.dndbattle.utils.Settings;
 import com.wouter.dndbattle.utils.Spells;
@@ -279,14 +276,7 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
     }
 
     private static void logToScreen(String logLine) {
-        JTextArea logger = MAIN.taDisplayLog;
-        if (logger.getText().isEmpty()) {
-            logger.setText(logLine);
-            return;
-        }
-        logger.setText(logger.getText() + '\n' + logLine);
-        JScrollBar vertical = MAIN.spDisplayLog.getVerticalScrollBar();
-        vertical.setValue(vertical.getMaximum());
+        MAIN.pbMain.setString(logLine);
     }
 
     private Main() {
@@ -313,10 +303,10 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        spDisplayLog = new javax.swing.JScrollPane();
-        taDisplayLog = new javax.swing.JTextArea();
         pbMain = new javax.swing.JProgressBar();
         pbSub = new javax.swing.JProgressBar();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Starting program");
@@ -328,32 +318,47 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
             }
         });
 
-        taDisplayLog.setEditable(false);
-        taDisplayLog.setBackground(GlobalUtils.getBackgroundTransparent());
-        taDisplayLog.setColumns(20);
-        taDisplayLog.setRows(5);
-        spDisplayLog.setViewportView(taDisplayLog);
-
         pbMain.setIndeterminate(true);
+        pbMain.setString("");
+        pbMain.setStringPainted(true);
 
         pbSub.setVisible(false);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/font_awesome_5_solid_dice-d20.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("D&D Charactersheets and Battle control");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
-            .addComponent(pbMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pbSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(pbMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pbSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(spDisplayLog, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pbMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pbSub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pbMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pbSub, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -375,9 +380,9 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JProgressBar pbMain;
     private javax.swing.JProgressBar pbSub;
-    private javax.swing.JScrollPane spDisplayLog;
-    private javax.swing.JTextArea taDisplayLog;
     // End of variables declaration//GEN-END:variables
 }

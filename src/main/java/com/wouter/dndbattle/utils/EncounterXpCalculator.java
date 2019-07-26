@@ -106,9 +106,9 @@ public class EncounterXpCalculator {
                 }
             }
         }
-        if (partySize < 3 && base > 0) {
+        if (partySize > 6 && base > 0) {
             base--;
-        } else if (partySize > 6 && base < (ENCOUNTER_MULTIPLIER.length - 1)) {
+        } else if (partySize < 3 && base < (ENCOUNTER_MULTIPLIER.length - 1)) {
             base++;
         }
         return ENCOUNTER_MULTIPLIER[base];

@@ -200,12 +200,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pView" alignment="0" pref="661" max="32767" attributes="0"/>
+          <Component id="pView" alignment="0" pref="385" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pView" alignment="0" pref="401" max="32767" attributes="0"/>
+          <Component id="pView" alignment="0" pref="229" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -242,7 +242,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bAddCombatant" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="bNext" pref="434" max="32767" attributes="0"/>
+                          <Component id="bNext" pref="158" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bNewBattle" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -260,7 +260,7 @@
                               <Component id="bNext" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="spCombatants" pref="333" max="32767" attributes="0"/>
+                          <Component id="spCombatants" pref="161" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -370,7 +370,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="spClientsTable" pref="574" max="32767" attributes="0"/>
+                      <Component id="spClientsTable" pref="298" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="tbRefresh" max="32767" attributes="0"/>
@@ -382,7 +382,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="spClientsTable" alignment="0" pref="401" max="32767" attributes="0"/>
+                  <Component id="spClientsTable" alignment="0" pref="229" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bKickClient" min="-2" max="-2" attributes="0"/>

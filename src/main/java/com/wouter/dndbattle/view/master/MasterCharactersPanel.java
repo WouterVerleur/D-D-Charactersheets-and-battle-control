@@ -120,7 +120,7 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         pCharactersLayout.setVerticalGroup(
             pCharactersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pCharactersLayout.createSequentialGroup()
-                .addComponent(spCharacters)
+                .addComponent(spCharacters, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bNew))
         );
@@ -131,11 +131,11 @@ public class MasterCharactersPanel extends javax.swing.JPanel {
         pTemp.setLayout(pTempLayout);
         pTempLayout.setHorizontalGroup(
             pTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 248, Short.MAX_VALUE)
         );
         pTempLayout.setVerticalGroup(
             pTempLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 211, Short.MAX_VALUE)
+            .addGap(0, 174, Short.MAX_VALUE)
         );
 
         spPreset.setRightComponent(pTemp);

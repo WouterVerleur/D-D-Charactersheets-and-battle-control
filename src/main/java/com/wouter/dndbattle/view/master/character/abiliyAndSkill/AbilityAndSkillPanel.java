@@ -745,6 +745,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     @Override
     public void update() {
         lPassiveWisdomModifier.setText(Integer.toString(character.getPassiveWisdom()));
+        lInitativeDex.setText(GlobalUtils.modifierToString(character.getAbilityModifier(AbilityType.DEX)));
         lInitiative.setText(GlobalUtils.modifierToString(character.getInitiative()));
         lArmorClass.setText(character.getArmorClassString());
         lProficiency.setText(GlobalUtils.modifierToString(character.getProficiencyScore()));

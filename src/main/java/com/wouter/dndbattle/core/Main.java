@@ -16,7 +16,6 @@ import static com.wouter.dndbattle.utils.Settings.CONNECTION_PORT;
 import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
 import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
 import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
 
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -305,8 +304,9 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
         } else {
             image = null;
         }
-        setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, 0), SETTINGS.getProperty(MASTER_LOCATION_Y, 0));
-        setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
+        //setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, 0), SETTINGS.getProperty(MASTER_LOCATION_Y, 0));
+        setLocationRelativeTo(null);
+        //setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
     }
 
     @SuppressWarnings("unchecked")
@@ -321,6 +321,7 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Starting program");
         setName("Starting"); // NOI18N
+        setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentMoved(java.awt.event.ComponentEvent evt) {
                 formComponentMoved(evt);

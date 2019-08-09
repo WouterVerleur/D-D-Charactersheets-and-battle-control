@@ -1,0 +1,420 @@
+/*
+ * Copyright (C) 2018 wverl
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.wouter.dndbattle.view.master.encounter;
+
+import static com.wouter.dndbattle.utils.EncounterXpCalculator.*;
+
+import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.ListModel;
+
+import com.wouter.dndbattle.objects.ICharacter;
+import com.wouter.dndbattle.objects.impl.character.Player;
+import com.wouter.dndbattle.utils.Characters;
+
+/**
+ *
+ * @author wverl
+ */
+public class EncounterCalculator extends javax.swing.JPanel implements IEncounterCombatantPanelParent {
+
+    private static final Characters CHARACTERS = Characters.getInstance();
+    private static final String TOTAL_FORMAT = "%d / %d";
+
+    private final Map<ICharacter, EncounterCombantantPanel> characterPanelMap = new HashMap<>();
+    private final List<EnemiesPanel> enemyPanels = new ArrayList<>(1);
+
+    private int easyTotal = 0;
+    private int mediumTotal = 0;
+    private int hardTotal = 0;
+    private int deathlyTotal = 0;
+    private int dailyTotal = 0;
+    private int partySize = 0;
+
+    /**
+     * Creates new form EncounterCalculator
+     */
+    public EncounterCalculator() {
+        initComponents();
+    }
+
+    @Override
+    public void update() {
+        easyTotal = 0;
+        mediumTotal = 0;
+        hardTotal = 0;
+        deathlyTotal = 0;
+        dailyTotal = 0;
+        partySize = 0;
+
+        for (Component component : pFriendlyCombatants.getComponents()) {
+            if (component instanceof EncounterCombantantPanel) {
+                EncounterCombantantPanel ecp = (EncounterCombantantPanel) component;
+                if (ecp.getAmount() <= 0) {
+                    removeCharacter(ecp);
+                } else {
+                    int level = ecp.getLevel();
+                    int amount = ecp.getAmount();
+                    easyTotal += (getEasyExperience(level) * amount);
+                    mediumTotal += (getMediumExperience(level) * amount);
+                    hardTotal += (getHardExperience(level) * amount);
+                    deathlyTotal += (getDeathlyExperience(level) * amount);
+                    dailyTotal += (getDailyExperience(level) * amount);
+                    partySize += amount;
+                }
+            }
+        }
+        lEasy.setText(Integer.toString(easyTotal));
+        lMedium.setText(Integer.toString(mediumTotal));
+        lHard.setText(Integer.toString(hardTotal));
+        lDeathly.setText(Integer.toString(deathlyTotal));
+        lDaily.setText(Integer.toString(dailyTotal));
+
+        updateEnemies();
+    }
+
+    public void updateEnemies() {
+        long totalExp = 0;
+        for (EnemiesPanel enemiesPanel : enemyPanels) {
+            final int enemyXp = enemiesPanel.getTotalXp();
+            if (enemyXp < easyTotal) {
+                enemiesPanel.setResult("Very Easy (<" + easyTotal + ')');
+            } else if (enemyXp < mediumTotal) {
+                enemiesPanel.setResult("Easy (" + easyTotal + '-' + mediumTotal + ')');
+            } else if (enemyXp < hardTotal) {
+                enemiesPanel.setResult("Medium (" + mediumTotal + '-' + hardTotal + ')');
+            } else if (enemyXp < deathlyTotal) {
+                enemiesPanel.setResult("Hard (" + hardTotal + '-' + deathlyTotal + ')');
+            } else if (enemyXp < dailyTotal) {
+                enemiesPanel.setResult("Deathly (" + deathlyTotal + '-' + dailyTotal + ')');
+            } else {
+                enemiesPanel.setResult("DAILY!!! (>=" + dailyTotal + ')');
+            }
+            totalExp += enemyXp;
+        }
+        lTotal.setText(String.format(TOTAL_FORMAT, totalExp, dailyTotal));
+    }
+
+    public static ListModel<ICharacter> getListModel(Class<? extends ICharacter> clazz) {
+        DefaultListModel<ICharacter> model = new DefaultListModel<>();
+        CHARACTERS.getCharacters(clazz).forEach((character) -> {
+            model.addElement(character);
+        });
+        return model;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        cbFriendlyClass = new com.wouter.dndbattle.view.comboboxes.ClassComboBox();
+        splFriendly = new javax.swing.JScrollPane();
+        lFriendly = new javax.swing.JList<>();
+        bAddFriendly = new javax.swing.JButton();
+        splFriendlyCombatants = new javax.swing.JScrollPane();
+        pFriendlyCombatants = new javax.swing.JPanel();
+        lEasyText = new javax.swing.JLabel();
+        lEasy = new javax.swing.JLabel();
+        lMediumTest = new javax.swing.JLabel();
+        lMedium = new javax.swing.JLabel();
+        lHardText = new javax.swing.JLabel();
+        lHard = new javax.swing.JLabel();
+        lDeathlyText = new javax.swing.JLabel();
+        lDeathly = new javax.swing.JLabel();
+        lDailyText = new javax.swing.JLabel();
+        lDaily = new javax.swing.JLabel();
+        sMiddle = new javax.swing.JSeparator();
+        lTotal = new javax.swing.JLabel();
+        lTotalText = new javax.swing.JLabel();
+        tpEnemies = new javax.swing.JTabbedPane();
+        bAddBattle = new javax.swing.JButton();
+
+        setLayout(new java.awt.GridBagLayout());
+
+        cbFriendlyClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbFriendlyClassItemStateChanged(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(cbFriendlyClass, gridBagConstraints);
+
+        lFriendly.setModel(getListModel(Player.class));
+        splFriendly.setViewportView(lFriendly);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(splFriendly, gridBagConstraints);
+
+        bAddFriendly.setText(">");
+        bAddFriendly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAddFriendlyActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(bAddFriendly, gridBagConstraints);
+
+        pFriendlyCombatants.setLayout(new java.awt.GridLayout(0, 1));
+        splFriendlyCombatants.setViewportView(pFriendlyCombatants);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(splFriendlyCombatants, gridBagConstraints);
+
+        lEasyText.setText("Easy");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lEasyText, gridBagConstraints);
+
+        lEasy.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lEasy, gridBagConstraints);
+
+        lMediumTest.setText("Medium");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lMediumTest, gridBagConstraints);
+
+        lMedium.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lMedium, gridBagConstraints);
+
+        lHardText.setText("Hard");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lHardText, gridBagConstraints);
+
+        lHard.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lHard, gridBagConstraints);
+
+        lDeathlyText.setText("Deathly");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lDeathlyText, gridBagConstraints);
+
+        lDeathly.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lDeathly, gridBagConstraints);
+
+        lDailyText.setText("Daily");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(lDailyText, gridBagConstraints);
+
+        lDaily.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(lDaily, gridBagConstraints);
+
+        sMiddle.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(sMiddle, gridBagConstraints);
+
+        lTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(lTotal, gridBagConstraints);
+
+        lTotalText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lTotalText.setText("Total");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(lTotalText, gridBagConstraints);
+
+        tpEnemies.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        bAddBattleActionPerformed(null);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        add(tpEnemies, gridBagConstraints);
+
+        bAddBattle.setText("Add");
+        bAddBattle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAddBattleActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(bAddBattle, gridBagConstraints);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void cbFriendlyClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFriendlyClassItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            final DefaultListModel model = (DefaultListModel) lFriendly.getModel();
+            model.removeAllElements();
+            lFriendly.clearSelection();
+            CHARACTERS.getCharacters(cbFriendlyClass.getSelectedItem()).forEach((character) -> {
+                model.addElement(character);
+            });
+        }
+    }//GEN-LAST:event_cbFriendlyClassItemStateChanged
+
+    private void bAddFriendlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddFriendlyActionPerformed
+        addCharacter(lFriendly);
+    }//GEN-LAST:event_bAddFriendlyActionPerformed
+
+    private void bAddBattleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddBattleActionPerformed
+        int number = tpEnemies.getComponentCount();
+        String name = "Battle " + (number + 1);
+        EnemiesPanel panel = new EnemiesPanel(this);
+        enemyPanels.add(panel);
+        tpEnemies.addTab(name, panel);
+        tpEnemies.setSelectedIndex(number);
+    }//GEN-LAST:event_bAddBattleActionPerformed
+
+    public void addCharacter(JList<ICharacter> list) {
+        ICharacter selectedValue = list.getSelectedValue();
+        if (selectedValue != null) {
+            if (characterPanelMap.containsKey(selectedValue)) {
+                characterPanelMap.get(selectedValue).addOne();
+            } else {
+                final EncounterCombantantPanel ecp = new EncounterCombantantPanel(this, selectedValue);
+                characterPanelMap.put(selectedValue, ecp);
+                pFriendlyCombatants.add(ecp);
+            }
+            update();
+        }
+    }
+
+    public void removeCharacter(EncounterCombantantPanel panel) {
+        characterPanelMap.remove(panel.getCharacter());
+        pFriendlyCombatants.remove(panel);
+    }
+
+    public int getPartySize() {
+        return partySize;
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bAddBattle;
+    private javax.swing.JButton bAddFriendly;
+    private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbFriendlyClass;
+    private javax.swing.JLabel lDaily;
+    private javax.swing.JLabel lDailyText;
+    private javax.swing.JLabel lDeathly;
+    private javax.swing.JLabel lDeathlyText;
+    private javax.swing.JLabel lEasy;
+    private javax.swing.JLabel lEasyText;
+    private javax.swing.JList<ICharacter> lFriendly;
+    private javax.swing.JLabel lHard;
+    private javax.swing.JLabel lHardText;
+    private javax.swing.JLabel lMedium;
+    private javax.swing.JLabel lMediumTest;
+    private javax.swing.JLabel lTotal;
+    private javax.swing.JLabel lTotalText;
+    private javax.swing.JPanel pFriendlyCombatants;
+    private javax.swing.JSeparator sMiddle;
+    private javax.swing.JScrollPane splFriendly;
+    private javax.swing.JScrollPane splFriendlyCombatants;
+    private javax.swing.JTabbedPane tpEnemies;
+    // End of variables declaration//GEN-END:variables
+}

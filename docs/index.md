@@ -2,7 +2,7 @@
 A simple program designed for a D&amp;D group to create Character sheets and use them as a guide for a battle. This program creates a battle master when started on a computer that does not have the program running. Any other computer in the network can than connect to the battle master to create a slave of this master. This way the DM has control over the battle and party members can view information like the order and the health of friendly characters.
 
 You can download a jar of the latest version [here]({{ site.url }}/downloads/dndbattle-2.5.jar).  
-Requires Java.  
+Requires Java 8 or higher.  
 [![Known Vulnerabilities](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=pom.xml)
 
 ## Current features
@@ -32,7 +32,7 @@ Requires Java.
   * For the player that don't want to use a laptop.
   * Custom build templates for this software.
 * Equipment Management
-  * Add all types of equipment to your character and have the information rady to use.
+  * Add all types of equipment to your character and have the information ready to use.
   * The weight of the equipment is also calculated for you.
 
 ## Planned features
@@ -48,6 +48,10 @@ Requires Java.
 [Version 2.1]({{ site.url }}/downloads/dndbattle-2.1.jar).  
 [Version 2]({{ site.url }}/downloads/dndbattle-2.jar).  
 [Version 1]({{ site.url }}/downloads/dndbattle-1.jar).
+
+## Randomizer:
+This is an optional program that allows a DM to easilly create random events. These can be timed events or one-off.  
+[randomizer-1.0]({{ site.url }}/downloads/randomizer-1.0).  
 
 Website & Software logo:
 Created by Font Awesome https://fontawesome.com

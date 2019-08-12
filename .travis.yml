@@ -6,3 +6,4 @@ jdk:
   - openjdk11
 git:
   quiet: true
+before_install: cd dndbattle

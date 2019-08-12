@@ -8,4 +8,5 @@ Check our website [dnd.verleur.nl](https://dnd.verleur.nl).
 
 Development of this project is optimised for use with netbeans.
 
-[![Known Vulnerabilities](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=pom.xml)
+[![Known Vulnerabilities](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=pom.xml)  
+[![CodeFactor](https://www.codefactor.io/repository/github/wouterverleur/d-d-charactersheets-and-battle-control/badge)](https://www.codefactor.io/repository/github/wouterverleur/d-d-charactersheets-and-battle-control)  

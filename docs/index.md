@@ -3,7 +3,7 @@ A simple program designed for a D&amp;D group to create Character sheets and use
 
 You can download a jar of the latest version [here]({{ site.url }}/downloads/dndbattle-2.5.jar).  
 Requires Java 8 or higher.  
-[![Known Vulnerabilities](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=pom.xml)
+[![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=dndbattle/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=dndbattle/pom.xml)
 
 ## Current features
 * D&D 5e style character sheets
@@ -51,6 +51,7 @@ Requires Java 8 or higher.
 
 ## Randomizer:
 This is an optional program that allows a DM to easilly create random events. These can be timed events or one-off.  
+[![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=randomizer/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=randomizer/pom.xml)  
 [randomizer-1.0]({{ site.url }}/downloads/randomizer-1.0).  
 
 Website & Software logo:

@@ -9,6 +9,8 @@ deploy:
   provider: releases
   api_key: $OAUTHTOKEN
   file_glob: true
-  file: target/*
+  file: target/*-jar-with
   skip_cleanup: true
   draft: true
+  if:
+    jdk: oraclejdk11

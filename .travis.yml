@@ -8,6 +8,7 @@ before_install: cd dndbattle
 deploy:
   provider: releases
   api_key: $OAUTHTOKEN
-  file: **-jar-with-dependencies.jar
+  file:
+  - target/*
   skip_cleanup: true
   draft: true

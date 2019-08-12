@@ -11,5 +11,4 @@ deploy:
   file_glob: true
   file: target/*
   skip_cleanup: true
-  on:
-    tags: true
+  draft: true

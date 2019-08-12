@@ -12,3 +12,5 @@ Development of this project is optimised for use with netbeans.
 D&D Character a battle control: [![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=dndbattle/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=dndbattle/pom.xml)  
 Randomizer: [![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=randomizer/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=randomizer/pom.xml)  
 [![CodeFactor](https://www.codefactor.io/repository/github/wouterverleur/d-d-charactersheets-and-battle-control/badge)](https://www.codefactor.io/repository/github/wouterverleur/d-d-charactersheets-and-battle-control)  
+
+[![Build Status](https://travis-ci.com/WouterVerleur/D-D-Charactersheets-and-battle-control.svg?branch=master)](https://travis-ci.com/WouterVerleur/D-D-Charactersheets-and-battle-control)  

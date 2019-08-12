@@ -5,19 +5,3 @@ jdk:
 git:
   quiet: true
 before_install: cd dndbattle
-matrix:
-  include:
-  - deploy:
-      provider: releases
-      api_key: $API_KEY$
-      file_glob: true
-      file: target/*-jar-with-dependencies.jar
-      skip_cleanup: true
-      on:
-        tags: true
-  - deploy:
-      provider: releases
-      api_key: "GITHUB OAUTH TOKEN"
-      file: "FILE TO UPLOAD"
-      skip_cleanup: true
-      draft: true

@@ -51,9 +51,9 @@ Requires Java 8 or higher.
 
 ## Randomizer:
 This is an optional program that allows a DM to easilly create random events. These can be timed events or one-off.  
-[![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=randomizer/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=randomizer/pom.xml)  
 [randomizer-1.0]({{ site.url }}/downloads/randomizer-1.0).  
+[![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=randomizer/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=randomizer/pom.xml)  
 
 Website & Software logo:
-Created by Font Awesome https://fontawesome.com
-Downloaded from https://commons.wikimedia.org/wiki/File:Font_Awesome_5_solid_dice-d20.svg
+Created by Font Awesome [https://fontawesome.com](https://fontawesome.com)
+Downloaded from [https://commons.wikimedia.org/wiki/File:Font_Awesome_5_solid_dice-d20.svg](https://commons.wikimedia.org/wiki/File:Font_Awesome_5_solid_dice-d20.svg)

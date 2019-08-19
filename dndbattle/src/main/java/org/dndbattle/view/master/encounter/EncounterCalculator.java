@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.encounter;
+package org.dndbattle.view.master.encounter;
 
-import static com.wouter.dndbattle.utils.EncounterXpCalculator.*;
+import static org.dndbattle.utils.EncounterXpCalculator.*;
 
 import java.awt.Component;
 import java.awt.event.ItemEvent;
@@ -29,9 +29,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.character.Player;
-import com.wouter.dndbattle.utils.Characters;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.impl.character.Player;
+import org.dndbattle.utils.Characters;
 
 /**
  *
@@ -134,7 +134,7 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cbFriendlyClass = new com.wouter.dndbattle.view.comboboxes.ClassComboBox();
+        cbFriendlyClass = new org.dndbattle.view.comboboxes.ClassComboBox();
         splFriendly = new javax.swing.JScrollPane();
         lFriendly = new javax.swing.JList<>();
         bAddFriendly = new javax.swing.JButton();
@@ -397,7 +397,7 @@ public class EncounterCalculator extends javax.swing.JPanel implements IEncounte
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddBattle;
     private javax.swing.JButton bAddFriendly;
-    private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbFriendlyClass;
+    private org.dndbattle.view.comboboxes.ClassComboBox cbFriendlyClass;
     private javax.swing.JLabel lDaily;
     private javax.swing.JLabel lDailyText;
     private javax.swing.JLabel lDeathly;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.randomizer.randomizers;
+package org.dndbattle.randomizer.randomizers;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.randomizer.view.AbstractRandomizerPanel;
-import com.wouter.randomizer.view.OnetimeRandomizerPanel;
+import org.dndbattle.randomizer.view.AbstractRandomizerPanel;
+import org.dndbattle.randomizer.view.OnetimeRandomizerPanel;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Randomizer implements Serializable {

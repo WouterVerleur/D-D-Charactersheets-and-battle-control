@@ -66,7 +66,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.DiceComboBox" name="cbDice">
+    <Component class="org.dndbattle.view.comboboxes.DiceComboBox" name="cbDice">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="weapon.getAttackDice()" type="code"/>
@@ -100,7 +100,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.WeaponRangeComboBox" name="cbRange">
+    <Component class="org.dndbattle.view.comboboxes.WeaponRangeComboBox" name="cbRange">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="weapon.getWeaponRange()" type="code"/>
@@ -260,7 +260,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.WeaponWeightComboBox" name="cbWeight">
+    <Component class="org.dndbattle.view.comboboxes.WeaponWeightComboBox" name="cbWeight">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="weapon.getWeightClass()" type="code"/>

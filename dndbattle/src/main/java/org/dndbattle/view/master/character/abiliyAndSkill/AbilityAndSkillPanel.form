@@ -507,7 +507,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox" name="cbChallengeRating">
+        <Component class="org.dndbattle.view.comboboxes.ChallengeRatingComboBox" name="cbChallengeRating">
           <Properties>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="character.getChallengeRating()" type="code"/>
@@ -556,7 +556,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="com.wouter.dndbattle.view.comboboxes.SizeComboBox" name="cbSize">
+        <Component class="org.dndbattle.view.comboboxes.SizeComboBox" name="cbSize">
           <Properties>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="character.getSize()" type="code"/>
@@ -712,7 +712,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCanTransformActionPerformed"/>
           </Events>
         </Component>
-        <Component class="com.wouter.dndbattle.view.comboboxes.ClassComboBox" name="cbTransformClass">
+        <Component class="org.dndbattle.view.comboboxes.ClassComboBox" name="cbTransformClass">
           <Properties>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="character.getTransformType()" type="code"/>
@@ -725,7 +725,7 @@
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbTransformClassItemStateChanged"/>
           </Events>
         </Component>
-        <Component class="com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox" name="cbTransformChallengeRating">
+        <Component class="org.dndbattle.view.comboboxes.ChallengeRatingComboBox" name="cbTransformChallengeRating">
           <Properties>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="character.getTransformChallengeRating()" type="code"/>

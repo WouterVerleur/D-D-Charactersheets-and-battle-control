@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.encounter;
+package org.dndbattle.view.master.encounter;
 
-import static com.wouter.dndbattle.utils.EncounterXpCalculator.getEncounterMultiplier;
-import static com.wouter.dndbattle.view.master.encounter.EncounterCalculator.getListModel;
+import static org.dndbattle.utils.EncounterXpCalculator.getEncounterMultiplier;
+import static org.dndbattle.view.master.encounter.EncounterCalculator.getListModel;
 
 import java.awt.event.ItemEvent;
 import java.util.HashMap;
@@ -26,9 +26,9 @@ import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.character.Enemy;
-import com.wouter.dndbattle.utils.Characters;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.impl.character.Enemy;
+import org.dndbattle.utils.Characters;
 
 /**
  *
@@ -93,7 +93,7 @@ public class EnemiesPanel extends javax.swing.JPanel implements IEncounterCombat
         spEnemyCombatants = new javax.swing.JScrollPane();
         pEnemyCombatants = new javax.swing.JPanel();
         bAddEnemy = new javax.swing.JButton();
-        cbEnemyClass = new com.wouter.dndbattle.view.comboboxes.ClassComboBox();
+        cbEnemyClass = new org.dndbattle.view.comboboxes.ClassComboBox();
         splEnemy = new javax.swing.JScrollPane();
         lEnemy = new javax.swing.JList<>();
         lTotal = new javax.swing.JLabel();
@@ -265,7 +265,7 @@ public class EnemiesPanel extends javax.swing.JPanel implements IEncounterCombat
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddEnemy;
-    private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbEnemyClass;
+    private org.dndbattle.view.comboboxes.ClassComboBox cbEnemyClass;
     private javax.swing.JLabel lAdjusted;
     private javax.swing.JLabel lAdjustedText;
     private javax.swing.JList<ICharacter> lEnemy;

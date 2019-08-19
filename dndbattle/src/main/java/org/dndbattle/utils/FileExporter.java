@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
-import static com.wouter.dndbattle.utils.GlobalUtils.ATTACK;
-import static com.wouter.dndbattle.utils.GlobalUtils.DAMAGE;
-import static com.wouter.dndbattle.utils.GlobalUtils.NAME;
-import static com.wouter.dndbattle.utils.GlobalUtils.NOTES;
+import static org.dndbattle.utils.GlobalUtils.ATTACK;
+import static org.dndbattle.utils.GlobalUtils.DAMAGE;
+import static org.dndbattle.utils.GlobalUtils.NAME;
+import static org.dndbattle.utils.GlobalUtils.NOTES;
 import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
 
 import java.awt.Desktop;
@@ -41,14 +41,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.IEquipment;
-import com.wouter.dndbattle.objects.IExtendedCharacter;
-import com.wouter.dndbattle.objects.IInventoryItem;
-import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.WeaponSelection;
-import com.wouter.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.IEquipment;
+import org.dndbattle.objects.IExtendedCharacter;
+import org.dndbattle.objects.IInventoryItem;
+import org.dndbattle.objects.ISpell;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.WeaponSelection;
+import org.dndbattle.objects.enums.WeaponType;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.W3CDom;
 import org.slf4j.Logger;

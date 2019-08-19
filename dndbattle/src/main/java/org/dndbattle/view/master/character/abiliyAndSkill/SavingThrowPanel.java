@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
+package org.dndbattle.view.master.character.abiliyAndSkill;
 
-import static com.wouter.dndbattle.objects.enums.Dice.D20;
+import static org.dndbattle.objects.enums.Dice.D20;
 
 import java.awt.event.ItemEvent;
 
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.DicePopup;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.view.DicePopup;
+import org.dndbattle.view.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
     private void initComponents() {
 
         lModifier = new javax.swing.JLabel();
-        cbProficiency = new com.wouter.dndbattle.view.comboboxes.ProficiencyComboBox();
+        cbProficiency = new org.dndbattle.view.comboboxes.ProficiencyComboBox();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), abilityType.getFullName(), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
@@ -117,7 +117,7 @@ class SavingThrowPanel extends javax.swing.JPanel implements IUpdateablePanel {
     }//GEN-LAST:event_lModifierMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.wouter.dndbattle.view.comboboxes.ProficiencyComboBox cbProficiency;
+    private org.dndbattle.view.comboboxes.ProficiencyComboBox cbProficiency;
     private javax.swing.JLabel lModifier;
     // End of variables declaration//GEN-END:variables
 }

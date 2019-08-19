@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.master;
+package org.dndbattle.view.master;
 
 import static java.lang.Integer.MIN_VALUE;
 
@@ -14,11 +14,11 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.objects.IArmor;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.Combatant;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.GlobalUtils;
+import org.dndbattle.objects.IArmor;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.Combatant;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.GlobalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

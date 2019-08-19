@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.core.impl;
+package org.dndbattle.core.impl;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.wouter.dndbattle.core.IMasterConnectionInfo;
-import com.wouter.dndbattle.core.ISlave;
+import org.dndbattle.core.IMasterConnectionInfo;
+import org.dndbattle.core.ISlave;
 
 /**
  *

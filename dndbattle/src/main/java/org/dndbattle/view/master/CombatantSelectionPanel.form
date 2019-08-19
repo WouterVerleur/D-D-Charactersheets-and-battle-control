@@ -26,7 +26,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.ClassComboBox" name="cbClass">
+    <Component class="org.dndbattle.view.comboboxes.ClassComboBox" name="cbClass">
       <Properties>
         <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="-1" type="code"/>

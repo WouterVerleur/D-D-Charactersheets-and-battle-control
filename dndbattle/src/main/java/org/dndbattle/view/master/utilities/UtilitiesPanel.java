@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.utilities;
+package org.dndbattle.view.master.utilities;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
-import com.wouter.dndbattle.objects.IUtility;
-import com.wouter.dndbattle.objects.impl.Utility;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.utils.Utilities;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.IUtility;
+import org.dndbattle.objects.impl.Utility;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.utils.Utilities;
+import org.dndbattle.view.IUpdateablePanel;
 
 /**
  *

@@ -47,7 +47,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tpCharacterPages.addTab(&quot;Abilities&quot;, new com.wouter.dndbattle.view.slave.character.SlaveAbilityAndSkillPanel(character));&#xa;if (character instanceof IExtendedCharacter){&#xa;    tpCharacterPages.addTab(&quot;Character&quot;, new com.wouter.dndbattle.view.slave.character.SlaveExtendedCharacterPanel((IExtendedCharacter) character));&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tpCharacterPages.addTab(&quot;Abilities&quot;, new org.dndbattle.view.slave.character.SlaveAbilityAndSkillPanel(character));&#xa;if (character instanceof IExtendedCharacter){&#xa;    tpCharacterPages.addTab(&quot;Character&quot;, new org.dndbattle.view.slave.character.SlaveExtendedCharacterPanel((IExtendedCharacter) character));&#xa;}"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

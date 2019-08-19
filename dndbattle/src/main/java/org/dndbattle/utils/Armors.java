@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
-import com.wouter.dndbattle.objects.IArmor;
-import com.wouter.dndbattle.objects.impl.Armor;
+import org.dndbattle.objects.IArmor;
+import org.dndbattle.objects.impl.Armor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

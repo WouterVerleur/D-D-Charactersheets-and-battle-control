@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.randomizer.view;
+package org.dndbattle.randomizer.view;
 
-import com.wouter.randomizer.Main;
-import com.wouter.randomizer.randomizers.Randomizer;
+import org.dndbattle.randomizer.Main;
+import org.dndbattle.randomizer.randomizers.Randomizer;
 
 public class OnetimeRandomizerPanel extends AbstractRandomizerPanel<Randomizer> {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.randomizer;
+package org.dndbattle.randomizer;
 
 import java.awt.Component;
 import java.io.File;
@@ -17,12 +17,12 @@ import javax.swing.JPanel;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wouter.randomizer.randomizers.Randomizer;
-import com.wouter.randomizer.randomizers.TimedRandomizer;
-import com.wouter.randomizer.utils.Settings;
-import com.wouter.randomizer.view.AbstractRandomizerPanel;
-import com.wouter.randomizer.view.EditRandomizerPanel;
-import com.wouter.randomizer.view.TimedRandomizerPanel;
+import org.dndbattle.randomizer.randomizers.Randomizer;
+import org.dndbattle.randomizer.randomizers.TimedRandomizer;
+import org.dndbattle.randomizer.utils.Settings;
+import org.dndbattle.randomizer.view.AbstractRandomizerPanel;
+import org.dndbattle.randomizer.view.EditRandomizerPanel;
+import org.dndbattle.randomizer.view.TimedRandomizerPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.extendedCharacter;
+package org.dndbattle.view.master.character.extendedCharacter;
 
 import java.awt.event.ItemEvent;
 
-import com.wouter.dndbattle.objects.impl.CharacterClass;
-import com.wouter.dndbattle.utils.GlobalUtils;
+import org.dndbattle.objects.impl.CharacterClass;
+import org.dndbattle.utils.GlobalUtils;
 
 /**
  *
@@ -45,7 +45,7 @@ public class CharacterClassPanel extends javax.swing.JPanel {
 
         tfName = new javax.swing.JTextField();
         sLevel = new javax.swing.JSpinner();
-        cbDice = new com.wouter.dndbattle.view.comboboxes.DiceComboBox();
+        cbDice = new org.dndbattle.view.comboboxes.DiceComboBox();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -123,7 +123,7 @@ public class CharacterClassPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tfNameFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.wouter.dndbattle.view.comboboxes.DiceComboBox cbDice;
+    private org.dndbattle.view.comboboxes.DiceComboBox cbDice;
     private javax.swing.JSpinner sLevel;
     private javax.swing.JTextField tfName;
     // End of variables declaration//GEN-END:variables

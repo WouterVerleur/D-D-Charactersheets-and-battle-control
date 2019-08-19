@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.weapons;
+package org.dndbattle.view.master.weapons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +23,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.objects.impl.Weapon;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Weapons;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.Dice;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.objects.impl.Weapon;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Weapons;
+import org.dndbattle.view.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.encounter;
+package org.dndbattle.view.master.encounter;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.IExtendedCharacter;
-import com.wouter.dndbattle.objects.enums.ChallengeRating;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.IExtendedCharacter;
+import org.dndbattle.objects.enums.ChallengeRating;
 
 /**
  *

@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.weapons;
+package org.dndbattle.view.master.weapons;
 
-import com.wouter.dndbattle.objects.enums.WeaponRange;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.objects.impl.Weapon;
-import com.wouter.dndbattle.utils.Weapons;
+import org.dndbattle.objects.enums.WeaponRange;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.objects.impl.Weapon;
+import org.dndbattle.utils.Weapons;
 
 /**
  *
@@ -48,10 +48,10 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         tfName = new javax.swing.JTextField();
         lDamage = new javax.swing.JLabel();
         sDiceAmount = new javax.swing.JSpinner();
-        cbDice = new com.wouter.dndbattle.view.comboboxes.DiceComboBox();
+        cbDice = new org.dndbattle.view.comboboxes.DiceComboBox();
         tfDamage = new javax.swing.JTextField();
         lRange = new javax.swing.JLabel();
-        cbRange = new com.wouter.dndbattle.view.comboboxes.WeaponRangeComboBox();
+        cbRange = new org.dndbattle.view.comboboxes.WeaponRangeComboBox();
         sRange = new javax.swing.JSpinner();
         lSlash = new javax.swing.JLabel();
         sMaxRange = new javax.swing.JSpinner();
@@ -62,7 +62,7 @@ public class WeaponEditPanel extends javax.swing.JPanel {
         cbProficient = new javax.swing.JCheckBox();
         lWeight = new javax.swing.JLabel();
         sWeight = new javax.swing.JSpinner();
-        cbWeight = new com.wouter.dndbattle.view.comboboxes.WeaponWeightComboBox();
+        cbWeight = new org.dndbattle.view.comboboxes.WeaponWeightComboBox();
         lAttackModifier = new javax.swing.JLabel();
         sAttackModifier = new javax.swing.JSpinner();
         lDamageModifier = new javax.swing.JLabel();
@@ -361,13 +361,13 @@ public class WeaponEditPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox cbCanUseMagicStats;
-    private com.wouter.dndbattle.view.comboboxes.DiceComboBox cbDice;
+    private org.dndbattle.view.comboboxes.DiceComboBox cbDice;
     private javax.swing.JCheckBox cbFinesse;
     private javax.swing.JCheckBox cbLoading;
     private javax.swing.JCheckBox cbProficient;
-    private com.wouter.dndbattle.view.comboboxes.WeaponRangeComboBox cbRange;
+    private org.dndbattle.view.comboboxes.WeaponRangeComboBox cbRange;
     private javax.swing.JCheckBox cbTwoHanded;
-    private com.wouter.dndbattle.view.comboboxes.WeaponWeightComboBox cbWeight;
+    private org.dndbattle.view.comboboxes.WeaponWeightComboBox cbWeight;
     private javax.swing.JLabel lAttackModifier;
     private javax.swing.JLabel lDamage;
     private javax.swing.JLabel lDamageModifier;

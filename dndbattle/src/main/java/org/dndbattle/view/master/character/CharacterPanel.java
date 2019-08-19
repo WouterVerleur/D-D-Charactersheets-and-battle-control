@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character;
+package org.dndbattle.view.master.character;
 
-import static com.wouter.dndbattle.utils.Settings.EXPORT_FILESELECTION;
-import static com.wouter.dndbattle.utils.Settings.EXPORT_WEAPONSELECTION;
+import static org.dndbattle.utils.Settings.EXPORT_FILESELECTION;
+import static org.dndbattle.utils.Settings.EXPORT_WEAPONSELECTION;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -30,22 +30,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.enums.WeaponSelection;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.FileExporter;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.IUpdateablePanel;
-import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
-import com.wouter.dndbattle.view.master.MasterCharactersPanel;
-import com.wouter.dndbattle.view.master.character.abiliyAndSkill.AbilityAndSkillPanel;
-import com.wouter.dndbattle.view.master.character.equipment.EquipmentPanel;
-import com.wouter.dndbattle.view.master.character.extendedCharacter.ExtendedCharacterPanel;
-import com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel;
-import com.wouter.dndbattle.view.master.character.weapon.CharacterWeaponPanel;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.enums.WeaponSelection;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.AbstractExtendedCharacter;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.FileExporter;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.view.comboboxes.ClassComboBox;
+import org.dndbattle.view.master.MasterCharactersPanel;
+import org.dndbattle.view.master.character.abiliyAndSkill.AbilityAndSkillPanel;
+import org.dndbattle.view.master.character.equipment.EquipmentPanel;
+import org.dndbattle.view.master.character.extendedCharacter.ExtendedCharacterPanel;
+import org.dndbattle.view.master.character.spells.SpellOverviewPanel;
+import org.dndbattle.view.master.character.weapon.CharacterWeaponPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

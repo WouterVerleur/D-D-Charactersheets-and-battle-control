@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.master;
+package org.dndbattle.view.master;
 
 import static java.nio.file.StandardCopyOption.*;
 
-import static com.wouter.dndbattle.utils.GlobalUtils.getFileName;
-import static com.wouter.dndbattle.utils.GlobalUtils.getFileNameWithoutExtention;
-import static com.wouter.dndbattle.utils.Settings.INPUT_FILESELECTION;
+import static org.dndbattle.utils.GlobalUtils.getFileName;
+import static org.dndbattle.utils.GlobalUtils.getFileNameWithoutExtention;
+import static org.dndbattle.utils.Settings.INPUT_FILESELECTION;
 
 import java.io.File;
 
@@ -27,9 +27,9 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.utils.AudioPlayer;
-import com.wouter.dndbattle.utils.FileManager;
-import com.wouter.dndbattle.utils.Settings;
+import org.dndbattle.utils.AudioPlayer;
+import org.dndbattle.utils.FileManager;
+import org.dndbattle.utils.Settings;
 import org.slf4j.LoggerFactory;
 
 /**

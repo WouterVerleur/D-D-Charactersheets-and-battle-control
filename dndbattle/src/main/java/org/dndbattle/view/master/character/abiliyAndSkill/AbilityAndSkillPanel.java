@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.abiliyAndSkill;
+package org.dndbattle.view.master.character.abiliyAndSkill;
 
 import static java.awt.event.ItemEvent.SELECTED;
 
@@ -25,16 +25,16 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 
-import com.wouter.dndbattle.objects.IArmor;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.SkillType;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.IUpdateablePanel;
-import com.wouter.dndbattle.view.master.character.CharacterPanel;
+import org.dndbattle.objects.IArmor;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.SkillType;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.AbstractExtendedCharacter;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.view.master.character.CharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,17 +92,17 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         lArmorClass = new javax.swing.JLabel();
         sShieldBonus = new javax.swing.JSpinner();
         pChallengeRating = new javax.swing.JPanel();
-        cbChallengeRating = new com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox();
+        cbChallengeRating = new org.dndbattle.view.comboboxes.ChallengeRatingComboBox();
         pSize = new javax.swing.JPanel();
-        cbSize = new com.wouter.dndbattle.view.comboboxes.SizeComboBox();
+        cbSize = new org.dndbattle.view.comboboxes.SizeComboBox();
         pSpeed = new javax.swing.JPanel();
         sSpeed = new javax.swing.JSpinner();
         pHitDice = new javax.swing.JPanel();
         lHitDice = new javax.swing.JLabel();
         pTransform = new javax.swing.JPanel();
         cbCanTransform = new javax.swing.JCheckBox();
-        cbTransformClass = new com.wouter.dndbattle.view.comboboxes.ClassComboBox();
-        cbTransformChallengeRating = new com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox();
+        cbTransformClass = new org.dndbattle.view.comboboxes.ClassComboBox();
+        cbTransformChallengeRating = new org.dndbattle.view.comboboxes.ChallengeRatingComboBox();
         spNotes = new javax.swing.JScrollPane();
         taNotes = new javax.swing.JTextArea();
 
@@ -703,11 +703,11 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<IArmor> cbArmor;
     private javax.swing.JCheckBox cbCanTransform;
-    private com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox cbChallengeRating;
+    private org.dndbattle.view.comboboxes.ChallengeRatingComboBox cbChallengeRating;
     private javax.swing.JCheckBox cbShield;
-    private com.wouter.dndbattle.view.comboboxes.SizeComboBox cbSize;
-    private com.wouter.dndbattle.view.comboboxes.ChallengeRatingComboBox cbTransformChallengeRating;
-    private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbTransformClass;
+    private org.dndbattle.view.comboboxes.SizeComboBox cbSize;
+    private org.dndbattle.view.comboboxes.ChallengeRatingComboBox cbTransformChallengeRating;
+    private org.dndbattle.view.comboboxes.ClassComboBox cbTransformClass;
     private javax.swing.JLabel lArmor;
     private javax.swing.JLabel lArmorClass;
     private javax.swing.JLabel lExtraArmor;

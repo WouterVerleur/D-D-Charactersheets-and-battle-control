@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view;
+package org.dndbattle.view;
 
-import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.utils.GlobalUtils;
+import org.dndbattle.objects.enums.Dice;
+import org.dndbattle.utils.GlobalUtils;
 import java.util.Random;
 
 /**

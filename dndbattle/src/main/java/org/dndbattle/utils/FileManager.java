@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
-import static com.wouter.dndbattle.utils.Settings.PRESETFOLDER;
+import static org.dndbattle.utils.Settings.PRESETFOLDER;
 
 import java.io.File;
 

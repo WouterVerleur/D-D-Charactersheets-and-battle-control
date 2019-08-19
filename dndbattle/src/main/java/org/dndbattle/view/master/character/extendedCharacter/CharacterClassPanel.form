@@ -85,7 +85,7 @@
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sLevelStateChanged"/>
       </Events>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.DiceComboBox" name="cbDice">
+    <Component class="org.dndbattle.view.comboboxes.DiceComboBox" name="cbDice">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="GlobalUtils.getBackgroundTransparent()" type="code"/>

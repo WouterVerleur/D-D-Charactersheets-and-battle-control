@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.master;
+package org.dndbattle.view.master;
 
 import java.awt.event.ItemEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.utils.Characters;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.utils.Characters;
 
 /**
  *
@@ -35,7 +35,7 @@ public class CombatantSelectionPanel extends JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         lType = new javax.swing.JLabel();
-        cbClass = new com.wouter.dndbattle.view.comboboxes.ClassComboBox();
+        cbClass = new org.dndbattle.view.comboboxes.ClassComboBox();
         lPresets = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listCharacters = new javax.swing.JList();
@@ -102,7 +102,7 @@ public class CombatantSelectionPanel extends JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.wouter.dndbattle.view.comboboxes.ClassComboBox cbClass;
+    private org.dndbattle.view.comboboxes.ClassComboBox cbClass;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lPresets;
     private javax.swing.JLabel lType;

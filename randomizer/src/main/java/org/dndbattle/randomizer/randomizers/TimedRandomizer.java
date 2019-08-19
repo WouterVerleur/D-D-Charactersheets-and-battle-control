@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.randomizer.randomizers;
+package org.dndbattle.randomizer.randomizers;
 
 import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wouter.randomizer.view.TimedRandomizerPanel;
+import org.dndbattle.randomizer.view.TimedRandomizerPanel;
 
 public class TimedRandomizer extends Randomizer {
 

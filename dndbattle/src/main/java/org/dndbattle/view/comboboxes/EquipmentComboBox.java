@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.comboboxes;
+package org.dndbattle.view.comboboxes;
 
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import com.wouter.dndbattle.objects.IInventoryItem;
-import com.wouter.dndbattle.objects.impl.Armor;
-import com.wouter.dndbattle.objects.impl.Utility;
-import com.wouter.dndbattle.objects.impl.Weapon;
+import org.dndbattle.objects.IInventoryItem;
+import org.dndbattle.objects.impl.Armor;
+import org.dndbattle.objects.impl.Utility;
+import org.dndbattle.objects.impl.Weapon;
 
 /**
  *

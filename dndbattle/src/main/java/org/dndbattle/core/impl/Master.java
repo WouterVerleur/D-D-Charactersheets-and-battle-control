@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.core.impl;
+package org.dndbattle.core.impl;
 
-import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
+import static org.dndbattle.utils.Settings.SLAVE_TITLE;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -18,17 +18,17 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.core.IMaster;
-import com.wouter.dndbattle.core.IMasterConnectionInfo;
-import com.wouter.dndbattle.core.ISlave;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.objects.impl.Combatant;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.master.MasterFrame;
+import org.dndbattle.core.IMaster;
+import org.dndbattle.core.IMasterConnectionInfo;
+import org.dndbattle.core.ISlave;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.impl.Combatant;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.view.master.MasterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *

@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl;
+package org.dndbattle.objects.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.IArmor;
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ISaveableClass;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.ArmorType;
+import org.dndbattle.objects.IArmor;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ISaveableClass;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.ArmorType;
 
 /**
  *
@@ -34,7 +34,8 @@ import com.wouter.dndbattle.objects.enums.ArmorType;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Armor extends AbstractInventoryItem implements IArmor {
 
-    private static final String DESCRIPTION_FORMAT = "%s armor (Base AC %d)";
+    private static final String DESCRIPTION_FORMAT = "%s armor";
+    private static final String NOTES_FORMAT = "Base AC %d";
 
     private ArmorType armorType = ArmorType.LIGHT;
     private int baseArmorRating = 10;
@@ -117,7 +118,13 @@ public class Armor extends AbstractInventoryItem implements IArmor {
     @JsonIgnore
     @Override
     public String getDescription() {
-        return String.format(DESCRIPTION_FORMAT, armorType, baseArmorRating);
+        return String.format(DESCRIPTION_FORMAT, armorType);
+    }
+    
+    @JsonIgnore
+    @Override
+    public String getNotes() {
+        return String.format(NOTES_FORMAT, baseArmorRating);
     }
 
     @Override

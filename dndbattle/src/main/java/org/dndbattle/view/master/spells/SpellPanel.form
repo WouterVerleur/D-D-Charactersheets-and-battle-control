@@ -256,7 +256,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.SpellLevelComboBox" name="cbSpellLevel">
+    <Component class="org.dndbattle.view.comboboxes.SpellLevelComboBox" name="cbSpellLevel">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="spell.getLevel()" type="code"/>

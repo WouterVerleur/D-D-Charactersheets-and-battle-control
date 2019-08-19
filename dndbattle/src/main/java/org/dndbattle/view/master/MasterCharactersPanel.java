@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.master;
+package org.dndbattle.view.master;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -14,12 +14,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.master.character.CharacterPanel;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.view.master.character.CharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

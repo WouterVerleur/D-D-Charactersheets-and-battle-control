@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
-import static com.wouter.dndbattle.utils.Settings.WEBSITE;
+import static org.dndbattle.utils.Settings.WEBSITE;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -19,14 +19,14 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICharacterClass;
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.objects.enums.WeaponRange;
-import com.wouter.dndbattle.objects.enums.Website;
-import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ICharacterClass;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.Dice;
+import org.dndbattle.objects.enums.WeaponRange;
+import org.dndbattle.objects.enums.Website;
+import org.dndbattle.objects.impl.AbstractExtendedCharacter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

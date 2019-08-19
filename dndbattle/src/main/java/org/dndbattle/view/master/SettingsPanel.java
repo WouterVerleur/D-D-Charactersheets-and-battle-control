@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master;
+package org.dndbattle.view.master;
 
-import static com.wouter.dndbattle.utils.AbstractFileWriterThread.DEFAULT_TIMEOUT;
-import static com.wouter.dndbattle.utils.Settings.CARRYING_CAPACITY_MULTIPLIER;
-import static com.wouter.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
-import static com.wouter.dndbattle.utils.Settings.INPUT_FILESELECTION;
-import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
-import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
-import static com.wouter.dndbattle.utils.Settings.PRESETFOLDER;
-import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_TITLE;
-import static com.wouter.dndbattle.utils.Settings.WEBSITE;
+import static org.dndbattle.utils.AbstractFileWriterThread.DEFAULT_TIMEOUT;
+import static org.dndbattle.utils.Settings.CARRYING_CAPACITY_MULTIPLIER;
+import static org.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
+import static org.dndbattle.utils.Settings.INPUT_FILESELECTION;
+import static org.dndbattle.utils.Settings.LOOKANDFEEL;
+import static org.dndbattle.utils.Settings.MASTER_TITLE;
+import static org.dndbattle.utils.Settings.PRESETFOLDER;
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
+import static org.dndbattle.utils.Settings.SLAVE_TITLE;
+import static org.dndbattle.utils.Settings.WEBSITE;
 
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -36,10 +36,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import com.wouter.dndbattle.core.Main;
-import com.wouter.dndbattle.objects.enums.Website;
-import com.wouter.dndbattle.utils.FileManager;
-import com.wouter.dndbattle.utils.Settings;
+import org.dndbattle.core.Main;
+import org.dndbattle.objects.enums.Website;
+import org.dndbattle.utils.FileManager;
+import org.dndbattle.utils.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,7 +96,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         tfPresetFolder = new javax.swing.JTextField();
         bPresetFolder = new javax.swing.JButton();
         lWebsite = new javax.swing.JLabel();
-        cbWebsite = new com.wouter.dndbattle.view.comboboxes.WebsiteComboBox();
+        cbWebsite = new org.dndbattle.view.comboboxes.WebsiteComboBox();
         lCarryingCapacity = new javax.swing.JLabel();
         sCarryingCapacityMultiplier = new javax.swing.JSpinner();
         bReset = new javax.swing.JButton();
@@ -452,7 +452,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JButton bSaveSettings;
     private javax.swing.ButtonGroup bgRollForDeath;
     private javax.swing.JComboBox cbLookAndFeel;
-    private com.wouter.dndbattle.view.comboboxes.WebsiteComboBox cbWebsite;
+    private org.dndbattle.view.comboboxes.WebsiteComboBox cbWebsite;
     private javax.swing.JLabel lCarryingCapacity;
     private javax.swing.JLabel lIp;
     private javax.swing.JLabel lLookAndFeel;

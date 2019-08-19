@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.view.comboboxes.ClassComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

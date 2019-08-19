@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl;
+package org.dndbattle.objects.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,25 +27,25 @@ import javax.swing.JOptionPane;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.IAbility;
-import com.wouter.dndbattle.objects.IArmor;
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.IEquipment;
-import com.wouter.dndbattle.objects.ISaveableClass;
-import com.wouter.dndbattle.objects.ISavingThrow;
-import com.wouter.dndbattle.objects.ISkill;
-import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.ChallengeRating;
-import com.wouter.dndbattle.objects.enums.Proficiency;
-import com.wouter.dndbattle.objects.enums.Size;
-import com.wouter.dndbattle.objects.enums.SkillType;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.Spells;
-import com.wouter.dndbattle.utils.Weapons;
+import org.dndbattle.objects.IAbility;
+import org.dndbattle.objects.IArmor;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.IEquipment;
+import org.dndbattle.objects.ISaveableClass;
+import org.dndbattle.objects.ISavingThrow;
+import org.dndbattle.objects.ISkill;
+import org.dndbattle.objects.ISpell;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.ChallengeRating;
+import org.dndbattle.objects.enums.Proficiency;
+import org.dndbattle.objects.enums.Size;
+import org.dndbattle.objects.enums.SkillType;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Spells;
+import org.dndbattle.utils.Weapons;
 
 /**
  *

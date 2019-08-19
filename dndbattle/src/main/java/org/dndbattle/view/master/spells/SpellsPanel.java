@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.spells;
+package org.dndbattle.view.master.spells;
 
-import static com.wouter.dndbattle.utils.Settings.SPELLS_GRID_COLUMNS;
+import static org.dndbattle.utils.Settings.SPELLS_GRID_COLUMNS;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -33,11 +33,11 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.impl.Spell;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.utils.Spells;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.ISpell;
+import org.dndbattle.objects.impl.Spell;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.utils.Spells;
+import org.dndbattle.view.IUpdateablePanel;
 
 /**
  *

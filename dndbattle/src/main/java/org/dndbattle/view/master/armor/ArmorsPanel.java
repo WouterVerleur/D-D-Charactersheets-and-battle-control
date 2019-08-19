@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.armor;
+package org.dndbattle.view.master.armor;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
-import com.wouter.dndbattle.objects.impl.Armor;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.impl.Armor;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.view.IUpdateablePanel;
 
 /**
  *

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.randomizer.view;
+package org.dndbattle.randomizer.view;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-import com.wouter.randomizer.randomizers.RandomItemsList;
-import com.wouter.randomizer.randomizers.Randomizer;
-import com.wouter.randomizer.randomizers.TimedRandomizer;
+import org.dndbattle.randomizer.randomizers.RandomItemsList;
+import org.dndbattle.randomizer.randomizers.Randomizer;
+import org.dndbattle.randomizer.randomizers.TimedRandomizer;
 
 /**
  *

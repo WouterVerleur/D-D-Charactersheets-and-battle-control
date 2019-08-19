@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.core;
+package org.dndbattle.core;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.wouter.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.ICombatant;
 
 /**
  *

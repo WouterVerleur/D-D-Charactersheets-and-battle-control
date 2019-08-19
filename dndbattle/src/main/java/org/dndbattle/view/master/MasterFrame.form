@@ -323,7 +323,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
         </Container>
-        <Component class="com.wouter.dndbattle.view.master.AudioPanel" name="pAudio">
+        <Component class="org.dndbattle.view.master.AudioPanel" name="pAudio">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Audio"/>
@@ -339,7 +339,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="com.wouter.dndbattle.view.master.DicePanel" name="dicePanel">
+            <Component class="org.dndbattle.view.master.DicePanel" name="dicePanel">
             </Component>
           </SubComponents>
         </Container>
@@ -352,7 +352,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="com.wouter.dndbattle.view.master.SettingsPanel" name="settingsPanel">
+            <Component class="org.dndbattle.view.master.SettingsPanel" name="settingsPanel">
             </Component>
           </SubComponents>
         </Container>
@@ -460,35 +460,35 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="com.wouter.dndbattle.view.master.armor.ArmorsPanel" name="armorsPanel">
+        <Component class="org.dndbattle.view.master.armor.ArmorsPanel" name="armorsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Armors"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="com.wouter.dndbattle.view.master.spells.SpellsPanel" name="spellsPanel">
+        <Component class="org.dndbattle.view.master.spells.SpellsPanel" name="spellsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Spells"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="com.wouter.dndbattle.view.master.weapons.WeaponsPanel" name="weaponsPanel">
+        <Component class="org.dndbattle.view.master.weapons.WeaponsPanel" name="weaponsPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Weapons"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="com.wouter.dndbattle.view.master.encounter.EncounterCalculator" name="pEncounterCalculator">
+        <Component class="org.dndbattle.view.master.encounter.EncounterCalculator" name="pEncounterCalculator">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Encounter"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="com.wouter.dndbattle.view.master.utilities.UtilitiesPanel" name="utilitiesPanel">
+        <Component class="org.dndbattle.view.master.utilities.UtilitiesPanel" name="utilitiesPanel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Utilities"/>

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.master;
+package org.dndbattle.view.master;
 
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_STATE;
-import static com.wouter.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
-import static com.wouter.dndbattle.utils.Settings.MASTER_TITLE;
+import static org.dndbattle.utils.Settings.MASTER_LOCATION_X;
+import static org.dndbattle.utils.Settings.MASTER_LOCATION_Y;
+import static org.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
+import static org.dndbattle.utils.Settings.MASTER_SIZE_STATE;
+import static org.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
+import static org.dndbattle.utils.Settings.MASTER_TITLE;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -30,16 +30,16 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
-import com.wouter.dndbattle.core.IMaster;
-import com.wouter.dndbattle.core.impl.Master;
-import com.wouter.dndbattle.core.impl.MasterConnectionInfo;
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.Combatant;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.comboboxes.ClassComboBox;
-import com.wouter.dndbattle.view.slave.character.SlaveCharacterPanel;
+import org.dndbattle.core.IMaster;
+import org.dndbattle.core.impl.Master;
+import org.dndbattle.core.impl.MasterConnectionInfo;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.Combatant;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.view.comboboxes.ClassComboBox;
+import org.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,21 +106,21 @@ public class MasterFrame extends javax.swing.JFrame {
         spCombatants = new javax.swing.JScrollPane();
         pCombatants = new javax.swing.JPanel();
         pCharacters = new javax.swing.JPanel();
-        pAudio = new com.wouter.dndbattle.view.master.AudioPanel();
+        pAudio = new org.dndbattle.view.master.AudioPanel();
         spDice = new javax.swing.JScrollPane();
-        dicePanel = new com.wouter.dndbattle.view.master.DicePanel();
+        dicePanel = new org.dndbattle.view.master.DicePanel();
         spSettings = new javax.swing.JScrollPane();
-        settingsPanel = new com.wouter.dndbattle.view.master.SettingsPanel();
+        settingsPanel = new org.dndbattle.view.master.SettingsPanel();
         pClients = new javax.swing.JPanel();
         spClientsTable = new javax.swing.JScrollPane();
         tClients = new javax.swing.JTable();
         bKickClient = new javax.swing.JButton();
         tbRefresh = new javax.swing.JToggleButton();
-        armorsPanel = new com.wouter.dndbattle.view.master.armor.ArmorsPanel();
-        spellsPanel = new com.wouter.dndbattle.view.master.spells.SpellsPanel();
-        weaponsPanel = new com.wouter.dndbattle.view.master.weapons.WeaponsPanel();
-        pEncounterCalculator = new com.wouter.dndbattle.view.master.encounter.EncounterCalculator();
-        utilitiesPanel = new com.wouter.dndbattle.view.master.utilities.UtilitiesPanel();
+        armorsPanel = new org.dndbattle.view.master.armor.ArmorsPanel();
+        spellsPanel = new org.dndbattle.view.master.spells.SpellsPanel();
+        weaponsPanel = new org.dndbattle.view.master.weapons.WeaponsPanel();
+        pEncounterCalculator = new org.dndbattle.view.master.encounter.EncounterCalculator();
+        utilitiesPanel = new org.dndbattle.view.master.utilities.UtilitiesPanel();
         mbMain = new javax.swing.JMenuBar();
         mBattle = new javax.swing.JMenu();
         miBattleView = new javax.swing.JMenuItem();
@@ -663,12 +663,12 @@ public class MasterFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.wouter.dndbattle.view.master.armor.ArmorsPanel armorsPanel;
+    private org.dndbattle.view.master.armor.ArmorsPanel armorsPanel;
     private javax.swing.JButton bAddCombatant;
     private javax.swing.JButton bKickClient;
     private javax.swing.JButton bNewBattle;
     private javax.swing.JButton bNext;
-    private com.wouter.dndbattle.view.master.DicePanel dicePanel;
+    private org.dndbattle.view.master.DicePanel dicePanel;
     private javax.swing.JMenu mAttributes;
     private javax.swing.JMenu mBattle;
     private javax.swing.JMenu mCharacters;
@@ -688,27 +688,27 @@ public class MasterFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem miSpells;
     private javax.swing.JMenuItem miUtilities;
     private javax.swing.JMenuItem miWeapons;
-    private com.wouter.dndbattle.view.master.AudioPanel pAudio;
+    private org.dndbattle.view.master.AudioPanel pAudio;
     private javax.swing.JPanel pCharacters;
     private javax.swing.JPanel pClients;
     private javax.swing.JPanel pCombatants;
-    private com.wouter.dndbattle.view.master.encounter.EncounterCalculator pEncounterCalculator;
+    private org.dndbattle.view.master.encounter.EncounterCalculator pEncounterCalculator;
     private javax.swing.JPanel pMain;
     private javax.swing.JPanel pView;
     private javax.swing.JPopupMenu.Separator sBattle;
     private javax.swing.JPopupMenu.Separator sView1;
     private javax.swing.JPopupMenu.Separator sView2;
-    private com.wouter.dndbattle.view.master.SettingsPanel settingsPanel;
+    private org.dndbattle.view.master.SettingsPanel settingsPanel;
     private javax.swing.JScrollPane spClientsTable;
     private javax.swing.JScrollPane spCombatants;
     private javax.swing.JScrollPane spDice;
     private javax.swing.JScrollPane spSettings;
-    private com.wouter.dndbattle.view.master.spells.SpellsPanel spellsPanel;
+    private org.dndbattle.view.master.spells.SpellsPanel spellsPanel;
     private javax.swing.JTable tClients;
     private javax.swing.JToggleButton tbRefresh;
     private javax.swing.JTabbedPane tpBattle;
-    private com.wouter.dndbattle.view.master.utilities.UtilitiesPanel utilitiesPanel;
-    private com.wouter.dndbattle.view.master.weapons.WeaponsPanel weaponsPanel;
+    private org.dndbattle.view.master.utilities.UtilitiesPanel utilitiesPanel;
+    private org.dndbattle.view.master.weapons.WeaponsPanel weaponsPanel;
     // End of variables declaration//GEN-END:variables
 
     public void refreshBattle(final List<ICombatant> combatants, int activeIndex) {

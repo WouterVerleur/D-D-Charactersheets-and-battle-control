@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl;
+package org.dndbattle.objects.impl;
 
-import com.wouter.dndbattle.objects.IInventoryItem;
+import org.dndbattle.objects.IInventoryItem;
 
 /**
  *
@@ -24,10 +24,10 @@ import com.wouter.dndbattle.objects.IInventoryItem;
  */
 public abstract class AbstractInventoryItem implements IInventoryItem {
 
-    private String name;
-    private String notes;
-    private float weight;
-    private String value;
+    private String name = "";
+    private String notes = "";
+    private float weight = 0f;
+    private String value = "";
 
     public AbstractInventoryItem() {
     }

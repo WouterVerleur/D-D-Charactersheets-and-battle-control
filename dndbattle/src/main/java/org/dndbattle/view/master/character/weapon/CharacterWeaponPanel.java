@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.weapon;
+package org.dndbattle.view.master.character.weapon;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -24,15 +24,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.Weapon;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Weapons;
-import com.wouter.dndbattle.view.IUpdateablePanel;
-import com.wouter.dndbattle.view.master.weapons.WeaponEditPanel;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.Weapon;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Weapons;
+import org.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.view.master.weapons.WeaponEditPanel;
 
 /**
  *

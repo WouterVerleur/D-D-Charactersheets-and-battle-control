@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static com.wouter.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
+import static org.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
 import org.joda.time.DateTime;
 
 /**

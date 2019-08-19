@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.core.impl;
+package org.dndbattle.core.impl;
 
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.wouter.dndbattle.core.IMaster;
-import com.wouter.dndbattle.core.IMasterConnectionInfo;
-import com.wouter.dndbattle.core.ISlave;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.view.slave.SlaveFrame;
+import org.dndbattle.core.IMaster;
+import org.dndbattle.core.IMasterConnectionInfo;
+import org.dndbattle.core.ISlave;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.view.slave.SlaveFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

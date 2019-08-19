@@ -16,7 +16,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
   <SubComponents>
-    <Component class="com.wouter.dndbattle.view.comboboxes.ClassComboBox" name="cbFriendlyClass">
+    <Component class="org.dndbattle.view.comboboxes.ClassComboBox" name="cbFriendlyClass">
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbFriendlyClassItemStateChanged"/>
       </Events>

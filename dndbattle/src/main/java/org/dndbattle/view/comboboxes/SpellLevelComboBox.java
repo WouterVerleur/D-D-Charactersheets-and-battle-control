@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.comboboxes;
+package org.dndbattle.view.comboboxes;
 
-import com.wouter.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.objects.enums.SpellLevel;
 
 /**
  *

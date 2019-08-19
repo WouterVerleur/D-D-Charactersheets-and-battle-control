@@ -47,7 +47,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.ClassComboBox" name="cbEnemyClass">
+    <Component class="org.dndbattle.view.comboboxes.ClassComboBox" name="cbEnemyClass">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Enemy.class" type="code"/>

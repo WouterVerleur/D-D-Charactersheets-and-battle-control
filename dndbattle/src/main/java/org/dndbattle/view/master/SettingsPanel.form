@@ -217,7 +217,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.WebsiteComboBox" name="cbWebsite">
+    <Component class="org.dndbattle.view.comboboxes.WebsiteComboBox" name="cbWebsite">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="Website.valueOf(SETTINGS.getProperty(WEBSITE, Website.ROLL20.name()))" type="code"/>

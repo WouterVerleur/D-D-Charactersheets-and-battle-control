@@ -14,14 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects;
-
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
-
-import java.io.Serializable;
+package org.dndbattle.objects;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
+import java.io.Serializable;
+import static org.dndbattle.objects.enums.AbilityType.DEX;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.objects.impl.CombatantCharacter;
 
 /**
  *
@@ -35,6 +34,8 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
     String getDescription();
 
     ICharacter getCharacter();
+
+    CombatantCharacter getCombatantCharacter();
 
     int getHealth();
 

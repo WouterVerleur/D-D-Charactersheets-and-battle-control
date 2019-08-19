@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects;
+package org.dndbattle.objects;
 
-import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.objects.enums.WeaponRange;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.objects.enums.WeaponWeight;
+import org.dndbattle.objects.enums.Dice;
+import org.dndbattle.objects.enums.WeaponRange;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.objects.enums.WeaponWeight;
 
 /**
  *

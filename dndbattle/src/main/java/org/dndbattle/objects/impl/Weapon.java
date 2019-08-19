@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl;
+package org.dndbattle.objects.impl;
 
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.ISaveableClass;
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.Dice;
-import com.wouter.dndbattle.objects.enums.WeaponRange;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.objects.enums.WeaponWeight;
+import org.dndbattle.objects.ISaveableClass;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.Dice;
+import org.dndbattle.objects.enums.WeaponRange;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.objects.enums.WeaponWeight;
 
 /**
  *

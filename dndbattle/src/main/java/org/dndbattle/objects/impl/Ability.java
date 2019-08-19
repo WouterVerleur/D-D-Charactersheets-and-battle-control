@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl;
+package org.dndbattle.objects.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.IAbility;
-import com.wouter.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.IAbility;
+import org.dndbattle.objects.enums.AbilityType;
 
 /**
  *

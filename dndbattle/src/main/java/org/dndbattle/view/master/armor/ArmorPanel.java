@@ -14,20 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.armor;
+package org.dndbattle.view.master.armor;
 
-import static com.wouter.dndbattle.objects.enums.AbilityType.CHA;
-import static com.wouter.dndbattle.objects.enums.AbilityType.CON;
-import static com.wouter.dndbattle.objects.enums.AbilityType.INT;
-import static com.wouter.dndbattle.objects.enums.AbilityType.STR;
-import static com.wouter.dndbattle.objects.enums.AbilityType.WIS;
+import static org.dndbattle.objects.enums.AbilityType.CHA;
+import static org.dndbattle.objects.enums.AbilityType.CON;
+import static org.dndbattle.objects.enums.AbilityType.INT;
+import static org.dndbattle.objects.enums.AbilityType.STR;
+import static org.dndbattle.objects.enums.AbilityType.WIS;
 
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.impl.Armor;
-import com.wouter.dndbattle.utils.Armors;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.impl.Armor;
+import org.dndbattle.utils.Armors;
 
 /**
  *
@@ -62,7 +62,7 @@ class ArmorPanel extends javax.swing.JPanel {
         bRename = new javax.swing.JButton();
         bDelete = new javax.swing.JButton();
         lType = new javax.swing.JLabel();
-        cbArmorType = new com.wouter.dndbattle.view.comboboxes.ArmorTypeComboBox();
+        cbArmorType = new org.dndbattle.view.comboboxes.ArmorTypeComboBox();
         lRating = new javax.swing.JLabel();
         sRating = new javax.swing.JSpinner();
         lModifiers = new javax.swing.JLabel();
@@ -388,7 +388,7 @@ class ArmorPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bRename;
-    private com.wouter.dndbattle.view.comboboxes.ArmorTypeComboBox cbArmorType;
+    private org.dndbattle.view.comboboxes.ArmorTypeComboBox cbArmorType;
     private javax.swing.JCheckBox cbCHA;
     private javax.swing.JCheckBox cbCON;
     private javax.swing.JCheckBox cbINT;

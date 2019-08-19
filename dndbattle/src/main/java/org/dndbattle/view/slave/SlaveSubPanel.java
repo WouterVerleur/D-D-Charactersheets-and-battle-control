@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.slave;
+package org.dndbattle.view.slave;
 
-import static com.wouter.dndbattle.objects.enums.SpellLevel.CANTRIP;
-import static com.wouter.dndbattle.objects.enums.SpellLevel.FEATURE;
+import static org.dndbattle.objects.enums.SpellLevel.CANTRIP;
+import static org.dndbattle.objects.enums.SpellLevel.FEATURE;
 
 import java.awt.GridBagConstraints;
 
@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
-import com.wouter.dndbattle.utils.GlobalUtils;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.utils.GlobalUtils;
 
 /**
  *

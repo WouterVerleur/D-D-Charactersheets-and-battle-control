@@ -16,7 +16,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
   <SubComponents>
-    <Component class="com.wouter.dndbattle.view.comboboxes.AbilityTypeComboBox" name="cbSpellModifier">
+    <Component class="org.dndbattle.view.comboboxes.AbilityTypeComboBox" name="cbSpellModifier">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="character.getSpellCastingAbility()" type="code"/>

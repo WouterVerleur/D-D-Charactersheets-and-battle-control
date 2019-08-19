@@ -3,25 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.master;
-
-import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
+package org.dndbattle.view.master;
 
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-
-import com.wouter.dndbattle.core.impl.Master;
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
-import com.wouter.dndbattle.objects.impl.Combatant;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Settings;
+import org.dndbattle.core.impl.Master;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.objects.impl.Combatant;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Settings;
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -288,7 +285,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
             ICharacter[] presets = characters.toArray(new ICharacter[characters.size()]);
             Object selection = JOptionPane.showInputDialog(this, "Message", "Title", JOptionPane.QUESTION_MESSAGE, null, presets, null);
             if (selection != null) {
-                combatant.transform((ICharacter) selection);
+                combatant.transform((ICharacter) selection, false);
                 master.updateAll(true);
             }
         }
@@ -309,7 +306,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         switch (JOptionPane.showConfirmDialog(this, selectionPanel, "Select character", JOptionPane.OK_CANCEL_OPTION)) {
             case JOptionPane.OK_OPTION:
                 ICharacter selection = selectionPanel.getSelection();
-                combatant.transform(selection);
+                combatant.transform(selection, true);
                 master.updateAll(true);
                 break;
             default:

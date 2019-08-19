@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.enums;
+package org.dndbattle.objects.enums;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wouter.dndbattle.objects.IEquipment;
-import com.wouter.dndbattle.objects.IInventoryItem;
-import com.wouter.dndbattle.objects.ISaveableClass;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.Utilities;
-import com.wouter.dndbattle.utils.Weapons;
+import org.dndbattle.objects.IEquipment;
+import org.dndbattle.objects.IInventoryItem;
+import org.dndbattle.objects.ISaveableClass;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Utilities;
+import org.dndbattle.utils.Weapons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

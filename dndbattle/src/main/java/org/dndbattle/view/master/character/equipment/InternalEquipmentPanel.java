@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.equipment;
+package org.dndbattle.view.master.character.equipment;
 
-import com.wouter.dndbattle.objects.enums.Equipment;
+import org.dndbattle.objects.enums.Equipment;
 
 /**
  *

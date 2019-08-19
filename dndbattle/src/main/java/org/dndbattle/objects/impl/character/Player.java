@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl.character;
+package org.dndbattle.objects.impl.character;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.AbstractExtendedCharacter;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.AbstractExtendedCharacter;
 
 /**
  *

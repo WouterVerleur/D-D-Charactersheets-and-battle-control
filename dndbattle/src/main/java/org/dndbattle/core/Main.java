@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.core;
+package org.dndbattle.core;
 
 import static java.awt.Frame.NORMAL;
 
 import static javax.swing.JOptionPane.CANCEL_OPTION;
 import static javax.swing.JOptionPane.YES_OPTION;
 
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_HOST;
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_NAME;
-import static com.wouter.dndbattle.utils.Settings.CONNECTION_PORT;
-import static com.wouter.dndbattle.utils.Settings.LOOKANDFEEL;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static com.wouter.dndbattle.utils.Settings.MASTER_LOCATION_Y;
+import static org.dndbattle.utils.Settings.CONNECTION_HOST;
+import static org.dndbattle.utils.Settings.CONNECTION_NAME;
+import static org.dndbattle.utils.Settings.CONNECTION_PORT;
+import static org.dndbattle.utils.Settings.LOOKANDFEEL;
+import static org.dndbattle.utils.Settings.MASTER_LOCATION_X;
+import static org.dndbattle.utils.Settings.MASTER_LOCATION_Y;
 
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -39,15 +39,15 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.wouter.dndbattle.core.impl.Master;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.Initializable;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.utils.Spells;
-import com.wouter.dndbattle.utils.Utilities;
-import com.wouter.dndbattle.utils.Weapons;
-import com.wouter.dndbattle.view.slave.SlaveFrame;
+import org.dndbattle.core.impl.Master;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.Initializable;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.utils.Spells;
+import org.dndbattle.utils.Utilities;
+import org.dndbattle.utils.Weapons;
+import org.dndbattle.view.slave.SlaveFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -300,74 +300,74 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
   }
 
   @SuppressWarnings("unchecked")
-  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
-    java.awt.GridBagConstraints gridBagConstraints;
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-    pbMain = new javax.swing.JProgressBar();
-    pbSub = new javax.swing.JProgressBar();
-    jLabel1 = new javax.swing.JLabel();
-    jLabel2 = new javax.swing.JLabel();
+        pbMain = new javax.swing.JProgressBar();
+        pbSub = new javax.swing.JProgressBar();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("Starting program");
-    setName("Starting"); // NOI18N
-    setUndecorated(true);
-    addComponentListener(new java.awt.event.ComponentAdapter() {
-      public void componentMoved(java.awt.event.ComponentEvent evt) {
-        formComponentMoved(evt);
-      }
-    });
-    getContentPane().setLayout(new java.awt.GridBagLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Starting program");
+        setName("Starting"); // NOI18N
+        setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
+            }
+        });
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-    pbMain.setIndeterminate(true);
-    pbMain.setString("");
-    pbMain.setStringPainted(true);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 0.5;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
-    getContentPane().add(pbMain, gridBagConstraints);
+        pbMain.setIndeterminate(true);
+        pbMain.setString("");
+        pbMain.setStringPainted(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        getContentPane().add(pbMain, gridBagConstraints);
 
-    pbSub.setVisible(false);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 0.5;
-    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-    getContentPane().add(pbSub, gridBagConstraints);
+        pbSub.setVisible(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+        getContentPane().add(pbSub, gridBagConstraints);
 
-    jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/font_awesome_5_solid_dice-d20.png"))); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    getContentPane().add(jLabel1, gridBagConstraints);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/font_awesome_5_solid_dice-d20.png"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jLabel1, gridBagConstraints);
 
-    jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-    jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    jLabel2.setText("D&D Charactersheets and Battle control");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.gridwidth = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
-    getContentPane().add(jLabel2, gridBagConstraints);
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("D&D Charactersheets and Battle control");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        getContentPane().add(jLabel2, gridBagConstraints);
 
-    pack();
-  }// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
     if (getExtendedState() == NORMAL) {
@@ -384,10 +384,10 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
     return ip;
   }
 
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
-  private javax.swing.JProgressBar pbMain;
-  private javax.swing.JProgressBar pbSub;
-  // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JProgressBar pbMain;
+    private javax.swing.JProgressBar pbSub;
+    // End of variables declaration//GEN-END:variables
 }

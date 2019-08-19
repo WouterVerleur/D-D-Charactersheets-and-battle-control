@@ -55,7 +55,7 @@
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lModifierMouseClicked"/>
       </Events>
     </Component>
-    <Component class="com.wouter.dndbattle.view.comboboxes.ProficiencyComboBox" name="cbProficiency">
+    <Component class="org.dndbattle.view.comboboxes.ProficiencyComboBox" name="cbProficiency">
       <Properties>
         <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="character.getSkillProficiency(skillType)" type="code"/>

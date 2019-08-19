@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.slave.character;
+package org.dndbattle.view.slave.character;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import static com.wouter.dndbattle.objects.enums.Dice.D20;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.view.DicePopup;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.enums.AbilityType;
+import static org.dndbattle.objects.enums.Dice.D20;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.view.DicePopup;
 
 /**
  *

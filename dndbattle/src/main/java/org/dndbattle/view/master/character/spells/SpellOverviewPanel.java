@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.spells;
+package org.dndbattle.view.master.character.spells;
 
-import static com.wouter.dndbattle.utils.Settings.CHARACTER_SPELLS_COLUMNS;
+import static org.dndbattle.utils.Settings.CHARACTER_SPELLS_COLUMNS;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -31,13 +31,13 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.utils.Spells;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.ISpell;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.utils.Spells;
+import org.dndbattle.view.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,7 +124,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        cbSpellModifier = new com.wouter.dndbattle.view.comboboxes.AbilityTypeComboBox();
+        cbSpellModifier = new org.dndbattle.view.comboboxes.AbilityTypeComboBox();
         lSpellcastingAbility = new javax.swing.JLabel();
         lSpellSaveDC = new javax.swing.JLabel();
         lSpellAttackBonus = new javax.swing.JLabel();
@@ -273,7 +273,7 @@ public class SpellOverviewPanel extends javax.swing.JPanel implements IUpdateabl
     }//GEN-LAST:event_sSpellColumnsStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.wouter.dndbattle.view.comboboxes.AbilityTypeComboBox cbSpellModifier;
+    private org.dndbattle.view.comboboxes.AbilityTypeComboBox cbSpellModifier;
     private javax.swing.JLabel lSpellAttackBonus;
     private javax.swing.JLabel lSpellSaveDC;
     private javax.swing.JLabel lSpellSlots;

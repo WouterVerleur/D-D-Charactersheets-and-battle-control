@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.spells;
+package org.dndbattle.view.master.spells;
 
 import java.awt.event.ItemEvent;
 
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.impl.Spell;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Spells;
+import org.dndbattle.objects.ISpell;
+import org.dndbattle.objects.impl.Spell;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Spells;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ class SpellPanel extends javax.swing.JPanel {
         spDescription = new javax.swing.JScrollPane();
         taDescription = new javax.swing.JTextArea();
         tfType = new javax.swing.JTextField();
-        cbSpellLevel = new com.wouter.dndbattle.view.comboboxes.SpellLevelComboBox();
+        cbSpellLevel = new org.dndbattle.view.comboboxes.SpellLevelComboBox();
         bDelete = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
@@ -330,7 +330,7 @@ class SpellPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bDelete;
-    private com.wouter.dndbattle.view.comboboxes.SpellLevelComboBox cbSpellLevel;
+    private org.dndbattle.view.comboboxes.SpellLevelComboBox cbSpellLevel;
     private javax.swing.JLabel lName;
     private javax.swing.JPanel psmallFields;
     private javax.swing.JScrollPane spDescription;

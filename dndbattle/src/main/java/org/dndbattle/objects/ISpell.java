@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects;
+package org.dndbattle.objects;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.objects.enums.SpellLevel;
 
 /**
  *

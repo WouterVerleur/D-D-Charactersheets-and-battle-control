@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.view.slave;
+package org.dndbattle.view.slave;
 
 import java.awt.Component;
 import java.awt.GraphicsDevice;
@@ -13,21 +13,21 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import com.wouter.dndbattle.core.IMaster;
-import com.wouter.dndbattle.core.IMasterConnectionInfo;
-import com.wouter.dndbattle.core.ISlave;
-import com.wouter.dndbattle.core.impl.Slave;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.view.IUpdateablePanel;
-import com.wouter.dndbattle.view.slave.character.SlaveCharacterPanel;
+import org.dndbattle.core.IMaster;
+import org.dndbattle.core.IMasterConnectionInfo;
+import org.dndbattle.core.ISlave;
+import org.dndbattle.core.impl.Slave;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.wouter.dndbattle.utils.Settings.SLAVE_LOCATION_X;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_LOCATION_Y;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_SIZE_HEIGHT;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_SIZE_STATE;
-import static com.wouter.dndbattle.utils.Settings.SLAVE_SIZE_WIDTH;
+import static org.dndbattle.utils.Settings.SLAVE_LOCATION_X;
+import static org.dndbattle.utils.Settings.SLAVE_LOCATION_Y;
+import static org.dndbattle.utils.Settings.SLAVE_SIZE_HEIGHT;
+import static org.dndbattle.utils.Settings.SLAVE_SIZE_STATE;
+import static org.dndbattle.utils.Settings.SLAVE_SIZE_WIDTH;
 
 /**
  *

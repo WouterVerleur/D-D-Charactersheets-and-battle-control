@@ -14,21 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.impl;
-
+package org.dndbattle.objects.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.objects.IExtendedCharacter;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
-import com.wouter.dndbattle.utils.Settings;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.IExtendedCharacter;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.utils.Settings;
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static com.wouter.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *
@@ -73,6 +70,7 @@ public class Combatant implements ICombatant {
     private int totalDamageRecieved = 0;
     private boolean friendly;
     private Map<SpellLevel, Integer> usedSpellSlotsMap;
+    private final CombatantCharacter combatantCharacter;
 
     public Combatant(ICharacter character, String name, int initiative) {
         this(character, name, initiative, character.getMaxHealth());
@@ -81,6 +79,7 @@ public class Combatant implements ICombatant {
     public Combatant(ICharacter character, String name, int initiative, int health) {
         this.name = name;
         this.character = character;
+        combatantCharacter = new CombatantCharacter(character);
         this.health = health;
         this.dead = false;
         this.initiative = initiative;
@@ -321,12 +320,13 @@ public class Combatant implements ICombatant {
         return String.format(TRANSFORM_DESCRIPTION_FORMAT, previousName, getDescription());
     }
 
-    public void transform(ICharacter transform) {
+    public void transform(ICharacter transform, boolean completeTransformation) {
         if (isTransformed()) {
-            transformation.transform(transform);
+            transformation.transform(transform, completeTransformation);
         } else {
             log.debug("Transforming [{}] into [{}]", character.getName(), transform.getName());
             transformation = new Combatant(transform, transform.getName(), initiative, false);
+            combatantCharacter.transform(transformation.getCombatantCharacter(), completeTransformation);
             return;
         }
         log.debug("Transformation of [{}] into [{}] failed", character.getName(), transform.getName());
@@ -342,6 +342,7 @@ public class Combatant implements ICombatant {
             transformation.leaveTransformation();
         } else {
             transformation = null;
+            combatantCharacter.leaveTransformation();
         }
     }
 
@@ -387,5 +388,10 @@ public class Combatant implements ICombatant {
 
     public final void resetSpellSlots() {
         usedSpellSlotsMap = new HashMap<>(BASE_USED_SPELLSLOTS_MAP);
+    }
+
+    @Override
+    public CombatantCharacter getCombatantCharacter() {
+        return combatantCharacter;
     }
 }

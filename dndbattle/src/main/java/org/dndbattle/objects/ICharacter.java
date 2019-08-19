@@ -14,21 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects;
+package org.dndbattle.objects;
 
-import static com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
+import static org.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.ChallengeRating;
-import com.wouter.dndbattle.objects.enums.Proficiency;
-import com.wouter.dndbattle.objects.enums.Size;
-import com.wouter.dndbattle.objects.enums.SkillType;
-import com.wouter.dndbattle.objects.enums.SpellLevel;
-import com.wouter.dndbattle.utils.GlobalUtils;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.ChallengeRating;
+import org.dndbattle.objects.enums.Proficiency;
+import org.dndbattle.objects.enums.Size;
+import org.dndbattle.objects.enums.SkillType;
+import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.utils.GlobalUtils;
 
 /**
  *

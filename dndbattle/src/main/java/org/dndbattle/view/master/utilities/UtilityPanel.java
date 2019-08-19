@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.utilities;
+package org.dndbattle.view.master.utilities;
 
 import javax.swing.JOptionPane;
 
-import com.wouter.dndbattle.objects.impl.Utility;
-import com.wouter.dndbattle.utils.Utilities;
+import org.dndbattle.objects.impl.Utility;
+import org.dndbattle.utils.Utilities;
 
 /**
  *

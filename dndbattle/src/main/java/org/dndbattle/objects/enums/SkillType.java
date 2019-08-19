@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.objects.enums;
+package org.dndbattle.objects.enums;
 
-import static com.wouter.dndbattle.objects.enums.AbilityType.CHA;
-import static com.wouter.dndbattle.objects.enums.AbilityType.DEX;
-import static com.wouter.dndbattle.objects.enums.AbilityType.INT;
-import static com.wouter.dndbattle.objects.enums.AbilityType.STR;
-import static com.wouter.dndbattle.objects.enums.AbilityType.WIS;
+import static org.dndbattle.objects.enums.AbilityType.CHA;
+import static org.dndbattle.objects.enums.AbilityType.DEX;
+import static org.dndbattle.objects.enums.AbilityType.INT;
+import static org.dndbattle.objects.enums.AbilityType.STR;
+import static org.dndbattle.objects.enums.AbilityType.WIS;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

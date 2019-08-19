@@ -14,10 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.slave.character;
-
-import static com.wouter.dndbattle.utils.Settings.SLAVE_SPELLS_SEPERATOR;
-import static com.wouter.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
+package org.dndbattle.view.slave.character;
 
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -25,24 +22,24 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.JRadioButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.ICombatant;
-import com.wouter.dndbattle.objects.IEquipment;
-import com.wouter.dndbattle.objects.IExtendedCharacter;
-import com.wouter.dndbattle.objects.ISpell;
-import com.wouter.dndbattle.objects.IWeapon;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.WeaponSelection;
-import com.wouter.dndbattle.objects.enums.WeaponType;
-import com.wouter.dndbattle.utils.GlobalUtils;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.utils.Weapons;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.ICombatant;
+import org.dndbattle.objects.IEquipment;
+import org.dndbattle.objects.IExtendedCharacter;
+import org.dndbattle.objects.ISpell;
+import org.dndbattle.objects.IWeapon;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.WeaponSelection;
+import org.dndbattle.objects.enums.WeaponType;
+import org.dndbattle.utils.GlobalUtils;
+import org.dndbattle.utils.Settings;
+import static org.dndbattle.utils.Settings.SLAVE_SPELLS_SEPERATOR;
+import org.dndbattle.utils.Weapons;
+import org.dndbattle.view.IUpdateablePanel;
+import static org.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +62,7 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private WeaponSelection selection;
 
     public SlaveCharacterPanel(ICombatant combatant) {
-        this.character = combatant.getCharacter();
+        this.character = combatant.getCombatantCharacter();
         selectionString = String.format(WEAPON_SELECTION_FORMAT, character.getClass().getSimpleName());
         selection = WeaponSelection.valueOf(SETTINGS.getProperty(selectionString, WeaponSelection.ALL.name()));
 
@@ -192,9 +189,9 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
 
         tpCharacterPages.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
         tpCharacterPages.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tpCharacterPages.addTab("Abilities", new com.wouter.dndbattle.view.slave.character.SlaveAbilityAndSkillPanel(character));
+        tpCharacterPages.addTab("Abilities", new org.dndbattle.view.slave.character.SlaveAbilityAndSkillPanel(character));
         if (character instanceof IExtendedCharacter){
-            tpCharacterPages.addTab("Character", new com.wouter.dndbattle.view.slave.character.SlaveExtendedCharacterPanel((IExtendedCharacter) character));
+            tpCharacterPages.addTab("Character", new org.dndbattle.view.slave.character.SlaveExtendedCharacterPanel((IExtendedCharacter) character));
         }
 
         pWeapons.setLayout(new java.awt.GridBagLayout());

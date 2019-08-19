@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.utils;
+package org.dndbattle.utils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
-import com.wouter.dndbattle.objects.ISaveableClass;
+import org.dndbattle.objects.ISaveableClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

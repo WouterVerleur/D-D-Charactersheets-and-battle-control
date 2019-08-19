@@ -14,15 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.comboboxes;
+package org.dndbattle.view.comboboxes;
 
+import org.dndbattle.objects.impl.character.Aberration;
+import org.dndbattle.objects.impl.character.Elemental;
+import org.dndbattle.objects.impl.character.Fey;
+import org.dndbattle.objects.impl.character.Enemy;
+import org.dndbattle.objects.impl.character.Dragon;
+import org.dndbattle.objects.impl.character.Player;
+import org.dndbattle.objects.impl.character.Swarm;
+import org.dndbattle.objects.impl.character.Beast;
+import org.dndbattle.objects.impl.character.Construct;
+import org.dndbattle.objects.impl.character.Ooze;
+import org.dndbattle.objects.impl.character.Npc;
+import org.dndbattle.objects.impl.character.Celestial;
+import org.dndbattle.objects.impl.character.Plant;
+import org.dndbattle.objects.impl.character.Monstrosity;
+import org.dndbattle.objects.impl.character.Giant;
+import org.dndbattle.objects.impl.character.Undead;
+import org.dndbattle.objects.impl.character.Fiend;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
-import com.wouter.dndbattle.objects.ICharacter;
-import com.wouter.dndbattle.objects.impl.character.*;
+import org.dndbattle.objects.ICharacter;
 
 /**
  *

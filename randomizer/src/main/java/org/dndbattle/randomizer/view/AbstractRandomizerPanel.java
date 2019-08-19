@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.randomizer.view;
+package org.dndbattle.randomizer.view;
 
 import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.wouter.randomizer.randomizers.Randomizer;
+import org.dndbattle.randomizer.randomizers.Randomizer;
 
 public abstract class AbstractRandomizerPanel<R extends Randomizer> extends JPanel {
 

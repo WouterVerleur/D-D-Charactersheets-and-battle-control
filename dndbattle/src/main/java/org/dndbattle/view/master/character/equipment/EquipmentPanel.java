@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.wouter.dndbattle.view.master.character.equipment;
+package org.dndbattle.view.master.character.equipment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,19 +24,19 @@ import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
-import com.wouter.dndbattle.objects.IArmor;
-import com.wouter.dndbattle.objects.IEquipment;
-import com.wouter.dndbattle.objects.IInventoryItem;
-import com.wouter.dndbattle.objects.enums.AbilityType;
-import com.wouter.dndbattle.objects.enums.Equipment;
-import com.wouter.dndbattle.objects.impl.AbstractCharacter;
-import com.wouter.dndbattle.objects.impl.AbstractInventoryItem;
-import com.wouter.dndbattle.utils.Armors;
-import com.wouter.dndbattle.utils.Characters;
-import com.wouter.dndbattle.utils.Settings;
-import com.wouter.dndbattle.utils.Utilities;
-import com.wouter.dndbattle.utils.Weapons;
-import com.wouter.dndbattle.view.IUpdateablePanel;
+import org.dndbattle.objects.IArmor;
+import org.dndbattle.objects.IEquipment;
+import org.dndbattle.objects.IInventoryItem;
+import org.dndbattle.objects.enums.AbilityType;
+import org.dndbattle.objects.enums.Equipment;
+import org.dndbattle.objects.impl.AbstractCharacter;
+import org.dndbattle.objects.impl.AbstractInventoryItem;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Characters;
+import org.dndbattle.utils.Settings;
+import org.dndbattle.utils.Utilities;
+import org.dndbattle.utils.Weapons;
+import org.dndbattle.view.IUpdateablePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

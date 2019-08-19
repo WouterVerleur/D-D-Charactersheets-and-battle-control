@@ -1,4 +1,4 @@
-package com.wouter.dndbattle.view;
+package org.dndbattle.view;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wouter.dndbattle.core;
+package org.dndbattle.core;
 
 import java.io.Serializable;
 import java.rmi.Remote;

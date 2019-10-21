@@ -151,6 +151,14 @@ public class CombatantCharacter implements ICharacter {
     }
 
     @Override
+    public boolean isJackOfAllTrades() {
+        if (isTransformed()) {
+            return transformation.isJackOfAllTrades();
+        }
+        return character.isJackOfAllTrades();
+    }
+
+    @Override
     public int getSpeed() {
         if (isTransformed()) {
             return transformation.getSpeed();

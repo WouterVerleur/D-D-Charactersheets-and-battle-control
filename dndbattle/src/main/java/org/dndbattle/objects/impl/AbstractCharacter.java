@@ -16,17 +16,15 @@
  */
 package org.dndbattle.objects.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JOptionPane;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.dndbattle.objects.IAbility;
 import org.dndbattle.objects.IArmor;
 import org.dndbattle.objects.ICharacter;
@@ -79,6 +77,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private List<IWeapon> privateWeapons = new ArrayList<>();
     private Size size = Size.MEDIUM;
     private boolean powerfulBuild = false;
+    private boolean jackOfAllTrades = false;
     private List<IEquipment> inventoryItems = new ArrayList<>();
 
     public AbstractCharacter() {
@@ -111,6 +110,8 @@ public abstract class AbstractCharacter implements ICharacter {
         this.transformChallengeRating = character.getTransformChallengeRating();
         this.challengeRating = character.getChallengeRating();
         this.spellCastingAbility = character.getSpellCastingAbility();
+        this.powerfulBuild = character.isPowerfulBuild();
+        this.jackOfAllTrades = character.isJackOfAllTrades();
         this.size = character.getSize();
     }
 
@@ -253,7 +254,8 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in filenames.
+     * Funtion to return a name based string that is save for usage in
+     * filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -279,7 +281,7 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public int getSavingThrowModifier(AbilityType abilityType) {
-        return abilities.get(abilityType).getModifier() + savingThrows.get(abilityType).getProficiency().getMultiplier() * getProficiencyScore();
+        return abilities.get(abilityType).getModifier() + getProficiencyAddition(getSavingThrowProficiency(abilityType));
     }
 
     public int getSavingThrowModifier(String typeName) {
@@ -305,11 +307,20 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public int getSkillModifier(SkillType skillType) {
-        return abilities.get(skillType.getAbilityType()).getModifier() + getSkillProficiency(skillType).getMultiplier() * getProficiencyScore();
+        return abilities.get(skillType.getAbilityType()).getModifier() + getProficiencyAddition(getSkillProficiency(skillType));
     }
 
     public int getSkillModifier(String typeName) {
         return getSkillModifier(SkillType.valueOf(typeName.toUpperCase()));
+    }
+
+    @Override
+    public boolean isJackOfAllTrades() {
+        return jackOfAllTrades;
+    }
+
+    public void setJackOfAllTrades(boolean jackOfAllTrades) {
+        this.jackOfAllTrades = jackOfAllTrades;
     }
 
     @Override
@@ -605,6 +616,13 @@ public abstract class AbstractCharacter implements ICharacter {
             return getChallengeRating().getProficiencyScore();
         }
         return 2;
+    }
+
+    private int getProficiencyAddition(final Proficiency proficiency) {
+        if (proficiency == Proficiency.NONE && isJackOfAllTrades()) {
+            return Math.floorDiv(getProficiencyScore(), 2);
+        }
+        return proficiency.getMultiplier() * getProficiencyScore();
     }
 
     public WeaponProficiency getWeaponProficiency() {

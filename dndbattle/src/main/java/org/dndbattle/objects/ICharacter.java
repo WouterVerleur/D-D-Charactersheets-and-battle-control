@@ -16,12 +16,9 @@
  */
 package org.dndbattle.objects;
 
-import static org.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
-
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.util.List;
 import org.dndbattle.objects.enums.AbilityType;
 import org.dndbattle.objects.enums.ChallengeRating;
 import org.dndbattle.objects.enums.Proficiency;
@@ -29,6 +26,7 @@ import org.dndbattle.objects.enums.Size;
 import org.dndbattle.objects.enums.SkillType;
 import org.dndbattle.objects.enums.SpellLevel;
 import org.dndbattle.utils.GlobalUtils;
+import static org.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
 
 /**
  *
@@ -62,6 +60,8 @@ public interface ICharacter extends ISaveableClass, Cloneable {
     int getSavingThrowModifier(AbilityType abilityType);
 
     int getSkillModifier(SkillType skillType);
+
+    boolean isJackOfAllTrades();
 
     int getSpeed();
 

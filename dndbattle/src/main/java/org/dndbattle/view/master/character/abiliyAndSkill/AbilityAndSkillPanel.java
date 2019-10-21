@@ -16,15 +16,12 @@
  */
 package org.dndbattle.view.master.character.abiliyAndSkill;
 
-import static java.awt.event.ItemEvent.SELECTED;
-
 import java.awt.Component;
+import static java.awt.event.ItemEvent.SELECTED;
 import java.util.List;
-
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
-
 import org.dndbattle.objects.IArmor;
 import org.dndbattle.objects.enums.AbilityType;
 import org.dndbattle.objects.enums.SkillType;
@@ -81,6 +78,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         lInitiative = new javax.swing.JLabel();
         pProficiency = new javax.swing.JPanel();
         lProficiency = new javax.swing.JLabel();
+        cbJackOfAllTrades = new javax.swing.JCheckBox();
         pArmorClass = new javax.swing.JPanel();
         lArmor = new javax.swing.JLabel();
         cbArmor = new javax.swing.JComboBox<>();
@@ -241,15 +239,15 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         pInitiativeLayout.setHorizontalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pInitiativeLayout.createSequentialGroup()
-                .addComponent(lInitativeDex, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addComponent(lInitativeDex, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lInitiativeAdd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sInitiativeBonus, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addComponent(sInitiativeBonus, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lInitiativeEquals)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                .addComponent(lInitiative, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
         );
         pInitiativeLayout.setVerticalGroup(
             pInitiativeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,341 +272,354 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         lProficiency.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lProficiency.setText(GlobalUtils.modifierToString(character.getProficiencyScore()));
 
-        javax.swing.GroupLayout pProficiencyLayout = new javax.swing.GroupLayout(pProficiency);
-        pProficiency.setLayout(pProficiencyLayout);
-        pProficiencyLayout.setHorizontalGroup(
-            pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lProficiency, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pProficiencyLayout.setVerticalGroup(
-            pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        cbJackOfAllTrades.setSelected(character.isJackOfAllTrades());
+        cbJackOfAllTrades.setText("Jack of all Trades (" + GlobalUtils.modifierToString(Math.floorDiv(character.getProficiencyScore(), 2)) + ')');
+    cbJackOfAllTrades.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    cbJackOfAllTrades.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            cbJackOfAllTradesActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout pProficiencyLayout = new javax.swing.GroupLayout(pProficiency);
+    pProficiency.setLayout(pProficiencyLayout);
+    pProficiencyLayout.setHorizontalGroup(
+        pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(lProficiency, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(cbJackOfAllTrades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    );
+    pProficiencyLayout.setVerticalGroup(
+        pProficiencyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(pProficiencyLayout.createSequentialGroup()
             .addComponent(lProficiency)
-        );
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbJackOfAllTrades))
+    );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pProficiency, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pProficiency, gridBagConstraints);
 
-        pArmorClass.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Armor Class", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
-        pArmorClass.setLayout(new java.awt.GridBagLayout());
+    pArmorClass.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Armor Class", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+    pArmorClass.setLayout(new java.awt.GridBagLayout());
 
-        lArmor.setText("Armor");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        pArmorClass.add(lArmor, gridBagConstraints);
+    lArmor.setText("Armor");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    pArmorClass.add(lArmor, gridBagConstraints);
 
-        cbArmor.setModel(getArmorCbModel());
-        cbArmor.setSelectedItem(character.getArmor());
-        cbArmor.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbArmorItemStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        pArmorClass.add(cbArmor, gridBagConstraints);
+    cbArmor.setModel(getArmorCbModel());
+    cbArmor.setSelectedItem(character.getArmor());
+    cbArmor.addItemListener(new java.awt.event.ItemListener() {
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            cbArmorItemStateChanged(evt);
+        }
+    });
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+    pArmorClass.add(cbArmor, gridBagConstraints);
 
-        lOverride.setText("Override");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        pArmorClass.add(lOverride, gridBagConstraints);
+    lOverride.setText("Override");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 2;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    pArmorClass.add(lOverride, gridBagConstraints);
 
-        sOverride.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-        sOverride.setValue(character.getArmorOverride());
-        sOverride.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sOverrideStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        pArmorClass.add(sOverride, gridBagConstraints);
+    sOverride.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+    sOverride.setValue(character.getArmorOverride());
+    sOverride.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            sOverrideStateChanged(evt);
+        }
+    });
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 2;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+    pArmorClass.add(sOverride, gridBagConstraints);
 
-        lExtraArmor.setText("Extra armor");
-        lExtraArmor.setToolTipText("Extra armor from features and traits");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        pArmorClass.add(lExtraArmor, gridBagConstraints);
+    lExtraArmor.setText("Extra armor");
+    lExtraArmor.setToolTipText("Extra armor from features and traits");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    pArmorClass.add(lExtraArmor, gridBagConstraints);
 
-        sExtraArmor.setModel(new javax.swing.SpinnerNumberModel());
-        sExtraArmor.setValue(character.getConditionalArmorBonus());
-        sExtraArmor.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sExtraArmorStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        pArmorClass.add(sExtraArmor, gridBagConstraints);
+    sExtraArmor.setModel(new javax.swing.SpinnerNumberModel());
+    sExtraArmor.setValue(character.getConditionalArmorBonus());
+    sExtraArmor.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            sExtraArmorStateChanged(evt);
+        }
+    });
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+    pArmorClass.add(sExtraArmor, gridBagConstraints);
 
-        cbShield.setSelected(character.isShieldWearer());
-        cbShield.setText("Has a shield");
-        cbShield.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbShieldItemStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        pArmorClass.add(cbShield, gridBagConstraints);
+    cbShield.setSelected(character.isShieldWearer());
+    cbShield.setText("Has a shield");
+    cbShield.addItemListener(new java.awt.event.ItemListener() {
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            cbShieldItemStateChanged(evt);
+        }
+    });
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 1;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    pArmorClass.add(cbShield, gridBagConstraints);
 
-        lArmorClass.setText(character.getArmorClassString());
-        lArmorClass.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        pArmorClass.add(lArmorClass, gridBagConstraints);
+    lArmorClass.setText(character.getArmorClassString());
+    lArmorClass.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 0;
+    gridBagConstraints.gridy = 4;
+    gridBagConstraints.gridwidth = 2;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.weighty = 1.0;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+    pArmorClass.add(lArmorClass, gridBagConstraints);
 
-        sShieldBonus.setModel(new javax.swing.SpinnerNumberModel(2, null, null, 1));
-        sShieldBonus.setEnabled(character.isShieldWearer());
-        sShieldBonus.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sShieldBonusStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-        pArmorClass.add(sShieldBonus, gridBagConstraints);
+    sShieldBonus.setModel(new javax.swing.SpinnerNumberModel(2, null, null, 1));
+    sShieldBonus.setEnabled(character.isShieldWearer());
+    sShieldBonus.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            sShieldBonusStateChanged(evt);
+        }
+    });
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 1;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+    pArmorClass.add(sShieldBonus, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pArmorClass, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 4;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pArmorClass, gridBagConstraints);
 
-        pChallengeRating.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Challenge Rating", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
-        pChallengeRating.setEnabled(character.hasChallengeRating());
+    pChallengeRating.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Challenge Rating", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+    pChallengeRating.setEnabled(character.hasChallengeRating());
 
-        cbChallengeRating.setSelectedItem(character.getChallengeRating());
-        cbChallengeRating.setEnabled(character.hasChallengeRating());
-        cbChallengeRating.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbChallengeRatingItemStateChanged(evt);
-            }
-        });
+    cbChallengeRating.setSelectedItem(character.getChallengeRating());
+    cbChallengeRating.setEnabled(character.hasChallengeRating());
+    cbChallengeRating.addItemListener(new java.awt.event.ItemListener() {
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            cbChallengeRatingItemStateChanged(evt);
+        }
+    });
 
-        javax.swing.GroupLayout pChallengeRatingLayout = new javax.swing.GroupLayout(pChallengeRating);
-        pChallengeRating.setLayout(pChallengeRatingLayout);
-        pChallengeRatingLayout.setHorizontalGroup(
-            pChallengeRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pChallengeRatingLayout.setVerticalGroup(
-            pChallengeRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pChallengeRatingLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(cbChallengeRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+    javax.swing.GroupLayout pChallengeRatingLayout = new javax.swing.GroupLayout(pChallengeRating);
+    pChallengeRating.setLayout(pChallengeRatingLayout);
+    pChallengeRatingLayout.setHorizontalGroup(
+        pChallengeRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(cbChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+    );
+    pChallengeRatingLayout.setVerticalGroup(
+        pChallengeRatingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pChallengeRatingLayout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cbChallengeRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pChallengeRating, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 7;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pChallengeRating, gridBagConstraints);
 
-        pSize.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Size", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
-        pSize.setEnabled(character.hasChallengeRating());
+    pSize.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Size", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+    pSize.setEnabled(character.hasChallengeRating());
 
-        cbSize.setSelectedItem(character.getSize());
-        cbSize.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbSizeItemStateChanged(evt);
-            }
-        });
+    cbSize.setSelectedItem(character.getSize());
+    cbSize.addItemListener(new java.awt.event.ItemListener() {
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            cbSizeItemStateChanged(evt);
+        }
+    });
 
-        javax.swing.GroupLayout pSizeLayout = new javax.swing.GroupLayout(pSize);
-        pSize.setLayout(pSizeLayout);
-        pSizeLayout.setHorizontalGroup(
-            pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbSize, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pSizeLayout.setVerticalGroup(
-            pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+    javax.swing.GroupLayout pSizeLayout = new javax.swing.GroupLayout(pSize);
+    pSize.setLayout(pSizeLayout);
+    pSizeLayout.setHorizontalGroup(
+        pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(cbSize, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+    );
+    pSizeLayout.setVerticalGroup(
+        pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(cbSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+    );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pSize, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 8;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pSize, gridBagConstraints);
 
-        pSpeed.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Speed", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
-        pSpeed.setEnabled(character.hasChallengeRating());
+    pSpeed.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Speed", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+    pSpeed.setEnabled(character.hasChallengeRating());
 
-        sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 5, null, 5));
-        sSpeed.setValue(character.getSpeed());
-        sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sSpeedStateChanged(evt);
-            }
-        });
+    sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 5, null, 5));
+    sSpeed.setValue(character.getSpeed());
+    sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            sSpeedStateChanged(evt);
+        }
+    });
 
-        javax.swing.GroupLayout pSpeedLayout = new javax.swing.GroupLayout(pSpeed);
-        pSpeed.setLayout(pSpeedLayout);
-        pSpeedLayout.setHorizontalGroup(
-            pSpeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sSpeed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pSpeedLayout.setVerticalGroup(
-            pSpeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+    javax.swing.GroupLayout pSpeedLayout = new javax.swing.GroupLayout(pSpeed);
+    pSpeed.setLayout(pSpeedLayout);
+    pSpeedLayout.setHorizontalGroup(
+        pSpeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(sSpeed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+    );
+    pSpeedLayout.setVerticalGroup(
+        pSpeedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(sSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+    );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pSpeed, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 9;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pSpeed, gridBagConstraints);
 
-        pHitDice.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Hit dice", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+    pHitDice.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Hit dice", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
-        lHitDice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lHitDice.setText(getHitDiceText());
+    lHitDice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    lHitDice.setText(getHitDiceText());
 
-        javax.swing.GroupLayout pHitDiceLayout = new javax.swing.GroupLayout(pHitDice);
-        pHitDice.setLayout(pHitDiceLayout);
-        pHitDiceLayout.setHorizontalGroup(
-            pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lHitDice, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pHitDiceLayout.setVerticalGroup(
-            pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lHitDice)
-        );
+    javax.swing.GroupLayout pHitDiceLayout = new javax.swing.GroupLayout(pHitDice);
+    pHitDice.setLayout(pHitDiceLayout);
+    pHitDiceLayout.setHorizontalGroup(
+        pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(lHitDice, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+    );
+    pHitDiceLayout.setVerticalGroup(
+        pHitDiceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(lHitDice)
+    );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pHitDice, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 5;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pHitDice, gridBagConstraints);
 
-        pTransform.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Transformation", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
-        pTransform.setEnabled(character.hasChallengeRating());
+    pTransform.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Transformation", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+    pTransform.setEnabled(character.hasChallengeRating());
 
-        cbCanTransform.setSelected(character.isCanTransform());
-        cbCanTransform.setText("Can transform");
-        cbCanTransform.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cbCanTransform.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCanTransformActionPerformed(evt);
-            }
-        });
+    cbCanTransform.setSelected(character.isCanTransform());
+    cbCanTransform.setText("Can transform");
+    cbCanTransform.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    cbCanTransform.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            cbCanTransformActionPerformed(evt);
+        }
+    });
 
-        cbTransformClass.setSelectedItem(character.getTransformType());
-        cbTransformClass.setEnabled(character.isCanTransform());
-        cbTransformClass.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbTransformClassItemStateChanged(evt);
-            }
-        });
+    cbTransformClass.setSelectedItem(character.getTransformType());
+    cbTransformClass.setEnabled(character.isCanTransform());
+    cbTransformClass.addItemListener(new java.awt.event.ItemListener() {
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            cbTransformClassItemStateChanged(evt);
+        }
+    });
 
-        cbTransformChallengeRating.setSelectedItem(character.getTransformChallengeRating());
-        cbTransformChallengeRating.setEnabled(character.isCanTransform());
-        cbTransformChallengeRating.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbTransformChallengeRatingItemStateChanged(evt);
-            }
-        });
+    cbTransformChallengeRating.setSelectedItem(character.getTransformChallengeRating());
+    cbTransformChallengeRating.setEnabled(character.isCanTransform());
+    cbTransformChallengeRating.addItemListener(new java.awt.event.ItemListener() {
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            cbTransformChallengeRatingItemStateChanged(evt);
+        }
+    });
 
-        javax.swing.GroupLayout pTransformLayout = new javax.swing.GroupLayout(pTransform);
-        pTransform.setLayout(pTransformLayout);
-        pTransformLayout.setHorizontalGroup(
-            pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cbCanTransform, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-            .addComponent(cbTransformClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cbTransformChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pTransformLayout.setVerticalGroup(
-            pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pTransformLayout.createSequentialGroup()
-                .addComponent(cbCanTransform)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbTransformClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbTransformChallengeRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+    javax.swing.GroupLayout pTransformLayout = new javax.swing.GroupLayout(pTransform);
+    pTransform.setLayout(pTransformLayout);
+    pTransformLayout.setHorizontalGroup(
+        pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(cbCanTransform, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+        .addComponent(cbTransformClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(cbTransformChallengeRating, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    );
+    pTransformLayout.setVerticalGroup(
+        pTransformLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(pTransformLayout.createSequentialGroup()
+            .addComponent(cbCanTransform)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbTransformClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbTransformChallengeRating, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+    );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(pTransform, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 6;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(pTransform, gridBagConstraints);
 
-        taNotes.setColumns(20);
-        taNotes.setLineWrap(true);
-        taNotes.setTabSize(4);
-        taNotes.setText(character.getNotes());
-        taNotes.setWrapStyleWord(true);
-        taNotes.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                taNotesFocusLost(evt);
-            }
-        });
-        spNotes.setViewportView(taNotes);
+    taNotes.setColumns(20);
+    taNotes.setLineWrap(true);
+    taNotes.setTabSize(4);
+    taNotes.setText(character.getNotes());
+    taNotes.setWrapStyleWord(true);
+    taNotes.addFocusListener(new java.awt.event.FocusAdapter() {
+        public void focusLost(java.awt.event.FocusEvent evt) {
+            taNotesFocusLost(evt);
+        }
+    });
+    spNotes.setViewportView(taNotes);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
-        add(spNotes, gridBagConstraints);
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 3;
+    gridBagConstraints.gridy = 10;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.ipadx = 100;
+    gridBagConstraints.ipady = 50;
+    gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
+    gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 5);
+    add(spNotes, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void sHealthStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sHealthStateChanged
@@ -700,10 +711,17 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         CHARACTERS.update(character);
     }//GEN-LAST:event_sInitiativeBonusStateChanged
 
+    private void cbJackOfAllTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJackOfAllTradesActionPerformed
+        character.setJackOfAllTrades(cbJackOfAllTrades.isSelected());
+        update();
+        //CHARACTERS.update(character);
+    }//GEN-LAST:event_cbJackOfAllTradesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<IArmor> cbArmor;
     private javax.swing.JCheckBox cbCanTransform;
     private org.dndbattle.view.comboboxes.ChallengeRatingComboBox cbChallengeRating;
+    private javax.swing.JCheckBox cbJackOfAllTrades;
     private javax.swing.JCheckBox cbShield;
     private org.dndbattle.view.comboboxes.SizeComboBox cbSize;
     private org.dndbattle.view.comboboxes.ChallengeRatingComboBox cbTransformChallengeRating;

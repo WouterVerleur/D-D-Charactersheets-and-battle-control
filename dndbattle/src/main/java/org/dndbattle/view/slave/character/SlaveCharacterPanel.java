@@ -26,7 +26,6 @@ import javax.swing.JRadioButton;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import org.dndbattle.objects.ICharacter;
-import org.dndbattle.objects.ICombatant;
 import org.dndbattle.objects.IEquipment;
 import org.dndbattle.objects.IExtendedCharacter;
 import org.dndbattle.objects.ISpell;
@@ -61,8 +60,8 @@ public class SlaveCharacterPanel extends javax.swing.JPanel implements IUpdateab
     private final GridLayout equipmentColumnsLayout = new GridLayout(0, getEquipmentColumns(), 5, 5);
     private WeaponSelection selection;
 
-    public SlaveCharacterPanel(ICombatant combatant) {
-        this.character = combatant.getCombatantCharacter();
+    public SlaveCharacterPanel(ICharacter character) {
+        this.character = character;
         selectionString = String.format(WEAPON_SELECTION_FORMAT, character.getClass().getSimpleName());
         selection = WeaponSelection.valueOf(SETTINGS.getProperty(selectionString, WeaponSelection.ALL.name()));
 

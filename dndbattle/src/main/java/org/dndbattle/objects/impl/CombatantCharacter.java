@@ -35,6 +35,9 @@ import org.dndbattle.objects.enums.SpellLevel;
  */
 public class CombatantCharacter implements ICharacter {
 
+    private static final String NAME_FORMAT = "%s (%s)";
+    private static final String TEXT_FORMAT = "%s\n\n______________________________\n\n%s";
+
     private final ICharacter character;
     private CombatantCharacter transformation;
     private boolean completeTransformation;
@@ -86,7 +89,7 @@ public class CombatantCharacter implements ICharacter {
     @Override
     public String getName() {
         if (isTransformed()) {
-            return transformation.getName();
+            return String.format(NAME_FORMAT, transformation.getName(), character.getName());
         }
         return character.getName();
     }
@@ -311,7 +314,7 @@ public class CombatantCharacter implements ICharacter {
     @Override
     public String getNotes() {
         if (isTransformed()) {
-            return transformation.getNotes().concat("\n\n______________________________\n\n").concat(character.getNotes());
+            return String.format(TEXT_FORMAT, transformation.getNotes(), character.getNotes());
         }
         return character.getNotes();
     }

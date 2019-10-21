@@ -5,35 +5,32 @@
  */
 package org.dndbattle.view.slave;
 
-import java.awt.Component;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.List;
-
 import javax.swing.JPanel;
-
 import org.dndbattle.core.IMaster;
 import org.dndbattle.core.IMasterConnectionInfo;
 import org.dndbattle.core.ISlave;
 import org.dndbattle.core.impl.Slave;
 import org.dndbattle.objects.ICombatant;
-import org.dndbattle.view.IUpdateablePanel;
-import org.dndbattle.view.slave.character.SlaveCharacterPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static org.dndbattle.utils.Settings.SLAVE_LOCATION_X;
 import static org.dndbattle.utils.Settings.SLAVE_LOCATION_Y;
 import static org.dndbattle.utils.Settings.SLAVE_SIZE_HEIGHT;
 import static org.dndbattle.utils.Settings.SLAVE_SIZE_STATE;
 import static org.dndbattle.utils.Settings.SLAVE_SIZE_WIDTH;
+import org.dndbattle.view.slave.character.SlaveCharacterPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Wouter
  */
-public class SlaveFrame extends javax.swing.JFrame {
+public final class SlaveFrame extends javax.swing.JFrame {
+
+    private static final String SINGLE = "single";
 
     private static final Logger log = LoggerFactory.getLogger(SlaveFrame.class);
 
@@ -78,7 +75,7 @@ public class SlaveFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tpSelection = new javax.swing.JTabbedPane();
+        spSlave = new javax.swing.JSplitPane();
         spCombatants = new javax.swing.JScrollPane();
         pCombatants = new javax.swing.JPanel();
 
@@ -92,11 +89,7 @@ public class SlaveFrame extends javax.swing.JFrame {
             }
         });
 
-        tpSelection.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                tpSelectionStateChanged(evt);
-            }
-        });
+        spSlave.setDividerLocation(1d);
 
         spCombatants.setBorder(null);
         spCombatants.setName("Battle"); // NOI18N
@@ -104,18 +97,20 @@ public class SlaveFrame extends javax.swing.JFrame {
         pCombatants.setLayout(new javax.swing.BoxLayout(pCombatants, javax.swing.BoxLayout.Y_AXIS));
         spCombatants.setViewportView(pCombatants);
 
-        tpSelection.addTab("Battle", spCombatants);
+        spSlave.setLeftComponent(spCombatants);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+            .addComponent(spSlave, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+            .addComponent(spSlave, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
+
+        //spSlave.setLeftComponent(spCombatants);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,17 +132,10 @@ public class SlaveFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formComponentResized
 
-    private void tpSelectionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tpSelectionStateChanged
-        final Component selectedComponent = tpSelection.getSelectedComponent();
-        if (selectedComponent instanceof IUpdateablePanel) {
-            ((IUpdateablePanel) selectedComponent).update();
-        }
-    }//GEN-LAST:event_tpSelectionStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel pCombatants;
     private javax.swing.JScrollPane spCombatants;
-    private javax.swing.JTabbedPane tpSelection;
+    private javax.swing.JSplitPane spSlave;
     // End of variables declaration//GEN-END:variables
 
     public void refreshBattle(List<ICombatant> combatants, int activeIndex) {
@@ -169,15 +157,8 @@ public class SlaveFrame extends javax.swing.JFrame {
     }
 
     public void refreshCombatants(List<ICombatant> combatants) {
-        int selectedIndex = tpSelection.getSelectedIndex();
-        tpSelection.removeAll();
-        tpSelection.add(spCombatants);
-        for (ICombatant combatant : combatants) {
-            if (checkOwnCharacter(combatant)) {
-                createCharacterPanel(combatant);
-            }
-        }
-        tpSelection.setSelectedIndex(selectedIndex);
+        spSlave.setRightComponent(null);
+        spSlave.setDividerLocation(1d);
     }
 
     private boolean checkOwnCharacter(ICombatant combatant) {
@@ -185,17 +166,18 @@ public class SlaveFrame extends javax.swing.JFrame {
         return connectionInfo != null && combatant.ownedbyPlayer(connectionInfo.getPlayerName());
     }
 
-    private void createCharacterPanel(ICombatant combatant) {
-        final SlaveCharacterPanel panel = new SlaveCharacterPanel(combatant);
-        tpSelection.add(panel);
-        if (combatant.isTransformed()) {
-            createCharacterPanel(combatant.getTransformation());
-        }
+    public void createCharacterPanel(ICombatant combatant) {
+        final SlaveCharacterPanel panel = new SlaveCharacterPanel(combatant.getCombatantCharacter());
+        setRightPanel(panel);
+    }
+
+    private void setRightPanel(JPanel panel) {
+        spSlave.setRightComponent(panel);
     }
 
     private void addCombatant(ICombatant combatant) {
         log.debug("Adding {} of class {}", combatant, combatant.getClass());
-        pCombatants.add(new SlaveSubPanel(combatant));
+        pCombatants.add(new SlaveSubPanel(combatant, checkOwnCharacter(combatant) ? this : null));
     }
 
     @Override

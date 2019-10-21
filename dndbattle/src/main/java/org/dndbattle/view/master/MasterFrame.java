@@ -5,13 +5,6 @@
  */
 package org.dndbattle.view.master;
 
-import static org.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static org.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static org.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
-import static org.dndbattle.utils.Settings.MASTER_SIZE_STATE;
-import static org.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
-import static org.dndbattle.utils.Settings.MASTER_TITLE;
-
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GraphicsDevice;
@@ -23,13 +16,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
-
 import org.dndbattle.core.IMaster;
 import org.dndbattle.core.impl.Master;
 import org.dndbattle.core.impl.MasterConnectionInfo;
@@ -38,6 +29,12 @@ import org.dndbattle.objects.ICombatant;
 import org.dndbattle.objects.impl.AbstractCharacter;
 import org.dndbattle.objects.impl.Combatant;
 import org.dndbattle.utils.Settings;
+import static org.dndbattle.utils.Settings.MASTER_LOCATION_X;
+import static org.dndbattle.utils.Settings.MASTER_LOCATION_Y;
+import static org.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
+import static org.dndbattle.utils.Settings.MASTER_SIZE_STATE;
+import static org.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
+import static org.dndbattle.utils.Settings.MASTER_TITLE;
 import org.dndbattle.view.comboboxes.ClassComboBox;
 import org.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
@@ -732,7 +729,7 @@ public class MasterFrame extends javax.swing.JFrame {
         ICharacter previousCharacter = null;
         for (ICombatant combatant : characters) {
             if (!combatant.getCharacter().equals(previousCharacter)) {
-                tpBattle.add(new SlaveCharacterPanel(combatant));
+                tpBattle.add(new SlaveCharacterPanel(combatant.getCharacter()));
                 previousCharacter = combatant.getCharacter();
             }
         }

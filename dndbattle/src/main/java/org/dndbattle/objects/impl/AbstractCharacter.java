@@ -16,15 +16,17 @@
  */
 package org.dndbattle.objects.impl;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.JOptionPane;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.dndbattle.objects.IAbility;
 import org.dndbattle.objects.IArmor;
 import org.dndbattle.objects.ICharacter;
@@ -254,8 +256,7 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Funtion to return a name based string that is save for usage in
-     * filenames.
+     * Funtion to return a name based string that is save for usage in filenames.
      *
      * @return a filename save representation of the name of this character.
      */
@@ -281,7 +282,7 @@ public abstract class AbstractCharacter implements ICharacter {
 
     @Override
     public int getSavingThrowModifier(AbilityType abilityType) {
-        return abilities.get(abilityType).getModifier() + getProficiencyAddition(getSavingThrowProficiency(abilityType));
+        return abilities.get(abilityType).getModifier() + getSavingThrowProficiency(abilityType).getMultiplier() * getProficiencyScore();
     }
 
     public int getSavingThrowModifier(String typeName) {
@@ -373,7 +374,7 @@ public abstract class AbstractCharacter implements ICharacter {
     @JsonIgnore
     @Override
     public int getInitiative() {
-        return getAbilityModifier(AbilityType.DEX) + getInitiativeBonus();
+        return getAbilityModifier(AbilityType.DEX) + getProficiencyAddition(Proficiency.NONE) + getInitiativeBonus();
     }
 
     @Override

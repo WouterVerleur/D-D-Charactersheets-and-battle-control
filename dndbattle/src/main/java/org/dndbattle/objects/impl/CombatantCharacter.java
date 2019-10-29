@@ -226,6 +226,22 @@ public class CombatantCharacter implements ICharacter {
     }
 
     @Override
+    public int getConditionalAttackBonus() {
+        if (isTransformed()) {
+            return transformation.getConditionalAttackBonus();
+        }
+        return character.getConditionalAttackBonus();
+    }
+
+    @Override
+    public int getConditionalDamageBonus() {
+        if (isTransformed()) {
+            return transformation.getConditionalAttackBonus();
+        }
+        return character.getConditionalAttackBonus();
+    }
+
+    @Override
     public boolean isShieldWearer() {
         if (isTransformed()) {
             return transformation.isShieldWearer();

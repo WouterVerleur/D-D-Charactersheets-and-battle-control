@@ -261,7 +261,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="GlobalUtils.modifierToString(character.getProficiencyScore())" type="code"/>
+              <Connection code="GlobalUtils.modifierToString(character.getProficiencyScore())+(character.isJackOfAllTrades()?&quot; (+&quot;+Math.floorDiv(character.getProficiencyScore(), 2)+&quot;)&quot;:&quot;&quot;)" type="code"/>
             </Property>
           </Properties>
         </Component>

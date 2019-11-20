@@ -1,4 +1,4 @@
-# D&D Charactersheets and battle control
+# D&D Character sheets and battle control
 A simple program designed for a D&amp;D group to create Character sheets and use them as a guide for a battle. This program creates a battle master when started on a computer that does not have the program running. Any other computer in the network can than connect to the battle master to create a slave of this master. This way the DM has control over the battle and party members can view information like the order and the health of friendly characters.
 
 You can download a jar of the latest version [here]({{ site.url }}/downloads/dndbattle-2.6.jar).  
@@ -14,22 +14,22 @@ Requires Java 8 or higher, but has been build using Java 11.
   * Tells you the amount of health everybody has and the order their turns are.
 * Network connection
   * Allow the players to watch a part of your information on their own screen.
-  * They can only see the order, the health of frendly characters and character sheets of their own characters.
+  * They can only see the order, the health of friendly characters and character sheets of their own characters.
 * Compatible with most shared storage providers (Dropbox, one drive, etc.)
   * All information is stored in a set of folders.
   * Just change the storage location in the settings.
 * Dice rolling
-  * Both as a seperate view and from the character pages.
+  * Both as a separate view and from the character pages.
 * Quick lookup of information
   * Opens a relevant page in your browser.
   * The website can be set to one of the following:
     * dndbeyond.com
-	* dnd5e.fandom.com
-	* roll20.net
+	  * dnd5e.fandom.com
+	  * roll20.net
 * Encounter calculator
   * You can use the created characters in the build-in encounter calculator.
 * Exporting to a PDF & HTML
-  * For the player that don't want to use a laptop.
+  * For the players that don't want to use a laptop.
   * Custom build templates for this software.
 * Equipment Management
   * Add all types of equipment to your character and have the information ready to use.
@@ -37,10 +37,11 @@ Requires Java 8 or higher, but has been build using Java 11.
 
 ## Planned features
 * Additional export templates
-* Batle log
+* Battle log
 * Other options for information lookup
 
 ## All versions:
+Be aware that older versions are not rebuild may have vulnerabilities.
 [Version 2.6]({{ site.url }}/downloads/dndbattle-2.6.jar).  
 [Version 2.5]({{ site.url }}/downloads/dndbattle-2.5.jar).  
 [Version 2.4]({{ site.url }}/downloads/dndbattle-2.4.jar).  
@@ -51,7 +52,7 @@ Requires Java 8 or higher, but has been build using Java 11.
 [Version 1]({{ site.url }}/downloads/dndbattle-1.jar).
 
 ## Randomizer:
-This is an optional program that allows a DM to easilly create random events. These can be timed events or one-off.  
+This is an optional program that allows a DM to easily create random events. These events can be timed or on-demand.  
 [randomizer-1.0]({{ site.url }}/downloads/randomizer-1.0).  
 [![Known Vulnerabilities](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control/badge.svg?targetFile=randomizer/pom.xml)](https://snyk.io//test/github/WouterVerleur/D-D-Charactersheets-and-battle-control?targetFile=randomizer/pom.xml)  
 

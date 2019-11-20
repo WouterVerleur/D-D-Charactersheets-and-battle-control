@@ -24,8 +24,8 @@ Requires Java 8 or higher, but has been build using Java 11.
   * Opens a relevant page in your browser.
   * The website can be set to one of the following:
     * dndbeyond.com
-	  * dnd5e.fandom.com
-	  * roll20.net
+  * dnd5e.fandom.com
+  * roll20.net
 * Encounter calculator
   * You can use the created characters in the build-in encounter calculator.
 * Exporting to a PDF & HTML

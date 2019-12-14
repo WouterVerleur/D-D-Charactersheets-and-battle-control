@@ -143,6 +143,8 @@ public class SpellsPanel extends javax.swing.JPanel implements IUpdateablePanel 
         pSpells.setLayout(new java.awt.GridBagLayout());
         spSpells.setViewportView(pSpells);
 
+        spSpells.getVerticalScrollBar().setUnitIncrement(20);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

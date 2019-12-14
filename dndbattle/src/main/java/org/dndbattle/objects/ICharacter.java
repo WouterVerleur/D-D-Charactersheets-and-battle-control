@@ -109,6 +109,10 @@ public interface ICharacter extends ISaveableClass, Cloneable {
 
     boolean isProficient(IWeapon weapon);
 
+    int getConditionalAttackBonus();
+
+    int getConditionalDamageBonus();
+
     boolean isShieldWearer();
 
     @JsonIgnore

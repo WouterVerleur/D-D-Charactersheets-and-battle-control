@@ -5,8 +5,6 @@
  */
 package org.dndbattle.utils;
 
-import static org.dndbattle.utils.Settings.WEBSITE;
-
 import java.awt.Color;
 import java.awt.Desktop;
 import java.io.BufferedReader;
@@ -18,7 +16,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICharacterClass;
 import org.dndbattle.objects.IWeapon;
@@ -27,6 +24,7 @@ import org.dndbattle.objects.enums.Dice;
 import org.dndbattle.objects.enums.WeaponRange;
 import org.dndbattle.objects.enums.Website;
 import org.dndbattle.objects.impl.AbstractExtendedCharacter;
+import static org.dndbattle.utils.Settings.WEBSITE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,8 +111,8 @@ public class GlobalUtils {
         return new Object[]{
             weapon.getName(),
             character.isProficient(weapon),
-            getModifierString(character, weapon, true),
-            getWeaponDamage(weapon, getModifierString(character, weapon, false)).replaceAll("\\s(\\s)+", " "),
+            getAttackModifier(character, weapon),
+            getWeaponDamage(weapon, getDamageModifier(character, weapon)).replaceAll("\\s(\\s)+", " "),
             weapon.getNotes()
         };
     }
@@ -156,6 +154,12 @@ public class GlobalUtils {
 
         if (modifier == 0) {
             return "";
+        }
+
+        int conditionalModifier = addProficiency ? character.getConditionalAttackBonus() : character.getConditionalDamageBonus();
+
+        if (conditionalModifier != 0) {
+            return modifierToString(modifier) + "/" + modifierToString(modifier + conditionalModifier);
         }
         return modifierToString(modifier);
     }

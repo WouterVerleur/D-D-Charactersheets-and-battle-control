@@ -77,6 +77,8 @@ public abstract class AbstractCharacter implements ICharacter {
     private Map<SpellLevel, Integer> spellSlots = new HashMap<>(SpellLevel.values().length);
     private WeaponProficiency weaponProficiency;
     private List<IWeapon> privateWeapons = new ArrayList<>();
+    private int conditionalAttackBonus = 0;
+    private int conditionalDamageBonus = 0;
     private Size size = Size.MEDIUM;
     private boolean powerfulBuild = false;
     private boolean jackOfAllTrades = false;
@@ -509,6 +511,24 @@ public abstract class AbstractCharacter implements ICharacter {
 
     public void removePrivateWeapon(IWeapon weapon) {
         privateWeapons.remove(weapon);
+    }
+
+    @Override
+    public int getConditionalAttackBonus() {
+        return conditionalAttackBonus;
+    }
+
+    public void setConditionalAttackBonus(int conditionalAttackBonus) {
+        this.conditionalAttackBonus = conditionalAttackBonus;
+    }
+
+    @Override
+    public int getConditionalDamageBonus() {
+        return conditionalDamageBonus;
+    }
+
+    public void setConditionalDamageBonus(int conditionalDamageBonus) {
+        this.conditionalDamageBonus = conditionalDamageBonus;
     }
 
     @Override

@@ -19,11 +19,9 @@ package org.dndbattle.view.master.character.weapon;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.List;
-
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import org.dndbattle.objects.IWeapon;
 import org.dndbattle.objects.enums.WeaponType;
 import org.dndbattle.objects.impl.AbstractCharacter;
@@ -84,6 +82,10 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         spRegularWeapons = new javax.swing.JScrollPane();
         pRegularWeapons = new javax.swing.JPanel();
         cbAllWeapons = new javax.swing.JCheckBox();
+        lAttackBonus = new javax.swing.JLabel();
+        lDamageBonus = new javax.swing.JLabel();
+        sAttackBonus = new javax.swing.JSpinner();
+        sDamageBonus = new javax.swing.JSpinner();
         sTop = new javax.swing.JSeparator();
         rbNone = new javax.swing.JRadioButton();
         rbSimple = new javax.swing.JRadioButton();
@@ -111,16 +113,49 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         pRegularWeapons.add(cbAllWeapons, gridBagConstraints);
+
+        lAttackBonus.setText("Attack bonus");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        pRegularWeapons.add(lAttackBonus, gridBagConstraints);
+
+        lDamageBonus.setText("Damage bonus");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        pRegularWeapons.add(lDamageBonus, gridBagConstraints);
+
+        sAttackBonus.setModel(new javax.swing.SpinnerNumberModel());
+        sAttackBonus.setValue(character.getConditionalAttackBonus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        pRegularWeapons.add(sAttackBonus, gridBagConstraints);
+
+        sDamageBonus.setModel(new javax.swing.SpinnerNumberModel());
+        sDamageBonus.setValue(character.getConditionalDamageBonus());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
+        pRegularWeapons.add(sDamageBonus, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -155,6 +190,7 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -170,8 +206,9 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -180,7 +217,7 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -198,7 +235,7 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -299,7 +336,7 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tpWeapons, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(tpWeapons, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,13 +398,17 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
     private javax.swing.JButton bNewPrivateWeapon;
     private javax.swing.ButtonGroup bgType;
     private javax.swing.JCheckBox cbAllWeapons;
+    private javax.swing.JLabel lAttackBonus;
+    private javax.swing.JLabel lDamageBonus;
     private javax.swing.JPanel pPrivateWeapons;
     private javax.swing.JPanel pRegularWeapons;
     private javax.swing.JPanel pWeapons;
     private javax.swing.JRadioButton rbMartial;
     private javax.swing.JRadioButton rbNone;
     private javax.swing.JRadioButton rbSimple;
+    private javax.swing.JSpinner sAttackBonus;
     private javax.swing.JSeparator sBottom;
+    private javax.swing.JSpinner sDamageBonus;
     private javax.swing.JSeparator sTop;
     private javax.swing.JScrollPane spPrivateWeapons;
     private javax.swing.JScrollPane spPrivateWeaponsTable;
@@ -434,7 +475,7 @@ public class CharacterWeaponPanel extends javax.swing.JPanel implements IUpdatea
         private void updateCheckBox() {
             final boolean proficient = weaponProficiency.isProficient(weapon);
             Object[] weaponRow = GlobalUtils.getWeaponRow(character, weapon);
-            setText(weaponRow[GlobalUtils.NAME] + " (" + weaponRow[GlobalUtils.ATTACK] + " / " + weaponRow[GlobalUtils.DAMAGE] + ")");
+            setText(weaponRow[GlobalUtils.NAME] + " (" + weaponRow[GlobalUtils.ATTACK] + ", " + weaponRow[GlobalUtils.DAMAGE] + ")");
             if (!isSelected() && proficient) {
                 setEnabled(false);
             } else {

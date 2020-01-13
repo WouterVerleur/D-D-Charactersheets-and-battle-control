@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
+
 import org.dndbattle.core.IMaster;
 import org.dndbattle.core.impl.Master;
 import org.dndbattle.core.impl.MasterConnectionInfo;
@@ -29,16 +31,17 @@ import org.dndbattle.objects.ICombatant;
 import org.dndbattle.objects.impl.AbstractCharacter;
 import org.dndbattle.objects.impl.Combatant;
 import org.dndbattle.utils.Settings;
+import org.dndbattle.view.comboboxes.ClassComboBox;
+import org.dndbattle.view.slave.character.SlaveCharacterPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static org.dndbattle.utils.Settings.MASTER_LOCATION_X;
 import static org.dndbattle.utils.Settings.MASTER_LOCATION_Y;
 import static org.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
 import static org.dndbattle.utils.Settings.MASTER_SIZE_STATE;
 import static org.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
 import static org.dndbattle.utils.Settings.MASTER_TITLE;
-import org.dndbattle.view.comboboxes.ClassComboBox;
-import org.dndbattle.view.slave.character.SlaveCharacterPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -107,17 +110,17 @@ public class MasterFrame extends javax.swing.JFrame {
         spDice = new javax.swing.JScrollPane();
         dicePanel = new org.dndbattle.view.master.DicePanel();
         spSettings = new javax.swing.JScrollPane();
-        settingsPanel = new org.dndbattle.view.master.SettingsPanel();
+        settingsPanel = new org.dndbattle.view.master.SettingsPanel(this);
         pClients = new javax.swing.JPanel();
         spClientsTable = new javax.swing.JScrollPane();
         tClients = new javax.swing.JTable();
         bKickClient = new javax.swing.JButton();
         tbRefresh = new javax.swing.JToggleButton();
-        armorsPanel = new org.dndbattle.view.master.armor.ArmorsPanel();
-        spellsPanel = new org.dndbattle.view.master.spells.SpellsPanel();
-        weaponsPanel = new org.dndbattle.view.master.weapons.WeaponsPanel();
+        pArmors = new org.dndbattle.view.master.armor.ArmorsPanel();
+        pSpells = new org.dndbattle.view.master.spells.SpellsPanel();
+        pWeapons = new org.dndbattle.view.master.weapons.WeaponsPanel();
+        pUtilities = new org.dndbattle.view.master.utilities.UtilitiesPanel();
         pEncounterCalculator = new org.dndbattle.view.master.encounter.EncounterCalculator();
-        utilitiesPanel = new org.dndbattle.view.master.utilities.UtilitiesPanel();
         mbMain = new javax.swing.JMenuBar();
         mBattle = new javax.swing.JMenu();
         miBattleView = new javax.swing.JMenuItem();
@@ -299,11 +302,11 @@ public class MasterFrame extends javax.swing.JFrame {
         pView.add(pClients, "Clients");
         pClients.getAccessibleContext().setAccessibleName("Clients");
 
-        pView.add(armorsPanel, "Armors");
-        pView.add(spellsPanel, "Spells");
-        pView.add(weaponsPanel, "Weapons");
+        pView.add(pArmors, "Armors");
+        pView.add(pSpells, "Spells");
+        pView.add(pWeapons, "Weapons");
+        pView.add(pUtilities, "Utilities");
         pView.add(pEncounterCalculator, "Encounter");
-        pView.add(utilitiesPanel, "Utilities");
 
         mBattle.setText("Battle");
 
@@ -660,7 +663,6 @@ public class MasterFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.dndbattle.view.master.armor.ArmorsPanel armorsPanel;
     private javax.swing.JButton bAddCombatant;
     private javax.swing.JButton bKickClient;
     private javax.swing.JButton bNewBattle;
@@ -685,13 +687,17 @@ public class MasterFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem miSpells;
     private javax.swing.JMenuItem miUtilities;
     private javax.swing.JMenuItem miWeapons;
+    private org.dndbattle.view.master.armor.ArmorsPanel pArmors;
     private org.dndbattle.view.master.AudioPanel pAudio;
     private javax.swing.JPanel pCharacters;
     private javax.swing.JPanel pClients;
     private javax.swing.JPanel pCombatants;
     private org.dndbattle.view.master.encounter.EncounterCalculator pEncounterCalculator;
     private javax.swing.JPanel pMain;
+    private org.dndbattle.view.master.spells.SpellsPanel pSpells;
+    private org.dndbattle.view.master.utilities.UtilitiesPanel pUtilities;
     private javax.swing.JPanel pView;
+    private org.dndbattle.view.master.weapons.WeaponsPanel pWeapons;
     private javax.swing.JPopupMenu.Separator sBattle;
     private javax.swing.JPopupMenu.Separator sView1;
     private javax.swing.JPopupMenu.Separator sView2;
@@ -700,12 +706,9 @@ public class MasterFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane spCombatants;
     private javax.swing.JScrollPane spDice;
     private javax.swing.JScrollPane spSettings;
-    private org.dndbattle.view.master.spells.SpellsPanel spellsPanel;
     private javax.swing.JTable tClients;
     private javax.swing.JToggleButton tbRefresh;
     private javax.swing.JTabbedPane tpBattle;
-    private org.dndbattle.view.master.utilities.UtilitiesPanel utilitiesPanel;
-    private org.dndbattle.view.master.weapons.WeaponsPanel weaponsPanel;
     // End of variables declaration//GEN-END:variables
 
     public void refreshBattle(final List<ICombatant> combatants, int activeIndex) {
@@ -759,6 +762,19 @@ public class MasterFrame extends javax.swing.JFrame {
             final String previous = (i == 0 ? classes[classes.length - 1] : classes[i - 1]).getSimpleName();
             final String next = (i == classes.length - 1 ? classes[0] : classes[i + 1]).getSimpleName();
             mCharacters.add(new ClassMenuItem(clazz, previous, next));
+        }
+    }
+
+    public void resetObjectPanels() {
+        pArmors.update();
+        pWeapons.update();
+        pUtilities.update();
+        pSpells.update();
+        for (Component characterpanel : pCharacters.getComponents()) {
+            if (characterpanel instanceof MasterCharactersPanel) {
+                log.error("Resetting [{}]", characterpanel);
+                ((MasterCharactersPanel) characterpanel).updateList(true);
+            }
         }
     }
 

@@ -353,6 +353,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
             <Component class="org.dndbattle.view.master.SettingsPanel" name="settingsPanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new org.dndbattle.view.master.SettingsPanel(this)"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -460,24 +463,31 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="org.dndbattle.view.master.armor.ArmorsPanel" name="armorsPanel">
+        <Component class="org.dndbattle.view.master.armor.ArmorsPanel" name="pArmors">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Armors"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="org.dndbattle.view.master.spells.SpellsPanel" name="spellsPanel">
+        <Component class="org.dndbattle.view.master.spells.SpellsPanel" name="pSpells">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Spells"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="org.dndbattle.view.master.weapons.WeaponsPanel" name="weaponsPanel">
+        <Component class="org.dndbattle.view.master.weapons.WeaponsPanel" name="pWeapons">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Weapons"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="org.dndbattle.view.master.utilities.UtilitiesPanel" name="pUtilities">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+              <CardConstraints cardName="Utilities"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -485,13 +495,6 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
               <CardConstraints cardName="Encounter"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="org.dndbattle.view.master.utilities.UtilitiesPanel" name="utilitiesPanel">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="Utilities"/>
             </Constraint>
           </Constraints>
         </Component>

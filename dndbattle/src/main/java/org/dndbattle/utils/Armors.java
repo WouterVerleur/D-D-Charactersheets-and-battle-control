@@ -8,7 +8,6 @@ package org.dndbattle.utils;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-
 import org.dndbattle.objects.IArmor;
 import org.dndbattle.objects.impl.Armor;
 import org.slf4j.Logger;

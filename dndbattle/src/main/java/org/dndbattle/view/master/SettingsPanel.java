@@ -16,6 +16,7 @@
  */
 package org.dndbattle.view.master;
 
+import java.awt.HeadlessException;
 import java.awt.event.ItemEvent;
 import java.io.File;
 
@@ -88,6 +89,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Initializable.I
         java.awt.GridBagConstraints gridBagConstraints;
 
         bgRollForDeath = new javax.swing.ButtonGroup();
+        jFileChooser1 = new javax.swing.JFileChooser();
         lMasterTitle = new javax.swing.JLabel();
         tfMasterTitle = new javax.swing.JTextField();
         lSlaveTitle = new javax.swing.JLabel();
@@ -100,6 +102,7 @@ public class SettingsPanel extends javax.swing.JPanel implements Initializable.I
         rbRollForDeath = new javax.swing.JRadioButton();
         rbAutomaticDeath = new javax.swing.JRadioButton();
         lPresetFolder = new javax.swing.JLabel();
+        bSelectKnownPreset = new javax.swing.JButton();
         tfPresetFolder = new javax.swing.JTextField();
         bPresetFolder = new javax.swing.JButton();
         lWebsite = new javax.swing.JLabel();
@@ -270,11 +273,23 @@ public class SettingsPanel extends javax.swing.JPanel implements Initializable.I
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(lPresetFolder, gridBagConstraints);
 
-        tfPresetFolder.setText(FileManager.getPresetFolder().getPath());
+        bSelectKnownPreset.setText("Select known");
+        bSelectKnownPreset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSelectKnownPresetActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(bSelectKnownPreset, gridBagConstraints);
+
+        tfPresetFolder.setText(FileManager.getPresetFolder().getPath());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -427,18 +442,23 @@ public class SettingsPanel extends javax.swing.JPanel implements Initializable.I
     private void bPresetFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPresetFolderActionPerformed
         File newPresetFolder = selectFile();
         if (newPresetFolder != null) {
-            tfPresetFolder.setText(newPresetFolder.getPath());
-            save();
-            switch (JOptionPane.showConfirmDialog(this, "Would you like to load the presets for the new location?", "Reload presets?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
-                case JOptionPane.YES_OPTION:
-                    reloadPresets();
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(this, "The new preset folder will be active on the next start.", "Notification", JOptionPane.INFORMATION_MESSAGE);
-                    break;
-            }
+            storePresetSelection(newPresetFolder);
         }
     }//GEN-LAST:event_bPresetFolderActionPerformed
+
+    private void storePresetSelection(File newPresetFolder) throws HeadlessException {
+        SETTINGS.addKnownPresetLocation(newPresetFolder);
+        tfPresetFolder.setText(newPresetFolder.getPath());
+        save();
+        switch (JOptionPane.showConfirmDialog(this, "Would you like to load the presets for the new location?", "Reload presets?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
+            case JOptionPane.YES_OPTION:
+                reloadPresets();
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "The new preset folder will be active on the next start.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                break;
+        }
+    }
 
     private void bResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bResetActionPerformed
         int option = JOptionPane.showConfirmDialog(this, "This will reset all settings.\nAre you sure?", "Please confirm!", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -471,13 +491,22 @@ public class SettingsPanel extends javax.swing.JPanel implements Initializable.I
         save();
     }//GEN-LAST:event_sCarryingCapacityMultiplierStateChanged
 
+    private void bSelectKnownPresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSelectKnownPresetActionPerformed
+        File selection = (File) JOptionPane.showInputDialog(this, "Select a known preset location.", "Select known location", JOptionPane.QUESTION_MESSAGE, null, SETTINGS.getKnownPresetLocations().toArray(new File[0]), new File(tfPresetFolder.getText()));
+        if (selection != null) {
+            storePresetSelection(selection);
+        }
+    }//GEN-LAST:event_bSelectKnownPresetActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bPresetFolder;
     private javax.swing.JButton bReset;
     private javax.swing.JButton bSaveSettings;
+    private javax.swing.JButton bSelectKnownPreset;
     private javax.swing.ButtonGroup bgRollForDeath;
     private javax.swing.JComboBox cbLookAndFeel;
     private org.dndbattle.view.comboboxes.WebsiteComboBox cbWebsite;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel lCarryingCapacity;
     private javax.swing.JLabel lIp;
     private javax.swing.JLabel lLookAndFeel;

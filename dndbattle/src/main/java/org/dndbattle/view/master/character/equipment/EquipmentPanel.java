@@ -136,6 +136,7 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
     private void updateLabels() {
         lCarryingCapacityValue.setText("" + carryingCapacity);
         lEquipmentTotalValue.setText("" + inventoryWeight);
+        lEquipmentTotalValue.setText("" + (carryingCapacity - inventoryWeight));
     }
 
     public void save() {
@@ -153,6 +154,9 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        spItem = new javax.swing.JScrollPane();
+        lItems = new javax.swing.JList<>();
+        bAdd = new javax.swing.JButton();
         spEquipment = new javax.swing.JScrollPane();
         pEquipment = new javax.swing.JPanel();
         cbPowerfullBuild = new javax.swing.JCheckBox();
@@ -160,11 +164,36 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
         lCarryingCapacityValue = new javax.swing.JLabel();
         lEquipmentTotal = new javax.swing.JLabel();
         lEquipmentTotalValue = new javax.swing.JLabel();
-        spItem = new javax.swing.JScrollPane();
-        lItems = new javax.swing.JList<IInventoryItem>();
-        bAdd = new javax.swing.JButton();
+        lOpenCapacity = new javax.swing.JLabel();
+        lOpenCapacityValue = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
+
+        lItems.setModel(getListModel());
+        spItem.setViewportView(lItems);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.weighty = 1.0;
+        add(spItem, gridBagConstraints);
+
+        bAdd.setText(">");
+        bAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAddActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        add(bAdd, gridBagConstraints);
 
         pEquipment.setLayout(new java.awt.GridLayout(0, 1, 5, 5));
         spEquipment.setViewportView(pEquipment);
@@ -172,7 +201,7 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.gridheight = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -229,30 +258,22 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(lEquipmentTotalValue, gridBagConstraints);
 
-        lItems.setModel(getListModel());
-        spItem.setViewportView(lItems);
-
+        lOpenCapacity.setText("Open capacity");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 1.0;
-        add(spItem, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lOpenCapacity, gridBagConstraints);
 
-        bAdd.setText(">");
-        bAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bAddActionPerformed(evt);
-            }
-        });
+        lOpenCapacityValue.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        lOpenCapacityValue.setText("" + (carryingCapacity - inventoryWeight));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        add(bAdd, gridBagConstraints);
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(lOpenCapacityValue, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbPowerfullBuildStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbPowerfullBuildStateChanged
@@ -298,6 +319,8 @@ public class EquipmentPanel extends javax.swing.JPanel implements IUpdateablePan
     private javax.swing.JLabel lEquipmentTotal;
     private javax.swing.JLabel lEquipmentTotalValue;
     private javax.swing.JList<IInventoryItem> lItems;
+    private javax.swing.JLabel lOpenCapacity;
+    private javax.swing.JLabel lOpenCapacityValue;
     private javax.swing.JPanel pEquipment;
     private javax.swing.JScrollPane spEquipment;
     private javax.swing.JScrollPane spItem;

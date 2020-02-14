@@ -9,20 +9,23 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.util.List;
+
 import javax.swing.JPanel;
+
 import org.dndbattle.core.IMaster;
 import org.dndbattle.core.IMasterConnectionInfo;
 import org.dndbattle.core.ISlave;
 import org.dndbattle.core.impl.Slave;
 import org.dndbattle.objects.ICombatant;
+import org.dndbattle.view.slave.character.SlaveCharacterPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static org.dndbattle.utils.Settings.SLAVE_LOCATION_X;
 import static org.dndbattle.utils.Settings.SLAVE_LOCATION_Y;
 import static org.dndbattle.utils.Settings.SLAVE_SIZE_HEIGHT;
 import static org.dndbattle.utils.Settings.SLAVE_SIZE_STATE;
 import static org.dndbattle.utils.Settings.SLAVE_SIZE_WIDTH;
-import org.dndbattle.view.slave.character.SlaveCharacterPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -173,6 +176,7 @@ public final class SlaveFrame extends javax.swing.JFrame {
 
     private void setRightPanel(JPanel panel) {
         spSlave.setRightComponent(panel);
+        spSlave.setDividerLocation(0.5);
     }
 
     private void addCombatant(ICombatant combatant) {

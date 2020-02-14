@@ -6,16 +6,19 @@
 package org.dndbattle.view.slave;
 
 import java.awt.GridBagConstraints;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICombatant;
 import org.dndbattle.objects.enums.SpellLevel;
+import org.dndbattle.utils.GlobalUtils;
+
 import static org.dndbattle.objects.enums.SpellLevel.CANTRIP;
 import static org.dndbattle.objects.enums.SpellLevel.FEATURE;
-import org.dndbattle.utils.GlobalUtils;
 
 /**
  *
@@ -209,11 +212,12 @@ public class SlaveSubPanel extends javax.swing.JPanel {
     private javax.swing.JProgressBar pbHealthBuff;
     // End of variables declaration//GEN-END:variables
 
-    private static class SpellSlotRadioButton extends JRadioButton {
+    private final static class SpellSlotRadioButton extends JRadioButton {
 
         public SpellSlotRadioButton(boolean selected) {
             setSelected(selected);
             setFocusable(false);
+            setEnabled(false);
             addActionListener((evt) -> {
                 setSelected(selected);
             });

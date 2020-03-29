@@ -16,17 +16,7 @@
  */
 package org.dndbattle.view.master;
 
-import static org.dndbattle.utils.AbstractFileWriterThread.DEFAULT_TIMEOUT;
-import static org.dndbattle.utils.Settings.CARRYING_CAPACITY_MULTIPLIER;
-import static org.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
-import static org.dndbattle.utils.Settings.INPUT_FILESELECTION;
-import static org.dndbattle.utils.Settings.LOOKANDFEEL;
-import static org.dndbattle.utils.Settings.MASTER_TITLE;
-import static org.dndbattle.utils.Settings.PRESETFOLDER;
-import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
-import static org.dndbattle.utils.Settings.SLAVE_TITLE;
-import static org.dndbattle.utils.Settings.WEBSITE;
-
+import java.awt.HeadlessException;
 import java.awt.event.ItemEvent;
 import java.io.File;
 
@@ -38,16 +28,33 @@ import javax.swing.UIManager;
 
 import org.dndbattle.core.Main;
 import org.dndbattle.objects.enums.Website;
+import org.dndbattle.utils.Armors;
+import org.dndbattle.utils.Characters;
 import org.dndbattle.utils.FileManager;
+import org.dndbattle.utils.Initializable;
 import org.dndbattle.utils.Settings;
+import org.dndbattle.utils.Spells;
+import org.dndbattle.utils.Utilities;
+import org.dndbattle.utils.Weapons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.dndbattle.utils.AbstractFileWriterThread.DEFAULT_TIMEOUT;
+import static org.dndbattle.utils.Settings.CARRYING_CAPACITY_MULTIPLIER;
+import static org.dndbattle.utils.Settings.FILE_WRITER_SAVE_TIMEOUT;
+import static org.dndbattle.utils.Settings.INPUT_FILESELECTION;
+import static org.dndbattle.utils.Settings.LOOKANDFEEL;
+import static org.dndbattle.utils.Settings.MASTER_TITLE;
+import static org.dndbattle.utils.Settings.PRESETFOLDER;
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
+import static org.dndbattle.utils.Settings.SLAVE_TITLE;
+import static org.dndbattle.utils.Settings.WEBSITE;
 
 /**
  *
  * @author Wouter
  */
-public class SettingsPanel extends javax.swing.JPanel {
+public class SettingsPanel extends javax.swing.JPanel implements Initializable.IProgressKeeper {
 
     private static final Logger log = LoggerFactory.getLogger(SettingsPanel.class);
 
@@ -55,11 +62,11 @@ public class SettingsPanel extends javax.swing.JPanel {
 
     private static final String IP_FORMAT = "Your connection is on port %d and your IP is: %s";
     private final String ipaddressText;
+    private final MasterFrame master;
+    private int baseProgress = 0;
 
-    /**
-     * Creates new form SettingsPanel
-     */
-    public SettingsPanel() {
+    public SettingsPanel(MasterFrame master) {
+        this.master = master;
         String ipText;
         try {
             ipText = String.format(IP_FORMAT, Main.getPort(), Main.getIp());
@@ -68,6 +75,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         }
         ipaddressText = ipText;
         initComponents();
+        pbReload.setVisible(false);
     }
 
     /**
@@ -81,6 +89,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         bgRollForDeath = new javax.swing.ButtonGroup();
+        jFileChooser1 = new javax.swing.JFileChooser();
         lMasterTitle = new javax.swing.JLabel();
         tfMasterTitle = new javax.swing.JTextField();
         lSlaveTitle = new javax.swing.JLabel();
@@ -93,6 +102,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         rbRollForDeath = new javax.swing.JRadioButton();
         rbAutomaticDeath = new javax.swing.JRadioButton();
         lPresetFolder = new javax.swing.JLabel();
+        bSelectKnownPreset = new javax.swing.JButton();
         tfPresetFolder = new javax.swing.JTextField();
         bPresetFolder = new javax.swing.JButton();
         lWebsite = new javax.swing.JLabel();
@@ -102,6 +112,7 @@ public class SettingsPanel extends javax.swing.JPanel {
         bReset = new javax.swing.JButton();
         lSaveTimeout = new javax.swing.JLabel();
         sSaveTimeout = new javax.swing.JSpinner();
+        pbReload = new javax.swing.JProgressBar();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -262,11 +273,23 @@ public class SettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         add(lPresetFolder, gridBagConstraints);
 
-        tfPresetFolder.setText(FileManager.getPresetFolder().getPath());
+        bSelectKnownPreset.setText("Select known");
+        bSelectKnownPreset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSelectKnownPresetActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+        add(bSelectKnownPreset, gridBagConstraints);
+
+        tfPresetFolder.setText(FileManager.getPresetFolder().getPath());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
@@ -371,6 +394,15 @@ public class SettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         add(sSaveTimeout, gridBagConstraints);
+
+        pbReload.setStringPainted(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 5);
+        add(pbReload, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfSlaveTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSlaveTitleActionPerformed
@@ -386,11 +418,11 @@ public class SettingsPanel extends javax.swing.JPanel {
         SETTINGS.setProperty(SLAVE_TITLE, tfSlaveTitle.getText());
         Object oldLookAndFeel = SETTINGS.setProperty(LOOKANDFEEL, (String) cbLookAndFeel.getSelectedItem());
         SETTINGS.setProperty(ROLL_FOR_DEATH, rbRollForDeath.isSelected());
-        Object oldPresetFolder = SETTINGS.setProperty(PRESETFOLDER, tfPresetFolder.getText());
+        SETTINGS.setProperty(PRESETFOLDER, tfPresetFolder.getText());
         SETTINGS.setProperty(FILE_WRITER_SAVE_TIMEOUT, (int) sSaveTimeout.getValue());
         SETTINGS.setProperty(WEBSITE, (String) cbWebsite.getSelectedItem().name());
         SETTINGS.setProperty(CARRYING_CAPACITY_MULTIPLIER, (int) sCarryingCapacityMultiplier.getValue());
-        if (checkValues(oldLookAndFeel, cbLookAndFeel.getSelectedItem()) || checkValues(oldPresetFolder, tfPresetFolder.getText())) {
+        if (checkValues(oldLookAndFeel, cbLookAndFeel.getSelectedItem())) {
             JOptionPane.showMessageDialog(this, "Some settings require a restart to take effect.", "Settings saved.", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -410,13 +442,26 @@ public class SettingsPanel extends javax.swing.JPanel {
     private void bPresetFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPresetFolderActionPerformed
         File newPresetFolder = selectFile();
         if (newPresetFolder != null) {
-            tfPresetFolder.setText(newPresetFolder.getPath());
-            save();
+            storePresetSelection(newPresetFolder);
         }
     }//GEN-LAST:event_bPresetFolderActionPerformed
 
+    private void storePresetSelection(File newPresetFolder) throws HeadlessException {
+        SETTINGS.addKnownPresetLocation(newPresetFolder);
+        tfPresetFolder.setText(newPresetFolder.getPath());
+        save();
+        switch (JOptionPane.showConfirmDialog(this, "Would you like to load the presets for the new location?", "Reload presets?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
+            case JOptionPane.YES_OPTION:
+                reloadPresets();
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "The new preset folder will be active on the next start.", "Notification", JOptionPane.INFORMATION_MESSAGE);
+                break;
+        }
+    }
+
     private void bResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bResetActionPerformed
-        int option = JOptionPane.showConfirmDialog(this, "This will reset all presets.\nAre you sure?", "Please confirm!", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int option = JOptionPane.showConfirmDialog(this, "This will reset all settings.\nAre you sure?", "Please confirm!", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (option == JOptionPane.YES_OPTION) {
             SETTINGS.clear();
         }
@@ -446,13 +491,22 @@ public class SettingsPanel extends javax.swing.JPanel {
         save();
     }//GEN-LAST:event_sCarryingCapacityMultiplierStateChanged
 
+    private void bSelectKnownPresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSelectKnownPresetActionPerformed
+        File selection = (File) JOptionPane.showInputDialog(this, "Select a known preset location.", "Select known location", JOptionPane.QUESTION_MESSAGE, null, SETTINGS.getKnownPresetLocations().toArray(new File[0]), new File(tfPresetFolder.getText()));
+        if (selection != null) {
+            storePresetSelection(selection);
+        }
+    }//GEN-LAST:event_bSelectKnownPresetActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bPresetFolder;
     private javax.swing.JButton bReset;
     private javax.swing.JButton bSaveSettings;
+    private javax.swing.JButton bSelectKnownPreset;
     private javax.swing.ButtonGroup bgRollForDeath;
     private javax.swing.JComboBox cbLookAndFeel;
     private org.dndbattle.view.comboboxes.WebsiteComboBox cbWebsite;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel lCarryingCapacity;
     private javax.swing.JLabel lIp;
     private javax.swing.JLabel lLookAndFeel;
@@ -462,6 +516,7 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lSaveTimeout;
     private javax.swing.JLabel lSlaveTitle;
     private javax.swing.JLabel lWebsite;
+    private javax.swing.JProgressBar pbReload;
     private javax.swing.JRadioButton rbAutomaticDeath;
     private javax.swing.JRadioButton rbRollForDeath;
     private javax.swing.JSpinner sCarryingCapacityMultiplier;
@@ -500,5 +555,38 @@ public class SettingsPanel extends javax.swing.JPanel {
             }
         }
         return chooser.getSelectedFile();
+    }
+
+    private void reloadPresets() {
+        Thread thread = new Thread(() -> {
+            pbReload.setVisible(true);
+            baseProgress = 0;
+            loadObjects(Armors.getInstance());
+            baseProgress = 20;
+            loadObjects(Utilities.getInstance());
+            baseProgress = 40;
+            loadObjects(Weapons.getInstance());
+            baseProgress = 60;
+            loadObjects(Spells.getInstance());
+            baseProgress = 80;
+            loadObjects(Characters.getInstance());
+
+            master.resetObjectPanels();
+
+            pbReload.setVisible(false);
+        });
+        thread.start();
+    }
+
+    private void loadObjects(Initializable initializable) {
+        initializable.reset();
+        initializable.registerProgressKeeper(this);
+        initializable.initialize();
+        initializable.unregisterProgressKeeper(this);
+    }
+
+    @Override
+    public void notifyProgress(int progress) {
+        pbReload.setValue(baseProgress + Math.floorDiv(progress, 5));
     }
 }

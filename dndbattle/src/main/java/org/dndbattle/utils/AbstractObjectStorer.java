@@ -16,6 +16,10 @@
  */
 package org.dndbattle.utils;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -30,13 +34,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.swing.JOptionPane;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import org.dndbattle.objects.ISaveableClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,9 +50,22 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> extends Ini
     private static final Logger log = LoggerFactory.getLogger(AbstractObjectStorer.class);
 
     private final Map<File, FileWriterThread<T>> writerThreadMap = new HashMap<>();
-    private final File presetFolder;
+    private File presetFolder;
+    private final String subPath;
 
     protected AbstractObjectStorer(String subPath) {
+        this.subPath = subPath;
+        presetFolder = new File(FileManager.getPresetFolder(), subPath);
+        if (!presetFolder.exists()) {
+            presetFolder.mkdir();
+        } else if (!presetFolder.isDirectory()) {
+            log.error("The preset folder [{}] exists but is not a directory.", presetFolder);
+            System.exit(1);
+        }
+    }
+
+    @Override
+    protected final void resetSub() {
         presetFolder = new File(FileManager.getPresetFolder(), subPath);
         if (!presetFolder.exists()) {
             presetFolder.mkdir();
@@ -122,9 +133,9 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> extends Ini
     public abstract boolean add(T preset);
 
     public void updateAll(List<T> presets) {
-        for (T preset : presets) {
+        presets.forEach((preset) -> {
             update(preset);
-        }
+        });
     }
 
     public abstract void update(T preset);

@@ -32,7 +32,7 @@ public abstract class Initializable {
     private boolean initialized = false;
     private int progress = 0;
     private final Object syncObject = new Object();
-    private List<IProgressKeeper> progressKeepers = new ArrayList<>();
+    private final List<IProgressKeeper> progressKeepers = new ArrayList<>();
 
     public void initialize() {
         synchronized (syncObject) {
@@ -49,6 +49,16 @@ public abstract class Initializable {
     public boolean isInitialized() {
         return initialized;
     }
+
+    public void reset() {
+        synchronized (syncObject) {
+            initialized = false;
+            progress = 0;
+            resetSub();
+        }
+    }
+
+    protected abstract void resetSub();
 
     public int getProgress() {
         return progress;

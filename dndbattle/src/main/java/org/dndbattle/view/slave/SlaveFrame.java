@@ -25,12 +25,6 @@ import org.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.dndbattle.utils.Settings.SLAVE_LOCATION_X;
-import static org.dndbattle.utils.Settings.SLAVE_LOCATION_Y;
-import static org.dndbattle.utils.Settings.SLAVE_SIZE_HEIGHT;
-import static org.dndbattle.utils.Settings.SLAVE_SIZE_STATE;
-import static org.dndbattle.utils.Settings.SLAVE_SIZE_WIDTH;
-
 /**
  *
  * @author Wouter
@@ -130,6 +124,7 @@ public final class SlaveFrame extends AbstractSlaveFrame {
     private javax.swing.JSplitPane spSlave;
     // End of variables declaration//GEN-END:variables
 
+    @Override
     public void refreshBattle(List<ICombatant> combatants, int activeIndex) {
         pCombatants.removeAll();
         log.debug("Removed all from view to leave a total of [{}] components in the view", pCombatants.getComponents().length);

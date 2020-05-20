@@ -28,7 +28,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 import org.dndbattle.core.IMaster;
@@ -40,18 +39,9 @@ import org.dndbattle.objects.impl.AbstractCharacter;
 import org.dndbattle.objects.impl.Combatant;
 import org.dndbattle.utils.Settings;
 import org.dndbattle.view.comboboxes.ClassComboBox;
-import org.dndbattle.view.slave.AbstractSlaveFrame;
-import org.dndbattle.view.slave.SlaveFrame;
 import org.dndbattle.view.slave.character.SlaveCharacterPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.dndbattle.utils.Settings.MASTER_LOCATION_X;
-import static org.dndbattle.utils.Settings.MASTER_LOCATION_Y;
-import static org.dndbattle.utils.Settings.MASTER_SIZE_HEIGHT;
-import static org.dndbattle.utils.Settings.MASTER_SIZE_STATE;
-import static org.dndbattle.utils.Settings.MASTER_SIZE_WIDTH;
-import static org.dndbattle.utils.Settings.MASTER_TITLE;
 
 /**
  *
@@ -73,6 +63,10 @@ public class MasterFrame extends javax.swing.JFrame {
         this.master = master;
         initComponents();
         spCombatants.getVerticalScrollBar().setUnitIncrement(20);
+        setSizeAndLocation();
+    }
+
+    private void setSizeAndLocation() {
         setLocation(SETTINGS.getProperty(MASTER_LOCATION_X, Integer.MIN_VALUE), SETTINGS.getProperty(MASTER_LOCATION_Y, Integer.MIN_VALUE));
         setSize(SETTINGS.getProperty(MASTER_SIZE_WIDTH, getPreferredSize().width), SETTINGS.getProperty(MASTER_SIZE_HEIGHT, getPreferredSize().height));
         setExtendedState(SETTINGS.getProperty(MASTER_SIZE_STATE, 0));
@@ -114,13 +108,12 @@ public class MasterFrame extends javax.swing.JFrame {
         bNewBattle = new javax.swing.JButton();
         spCombatants = new javax.swing.JScrollPane();
         pCombatants = new javax.swing.JPanel();
-        b2ndScreen = new javax.swing.JButton();
         pCharacters = new javax.swing.JPanel();
         pAudio = new org.dndbattle.view.master.AudioPanel();
         spDice = new javax.swing.JScrollPane();
         dicePanel = new org.dndbattle.view.master.DicePanel();
         spSettings = new javax.swing.JScrollPane();
-        settingsPanel = new org.dndbattle.view.master.SettingsPanel(this);
+        settingsPanel = new SettingsPanel(this);
         pClients = new javax.swing.JPanel();
         spClientsTable = new javax.swing.JScrollPane();
         tClients = new javax.swing.JTable();
@@ -234,21 +227,6 @@ public class MasterFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         pMain.add(spCombatants, gridBagConstraints);
         spCombatants.getAccessibleContext().setAccessibleName("");
-
-        b2ndScreen.setText("Open 2nd screen");
-        b2ndScreen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b2ndScreenActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        pMain.add(b2ndScreen, gridBagConstraints);
 
         tpBattle.addTab("Battle", pMain);
 
@@ -482,7 +460,7 @@ public class MasterFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pView, javax.swing.GroupLayout.PREFERRED_SIZE, 385, Short.MAX_VALUE)
+            .addComponent(pView, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,7 +488,10 @@ public class MasterFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentResized
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        log.debug("Closing");
         master.shutdown();
+        log.debug("Exiting");
+        System.exit(0);
     }//GEN-LAST:event_formWindowClosed
 
     private void bNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNextActionPerformed
@@ -689,33 +670,12 @@ public class MasterFrame extends javax.swing.JFrame {
         changeView("Utilities");
     }//GEN-LAST:event_miUtilitiesActionPerformed
 
-    private void b2ndScreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ndScreenActionPerformed
-        try {
-            final AbstractSlaveFrame slaveFrame;
-            if (JOptionPane.showConfirmDialog(this, "With webcam", "Do you want a second screen with webcam?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                slaveFrame = new WebcamSlave(master);
-            } else {
-                slaveFrame = new SlaveFrame(master, master.getIp());
-            }
-            master.connect(slaveFrame.getSlave());
-            slaveFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            java.awt.EventQueue.invokeLater(() -> {
-                slaveFrame.setVisible(true);
-            });
-        } catch (RemoteException e) {
-            JOptionPane.showMessageDialog(this, "Error", "Unable to open second screen", JOptionPane.ERROR_MESSAGE);
-            log.error("Unable to open second screen.", e);
-        }
-    }//GEN-LAST:event_b2ndScreenActionPerformed
-
     private void changeView(String cardName) {
         CardLayout layout = (CardLayout) (pView.getLayout());
         layout.show(pView, cardName);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.dndbattle.view.master.armor.ArmorsPanel armorsPanel;
-    private javax.swing.JButton b2ndScreen;
     private javax.swing.JButton bAddCombatant;
     private javax.swing.JButton bKickClient;
     private javax.swing.JButton bNewBattle;

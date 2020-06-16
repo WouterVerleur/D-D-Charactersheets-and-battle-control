@@ -5,6 +5,7 @@
  */
 package org.dndbattle.core.impl;
 
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import static org.dndbattle.utils.Settings.SLAVE_TITLE;
 
 import java.net.InetAddress;
@@ -27,8 +28,6 @@ import org.dndbattle.utils.Settings;
 import org.dndbattle.view.master.MasterFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *
@@ -144,6 +143,10 @@ public class Master extends AbstractRemoteConnector implements IMaster {
 
     public List<MasterConnectionInfo> getSlaves() {
         return slaves;
+    }
+
+    public String getIp() {
+        return ip;
     }
 
     public void nextTurn() {

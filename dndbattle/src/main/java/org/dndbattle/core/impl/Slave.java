@@ -13,7 +13,7 @@ import org.dndbattle.core.IMasterConnectionInfo;
 import org.dndbattle.core.ISlave;
 import org.dndbattle.objects.ICombatant;
 import org.dndbattle.utils.Settings;
-import org.dndbattle.view.slave.SlaveFrame;
+import org.dndbattle.view.slave.AbstractSlaveFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
 
     private static final Settings SETTINGS = Settings.getInstance();
 
-    private final SlaveFrame frame;
+    private final AbstractSlaveFrame frame;
     private IMaster master;
 
     private IMasterConnectionInfo connectionInfo;
@@ -35,7 +35,7 @@ public class Slave extends AbstractRemoteConnector implements ISlave {
 
     private List<ICombatant> combatants;
 
-    public Slave(IMaster master, SlaveFrame frame, String ip) {
+    public Slave(IMaster master, AbstractSlaveFrame frame, String ip) {
         this.master = master;
         this.frame = frame;
         this.ip = ip;

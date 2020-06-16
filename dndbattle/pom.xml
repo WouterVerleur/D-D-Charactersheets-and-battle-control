@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.dndbattle</groupId>
-  <artifactId>dndbattle</artifactId>
-  <version>2.7</version>
-  <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.dndbattle</groupId>
+    <artifactId>dndbattle</artifactId>
+    <version>2.7</version>
+    <packaging>jar</packaging>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <mainClass>org.dndbattle.core.Main</mainClass>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <dep.commons.version>2.6</dep.commons.version>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mainClass>org.dndbattle.core.Main</mainClass>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <dep.commons.version>2.7</dep.commons.version>
+    </properties>
 
   <dependencies>
     <dependency>
@@ -75,7 +75,7 @@
 
   <build>
     <plugins>
-      <!-- Create small jar without dependencies 
+      <!-- Create small jar without dependencies
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>

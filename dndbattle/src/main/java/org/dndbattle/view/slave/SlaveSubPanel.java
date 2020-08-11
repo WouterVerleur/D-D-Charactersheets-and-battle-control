@@ -5,12 +5,15 @@
  */
 package org.dndbattle.view.slave;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICombatant;
@@ -40,6 +43,10 @@ public class SlaveSubPanel extends javax.swing.JPanel {
     }
 
     public SlaveSubPanel(ICombatant combatant, SlaveFrame parent) {
+        this(combatant, parent, false);
+    }
+
+    public SlaveSubPanel(ICombatant combatant, SlaveFrame parent, boolean active) {
         this.combatant = combatant;
         this.parent = parent;
         this.character = getCombatantCharacter(combatant);
@@ -58,6 +65,9 @@ public class SlaveSubPanel extends javax.swing.JPanel {
         }
         if (friendly) {
             updateSpellSlots();
+        }
+        if (active) {
+            ((TitledBorder) getBorder()).setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.GRAY, Color.BLUE));
         }
     }
 
@@ -129,7 +139,7 @@ public class SlaveSubPanel extends javax.swing.JPanel {
         pSpellSlots = new javax.swing.JPanel();
         bShow = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, combatant.getName(), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), combatant.getName(), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 18))); // NOI18N
         setLayout(new java.awt.GridBagLayout());
 
         lDescription.setText(getDescription());
@@ -217,7 +227,6 @@ public class SlaveSubPanel extends javax.swing.JPanel {
         public SpellSlotRadioButton(boolean selected) {
             setSelected(selected);
             setFocusable(false);
-            setEnabled(false);
             addActionListener((evt) -> {
                 setSelected(selected);
             });

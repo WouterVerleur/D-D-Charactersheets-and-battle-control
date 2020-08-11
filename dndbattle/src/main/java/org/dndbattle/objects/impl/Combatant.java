@@ -18,14 +18,16 @@ package org.dndbattle.objects.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICombatant;
 import org.dndbattle.objects.IExtendedCharacter;
 import org.dndbattle.objects.enums.SpellLevel;
 import org.dndbattle.utils.Settings;
-import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *
@@ -69,6 +71,7 @@ public class Combatant implements ICombatant {
     private Boolean rollForDeath;
     private int totalDamageRecieved = 0;
     private boolean friendly;
+    private boolean hidden;
     private Map<SpellLevel, Integer> usedSpellSlotsMap;
     private final CombatantCharacter combatantCharacter;
 
@@ -111,6 +114,15 @@ public class Combatant implements ICombatant {
 
     public void setFriendly(Boolean friendly) {
         this.friendly = friendly;
+    }
+
+    @Override
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
     @Override

@@ -7,8 +7,10 @@ package org.dndbattle.view.master;
 
 import java.util.Iterator;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
 import org.dndbattle.core.impl.Master;
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICombatant;
@@ -18,9 +20,10 @@ import org.dndbattle.objects.impl.Combatant;
 import org.dndbattle.utils.Characters;
 import org.dndbattle.utils.GlobalUtils;
 import org.dndbattle.utils.Settings;
-import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 
 /**
  *
@@ -65,6 +68,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         lName = new javax.swing.JLabel();
         bInfo = new javax.swing.JButton();
@@ -78,14 +82,25 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         bLifeRoll = new javax.swing.JButton();
         bLeaveTransformation = new javax.swing.JButton();
         lTotalDamageRecieved = new javax.swing.JLabel();
+        tbHidden = new javax.swing.JToggleButton();
         bTransform = new javax.swing.JButton();
         bPolyMorph = new javax.swing.JButton();
         pUseSpellSlots = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), String.format(TITLE_FORMAT, combatant.getInitiative(), combatant.getCharacter().getAbilityScore(AbilityType.DEX)), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        setLayout(new java.awt.GridBagLayout());
 
         lName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lName.setText(combatant.getFriendlyName());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(lName, gridBagConstraints);
 
         bInfo.setText("Information");
         bInfo.addActionListener(new java.awt.event.ActionListener() {
@@ -93,18 +108,49 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bInfoActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(bInfo, gridBagConstraints);
 
         lDescription.setText(combatant.getFriendlyDescription());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(lDescription, gridBagConstraints);
 
         jProgressBar1.setMaximum(character.getMaxHealth());
         jProgressBar1.setValue(combatant.getHealth());
         jProgressBar1.setString(combatant.getHealthString());
         jProgressBar1.setStringPainted(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(jProgressBar1, gridBagConstraints);
 
         jProgressBar2.setMaximum(1);
         jProgressBar2.setValue(combatant.getHealthBuff());
         jProgressBar2.setString(combatant.getHealthBuff()>0?"+"+combatant.getHealthBuff():" ");
         jProgressBar2.setStringPainted(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(jProgressBar2, gridBagConstraints);
 
         bDamage.setText("Give damage");
         bDamage.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +158,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bDamageActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(bDamage, gridBagConstraints);
 
         bHealth.setText("Give health");
         bHealth.addActionListener(new java.awt.event.ActionListener() {
@@ -119,6 +172,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bHealthActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(bHealth, gridBagConstraints);
 
         bTempHitpoints.setText("Set temporary hitpoints");
         bTempHitpoints.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +186,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bTempHitpointsActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(bTempHitpoints, gridBagConstraints);
 
         bDeathRoll.setText("Add death roll");
         bDeathRoll.setEnabled(SETTINGS.getProperty(ROLL_FOR_DEATH, true));
@@ -134,6 +201,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bDeathRollActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(bDeathRoll, gridBagConstraints);
 
         bLifeRoll.setText("Add life roll");
         bLifeRoll.setEnabled(SETTINGS.getProperty(ROLL_FOR_DEATH, true));
@@ -142,6 +216,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bLifeRollActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(bLifeRoll, gridBagConstraints);
 
         bLeaveTransformation.setText("Leave transformation");
         bLeaveTransformation.setEnabled(combatant.isTransformed());
@@ -150,8 +231,40 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bLeaveTransformationActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(bLeaveTransformation, gridBagConstraints);
 
         lTotalDamageRecieved.setText(combatant.getTotalDamageString());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(lTotalDamageRecieved, gridBagConstraints);
+
+        tbHidden.setSelected(combatant.isHidden());
+        tbHidden.setText("Hidden");
+        tbHidden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbHiddenActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(tbHidden, gridBagConstraints);
 
         bTransform.setText("Transform");
         bTransform.setEnabled(checkCanTransform(combatant));
@@ -160,6 +273,13 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bTransformActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(bTransform, gridBagConstraints);
 
         bPolyMorph.setText("Polymorph");
         bPolyMorph.addActionListener(new java.awt.event.ActionListener() {
@@ -167,79 +287,27 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
                 bPolyMorphActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        add(bPolyMorph, gridBagConstraints);
 
         pUseSpellSlots.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Use spell slot", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         pUseSpellSlots.setLayout(new javax.swing.BoxLayout(pUseSpellSlots, javax.swing.BoxLayout.X_AXIS));
         createUseSpellSlotButtons();
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pUseSpellSlots, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bInfo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bDeathRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bDamage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bHealth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bLifeRoll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(bTransform, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bPolyMorph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(2, 2, 2))
-                            .addComponent(lTotalDamageRecieved, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bLeaveTransformation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bTempHitpoints, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bInfo)
-                    .addComponent(lName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lDescription)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bHealth)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(bDamage)
-                        .addComponent(lTotalDamageRecieved)
-                        .addComponent(bTempHitpoints)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bDeathRoll)
-                    .addComponent(bLifeRoll)
-                    .addComponent(bTransform)
-                    .addComponent(bPolyMorph)
-                    .addComponent(bLeaveTransformation))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pUseSpellSlots, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        add(pUseSpellSlots, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bDamageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDamageActionPerformed
@@ -318,6 +386,11 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
         master.getFrame().setBattleTab(combatant.getCharacter().getName());
     }//GEN-LAST:event_bInfoActionPerformed
 
+    private void tbHiddenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbHiddenActionPerformed
+        combatant.setHidden(tbHidden.isSelected());
+        master.updateAll(true);
+    }//GEN-LAST:event_tbHiddenActionPerformed
+
     private int requestNumber(String description) {
         int value = 0;
         String input = JOptionPane.showInputDialog(this, "Please enter the amount of " + description + " should be given to " + combatant, "Please enter a number.", JOptionPane.QUESTION_MESSAGE);
@@ -348,6 +421,7 @@ public class MasterCombatantPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lName;
     private javax.swing.JLabel lTotalDamageRecieved;
     private javax.swing.JPanel pUseSpellSlots;
+    private javax.swing.JToggleButton tbHidden;
     // End of variables declaration//GEN-END:variables
 
     private boolean checkCanTransform(Combatant combatant) {

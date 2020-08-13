@@ -81,7 +81,7 @@ public class Main extends javax.swing.JFrame implements Initializable.IProgressK
                     hostOverride = LOCALHOST;
                     break;
                 default:
-                    log.debug("Unknown option [{}]", arg);
+                    log.error("Unknown option [{}]", arg);
                     break;
             }
         }

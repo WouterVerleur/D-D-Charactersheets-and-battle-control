@@ -16,11 +16,14 @@
  */
 package org.dndbattle.objects;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.io.Serializable;
-import static org.dndbattle.objects.enums.AbilityType.DEX;
+
 import org.dndbattle.objects.enums.SpellLevel;
 import org.dndbattle.objects.impl.CombatantCharacter;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import static org.dndbattle.objects.enums.AbilityType.DEX;
 
 /**
  *
@@ -62,6 +65,8 @@ public interface ICombatant extends Comparable<ICombatant>, Serializable {
     boolean rollingForDeath();
 
     boolean isFriendly();
+
+    boolean isHidden();
 
     int getUsedSpellSlots(SpellLevel level);
 

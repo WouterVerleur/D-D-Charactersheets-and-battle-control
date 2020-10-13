@@ -5,8 +5,6 @@
  */
 package org.dndbattle.view.master;
 
-import static java.lang.Integer.MIN_VALUE;
-
 import java.util.List;
 import java.util.Random;
 
@@ -21,6 +19,8 @@ import org.dndbattle.utils.Armors;
 import org.dndbattle.utils.GlobalUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static java.lang.Integer.MIN_VALUE;
 
 /**
  *
@@ -63,6 +63,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
         bRoll = new javax.swing.JButton();
         sHealth = new javax.swing.JSpinner();
         cbFriendly = new javax.swing.JCheckBox();
+        cbHidden = new javax.swing.JCheckBox();
         lArmor = new javax.swing.JLabel();
         cbArmor = new javax.swing.JComboBox<>();
         lArmorClass = new javax.swing.JLabel();
@@ -163,13 +164,23 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     cbFriendly.setSelected(character.isFriendly());
     cbFriendly.setText("Friendly");
     gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
-    gridBagConstraints.gridwidth = 3;
+    gridBagConstraints.gridwidth = 2;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    add(cbFriendly, gridBagConstraints);
+
+    cbHidden.setText("Hidden");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 2;
+    gridBagConstraints.gridy = 3;
+    gridBagConstraints.gridwidth = 2;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
-    add(cbFriendly, gridBagConstraints);
+    add(cbHidden, gridBagConstraints);
 
     lArmor.setText("Armor");
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -252,6 +263,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<IArmor> cbArmor;
     private javax.swing.JCheckBox cbFriendly;
     private javax.swing.JCheckBox cbHealth;
+    private javax.swing.JCheckBox cbHidden;
     private javax.swing.JLabel lArmor;
     private javax.swing.JLabel lArmorClass;
     private javax.swing.JLabel lHealth;
@@ -298,6 +310,7 @@ public class AddCombatantPanel extends javax.swing.JPanel {
             combatant = new Combatant(character, name, initiative);
         }
         combatant.setFriendly(cbFriendly.isSelected());
+        combatant.setHidden(cbHidden.isSelected());
         return combatant;
     }
 

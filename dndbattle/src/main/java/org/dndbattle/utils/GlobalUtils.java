@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICharacterClass;
 import org.dndbattle.objects.IWeapon;
@@ -24,9 +25,10 @@ import org.dndbattle.objects.enums.Dice;
 import org.dndbattle.objects.enums.WeaponRange;
 import org.dndbattle.objects.enums.Website;
 import org.dndbattle.objects.impl.AbstractExtendedCharacter;
-import static org.dndbattle.utils.Settings.WEBSITE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.dndbattle.utils.Settings.WEBSITE;
 
 /**
  *

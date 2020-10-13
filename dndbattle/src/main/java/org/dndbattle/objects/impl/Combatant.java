@@ -16,14 +16,17 @@
  */
 package org.dndbattle.objects.impl;
 
+import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import org.dndbattle.objects.ICharacter;
 import org.dndbattle.objects.ICombatant;
 import org.dndbattle.objects.IExtendedCharacter;
+import org.dndbattle.objects.enums.Size;
 import org.dndbattle.objects.enums.SpellLevel;
 import org.dndbattle.utils.Settings;
-import static org.dndbattle.utils.Settings.ROLL_FOR_DEATH;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,9 +61,10 @@ public class Combatant implements ICombatant {
     private final String name;
 
     private final ICharacter character;
+    private Size size;
     private Combatant transformation;
     private int health;
-    private boolean dead;
+    private boolean dead = false;
     private int deathRolls = 0;
     private int lifeRolls = 0;
     private int healthBuff = 0;
@@ -77,11 +81,15 @@ public class Combatant implements ICombatant {
     }
 
     public Combatant(ICharacter character, String name, int initiative, int health) {
+        this(character, name, initiative, character.getMaxHealth(), character.getSize());
+    }
+
+    public Combatant(ICharacter character, String name, int initiative, int health, Size size) {
         this.name = name;
         this.character = character;
         combatantCharacter = new CombatantCharacter(character);
         this.health = health;
-        this.dead = false;
+        this.size = size;
         this.initiative = initiative;
         friendly = character.isFriendly();
         resetSpellSlots();
@@ -119,6 +127,14 @@ public class Combatant implements ICombatant {
             return transformation.getHealth();
         }
         return health;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     @Override

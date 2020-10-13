@@ -17,6 +17,7 @@
 package org.dndbattle.objects.impl.character;
 
 import org.dndbattle.objects.ICharacter;
+import org.dndbattle.objects.enums.Size;
 import org.dndbattle.objects.impl.AbstractCharacter;
 
 /**
@@ -25,15 +26,37 @@ import org.dndbattle.objects.impl.AbstractCharacter;
  */
 public class Ooze extends AbstractCharacter {
 
+    private boolean canSplit = false;
+    private Size lowestSplitSize = Size.MEDIUM;
+
     public Ooze() {
     }
 
     public Ooze(ICharacter character) {
         super(character);
+        if (character instanceof Ooze) {
+            canSplit = ((Ooze) character).isCanSplit();
+        }
     }
 
     @Override
     public AbstractCharacter clone() {
         return new Ooze(this);
+    }
+
+    public boolean isCanSplit() {
+        return canSplit;
+    }
+
+    public void setCanSplit(boolean canSplit) {
+        this.canSplit = canSplit;
+    }
+
+    public Size getLowestSplitSize() {
+        return lowestSplitSize;
+    }
+
+    public void setLowestSplitSize(Size lowestSplitSize) {
+        this.lowestSplitSize = lowestSplitSize;
     }
 }

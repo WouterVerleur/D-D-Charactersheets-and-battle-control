@@ -30,6 +30,7 @@ import org.dndbattle.objects.enums.AbilityType;
 import org.dndbattle.objects.enums.SkillType;
 import org.dndbattle.objects.impl.AbstractCharacter;
 import org.dndbattle.objects.impl.AbstractExtendedCharacter;
+import org.dndbattle.objects.impl.character.Ooze;
 import org.dndbattle.utils.Armors;
 import org.dndbattle.utils.Characters;
 import org.dndbattle.utils.GlobalUtils;
@@ -83,7 +84,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         cbJackOfAllTrades = new javax.swing.JCheckBox();
         pArmorClass = new javax.swing.JPanel();
         lArmor = new javax.swing.JLabel();
-        cbArmor = new javax.swing.JComboBox<IArmor>();
+        cbArmor = new javax.swing.JComboBox<>();
         lOverride = new javax.swing.JLabel();
         sOverride = new javax.swing.JSpinner();
         lExtraArmor = new javax.swing.JLabel();
@@ -95,6 +96,8 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         cbChallengeRating = new org.dndbattle.view.comboboxes.ChallengeRatingComboBox();
         pSize = new javax.swing.JPanel();
         cbSize = new org.dndbattle.view.comboboxes.SizeComboBox();
+        cbSplit = new javax.swing.JCheckBox();
+        cbSplitSize = new org.dndbattle.view.comboboxes.SizeComboBox();
         pSpeed = new javax.swing.JPanel();
         sSpeed = new javax.swing.JSpinner();
         pHitDice = new javax.swing.JPanel();
@@ -348,7 +351,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
     pArmorClass.add(lOverride, gridBagConstraints);
 
-    sOverride.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+    sOverride.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
     sOverride.setValue(character.getArmorOverride());
     sOverride.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -414,7 +417,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     pArmorClass.add(lArmorClass, gridBagConstraints);
 
-    sShieldBonus.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(2), null, null, Integer.valueOf(1)));
+    sShieldBonus.setModel(new javax.swing.SpinnerNumberModel(2, null, null, 1));
     sShieldBonus.setEnabled(character.isShieldWearer());
     sShieldBonus.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -478,15 +481,34 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
         }
     });
 
+    cbSplit.setSelected(character instanceof Ooze && ((Ooze) character).isCanSplit());
+    cbSplit.setText("Can split when at least:");
+    cbSplit.setEnabled(character instanceof Ooze);
+    cbSplit.addChangeListener(new javax.swing.event.ChangeListener() {
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            cbSplitStateChanged(evt);
+        }
+    });
+
+    cbSplitSize.setEditable(character instanceof Ooze && ((Ooze)character).isCanSplit());
+    cbSplitSize.setSelectedItem(character instanceof Ooze?((Ooze) character).getLowestSplitSize():null);
+
     javax.swing.GroupLayout pSizeLayout = new javax.swing.GroupLayout(pSize);
     pSize.setLayout(pSizeLayout);
     pSizeLayout.setHorizontalGroup(
         pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addComponent(cbSize, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+        .addComponent(cbSplit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(cbSplitSize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     pSizeLayout.setVerticalGroup(
         pSizeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(cbSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(pSizeLayout.createSequentialGroup()
+            .addComponent(cbSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbSplit)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbSplitSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -500,7 +522,7 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     pSpeed.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Speed", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
     pSpeed.setEnabled(character.hasChallengeRating());
 
-    sSpeed.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(30), Integer.valueOf(5), null, Integer.valueOf(5)));
+    sSpeed.setModel(new javax.swing.SpinnerNumberModel(30, 5, null, 5));
     sSpeed.setValue(character.getSpeed());
     sSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
         public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -720,9 +742,17 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
 
     private void cbJackOfAllTradesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbJackOfAllTradesActionPerformed
         character.setJackOfAllTrades(cbJackOfAllTrades.isSelected());
+        CHARACTERS.update(character);
         update();
-        //CHARACTERS.update(character);
     }//GEN-LAST:event_cbJackOfAllTradesActionPerformed
+
+    private void cbSplitStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cbSplitStateChanged
+        if (character instanceof Ooze) {
+            ((Ooze) character).setCanSplit(cbSplit.isSelected());
+            cbSplitSize.setEnabled(cbSplit.isSelected());
+            CHARACTERS.update(character);
+        }
+    }//GEN-LAST:event_cbSplitStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<IArmor> cbArmor;
@@ -731,6 +761,8 @@ public class AbilityAndSkillPanel extends javax.swing.JPanel implements IUpdatea
     private javax.swing.JCheckBox cbJackOfAllTrades;
     private javax.swing.JCheckBox cbShield;
     private org.dndbattle.view.comboboxes.SizeComboBox cbSize;
+    private javax.swing.JCheckBox cbSplit;
+    private org.dndbattle.view.comboboxes.SizeComboBox cbSplitSize;
     private org.dndbattle.view.comboboxes.ChallengeRatingComboBox cbTransformChallengeRating;
     private org.dndbattle.view.comboboxes.ClassComboBox cbTransformClass;
     private javax.swing.JLabel jLabel1;

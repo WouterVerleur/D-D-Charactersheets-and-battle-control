@@ -31,6 +31,7 @@ public enum Size {
 
     private static final String SIZE_FORMAT = "%1$s x %1$s";
     private static final String STRING_FORMAT = "%s (%s)";
+    private static final Size[] values = Size.values();
 
     private final String displayName;
     private final Dice hitDice;
@@ -52,6 +53,13 @@ public enum Size {
 
     private String getSizeFormat() {
         return String.format(SIZE_FORMAT, getSize());
+    }
+
+    public Size getOneSmaller() {
+        if (this == TINY) {
+            return TINY;
+        }
+        return values[ordinal() - 1];
     }
 
     @Override

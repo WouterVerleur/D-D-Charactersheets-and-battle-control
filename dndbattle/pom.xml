@@ -11,7 +11,7 @@
         <mainClass>org.dndbattle.core.Main</mainClass>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <dep.commons.version>2.6</dep.commons.version>
+        <dep.commons.version>2.7</dep.commons.version>
     </properties>
 
     <dependencies>

@@ -16,10 +16,6 @@
  */
 package org.dndbattle.utils;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -34,7 +30,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.swing.JOptionPane;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import org.dndbattle.objects.ISaveableClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -277,7 +279,7 @@ public abstract class AbstractObjectStorer<T extends ISaveableClass> extends Ini
                         log.debug("Exporting preset [{}] to file [{}]", object, getFile());
                         final ObjectMapper mapper = new ObjectMapper();
                         mapper.writerFor(object.getClass()).writeValue(getFile(), object);
-                        saved = true;
+                        saved = true; 
                     } catch (IOException e) {
                         log.error("Error while writing preset [{}] to [{}]", object, getFile(), e);
                     }

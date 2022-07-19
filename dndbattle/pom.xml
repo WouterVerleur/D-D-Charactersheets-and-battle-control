@@ -11,7 +11,6 @@
         <mainClass>org.dndbattle.core.Main</mainClass>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <dep.commons.version>2.10.0</dep.commons.version>
     </properties>
 
     <dependencies>
@@ -49,12 +48,12 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${dep.commons.version}</version>
+            <version>2.10.0</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>${dep.commons.version}</version>
+            <version>2.6</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>

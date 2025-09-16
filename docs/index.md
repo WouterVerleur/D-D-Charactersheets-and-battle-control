@@ -42,8 +42,8 @@ Requires Java 8 or higher, but has been build using Java 24.
 
 ## All versions:
 [Version 2.8]({{ site.url }}/downloads/dndbattle-2.8.jar).  
-[Version 2.7]({{ site.url }}/downloads/dndbattle-2.7.jar).  
 Be aware that older versions are not rebuild may have vulnerabilities.  
+[Version 2.7]({{ site.url }}/downloads/dndbattle-2.7.jar).  
 [Version 2.6]({{ site.url }}/downloads/dndbattle-2.6.jar).  
 [Version 2.5]({{ site.url }}/downloads/dndbattle-2.5.jar).  
 [Version 2.4]({{ site.url }}/downloads/dndbattle-2.4.jar).  

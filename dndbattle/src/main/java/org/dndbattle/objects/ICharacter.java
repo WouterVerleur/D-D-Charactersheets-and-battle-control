@@ -26,7 +26,7 @@ import org.dndbattle.objects.enums.Size;
 import org.dndbattle.objects.enums.SkillType;
 import org.dndbattle.objects.enums.SpellLevel;
 import org.dndbattle.utils.GlobalUtils;
-import static org.dndbattle.view.master.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
+import static org.dndbattle.view.host.character.spells.SpellOverviewPanel.ABILITY_FORMAT;
 
 /**
  *

@@ -22,11 +22,9 @@ import org.dndbattle.objects.enums.Dice;
  *
  * @author wverl
  */
-public class DiceComboBox extends CustomComboBox<Dice>{
+public class DiceComboBox extends CustomComboBox<Dice> {
 
-    public DiceComboBox() {
-        super(Dice.values());
-    }
-    
-    
+  public DiceComboBox() {
+    super(Dice.values());
+  }
 }

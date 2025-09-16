@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2018 Wouter
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package org.dndbattle.utils;
 
@@ -20,59 +31,59 @@ import org.slf4j.LoggerFactory;
  */
 public class Weapons extends AbstractObjectStorer<IWeapon> {
 
-    private static final Logger log = LoggerFactory.getLogger(Weapons.class);
+  private static final Logger log = LoggerFactory.getLogger(Weapons.class);
 
-    private static final Weapons INSTANCE = new Weapons();
+  private static final Weapons INSTANCE = new Weapons();
 
-    private List<IWeapon> weapons = null;
+  private List<IWeapon> weapons = null;
 
-    private Weapons() {
-        super("Weapons");
+  private Weapons() {
+    super("Weapons");
+  }
+
+  public static Weapons getInstance() {
+    return INSTANCE;
+  }
+
+  @Override
+  public boolean add(IWeapon weapon) {
+    if (!canCreate(weapon)) {
+      return false;
     }
+    getAll().add(weapon);
+    Collections.sort(getAll());
+    store(weapon, true);
+    return true;
+  }
 
-    public static Weapons getInstance() {
-        return INSTANCE;
+  @Override
+  public void update(IWeapon weapon) {
+    if (getFile(weapon).exists()) {
+      store(weapon, false);
     }
+  }
 
-    @Override
-    public boolean add(IWeapon weapon) {
-        if (!canCreate(weapon)) {
-            return false;
-        }
-        getAll().add(weapon);
-        Collections.sort(getAll());
-        store(weapon, true);
-        return true;
+  @Override
+  public List<IWeapon> getAll() {
+    if (!isInitialized()) {
+      initialize();
     }
+    return weapons;
+  }
 
-    @Override
-    public void update(IWeapon weapon) {
-        if (getFile(weapon).exists()) {
-            store(weapon, false);
-        }
-    }
+  @Override
+  protected void initializeHook() {
+    weapons = loadFromFiles(Weapon.class);
+  }
 
-    @Override
-    public List<IWeapon> getAll() {
-        if (!isInitialized()) {
-            initialize();
-        }
-        return weapons;
+  @Override
+  public void remove(IWeapon weapon) {
+    store(weapon, true);// to make sure any change does not undo this remove
+    File file = getFile(weapon);
+    if (file.exists()) {
+      file.delete();
+      getAll().remove(weapon);
+      log.debug("Weapon [{}] has been deleted.", weapon);
     }
-
-    @Override
-    protected void initializeHook() {
-        weapons = loadFromFiles(Weapon.class);
-    }
-
-    @Override
-    public void remove(IWeapon weapon) {
-        store(weapon, true);// to make sure any change does not undo this remove
-        File file = getFile(weapon);
-        if (file.exists()) {
-            file.delete();
-            getAll().remove(weapon);
-            log.debug("Weapon [{}] has been deleted.", weapon);
-        }
-    }
+  }
 }

@@ -2,11 +2,11 @@
 
 ## Supported Versions
 
-| Version                                 | Supported          |
-| --------------------------------------- | ------------------ |
-| D&D Character a battle control v2.7     | :white_check_mark: |
-| D&D Character a battle control <= v2.6  | :x:                |
-| Randomizer v1.0                         | :white_check_mark: |
+| Version                                     | Supported          |
+| ------------------------------------------- | ------------------ |
+| D&D Character a battle control - latest     | :white_check_mark: |
+| D&D Character a battle control - other      | :x:                |
+| Randomizer v1.0                             | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
